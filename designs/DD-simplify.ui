@@ -1,0 +1,1217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.40.0 -->
+<interface>
+  <requires lib="gtk+" version="3.24"/>
+  <object class="GtkWindow" id="debug_panel">
+    <property name="default-width">800</property>
+    <property name="default-height">480</property>
+    <child>
+      <object class="GtkBox" id="box_main">
+        <property name="visible">1</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkFixed" id="fixed_header">
+            <property name="visible">1</property>
+            <child>
+              <object class="GtkLabel" id="lbl_debug_mv_panel1">
+                <property name="width-request">100</property>
+                <property name="height-request">50</property>
+                <property name="visible">1</property>
+                <property name="xpad">50</property>
+                <property name="label" translatable="yes">DEBUG</property>
+                <property name="justify">fill</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans 20"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="x">300</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="lbl_tsa">
+                <property name="width-request">100</property>
+                <property name="height-request">50</property>
+                <property name="visible">1</property>
+                <property name="label" translatable="yes">TSA</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans 20"/>
+                </attributes>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="lbl_r2d">
+                <property name="width-request">100</property>
+                <property name="height-request">50</property>
+                <property name="visible">1</property>
+                <property name="label" translatable="yes">R2D</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans 20"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="x">700</property>
+              </packing>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="box_sidebyside">
+            <property name="visible">1</property>
+            <property name="homogeneous">1</property>
+            <child>
+              <object class="GtkBox" id="box_left">
+                <property name="width-request">400</property>
+                <property name="visible">1</property>
+                <property name="orientation">vertical</property>
+                <!-- n-columns=2 n-rows=12 -->
+                <child>
+                  <object class="GtkGrid" id="grid_states">
+                    <property name="visible">1</property>
+                    <property name="column-homogeneous">1</property>
+                    <child>
+                      <object class="GtkLabel" id="lbl_states">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">States</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 20"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">0</property>
+                        <property name="width">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_car_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">Car:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_bat_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">Bat:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_sdc_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">SDC:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_as_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">AS:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_asb_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">ASB:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_asb_cs">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">ASB CS:</property>
+                        <property name="justify">right</property>
+                        <property name="wrap">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_asb_tc">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">ASB TC:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">7</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_tsa_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unconfigured</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_bat_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unconfigured</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_sdc_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unconfigured</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_as_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unconfigured</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_asb_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unconfigured</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_asb_cs">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unconfigured</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_asb_tc">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unconfigured</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">7</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_asb_pressure1">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">ASB P1:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">8</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_asb_pressure1">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unconfigured</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">8</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_asb_pressure2">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">ASB P2:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">9</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_asb_pressure2">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unconfigured</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">9</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_brake_pressure1">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">BP 1:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">10</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_brake_pressure1">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unconfigured</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">10</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_brake_pressure2">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">BP 2:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">11</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_brake_pressure2">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unconfigured</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">11</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+                <!-- n-columns=2 n-rows=5 -->
+                <child>
+                  <object class="GtkGrid" id="grid_power">
+                    <property name="visible">1</property>
+                    <property name="column-homogeneous">1</property>
+                    <child>
+                      <object class="GtkLabel" id="lbl_power">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">Power</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 20"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">0</property>
+                        <property name="width">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_sdc_power">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">SDC:</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_lv_power">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">LV:</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_hv_power">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">HV:</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_epos_power">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">EPOS:</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_sdc_power">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unconfigured</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_lv_power">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unconfigured</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_hv_power">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unconfigured</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_epos_power">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unconfigured</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">4</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="box_right">
+                <property name="width-request">400</property>
+                <property name="visible">1</property>
+                <property name="orientation">vertical</property>
+                <!-- n-columns=2 n-rows=10 -->
+                <child>
+                  <object class="GtkGrid" id="main_grid">
+                    <property name="visible">1</property>
+                    <property name="column-homogeneous">1</property>
+                    <child>
+                      <object class="GtkLabel" id="lbl_errors">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">Errors</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 20"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">0</property>
+                        <property name="width">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_error_1">
+                        <property name="visible">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_error_2">
+                        <property name="visible">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_error_3">
+                        <property name="visible">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_error_4">
+                        <property name="visible">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_error_5">
+                        <property name="visible">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_error_1">
+                        <property name="visible">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_error_2">
+                        <property name="visible">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_error_3">
+                        <property name="visible">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_error_4">
+                        <property name="visible">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_error_5">
+                        <property name="visible">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_error_6">
+                        <property name="visible">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_error_6">
+                        <property name="visible">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_error_7">
+                        <property name="visible">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">7</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_error_8">
+                        <property name="visible">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">8</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_error_7">
+                        <property name="visible">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">7</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_error_8">
+                        <property name="visible">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">8</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_error_9">
+                        <property name="visible">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">9</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_error_9">
+                        <property name="visible">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">9</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+                <!-- n-columns=4 n-rows=7 -->
+                <child>
+                  <object class="GtkGrid" id="grid_switch_states">
+                    <property name="visible">1</property>
+                    <child>
+                      <object class="GtkLabel" id="lbl_switch_states">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">Switch States</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 20"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">0</property>
+                        <property name="width">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_acu_switch_state">
+                        <property name="width-request">150</property>
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">ACU:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_asb_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">ASB:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_dash_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">Dash</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_epos_lc_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">EPOS_LC:</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_fan_l_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">FAN L:</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_fan_r_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">FAN R:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_sbg_switch_state">
+                        <property name="width-request">150</property>
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">SBG:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_vcu_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">VCU:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_pef_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">PEF:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_per_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">PER:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_pumps_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">Pumps:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_sensors_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">Sensors:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_acu_switch_state">
+                        <property name="width-request">50</property>
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_asb_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_dash_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_epos_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_fan_l_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_fan_r_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_vcu_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_sbg_switch_state">
+                        <property name="width-request">50</property>
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_pef_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="top-attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_per_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="top-attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_pumps_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="top-attach">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_sensors_switch_state">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="top-attach">6</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

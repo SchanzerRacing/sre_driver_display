@@ -1,0 +1,19 @@
+#label_tsa {
+    /* background-color: purple; */
+    border-radius: 10px;
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+}
+
+.blink {
+    animation: blinker 1s linear infinite;
+}
+
+#label_r2d {
+    /* background-color: purple; */
+    border-radius: 10px;
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+}

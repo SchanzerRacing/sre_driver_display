@@ -1,0 +1,1149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.12"/>
+  <object class="GtkWindow" id="window_main">
+    <property name="default-width">800</property>
+    <property name="default-height">480</property>
+    <child>
+      <object class="GtkBox" id="box_main">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkFixed" id="fixed_header">
+            <child>
+              <object class="GtkLabel" id="lbl_debug_mv_panel">
+                <layout>
+                  <property name="transform">translate(350, 0)</property>
+                </layout>
+                <property name="width-request">100</property>
+                <property name="height-request">50</property>
+                <property name="label" translatable="1">DEBUG</property>
+                <property name="justify">fill</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans 20"></attribute>
+                </attributes>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="lbl_tsa">
+                <property name="name">label_tsa</property>
+                <property name="width-request">100</property>
+                <property name="height-request">50</property>
+                <property name="label" translatable="1">TSA</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans 20"></attribute>
+                </attributes>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="lbl_r2d">
+                <property name="name">label_r2d</property>
+                <layout>
+                  <property name="transform">translate(700, 0)</property>
+                </layout>
+                <property name="width-request">100</property>
+                <property name="height-request">50</property>
+                <property name="label" translatable="1">R2D</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans 20"></attribute>
+                </attributes>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="box_sidebyside">
+            <property name="homogeneous">1</property>
+            <child>
+              <object class="GtkBox" id="box_left">
+                <property name="width-request">400</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkGrid" id="grid_states">
+                    <child>
+                      <object class="GtkLabel" id="lbl_states">
+                        <property name="label" translatable="1">States</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 20"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                          <property name="column-span">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_car_state">
+                        <property name="label" translatable="1">Car:</property>
+                        <property name="width-request">100</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_bat_state">
+                        <property name="label" translatable="1">Bat:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_sdc_state">
+                        <property name="label" translatable="1">SDC:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">3</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_as_state">
+                        <property name="label" translatable="1">AS:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">4</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_asb_state">
+                        <property name="label" translatable="1">ASB:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">5</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_asb_cs">
+                        <property name="label" translatable="1">ASB CS:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">6</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_asb_tc">
+                        <property name="label" translatable="1">ASB TC:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">7</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_car_state">
+                        <property name="label" translatable="1">unconfigured</property>
+                        <property name="width-request">290</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_bat_state">
+                        <property name="label" translatable="1">unconfigured</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_sdc_state">
+                        <property name="label" translatable="1">unconfigured</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">3</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_as_state">
+                        <property name="label" translatable="1">unconfigured</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">4</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_asb_state">
+                        <property name="label" translatable="1">unconfigured</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">5</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_asb_cs">
+                        <property name="label" translatable="1">unconfigured</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">6</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_asb_tc">
+                        <property name="label" translatable="1">unconfigured</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">7</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_asb_pressure1">
+                        <property name="label" translatable="1">ASB P1:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">8</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_asb_pressure1">
+                        <property name="label" translatable="1">unconfigured</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">8</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_asb_pressure2">
+                        <property name="label" translatable="1">ASB P2:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">9</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_asb_pressure2">
+                        <property name="label" translatable="1">unconfigured</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">9</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_brake_pressure1">
+                        <property name="label" translatable="1">BP 1:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">10</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_brake_pressure1">
+                        <property name="label" translatable="1">unconfigured</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">10</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_brake_pressure2">
+                        <property name="label" translatable="1">BP 2:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">11</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_brake_pressure2">
+                        <property name="label" translatable="1">unconfigured</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">11</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkGrid" id="grid_power">
+                    <property name="column-homogeneous">1</property>
+                    <child>
+                      <object class="GtkLabel" id="lbl_power">
+                        <property name="label" translatable="1">Power</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 20"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                          <property name="column-span">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_sdc_power">
+                        <property name="label" translatable="1">SDC:</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_lv_power">
+                        <property name="label" translatable="1">LV:</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_hv_power">
+                        <property name="label" translatable="1">HV:</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">3</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_epos_power">
+                        <property name="label" translatable="1">EPOS:</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">4</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_sdc_power">
+                        <property name="label" translatable="1">unconfigured</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_lv_power">
+                        <property name="label" translatable="1">unconfigured</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_hv_power">
+                        <property name="label" translatable="1">unconfigured</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">3</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_epos_power">
+                        <property name="label" translatable="1">unconfigured</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">4</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="box_right">
+                <property name="width-request">400</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkGrid" id="grid_errors">
+                    <property name="column-homogeneous">1</property>
+                    <child>
+                      <object class="GtkLabel" id="lbl_errors">
+                        <property name="label" translatable="1">Errors</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 20"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                          <property name="column-span">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_error_1">
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_error_2">
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_error_3">
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">3</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_error_4">
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">4</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_error_5">
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">5</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_error_1">
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_error_2">
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_error_3">
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">3</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_error_4">
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">4</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_error_5">
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">5</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_error_6">
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">6</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_error_6">
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">6</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_error_7">
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">7</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_error_8">
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">8</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_error_7">
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">7</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_error_8">
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">8</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_error_9">
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">9</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_error_9">
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">9</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkGrid" id="grid_switch_states">
+                    <child>
+                      <object class="GtkLabel" id="lbl_switch_states">
+                        <property name="label" translatable="1">Switch States</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 20"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                          <property name="column-span">4</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_acu_switch_state">
+                        <property name="width-request">120</property>
+                        <property name="label" translatable="1">ACU:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_asb_switch_state">
+                        <property name="label" translatable="1">ASB:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_dash_switch_state">
+                        <property name="label" translatable="1">Dash</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">3</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_epos_lc_switch_state">
+                        <property name="label" translatable="1">EPOS_LC:</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">4</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_fan_l_switch_state">
+                        <property name="label" translatable="1">FAN L:</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">5</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_fan_r_switch_state">
+                        <property name="label" translatable="1">FAN R:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">6</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_sbg_switch_state">
+                        <property name="width-request">120</property>
+                        <property name="label" translatable="1">SBG:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">2</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_vcu_switch_state">
+                        <property name="label" translatable="1">VCU:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">2</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_pef_switch_state">
+                        <property name="label" translatable="1">PEF:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">2</property>
+                          <property name="row">3</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_per_switch_state">
+                        <property name="label" translatable="1">PER:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">2</property>
+                          <property name="row">4</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_pumps_switch_state">
+                        <property name="label" translatable="1">Pumps:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">2</property>
+                          <property name="row">5</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_sensors_switch_state">
+                        <property name="label" translatable="1">Sensors:</property>
+                        <property name="justify">right</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">0.05000000074505806</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">2</property>
+                          <property name="row">6</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_acu_switch_state">
+                        <property name="width-request">70</property>
+                        <property name="label" translatable="1">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_asb_switch_state">
+                        <property name="label" translatable="1">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_dash_switch_state">
+                        <property name="label" translatable="1">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">3</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_epos_switch_state">
+                        <property name="label" translatable="1">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">4</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_fan_l_switch_state">
+                        <property name="label" translatable="1">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">5</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_fan_r_switch_state">
+                        <property name="label" translatable="1">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">6</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_vcu_switch_state">
+                        <property name="label" translatable="1">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">3</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_sbg_switch_state">
+                        <property name="width-request">70</property>
+                        <property name="label" translatable="1">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">3</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_pef_switch_state">
+                        <property name="label" translatable="1">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">3</property>
+                          <property name="row">3</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_per_switch_state">
+                        <property name="label" translatable="1">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">3</property>
+                          <property name="row">4</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_pumps_switch_state">
+                        <property name="label" translatable="1">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">3</property>
+                          <property name="row">5</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_sensors_switch_state">
+                        <property name="label" translatable="1">unc</property>
+                        <property name="single-line-mode">1</property>
+                        <property name="xalign">1.0</property>
+                        <property name="margin-end">10</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 15"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">3</property>
+                          <property name="row">6</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
