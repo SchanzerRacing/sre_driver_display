@@ -10,24 +10,37 @@ LDFLAGS = `pkg-config --libs gtk4`
 # Source files
 SRC = main.c
 
+# Output folder
+OUT_DIR = build
+
 # Output executable
-OUT = gtkapp
+OUT = $(OUT_DIR)/driver-display.out
 
 # New rules
-driver-display: main.o debug_panel.o endurance_panel.o parameters_panel.o
-	$(CC) main.o debug_panel.o endurance_panel.o parameters_panel.o $(LDFLAGS) -o driver-display
+driver-display: $(OUT_DIR)/main.o $(OUT_DIR)/debug_panel.o $(OUT_DIR)/endurance_panel.o $(OUT_DIR)/parameters_panel.o
+	$(CC) $(OUT_DIR)/main.o $(OUT_DIR)/debug_panel.o $(OUT_DIR)/endurance_panel.o $(OUT_DIR)/parameters_panel.o $(LDFLAGS) -o $(OUT)
 
-main.o: main.c
-	$(CC) $(CFLAGS) -c main.c
+$(OUT_DIR)/main.o: main.c
+	$(CC) $(CFLAGS) -c main.c -o $(OUT_DIR)/main.o
 
-debug_panel.o: debug_panel.c
-	$(CC) $(CFLAGS) -c debug_panel.c
+$(OUT_DIR)/debug_panel.o: debug_panel.c
+	$(CC) $(CFLAGS) -c debug_panel.c -o $(OUT_DIR)/debug_panel.o
 
-endurance_panel.o: endurance_panel.c
-	$(CC) $(CFLAGS) -c endurance_panel.c
+$(OUT_DIR)/endurance_panel.o: endurance_panel.c
+	$(CC) $(CFLAGS) -c endurance_panel.c -o $(OUT_DIR)/endurance_panel.o
 
-parameters_panel.o: parameters_panel.c
-	$(CC) $(CFLAGS) -c parameters_panel.c
+$(OUT_DIR)/parameters_panel.o: parameters_panel.c
+	$(CC) $(CFLAGS) -c parameters_panel.c -o $(OUT_DIR)/parameters_panel.o
 
 clean:
-	rm -f *.o driver-display
+	rm -f $(OUT_DIR)/*.o $(OUT)
+
+# Create output directory if it doesn't exist
+$(OUT_DIR):
+	mkdir -p $(OUT_DIR)
+
+# Ensure output directory is created before compiling
+$(OUT_DIR)/main.o: | $(OUT_DIR)
+$(OUT_DIR)/debug_panel.o: | $(OUT_DIR)
+$(OUT_DIR)/endurance_panel.o: | $(OUT_DIR)
+$(OUT_DIR)/parameters_panel.o: | $(OUT_DIR)
