@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/robert/repos/personal/gtk-driver-display/gtkbuildertests",
-      "program": "/home/robert/repos/personal/gtk-driver-display/gtkbuildertests/build/Debug/outDebug",
+      "cwd": "/home/robert/repos/personal/gtk-driver-display/display",
+      "program": "/home/robert/repos/personal/gtk-driver-display/display/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

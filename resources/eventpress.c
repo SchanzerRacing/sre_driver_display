@@ -1,4 +1,4 @@
-* event-controller.c
+/* event-controller.c
  *
  * Compile: cc -ggdb event-controller.c -o event-controller $(pkg-config --cflags --libs gtk4) -o event-controller
  * Run: ./event-controller
