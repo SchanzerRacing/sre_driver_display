@@ -1,4 +1,4 @@
-#include "debug_panel.h"
+#include "headers/debug_panel.h"
 #include <gtk/gtk.h>
 
 GtkBuilder *builder_debug_panel = NULL;
@@ -8,7 +8,7 @@ GtkWidget* create_debug_panel() {
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 
     //import gtkbuilder ui
-    builder_debug_panel = gtk_builder_new_from_file("../designs/gtk4-driverdisplay.ui");
+    builder_debug_panel = gtk_builder_new_from_file("../designs/debug-panel.ui");
     if(builder_debug_panel == NULL) {
         g_print("Failed to load builder\n");
         return NULL;

@@ -17,8 +17,8 @@ OUT_DIR = build
 OUT = $(OUT_DIR)/driver-display.out
 
 # New rules
-driver-display: $(OUT_DIR)/main.o $(OUT_DIR)/debug_panel.o $(OUT_DIR)/endurance_panel.o $(OUT_DIR)/parameters_panel.o
-	$(CC) $(OUT_DIR)/main.o $(OUT_DIR)/debug_panel.o $(OUT_DIR)/endurance_panel.o $(OUT_DIR)/parameters_panel.o $(LDFLAGS) -o $(OUT)
+driver-display: $(OUT_DIR)/main.o $(OUT_DIR)/debug_panel.o $(OUT_DIR)/endurance_panel.o $(OUT_DIR)/parameters_panel.o $(OUT_DIR)/sre_logic.o
+	$(CC) $(OUT_DIR)/main.o $(OUT_DIR)/debug_panel.o $(OUT_DIR)/endurance_panel.o $(OUT_DIR)/parameters_panel.o $(OUT_DIR)/sre_logic.o $(LDFLAGS) -o $(OUT)
 
 $(OUT_DIR)/main.o: main.c
 	$(CC) $(CFLAGS) -c main.c -o $(OUT_DIR)/main.o
@@ -32,6 +32,9 @@ $(OUT_DIR)/endurance_panel.o: endurance_panel.c
 $(OUT_DIR)/parameters_panel.o: parameters_panel.c
 	$(CC) $(CFLAGS) -c parameters_panel.c -o $(OUT_DIR)/parameters_panel.o
 
+$(OUT_DIR)/sre_logic.o: sre_logic.c
+	$(CC) $(CFLAGS) -c sre_logic.c -o $(OUT_DIR)/sre_logic.o
+
 clean:
 	rm -f $(OUT_DIR)/*.o $(OUT)
 
@@ -44,3 +47,4 @@ $(OUT_DIR)/main.o: | $(OUT_DIR)
 $(OUT_DIR)/debug_panel.o: | $(OUT_DIR)
 $(OUT_DIR)/endurance_panel.o: | $(OUT_DIR)
 $(OUT_DIR)/parameters_panel.o: | $(OUT_DIR)
+$(OUT_DIR)/sre_logic.o: | $(OUT_DIR)
