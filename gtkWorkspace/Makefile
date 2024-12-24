@@ -17,8 +17,8 @@ OUT_DIR = build
 OUT = $(OUT_DIR)/driver-display.out
 
 # New rules
-driver-display: $(OUT_DIR)/main.o $(OUT_DIR)/debug_panel.o $(OUT_DIR)/endurance_panel.o $(OUT_DIR)/parameters_panel.o $(OUT_DIR)/sre_logic.o
-	$(CC) $(OUT_DIR)/main.o $(OUT_DIR)/debug_panel.o $(OUT_DIR)/endurance_panel.o $(OUT_DIR)/parameters_panel.o $(OUT_DIR)/sre_logic.o $(LDFLAGS) -o $(OUT)
+driver-display: $(OUT_DIR)/main.o $(OUT_DIR)/debug_panel.o $(OUT_DIR)/endurance_panel.o $(OUT_DIR)/parameters_panel.o $(OUT_DIR)/sre_logic.o $(OUT_DIR)/sre_can.o
+	$(CC) $(OUT_DIR)/main.o $(OUT_DIR)/debug_panel.o $(OUT_DIR)/endurance_panel.o $(OUT_DIR)/parameters_panel.o $(OUT_DIR)/sre_logic.o $(OUT_DIR)/sre_can.o $(LDFLAGS) -o $(OUT)
 
 $(OUT_DIR)/main.o: main.c
 	$(CC) $(CFLAGS) -c main.c -o $(OUT_DIR)/main.o
@@ -34,6 +34,9 @@ $(OUT_DIR)/parameters_panel.o: parameters_panel.c
 
 $(OUT_DIR)/sre_logic.o: sre_logic.c
 	$(CC) $(CFLAGS) -c sre_logic.c -o $(OUT_DIR)/sre_logic.o
+
+$(OUT_DIR)/sre_can.o: sre_can.c
+	$(CC) $(CFLAGS) -c sre_can.c -o $(OUT_DIR)/sre_can.o
 
 clean:
 	rm -f $(OUT_DIR)/*.o $(OUT)

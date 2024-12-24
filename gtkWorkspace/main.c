@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include "headers/sre_logic.h"
+#include "headers/sre_can.h"
 #include "headers/debug_panel.h"
 #include "headers/endurance_panel.h"
 #include "headers/parameters_panel.h"
@@ -126,6 +127,9 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_widget_add_controller(window, GTK_EVENT_CONTROLLER(click));
 
     g_timeout_add(250, (GSourceFunc) sre_run_display, NULL);
+
+    // Replace with signal when new can messages come in?
+    g_timeout_add(100, (GSourceFunc) sre_can_update, NULL);
 
     gtk_window_present(GTK_WINDOW(window));
 }
