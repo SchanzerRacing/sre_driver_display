@@ -18,4 +18,8 @@
   - Unfortunately its only useful for GTK3. But it is a nice tool and its possible to convert the UI to GTK4 with some manual work with the help of gtk4-builder-tool with the `--3to4` flag.
 
 
+## CAN
 
+- Socketcan Documentation https://www.kernel.org/doc/Documentation/networking/can.txt
+- Short Example Code https://www.beyondlogic.org/example-c-socketcan-code/
+- More Examples https://github.com/craigpeacock/CAN-Examples

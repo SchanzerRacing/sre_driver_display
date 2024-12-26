@@ -14,6 +14,7 @@ GtkWidget* create_debug_panel() {
         return NULL;
     }
 
+    // Look for debug panel and load it
     GObject *debug_panel = gtk_builder_get_object(builder_debug_panel, "box_main");
     if(debug_panel == NULL) {
         g_print("Failed to load debug panel\n");
@@ -26,10 +27,11 @@ GtkWidget* create_debug_panel() {
         gtk_widget_unparent(GTK_WIDGET(debug_panel));
     }
     
+    // Get the labels and save them for later use
     label_tsa = gtk_builder_get_object(builder_debug_panel, "lbl_tsa");
     label_r2d = gtk_builder_get_object(builder_debug_panel, "lbl_r2d");
 
-    // Ensure the widgets are visible
+    // Add debugpanel to the main box
     gtk_box_append(GTK_BOX(box), GTK_WIDGET(debug_panel));
 
     return box;

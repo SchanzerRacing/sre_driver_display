@@ -1,4 +1,17 @@
 #include <gtk/gtk.h>
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+
+#include <net/if.h>
+#include <sys/ioctl.h>
+#include <sys/socket.h>
+
+#include <linux/can.h>
+#include <linux/can/raw.h>
+
 #include "headers/sre_logic.h"
 #include "headers/sre_can.h"
 #include "headers/debug_panel.h"
@@ -126,9 +139,11 @@ static void activate(GtkApplication *app, gpointer user_data)
     g_signal_connect(click, "pressed", G_CALLBACK(on_click), window);
     gtk_widget_add_controller(window, GTK_EVENT_CONTROLLER(click));
 
+    // timer that calls the display run function every 250ms
     g_timeout_add(250, (GSourceFunc) sre_run_display, NULL);
 
     // Replace with signal when new can messages come in?
+    // timmer that runs the can update function every 100ms
     g_timeout_add(100, (GSourceFunc) sre_can_update, NULL);
 
     gtk_window_present(GTK_WINDOW(window));
@@ -139,9 +154,12 @@ int main(int argc, char *argv[])
     GtkApplication *app = gtk_application_new("org.fsae.driverdisplay", G_APPLICATION_DEFAULT_FLAGS);
     g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
 
+    
 
     // Example usage
     parse_dbc_file("BODY-CAN.dbc");
+
+
     int status = g_application_run(G_APPLICATION(app), argc, argv);
     g_object_unref(app);
     return status;
