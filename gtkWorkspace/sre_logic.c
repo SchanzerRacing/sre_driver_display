@@ -59,7 +59,7 @@ void init_sre_state()
     sre_state->asb_check_sequence = 0;
     sre_state->asb_trigger_cause = 0;
 
-    printf("sre_state batstate: %s\n", BAT_STATE_STR[sre_state->bat_state]);
+    // printf("sre_state batstate: %s\n", BAT_STATE_STR[sre_state->bat_state]);
 }
 
 gboolean sre_run_display()
@@ -67,22 +67,29 @@ gboolean sre_run_display()
     displayCallbackCounter = ++displayCallbackCounter % 10;
     if(displayCallbackCounter == 9)
     {
-        printf("sre_run_display\n");
+        //printf("sre_run_display\n");
     }
     
     tsa_logic();
     r2d_logic();
 
+    // Gathers all the data from the CAN messages and updates the states
+    // state_update();
+
+    // Updates the graphical elements
     graphical_update();
+
+    // Updates the labels
+    // label_update();
 
     return G_SOURCE_CONTINUE;
 }
 
 void graphical_update()
 {
-    printf("graphical_update\n");
-    printf("car_state: %s\n", CAR_STATE_STR[sre_state->car_state]);
-    printf("bat_state: %s\n", BAT_STATE_STR[sre_state->bat_state]);
+    // printf("graphical_update\n");
+    // printf("car_state: %s\n", CAR_STATE_STR[sre_state->car_state]);
+    // printf("bat_state: %s\n", BAT_STATE_STR[sre_state->bat_state]);
     
     if(sre_state->tsa_ready)
     {

@@ -1,17 +1,5 @@
 #include <gtk/gtk.h>
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-
-#include <net/if.h>
-#include <sys/ioctl.h>
-#include <sys/socket.h>
-
-#include <linux/can.h>
-#include <linux/can/raw.h>
-
 #include "headers/sre_logic.h"
 #include "headers/sre_can.h"
 #include "headers/debug_panel.h"
@@ -24,11 +12,6 @@ GtkWidget* create_endurance_panel();
 GtkWidget* create_parameters_panel();
 
 static gboolean on_click(GtkGestureClick *gesture, gint n_press, gdouble x, gdouble y, gpointer user_data);
-
-// Placeholder for reading/decoding BODY-CAN.dbc
-static void parse_dbc_file(const char *dbc_path) {
-    // TODO: Implement CAN DBC parsing logic
-}
 
 static void switch_panel(GtkWidget *window, const char *panel_name) {
     GtkWidget *panel;
@@ -144,23 +127,29 @@ static void activate(GtkApplication *app, gpointer user_data)
 
     // Replace with signal when new can messages come in?
     // timmer that runs the can update function every 100ms
-    g_timeout_add(100, (GSourceFunc) sre_can_update, NULL);
+    // g_timeout_add(250, (GSourceFunc) sre_can_update, NULL);
 
     gtk_window_present(GTK_WINDOW(window));
 }
 
 int main(int argc, char *argv[]) 
 {
+    setup_can();
+
+    // Setup CAN daughter thread
+    if (pthread_create(&can_thread, NULL, &can_loop, NULL) != 0) {
+        perror("Failed to create CAN thread");
+        exit(EXIT_FAILURE);
+    }
+
     GtkApplication *app = gtk_application_new("org.fsae.driverdisplay", G_APPLICATION_DEFAULT_FLAGS);
     g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
 
-    
-
-    // Example usage
-    parse_dbc_file("BODY-CAN.dbc");
-
-
     int status = g_application_run(G_APPLICATION(app), argc, argv);
     g_object_unref(app);
+
+    // close socket
+    close_can();
+
     return status;
 }

@@ -3,6 +3,10 @@
 
 #include <gtk/gtk.h>
 
+#include <pthread.h>
+
+pthread_t can_thread;
+
 GtkCssProvider *cssProvider;
 
 GObject *label_tsa;

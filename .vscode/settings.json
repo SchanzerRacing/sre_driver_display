@@ -60,6 +60,10 @@
     "*.t": "cpp",
     "debug_panel.h": "c",
     "sre-states.h": "c",
-    "stdio.h": "c"
+    "stdio.h": "c",
+    "unistd.h": "c",
+    "sre_logic.h": "c",
+    "sre_can.h": "c",
+    "endurance_panel.h": "c"
   }
 }
