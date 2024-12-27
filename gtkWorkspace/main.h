@@ -9,9 +9,6 @@ pthread_t can_thread;
 
 GtkCssProvider *cssProvider;
 
-GObject *label_tsa;
-GObject *label_r2d;
-
 bool tsa_ready;
 bool tsa_active;
 

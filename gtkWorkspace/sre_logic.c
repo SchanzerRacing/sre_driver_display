@@ -3,6 +3,8 @@
 */
 #include <gtk/gtk.h>
 #include <stdio.h>
+
+#include "headers/sre_can.h"
 #include "headers/sre_logic.h"
 #include "headers/debug_panel.h"
 
@@ -74,22 +76,56 @@ gboolean sre_run_display()
     r2d_logic();
 
     // Gathers all the data from the CAN messages and updates the states
-    // state_update();
+    state_update();
 
     // Updates the graphical elements
     graphical_update();
 
     // Updates the labels
-    // label_update();
+    label_update();
 
     return G_SOURCE_CONTINUE;
 }
 
+void state_update()
+{
+    // printf("state_update\n");
+
+    sre_state->brake_pressure_1 = LOG_BrakePressures.Front;
+    sre_state->brake_pressure_2 = LOG_BrakePressures.Rear;
+
+    sre_state->car_state = HSC_Vehicle_Status.State;
+    sre_state->bat_state = GW_Battery_Status.State;
+
+    sre_state->hv_power = GW_Battery_Status.Power;
+}
+
+void label_update()
+{
+    // printf("label_update\n");
+    char buffer[100];
+    sprintf(buffer, "%d", sre_state->brake_pressure_1);
+    gtk_label_set_text(GTK_LABEL(label_brake_pressure_1), buffer);
+
+    sprintf(buffer, "%d", sre_state->brake_pressure_2);
+    gtk_label_set_text(GTK_LABEL(label_brake_pressure_2), buffer);
+
+    sprintf(buffer, "%d", sre_state->hv_power);
+    gtk_label_set_text(GTK_LABEL(label_hv_power), buffer);
+
+    sprintf(buffer, "%s", CAR_STATE_STR[sre_state->car_state]);
+    gtk_label_set_text(GTK_LABEL(label_car_state), buffer);
+
+    sprintf(buffer, "%s", BAT_STATE_STR[sre_state->bat_state]);
+    gtk_label_set_text(GTK_LABEL(label_bat_state), buffer);
+
+}
+
 void graphical_update()
 {
-    // printf("graphical_update\n");
-    // printf("car_state: %s\n", CAR_STATE_STR[sre_state->car_state]);
-    // printf("bat_state: %s\n", BAT_STATE_STR[sre_state->bat_state]);
+    printf("graphical_update\n");
+    printf("car_state: %s\n", CAR_STATE_STR[sre_state->car_state]);
+    printf("bat_state: %s\n", BAT_STATE_STR[sre_state->bat_state]);
     
     if(sre_state->tsa_ready)
     {

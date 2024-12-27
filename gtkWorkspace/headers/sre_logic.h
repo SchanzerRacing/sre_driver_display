@@ -8,6 +8,8 @@
 
 gboolean sre_run_display();
 void graphical_update();
+void label_update();
+void state_update();
 
 void init_sre_state();
 

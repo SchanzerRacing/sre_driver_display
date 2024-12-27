@@ -21,6 +21,16 @@ uint8_t read_and_match();
 void setup_can();
 void close_can();
 
+// CAN STRUCTS
+extern union HSC_Vehicle_Status_UNION HSC_Vehicle_Status;
+extern union HSC_DriverInput_UNION HSC_DriverInput;
+extern union HSC_Steering_UNION HSC_Steering;
+extern union LOG_BrakePressures_UNION LOG_BrakePressures;
+extern union DV_System_Status_UNION DV_System_Status;
+extern union LOG_LEM_UNION LOG_LEM;
+extern union GW_Battery_Status_UNION GW_Battery_Status;
+
+
 // CAN Mapping
 typedef struct {
     int can_id;

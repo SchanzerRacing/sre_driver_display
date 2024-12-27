@@ -3,6 +3,14 @@
 
 GtkBuilder *builder_debug_panel = NULL;
 
+GObject *label_tsa = NULL;
+GObject *label_r2d = NULL;
+GObject *label_brake_pressure_1 = NULL;
+GObject *label_brake_pressure_2 = NULL;
+GObject *label_hv_power = NULL;
+GObject *label_car_state = NULL;
+GObject *label_bat_state = NULL;
+
 // Creates a simple debugging panel
 GtkWidget* create_debug_panel() {
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -30,6 +38,13 @@ GtkWidget* create_debug_panel() {
     // Get the labels and save them for later use
     label_tsa = gtk_builder_get_object(builder_debug_panel, "lbl_tsa");
     label_r2d = gtk_builder_get_object(builder_debug_panel, "lbl_r2d");
+
+    label_brake_pressure_1 = gtk_builder_get_object(builder_debug_panel, "info_brake_pressure_1");
+    label_brake_pressure_2 = gtk_builder_get_object(builder_debug_panel, "info_brake_pressure_2");
+    label_hv_power = gtk_builder_get_object(builder_debug_panel, "info_hv_power");
+
+    label_car_state = gtk_builder_get_object(builder_debug_panel, "info_car_state");
+    label_bat_state = gtk_builder_get_object(builder_debug_panel, "info_bat_state");
 
     // Add debugpanel to the main box
     gtk_box_append(GTK_BOX(box), GTK_WIDGET(debug_panel));
