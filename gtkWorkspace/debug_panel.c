@@ -13,7 +13,7 @@ GObject *label_bat_state = NULL;
 
 // Creates a simple debugging panel
 GtkWidget* create_debug_panel() {
-    GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget *main_dp_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 
     //import gtkbuilder ui
     builder_debug_panel = gtk_builder_new_from_file("../designs/debug-panel.ui");
@@ -47,7 +47,7 @@ GtkWidget* create_debug_panel() {
     label_bat_state = gtk_builder_get_object(builder_debug_panel, "info_bat_state");
 
     // Add debugpanel to the main box
-    gtk_box_append(GTK_BOX(box), GTK_WIDGET(debug_panel));
+    gtk_box_append(GTK_BOX(main_dp_box), GTK_WIDGET(debug_panel));
 
-    return box;
+    return main_dp_box;
 }

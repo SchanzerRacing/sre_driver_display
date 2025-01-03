@@ -48,6 +48,9 @@ typedef struct {
     bool r2d_ready;
     bool r2d_active;
 
+    bool error_show;
+    bool info_show;
+
     uint8_t car_state;
     uint8_t bat_state;
     uint8_t asb_state;

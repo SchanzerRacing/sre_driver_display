@@ -5,15 +5,27 @@
 #include "headers/debug_panel.h"
 #include "headers/endurance_panel.h"
 #include "headers/parameters_panel.h"
+#include "headers/objects.h"
 #include "main.h"
 
 // external functions
 GtkWidget* create_endurance_panel();
 GtkWidget* create_parameters_panel();
 
+GObject* box_error = NULL;
+GObject* box_info = NULL; 
+
+GObject *info_error_type = NULL;
+GObject *info_error_message = NULL;
+
+GObject *info_info_type = NULL;
+GObject *info_info_message = NULL;
+
+GtkBuilder *builder_error_info_panel = NULL;
+
 static gboolean on_click(GtkGestureClick *gesture, gint n_press, gdouble x, gdouble y, gpointer user_data);
 
-static void switch_panel(GtkWidget *window, const char *panel_name) {
+static void switch_panel(GtkWidget *widget, const char *panel_name) {
     GtkWidget *panel;
     if (g_strcmp0(panel_name, "Endurance") == 0) {
         panel = create_endurance_panel();
@@ -22,11 +34,11 @@ static void switch_panel(GtkWidget *window, const char *panel_name) {
     } else {
         panel = create_debug_panel();
     }
-    gtk_window_set_child(GTK_WINDOW(window), panel);
+    gtk_overlay_set_child(GTK_OVERLAY(widget), panel);
 }
 
 static gboolean on_click(GtkGestureClick *gesture, gint n_press, gdouble x, gdouble y, gpointer user_data) {
-    static int panel_index = 0;
+    static int panel_index = 1;
     const char *panels[] = {"Endurance", "Debug", "Parameters"};
     panel_index = (panel_index + 1) % 3;
     switch_panel(GTK_WIDGET(user_data), panels[panel_index]);
@@ -106,9 +118,15 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_window_set_title(GTK_WINDOW(window), "Driver Display");
     gtk_window_set_default_size(GTK_WINDOW(window), 800, 480);
 
+    // Create the main overlay
+    GtkWidget *main_overlay = gtk_overlay_new();
+
+    // Disallow being a target
+    gtk_widget_set_can_target(GTK_WIDGET(main_overlay), FALSE);
+    
     // Initial panel
     GtkWidget *initial_panel = create_debug_panel();
-    gtk_window_set_child(GTK_WINDOW(window), initial_panel);
+    gtk_overlay_set_child(GTK_OVERLAY(main_overlay), initial_panel);
 
     // Add Key Press Event Controller
     GtkEventController *key_controller = gtk_event_controller_key_new();
@@ -119,15 +137,64 @@ static void activate(GtkApplication *app, gpointer user_data)
 
     // Create a GtkGestureClick and connect it to the on_click function
     GtkGesture *click = gtk_gesture_click_new();
-    g_signal_connect(click, "pressed", G_CALLBACK(on_click), window);
+    g_signal_connect(click, "pressed", G_CALLBACK(on_click), main_overlay);
     gtk_widget_add_controller(window, GTK_EVENT_CONTROLLER(click));
+
+
+    // Create Error and Info Overlays
+    builder_error_info_panel = gtk_builder_new_from_file("../designs/error-info-panels.ui");
+    if(builder_error_info_panel == NULL) {
+        g_print("Failed to load builder\n");
+    }
+
+    // Import error Box
+    box_error = gtk_builder_get_object(builder_error_info_panel, "box_error");
+    if(box_error == NULL) {
+        g_print("Failed to load debug panel\n");
+    }
+
+    // Import Info Box
+    box_info = gtk_builder_get_object(builder_error_info_panel, "box_info");
+    if(box_info == NULL) {
+        g_print("Failed to load debug panel\n");
+    }
+
+    // Remove the parent of error box if it has one
+    GtkWidget *parent_error = gtk_widget_get_parent(GTK_WIDGET(box_error));
+    if (parent_error != NULL) {
+        gtk_widget_unparent(GTK_WIDGET(box_error));
+    }
+
+    // Remove the parent of info box if it has one
+    GtkWidget *parent_info = gtk_widget_get_parent(GTK_WIDGET(box_info));
+    if (parent_info != NULL) {
+        gtk_widget_unparent(GTK_WIDGET(box_info));
+    }
+
+    info_error_type = gtk_builder_get_object(builder_error_info_panel, "info_error_type");
+    info_error_message = gtk_builder_get_object(builder_error_info_panel, "info_error_message");
+
+    info_info_type = gtk_builder_get_object(builder_error_info_panel, "info_info_type");
+    info_info_message = gtk_builder_get_object(builder_error_info_panel, "info_info_message");
+
+    // Center alignment of error and info box
+    gtk_widget_set_halign(GTK_WIDGET(box_error), GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(GTK_WIDGET(box_error), GTK_ALIGN_CENTER);
+    gtk_widget_set_halign(GTK_WIDGET(box_info), GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(GTK_WIDGET(box_info), GTK_ALIGN_END);
+
+    // Add error and info box to the main overlay
+    gtk_overlay_add_overlay(GTK_OVERLAY(main_overlay), GTK_WIDGET(box_error));
+    gtk_widget_set_visible(GTK_WIDGET(box_error), FALSE);
+
+    gtk_overlay_add_overlay(GTK_OVERLAY(main_overlay), GTK_WIDGET(box_info));
+    gtk_widget_set_visible(GTK_WIDGET(box_info), FALSE);
 
     // timer that calls the display run function every 250ms
     g_timeout_add(250, (GSourceFunc) sre_run_display, NULL);
 
-    // Replace with signal when new can messages come in?
-    // timmer that runs the can update function every 100ms
-    // g_timeout_add(250, (GSourceFunc) sre_can_update, NULL);
+    // Add the main overlay to the window
+    gtk_window_set_child(GTK_WINDOW(window), main_overlay);
 
     gtk_window_present(GTK_WINDOW(window));
 }

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkWindow">
+    <property name="child">
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkBox" id="box_error">
+            <property name="name">box_error</property>
+            <property name="width-request">350</property>
+            <property name="height-request">150</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">20</property>
+            <child>
+              <object class="GtkLabel" id="info_error_type">
+                <property name="label" translatable="1">unconfigured</property>
+                <property name="margin-top">20</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans 24"></attribute>
+                </attributes>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_error_message">
+                <property name="label" translatable="1">unconfigured</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans 24"></attribute>
+                </attributes>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="box_info">
+            <property name="name">box_info</property>
+            <property name="width-request">350</property>
+            <property name="height-request">150</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">20</property>
+            <child>
+              <object class="GtkLabel" id="info_info_type">
+                <property name="label" translatable="1">unconfigured</property>
+                <property name="margin-top">20</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans 24"></attribute>
+                </attributes>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_info_message">
+                <property name="label" translatable="1">unconfigured</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans 24"></attribute>
+                </attributes>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+</interface>

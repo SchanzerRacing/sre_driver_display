@@ -18,5 +18,4 @@ extern GObject *label_hv_power;
 extern GObject *label_car_state;
 extern GObject *label_bat_state;
 
-
 #endif

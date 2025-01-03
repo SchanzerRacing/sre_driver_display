@@ -1,22 +1,26 @@
 /*
-*  This file contains state logics functions.
-*/
+ *  This file contains state logics functions.
+ */
 #include <gtk/gtk.h>
 #include <stdio.h>
 
 #include "headers/sre_can.h"
 #include "headers/sre_logic.h"
 #include "headers/debug_panel.h"
+#include "headers/objects.h"
 
 uint8_t displayCallbackCounter = 0;
 
-SRE_State* sre_state;
+SRE_State *sre_state;
+
+char error_message[100];
+char info_message[100];
 
 void init_sre_state()
 {
     printf("init_sre_state\n");
-    sre_state = (SRE_State*) malloc(sizeof(SRE_State));
-    if(sre_state == NULL)
+    sre_state = (SRE_State *)malloc(sizeof(SRE_State));
+    if (sre_state == NULL)
     {
         printf("Failed to allocate memory for sre_state\n");
         return;
@@ -51,6 +55,9 @@ void init_sre_state()
     sre_state->r2d_ready = false;
     sre_state->r2d_active = false;
 
+    sre_state->error_show = true;
+    sre_state->info_show = true;
+
     sre_state->car_state = UNDEFINED_C;
     sre_state->bat_state = UNDEFINED_B;
     sre_state->asb_state = UNINITALIZED;
@@ -67,11 +74,11 @@ void init_sre_state()
 gboolean sre_run_display()
 {
     displayCallbackCounter = ++displayCallbackCounter % 10;
-    if(displayCallbackCounter == 9)
+    if (displayCallbackCounter == 9)
     {
-        //printf("sre_run_display\n");
+        // printf("sre_run_display\n");
     }
-    
+
     tsa_logic();
     r2d_logic();
 
@@ -105,9 +112,11 @@ void label_update()
     // printf("label_update\n");
     char buffer[100];
     sprintf(buffer, "%d", sre_state->brake_pressure_1);
+    // GTK LABEL ASSERTION IS FAILING
     gtk_label_set_text(GTK_LABEL(label_brake_pressure_1), buffer);
 
     sprintf(buffer, "%d", sre_state->brake_pressure_2);
+    // GTK LABEL ASSERTION IS FAILING
     gtk_label_set_text(GTK_LABEL(label_brake_pressure_2), buffer);
 
     sprintf(buffer, "%d", sre_state->hv_power);
@@ -118,62 +127,73 @@ void label_update()
 
     sprintf(buffer, "%s", BAT_STATE_STR[sre_state->bat_state]);
     gtk_label_set_text(GTK_LABEL(label_bat_state), buffer);
-
 }
 
 void graphical_update()
 {
     printf("graphical_update\n");
-    printf("car_state: %s\n", CAR_STATE_STR[sre_state->car_state]);
-    printf("bat_state: %s\n", BAT_STATE_STR[sre_state->bat_state]);
-    
-    if(sre_state->tsa_ready)
+
+    // printf("car_state: %s\n", CAR_STATE_STR[sre_state->car_state]);
+    // printf("bat_state: %s\n", BAT_STATE_STR[sre_state->bat_state]);
+
+    if (sre_state->tsa_ready)
     {
         gtk_widget_add_css_class(GTK_WIDGET(label_tsa), "blink");
-    } else
+    }
+    else
     {
         gtk_widget_remove_css_class(GTK_WIDGET(label_tsa), "blink");
     }
 
-    if(sre_state->r2d_ready)
+    if (sre_state->r2d_ready)
     {
         gtk_widget_add_css_class(GTK_WIDGET(label_r2d), "blink");
-    } else
+    }
+    else
     {
         gtk_widget_remove_css_class(GTK_WIDGET(label_r2d), "blink");
     }
 
-    if(sre_state->r2d_active)
+    if (sre_state->r2d_active)
     {
         gtk_widget_add_css_class(GTK_WIDGET(label_r2d), "active");
-    } else
+    }
+    else
     {
         gtk_widget_remove_css_class(GTK_WIDGET(label_r2d), "active");
     }
 
-    if(sre_state->tsa_active)
+    if (sre_state->tsa_active)
     {
         gtk_widget_add_css_class(GTK_WIDGET(label_tsa), "active");
-    } else
+    }
+    else
     {
         gtk_widget_remove_css_class(GTK_WIDGET(label_tsa), "active");
     }
+
+    gtk_widget_set_visible(GTK_WIDGET(box_error), sre_state->error_show);
+    gtk_widget_set_visible(GTK_WIDGET(box_info), sre_state->info_show);
+
+
 }
 
-void tsa_logic() 
+void tsa_logic()
 {
-    if(sre_state->car_state == WAIT_FOR_TSA_C && sre_state->bat_state == WAIT_FOR_TSA_B) 
+    if (sre_state->car_state == WAIT_FOR_TSA_C && sre_state->bat_state == WAIT_FOR_TSA_B)
     {
         sre_state->tsa_ready = 1;
-    } else 
+    }
+    else
     {
         sre_state->tsa_ready = 0;
     }
 
-    if(sre_state->bat_state == TSA) 
+    if (sre_state->bat_state == TSA)
     {
         sre_state->tsa_active = 1;
-    } else 
+    }
+    else
     {
         sre_state->tsa_active = 0;
     }
@@ -181,18 +201,20 @@ void tsa_logic()
 
 void r2d_logic()
 {
-    if(sre_state->car_state == WAIT_FOR_RTD && sre_state->bat_state == TSA) 
+    if (sre_state->car_state == WAIT_FOR_RTD && sre_state->bat_state == TSA)
     {
         sre_state->r2d_ready = 1;
-    } else 
+    }
+    else
     {
         sre_state->r2d_ready = 0;
     }
 
-    if(sre_state->car_state == DRIVE) 
+    if (sre_state->car_state == DRIVE)
     {
         sre_state->r2d_active = 1;
-    } else 
+    }
+    else
     {
         sre_state->r2d_active = 0;
     }
