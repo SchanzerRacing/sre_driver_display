@@ -100,47 +100,8 @@ static void event_key_release_cb (GtkEventControllerKey *controller, guint keyva
     }
 }
 
-static void activate(GtkApplication *app, gpointer user_data) 
+static void setup_error_info(GObject *main_overlay)
 {
-    init_sre_state();
-
-    // Load CSS
-    cssProvider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(cssProvider, "../designs/dd.css");
-
-    // Apply CSS
-    gtk_style_context_add_provider_for_display(gdk_display_get_default(),
-                                               GTK_STYLE_PROVIDER(cssProvider),
-                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-    // Create a new window
-    GtkWidget *window = gtk_application_window_new(app);
-    gtk_window_set_title(GTK_WINDOW(window), "Driver Display");
-    gtk_window_set_default_size(GTK_WINDOW(window), 800, 480);
-
-    // Create the main overlay
-    GtkWidget *main_overlay = gtk_overlay_new();
-
-    // Disallow being a target
-    gtk_widget_set_can_target(GTK_WIDGET(main_overlay), FALSE);
-    
-    // Initial panel
-    GtkWidget *initial_panel = create_debug_panel();
-    gtk_overlay_set_child(GTK_OVERLAY(main_overlay), initial_panel);
-
-    // Add Key Press Event Controller
-    GtkEventController *key_controller = gtk_event_controller_key_new();
-    g_signal_connect_object(key_controller, "key-released", 
-                            G_CALLBACK(event_key_release_cb), 
-                            window, G_CONNECT_SWAPPED);
-    gtk_widget_add_controller(window, key_controller);
-
-    // Create a GtkGestureClick and connect it to the on_click function
-    GtkGesture *click = gtk_gesture_click_new();
-    g_signal_connect(click, "pressed", G_CALLBACK(on_click), main_overlay);
-    gtk_widget_add_controller(window, GTK_EVENT_CONTROLLER(click));
-
-
     // Create Error and Info Overlays
     builder_error_info_panel = gtk_builder_new_from_file("../designs/error-info-panels.ui");
     if(builder_error_info_panel == NULL) {
@@ -189,9 +150,53 @@ static void activate(GtkApplication *app, gpointer user_data)
 
     gtk_overlay_add_overlay(GTK_OVERLAY(main_overlay), GTK_WIDGET(box_info));
     gtk_widget_set_visible(GTK_WIDGET(box_info), FALSE);
+}
+
+static void activate(GtkApplication *app, gpointer user_data) 
+{
+    init_sre_state();
+
+    // Load CSS
+    cssProvider = gtk_css_provider_new();
+    gtk_css_provider_load_from_path(cssProvider, "../designs/dd.css");
+
+    // Apply CSS
+    gtk_style_context_add_provider_for_display(gdk_display_get_default(),
+                                               GTK_STYLE_PROVIDER(cssProvider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+    // Create a new window
+    GtkWidget *window = gtk_application_window_new(app);
+    gtk_window_set_title(GTK_WINDOW(window), "Driver Display");
+    gtk_window_set_default_size(GTK_WINDOW(window), 800, 480);
+
+    // Create the main overlay
+    GtkWidget *main_overlay = gtk_overlay_new();
+
+    // Disallow being a target
+    gtk_widget_set_can_target(GTK_WIDGET(main_overlay), FALSE);
+    
+    // Initial panel
+    GtkWidget *initial_panel = create_debug_panel();
+    gtk_overlay_set_child(GTK_OVERLAY(main_overlay), initial_panel);
+
+    // Add Key Press Event Controller
+    GtkEventController *key_controller = gtk_event_controller_key_new();
+    g_signal_connect_object(key_controller, "key-released", 
+                            G_CALLBACK(event_key_release_cb), 
+                            window, G_CONNECT_SWAPPED);
+    gtk_widget_add_controller(window, key_controller);
+
+    // Create a GtkGestureClick and connect it to the on_click function
+    GtkGesture *click = gtk_gesture_click_new();
+    g_signal_connect(click, "pressed", G_CALLBACK(on_click), main_overlay);
+    gtk_widget_add_controller(window, GTK_EVENT_CONTROLLER(click));
+
+    // Setup Error and Info Panels
+    setup_error_info(G_OBJECT(main_overlay));
 
     // timer that calls the display run function every 250ms
-    g_timeout_add(250, (GSourceFunc) sre_run_display, NULL);
+    g_timeout_add(100, (GSourceFunc) sre_run_display, NULL);
 
     // Add the main overlay to the window
     gtk_window_set_child(GTK_WINDOW(window), main_overlay);
