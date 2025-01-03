@@ -16,6 +16,9 @@ void init_sre_state();
 void tsa_logic();
 void r2d_logic();
 
+void error_logic();
+void info_logic();
+
 // STRUCT
 typedef struct {
     int brake_pressure_1;

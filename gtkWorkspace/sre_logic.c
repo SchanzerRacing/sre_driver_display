@@ -9,7 +9,7 @@
 #include "headers/debug_panel.h"
 #include "headers/objects.h"
 
-uint8_t displayCallbackCounter = 0;
+uint32_t displayCallbackCounter = 0;
 
 SRE_State *sre_state;
 
@@ -55,8 +55,8 @@ void init_sre_state()
     sre_state->r2d_ready = false;
     sre_state->r2d_active = false;
 
-    sre_state->error_show = true;
-    sre_state->info_show = true;
+    sre_state->error_show = false;
+    sre_state->info_show = false;
 
     sre_state->car_state = UNDEFINED_C;
     sre_state->bat_state = UNDEFINED_B;
@@ -73,14 +73,17 @@ void init_sre_state()
 
 gboolean sre_run_display()
 {
-    displayCallbackCounter = ++displayCallbackCounter % 10;
-    if (displayCallbackCounter == 9)
+    displayCallbackCounter = ++displayCallbackCounter;
+    if ((displayCallbackCounter % 10) == 0)
     {
-        // printf("sre_run_display\n");
+        printf("sre_run_display, %d\n", displayCallbackCounter);
     }
 
     tsa_logic();
     r2d_logic();
+
+    error_logic();
+    info_logic();
 
     // Gathers all the data from the CAN messages and updates the states
     state_update();
@@ -174,8 +177,6 @@ void graphical_update()
 
     gtk_widget_set_visible(GTK_WIDGET(box_error), sre_state->error_show);
     gtk_widget_set_visible(GTK_WIDGET(box_info), sre_state->info_show);
-
-
 }
 
 void tsa_logic()
@@ -218,4 +219,14 @@ void r2d_logic()
     {
         sre_state->r2d_active = 0;
     }
+}
+
+void error_logic()
+{
+
+}
+
+void info_logic()
+{
+
 }
