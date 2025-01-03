@@ -2,7 +2,7 @@
 CC = gcc
 
 # Compiler flags
-CFLAGS = `pkg-config --cflags gtk4`
+CFLAGS = `pkg-config --cflags gtk4` -g -O0
 
 # Linker flags
 LDFLAGS = `pkg-config --libs gtk4`
@@ -15,6 +15,8 @@ OUT_DIR = build
 
 # Output executable
 OUT = $(OUT_DIR)/driver-display.out
+
+all: driver-display
 
 # New rules
 driver-display: $(OUT_DIR)/main.o $(OUT_DIR)/debug_panel.o $(OUT_DIR)/endurance_panel.o $(OUT_DIR)/parameters_panel.o $(OUT_DIR)/sre_logic.o $(OUT_DIR)/sre_can.o
