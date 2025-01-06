@@ -25,7 +25,9 @@ GtkBuilder *builder_error_info_panel = NULL;
 
 static gboolean on_click(GtkGestureClick *gesture, gint n_press, gdouble x, gdouble y, gpointer user_data);
 
+
 static void switch_panel(GtkWidget *widget, const char *panel_name) {
+    // Could be done with overlays that appear and disappear instead of switching panels if switching lag is to high
     GtkWidget *panel;
     if (g_strcmp0(panel_name, "Endurance") == 0) {
         panel = create_endurance_panel();
@@ -195,8 +197,8 @@ static void activate(GtkApplication *app, gpointer user_data)
     // Setup Error and Info Panels
     setup_error_info(G_OBJECT(main_overlay));
 
-    // timer that calls the display run function every 250ms
-    g_timeout_add(100, (GSourceFunc) sre_run_display, NULL);
+    // timer that calls the display run function every x ms
+    g_timeout_add(500, (GSourceFunc) sre_run_display, NULL);
 
     // Add the main overlay to the window
     gtk_window_set_child(GTK_WINDOW(window), main_overlay);

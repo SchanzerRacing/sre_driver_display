@@ -19,19 +19,45 @@ void r2d_logic();
 void error_logic();
 void info_logic();
 
+uint32_t get_bit_position(uint32_t value);
+
+// array of errors
+#define SHOW_ERRORS 9
+#define MAX_ERRORS 20
+
+
+typedef struct {
+    uint32_t seen_cycles; // time the Error has been shown for in cycles of sre_run_display
+    uint16_t show_for_cycles; // number of cycles the error needs to be shown for (depending on criticallity)
+    uint16_t dismissed; // if the error has been dismissed -- 16 bit for padding to chars
+
+    char error_type[128];
+    char error_message[128];
+
+    uint64_t err_padding; // padding
+} SRE_error;
+
+extern SRE_error errors[MAX_ERRORS];
+
+// TODO: Refactor this to single structs (switches, states, powers, Errors etc)
 // STRUCT
 typedef struct {
+
+    // Pressures
     int brake_pressure_1;
     int brake_pressure_2;
 
     int asb_pressure_1;
     int asb_pressure_2;
 
+    // Power measurement
     int sdc_power;
     int lv_power;
     int hv_power;
     int epos_power;
 
+
+    // Switch States
     bool acu_switch;
     bool asb_switch;
     bool dash_switch;
@@ -45,6 +71,19 @@ typedef struct {
     bool pumps_switch;
     bool sensors_switch;
 
+    // States
+    uint8_t car_state;
+    uint16_t bat_state;
+    uint8_t as_state;
+    uint8_t ami_state;
+    uint8_t asb_state;
+    uint8_t sbs_state;
+    uint8_t ebs_state;
+    uint8_t asb_checkup_complete;
+    uint8_t asb_check_sequence;
+    uint16_t asb_trigger_cause;
+
+    // Graphical 
     bool tsa_ready;
     bool tsa_active;
 
@@ -54,15 +93,6 @@ typedef struct {
     bool error_show;
     bool info_show;
 
-    uint8_t car_state;
-    uint8_t bat_state;
-    uint8_t asb_state;
-    uint8_t ami_state;
-    uint8_t as_state;
-    uint8_t sbs_state;
-    uint8_t ebs_state;
-    uint8_t asb_check_sequence;
-    uint8_t asb_trigger_cause;
 } SRE_State;
 
 extern SRE_State* sre_state;

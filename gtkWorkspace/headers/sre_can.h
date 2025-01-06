@@ -1,6 +1,7 @@
 #ifndef SRE_CAN_H
 #define SRE_CAN_H
 
+#include "sre_dbc.h"
 
 #include <gtk/gtk.h>
 
@@ -29,7 +30,14 @@ extern union LOG_BrakePressures_UNION LOG_BrakePressures;
 extern union DV_System_Status_UNION DV_System_Status;
 extern union LOG_LEM_UNION LOG_LEM;
 extern union GW_Battery_Status_UNION GW_Battery_Status;
+extern union DV_ASB_Pressure_UNION DV_ASB_Pressure;
+extern union DV_ASB_Status_UNION DV_ASB_Status;
+extern union DV_AMI_Status_UNION DV_AMI_Status;
 
+// Safety Messages
+extern union SAF_AIN_F1_Status_UNION SAF_AIN_F1_Status;
+enum SAF_AIN_F1_Status_ERRORS {SCS_ERROR, Throttle_Lower_ERROR, Throttle_Upper_ERROR, Throttle_Differential_ERROR, Brake_ERROR, GEN_SCS};
+static const char* SAF_AIN_F1_Status_ERRORS_STR[] = {"SCS Error", "Throttle Lower Error", "Throttle Upper Error", "Throttle Differential Error", "Brake Error", "GEN SCS"};
 
 // CAN Mapping
 typedef struct {
@@ -40,125 +48,4 @@ typedef struct {
 
 #define NUM_MAPPINGS (sizeof(can_mappings) / sizeof(can_mappings[0]))
 
-
-// ----------------------------- HSC_Vehicle_Status ----------------------------
-
-#define HSC_VEHICLE_STATUS_ID 0x103
-#define HSC_VEHICLE_STATUS_DLC 8        
- // Number of Bytes
-union HSC_Vehicle_Status_UNION
-{
-    uint64_t data;
-    struct
-    {
-        uint64_t State :3;
-        uint64_t IMD_ERROR :1;
-        uint64_t AMS_ERROR :1;
-        uint64_t GEN_SCS :3;
-        uint64_t Velocity :8;
-        uint64_t reserved :48;
-    };
-};
-
-// ----------------------------- HSC_DriverInput ----------------------------
-
-#define HSC_DRIVERINPUT_ID 0x104
-#define HSC_DRIVERINPUT_DLC 3         // Number of Bytes
-
-union HSC_DriverInput_UNION
-{
-    uint64_t data;
-    struct
-    {
-        uint64_t Throttle :16;
-        uint64_t Brake_Pressed :1;
-        uint64_t Throttle_Valid :1;
-        uint64_t Brake_Valid :1;
-        uint64_t reserved :2;
-        uint64_t GEN_SCS :3;
-    };
-};
-
-// -------------------------------- HSC_Steering -------------------------------
-
-#define HSC_STEERING_ID 0x105
-#define HSC_STEERING_DLC 4
-
-union HSC_Steering_UNION
-{
-    uint64_t data;
-    struct
-    {
-        int64_t SteeringWheel_Angle :12;
-        int64_t Steering_Angle :12;
-        uint64_t Angle_Valid :1;
-        uint64_t GEN_SCS :3;
-        uint64_t reserved :4;
-    };
-};
-
-// ----------------------------- LOG_BrakePressures ----------------------------
-
-#define LOG_BRAKEPRESSURES_ID 0x515
-#define LOG_BRAKEPRESSURES_DLC 3         // Number of Bytes
-
-union LOG_BrakePressures_UNION
-{
-    uint64_t data;
-    struct
-    {
-        uint64_t Front :12;
-        uint64_t Rear :12;
-    };
-};
-
-// -------------------------------- DV_System_Status-------------------------------
-
-#define DV_SYSTEM_STATUS_ID 0x502
-#define DV_SYSTEM_STATUS_DLC 5          // Number of Bytes
-
-union DV_System_Status_UNION
-{
-    uint64_t data;
-    struct
-    {
-        uint64_t AS_State :3;
-        uint64_t EBS_State :2;
-        uint64_t AMI_State :3;
-        uint64_t SteeringState :1;
-        uint64_t ServiceBrakeState :2;
-        uint64_t LapCounter :4;
-        uint64_t ConesCount_Actual :8;
-        uint64_t ConesCount_ALL :17;
-    };
-};
-
-// -------------------------------- LOG_LEM --------------------------------
-
-#define LOG_LEM_ID 0x786
-#define LOG_LEM_DLC 2           // Number of Bytes
-
-union LOG_LEM_UNION
-{
-    uint64_t data;
-    struct
-    {
-        uint64_t LV_current :16;
-    };
-};
-
-// ---------------------- GW_Battery_Status ----------------------------
-#define GW_BATTERY_STATUS_ID 0x385
-#define GW_BATTERY_STATUS_DLC 4
-
-union GW_Battery_Status_UNION
-{
-    uint64_t data;
-    struct
-    {
-        uint64_t Power:14;
-        uint64_t SOC_Internal:14;
-        uint64_t State:4;
-    };
-};
 #endif // SRE_CAN_H

@@ -13,6 +13,9 @@ union LOG_BrakePressures_UNION LOG_BrakePressures;
 union DV_System_Status_UNION DV_System_Status;
 union LOG_LEM_UNION LOG_LEM;
 union GW_Battery_Status_UNION GW_Battery_Status;
+union DV_ASB_Pressure_UNION DV_ASB_Pressure;
+union DV_ASB_Status_UNION DV_ASB_Status;
+union DV_AMI_Status_UNION DV_AMI_Status;
 
 can_mapping_t can_mappings[] = {
     {HSC_VEHICLE_STATUS_ID, &HSC_Vehicle_Status, sizeof(HSC_Vehicle_Status)},
@@ -21,7 +24,11 @@ can_mapping_t can_mappings[] = {
     {LOG_BRAKEPRESSURES_ID, &LOG_BrakePressures, sizeof(LOG_BrakePressures)},
     {DV_SYSTEM_STATUS_ID, &DV_System_Status, sizeof(DV_System_Status)},
     {LOG_LEM_ID, &LOG_LEM, sizeof(LOG_LEM)},
-    {GW_BATTERY_STATUS_ID, &GW_Battery_Status, sizeof(GW_Battery_Status)}
+    {GW_BATTERY_STATUS_ID, &GW_Battery_Status, sizeof(GW_Battery_Status)},
+    {DV_ASB_PRESSURE_ID, &DV_ASB_Pressure, sizeof(DV_ASB_Pressure)},
+    {DV_ASB_STATUS_ID, &DV_ASB_Status, sizeof(DV_ASB_Status)},
+    {DV_AMI_STATUS_ID, &DV_AMI_Status, sizeof(DV_AMI_Status)},
+    {SAF_AIN_F1_STATUS_ID, &SAF_AIN_F1_Status, sizeof(SAF_AIN_F1_Status)}
 };
 
 void can_loop() {

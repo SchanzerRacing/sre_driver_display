@@ -104,32 +104,74 @@ void state_update()
     sre_state->brake_pressure_1 = LOG_BrakePressures.Front;
     sre_state->brake_pressure_2 = LOG_BrakePressures.Rear;
 
+    sre_state->asb_pressure_1 = DV_ASB_Pressure.Pressure1;
+    sre_state->asb_pressure_2 = DV_ASB_Pressure.Pressure2;
+
+    sre_state->sdc_power = 0; // Does not exist yet
+    sre_state->lv_power = 0; // Does not exist yet
+    sre_state->hv_power = GW_Battery_Status.Power;
+    sre_state->epos_power =  0; // Does not exist yet
+
+    // Switches do not exist yet
+
     sre_state->car_state = HSC_Vehicle_Status.State;
     sre_state->bat_state = GW_Battery_Status.State;
-
-    sre_state->hv_power = GW_Battery_Status.Power;
+    sre_state->as_state = DV_System_Status.AS_State;
+    sre_state->ami_state = DV_AMI_Status.State;
+    sre_state->asb_state = DV_ASB_Status.State;
+    sre_state->sbs_state = DV_ASB_Status.ServiceBrakeState;
+    sre_state->ebs_state = DV_ASB_Status.EBS_State;
+    sre_state->asb_checkup_complete = DV_ASB_Status.CheckupComplete;
+    sre_state->asb_check_sequence = DV_ASB_Status.CheckSequence;
+    sre_state->asb_trigger_cause = DV_ASB_Status.TriggerCause;
 }
 
 void label_update()
 {
+    // PRESSURES
+
     // printf("label_update\n");
     char buffer[100];
     sprintf(buffer, "%d", sre_state->brake_pressure_1);
-    // GTK LABEL ASSERTION IS FAILING
     gtk_label_set_text(GTK_LABEL(label_brake_pressure_1), buffer);
-
     sprintf(buffer, "%d", sre_state->brake_pressure_2);
-    // GTK LABEL ASSERTION IS FAILING
     gtk_label_set_text(GTK_LABEL(label_brake_pressure_2), buffer);
 
+    sprintf(buffer, "%d", sre_state->asb_pressure_1);
+    gtk_label_set_text(GTK_LABEL(label_asb_pressure_1), buffer);
+    sprintf(buffer, "%d", sre_state->asb_pressure_2);
+    gtk_label_set_text(GTK_LABEL(label_asb_pressure_2), buffer);
+
+    // POWER MEASUREMENT
+    sprintf(buffer, "%d", sre_state->sdc_power);
+    gtk_label_set_text(GTK_LABEL(label_sdc_power), buffer);
+    sprintf(buffer, "%d", sre_state->lv_power);
+    gtk_label_set_text(GTK_LABEL(label_lv_power), buffer);
     sprintf(buffer, "%d", sre_state->hv_power);
     gtk_label_set_text(GTK_LABEL(label_hv_power), buffer);
+    sprintf(buffer, "%d", sre_state->epos_power);
+    gtk_label_set_text(GTK_LABEL(label_epos_power), buffer);
 
+
+
+    // STATES
     sprintf(buffer, "%s", CAR_STATE_STR[sre_state->car_state]);
     gtk_label_set_text(GTK_LABEL(label_car_state), buffer);
 
     sprintf(buffer, "%s", BAT_STATE_STR[sre_state->bat_state]);
     gtk_label_set_text(GTK_LABEL(label_bat_state), buffer);
+
+    sprintf(buffer, "%s", AS_STATE_STR[sre_state->as_state]);
+    gtk_label_set_text(GTK_LABEL(label_as_state), buffer);
+
+    sprintf(buffer, "%s", ASB_STATE_STR[sre_state->asb_state]);
+    gtk_label_set_text(GTK_LABEL(label_asb_state), buffer);
+
+    sprintf(buffer, "%d", sre_state->asb_check_sequence);
+    gtk_label_set_text(GTK_LABEL(label_asb_check_sequence), buffer);
+
+    sprintf(buffer, "%d", sre_state->asb_trigger_cause);
+    gtk_label_set_text(GTK_LABEL(label_asb_trigger_cause), buffer);
 }
 
 void graphical_update()
@@ -175,6 +217,8 @@ void graphical_update()
         gtk_widget_remove_css_class(GTK_WIDGET(label_tsa), "active");
     }
 
+    printf("error_show: %d\n", sre_state->error_show);
+    printf("info_show: %d\n", sre_state->info_show);
     gtk_widget_set_visible(GTK_WIDGET(box_error), sre_state->error_show);
     gtk_widget_set_visible(GTK_WIDGET(box_info), sre_state->info_show);
 }
@@ -223,10 +267,84 @@ void r2d_logic()
 
 void error_logic()
 {
+    if(sre_state->car_state == SCS_ERROR)
+    {
+        sre_state->error_show = 1;
 
+        // malloc the error struct
+        SRE_error *scs_error = malloc(sizeof(SRE_error));
+        if(scs_error != NULL)
+        {
+            strcpy(scs_error->error_type, CAR_STATE_STR[sre_state->car_state]);
+            strcpy(scs_error->error_message, "");
+        }
+    }
+
+    if(sre_state->bat_state == SDC_OPEN || sre_state->bat_state == ISO_ERROR 
+    || sre_state->bat_state == BMS_ERROR || sre_state->bat_state == IMD_ERROR
+    || sre_state->bat_state == BAT_ERROR)
+    {
+        sre_state->error_show = 1; //(sre_state->car_state >= RTD_OFF);
+
+        // malloc the error struct
+        SRE_error *bat_error = malloc(sizeof(SRE_error));
+        if(bat_error != NULL)
+        {
+            strcpy(bat_error->error_type, BAT_STATE_STR[sre_state->bat_state]);
+            strcpy(bat_error->error_message, "");
+        }
+    }
+
+    if(sre_state->asb_state == EBS_TRIGGERED)
+    {
+        sre_state->error_show = 1;
+
+        // malloc the error struct
+        SRE_error *asb_error = malloc(sizeof(SRE_error));
+        if(asb_error != NULL)
+        {
+            strcpy(asb_error->error_type, ASB_STATE_STR[sre_state->asb_state]);
+            strcpy(asb_error->error_message, "");
+        }
+    }
+
+    if((sre_state->asb_checkup_complete == 0) && (sre_state->asb_trigger_cause != 0))
+    {
+        sre_state->error_show = 1;
+
+        // malloc the error struct
+        SRE_error *asb_error = malloc(sizeof(SRE_error));
+        if(asb_error != NULL)
+        {
+            strcpy(asb_error->error_type, ASB_TRIGGER_CAUSE_STR[sre_state->asb_trigger_cause]);
+            strcpy(asb_error->error_message, "");
+        }
+    }
+
+    if(SAF_AIN_F1_Status.data & 0x1F)
+    {
+        // malloc the error struct
+        SRE_error *ain_error = malloc(sizeof(SRE_error));
+        
+        if(ain_error != NULL)
+        {
+            strcpy(ain_error->error_type, SAF_AIN_F1_Status_ERRORS_STR[get_bit_position(SAF_AIN_F1_Status.data)]);
+            strcpy(ain_error->error_message, "");
+        }
+    }
 }
 
 void info_logic()
 {
 
+}
+
+// returns the position of the first bit that is 1
+uint32_t get_bit_position(uint32_t value) {
+    for (int i = 0; i < 8; i++) {
+        if (value & (1 << i)) {
+            return i;
+        }
+    }
+    return 0; // Return -1 if no bit is set
 }
