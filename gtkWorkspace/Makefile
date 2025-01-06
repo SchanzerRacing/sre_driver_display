@@ -16,7 +16,7 @@ OUT_DIR = build
 # Output executable
 OUT = $(OUT_DIR)/driver-display.out
 
-all: driver-display
+.PHONY: all rebuild clean
 
 # New rules
 driver-display: $(OUT_DIR)/main.o $(OUT_DIR)/debug_panel.o $(OUT_DIR)/endurance_panel.o $(OUT_DIR)/parameters_panel.o $(OUT_DIR)/sre_logic.o $(OUT_DIR)/sre_can.o
@@ -39,6 +39,12 @@ $(OUT_DIR)/sre_logic.o: sre_logic.c
 
 $(OUT_DIR)/sre_can.o: sre_can.c
 	$(CC) $(CFLAGS) -c sre_can.c -o $(OUT_DIR)/sre_can.o
+
+
+all: rebuild
+
+rebuild: clean
+	$(MAKE) -B driver-display
 
 clean:
 	rm -f $(OUT_DIR)/*.o $(OUT)
