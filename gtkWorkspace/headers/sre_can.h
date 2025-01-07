@@ -33,10 +33,10 @@ extern union GW_Battery_Status_UNION GW_Battery_Status;
 extern union DV_ASB_Pressure_UNION DV_ASB_Pressure;
 extern union DV_ASB_Status_UNION DV_ASB_Status;
 extern union DV_AMI_Status_UNION DV_AMI_Status;
+extern union SAF_AIN_F1_Status_UNION SAF_AIN_F1_Status;
 
 // Safety Messages
-extern union SAF_AIN_F1_Status_UNION SAF_AIN_F1_Status;
-enum SAF_AIN_F1_Status_ERRORS {SCS_ERROR, Throttle_Lower_ERROR, Throttle_Upper_ERROR, Throttle_Differential_ERROR, Brake_ERROR, GEN_SCS};
+enum SAF_AIN_F1_Status_ERRORS {SCS_ERROR_AIN, Throttle_Lower_ERROR, Throttle_Upper_ERROR, Throttle_Differential_ERROR, Brake_ERROR, GEN_SCS};
 static const char* SAF_AIN_F1_Status_ERRORS_STR[] = {"SCS Error", "Throttle Lower Error", "Throttle Upper Error", "Throttle Differential Error", "Brake Error", "GEN SCS"};
 
 // CAN Mapping

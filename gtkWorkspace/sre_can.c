@@ -16,6 +16,7 @@ union GW_Battery_Status_UNION GW_Battery_Status;
 union DV_ASB_Pressure_UNION DV_ASB_Pressure;
 union DV_ASB_Status_UNION DV_ASB_Status;
 union DV_AMI_Status_UNION DV_AMI_Status;
+union SAF_AIN_F1_Status_UNION SAF_AIN_F1_Status;
 
 can_mapping_t can_mappings[] = {
     {HSC_VEHICLE_STATUS_ID, &HSC_Vehicle_Status, sizeof(HSC_Vehicle_Status)},
