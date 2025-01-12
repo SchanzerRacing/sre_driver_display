@@ -156,7 +156,7 @@ static void setup_error_info(GObject *main_overlay)
 
 static void activate(GtkApplication *app, gpointer user_data) 
 {
-    init_sre_state();
+    init_sre_logic();
 
     // Load CSS
     cssProvider = gtk_css_provider_new();

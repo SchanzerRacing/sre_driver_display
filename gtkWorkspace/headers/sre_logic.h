@@ -5,39 +5,145 @@
 #include <stdbool.h>
 
 // Functions
-
 gboolean sre_run_display();
 void graphical_update();
 void label_update();
 void state_update();
 
-void init_sre_state();
+void init_sre_logic();
 
 void tsa_logic();
 void r2d_logic();
 
-void error_logic();
+
+
+/* ---- VEHICLE INFO MANAGEMENT --- */
+
 void info_logic();
 
+/// @brief calculates and returns the position of the first bit that is 1
+/// @param value variable to be checked
+/// @return position of the first bit that is 1
 uint32_t get_bit_position(uint32_t value);
+
+/* -------- VEHICLE ERROR MANAGEMENT ------------ */
 
 // array of errors
 #define SHOW_ERRORS 9
-#define MAX_ERRORS 20
+#define MAX_ERRORS 32
 
-
+// Error struct that contains information about the Error
 typedef struct {
-    uint32_t seen_cycles; // time the Error has been shown for in cycles of sre_run_display
-    uint16_t show_for_cycles; // number of cycles the error needs to be shown for (depending on criticallity)
-    uint16_t dismissed; // if the error has been dismissed -- 16 bit for padding to chars
+    uint64_t last_seen;      // timestamp of last seen in s
 
-    char error_type[128];
-    char error_message[128];
+    uint16_t error_type;      // General Error Type
+    uint16_t sub_error_type;  // Specific Error Type
 
-    uint64_t err_padding; // padding
+    uint8_t dismissed;        // State of dismissal
 } SRE_error;
 
-extern SRE_error errors[MAX_ERRORS];
+void error_logic();
+
+/// @brief create an sre_error object and returns a pointer to it
+/// @param error_type general error type
+/// @param sub_error_type specific error type
+/// @return pointer to the sre_error object
+SRE_error* create_sre_error(uint16_t error_type, uint16_t sub_error_type);
+
+/// @brief Adds the error to the vehicle_errors array
+/// @param error error to be added
+void add_error(SRE_error* error);
+
+/// @brief removes and frees error in vehicle_array on specific position
+/// @param index position of the error in vehicle_array
+void remove_error(uint16_t index);
+
+/// @brief checks if an error exists in the vehicle_error array and returns result
+/// @param error_type general error type
+/// @param sub_error_type specific error type
+/// @return returns pointer to the error if it exists, NULL if it does not
+SRE_error* check_if_error_exists(uint16_t error_type, uint16_t sub_error_type);
+
+/// @brief frees all errors in the vehicle_error array
+void free_all_errors();
+
+// array of SRE_error
+extern SRE_error* vehicle_errors[MAX_ERRORS];
+
+enum ERROR_TYPES 
+{
+    UNDEFINED_ERROR = 0,
+    VCU,
+    ERR_SDC_OPEN,
+    BAT_ERR,
+    ASB_ERROR,
+    SCS_ZOCO_FRONT,
+    SCS_ZOCO_REAR,
+    SCS_ZOCO_LEFT,
+    SCS_ZOCO_RIGHT,
+    SCS_FUSEBOARD,
+    SCS_DIO_AS,
+    SCS_DIO_DASH,
+    SCS_AIN_F1,
+};
+
+enum VCU_ERROR_TYPES
+{
+    VCU_UNDEFINED,
+    VCU_SCS,
+    VCU_MSG_ERR,
+};
+
+enum SDC_ERROR_TYPES
+{
+    SDC_UNDEFINED,
+    SDC_RES,
+    SDC_FR,
+    SDC_ASB,
+    SDC_BSPD,
+    SDC_BOTS,
+    SDC_FL,
+    SDC_DASH,
+    SDC_INERTIA,
+    SDC_RL,
+    SDC_TSAL,
+    SDC_RR,
+    SDC_HVD,
+    SDC_TS_CONNECTOR,
+    SDC_TSMS,
+};
+
+enum BAT_ERROR_TYPES
+{
+    BAT_UNDEFINED,
+    BAT_SDC_OPEN = 3,
+    BAT_ISO = 7,
+    BAT_BMS = 8,
+    BAT_IMD = 9,
+    BAT_GENERAL = 10,
+};
+
+enum ASB_ERROR_TYPES
+{
+    ASB_UNDEFINED,
+    ASB_WATCHDOG_ERROR,
+    ASB_ASB_P_INVALID,
+    ASB_BP_INVALID,
+    ASB_EBS1_LOW,
+    ASB_EBS2_LOW,
+    ASB_ASB_P_LOW,
+    ASB_CAN,
+    ASB_EBS_TRIGGERED_BY_AS,
+    ASB_RES_SDC,
+    ASB_SDC,
+    ASB_MECH_STUCK,
+    ASB_ASMS_TURNED_OFF,
+    ASB_EBS_TRIGGERED,
+};
+
+
+
+/* ---------- STATE MANAGEMENT ------------------- */
 
 // TODO: Refactor this to single structs (switches, states, powers, Errors etc)
 // STRUCT
@@ -114,8 +220,8 @@ static const char* ASB_STATE_STR[] = {"Uninitialized", "MV Check", "Passive", "D
 enum AMI_STATE {MANUAL, ACCEL, SKIDPAD, TRACKDRIVE, BRAKETEST, INSPECTION, AUTOX};
 static const char* AMI_STATE_STR[] = {"Manual", "Accel", "Skidpad", "Trackdrive", "Braketest", "Inspection", "Autox"};
 
-enum AS_STATE {OFF = 1, READY = 2, DRIVING = 3, EMERGENCY_BRAKE = 4, FINISH = 5};
-static const char* AS_STATE_STR[] = {"Off", "Ready", "Driving", "Emergency Brake", "Finish"};
+enum AS_STATE {OFF = 1, READY = 2, DRIVING = 3, EMERGENCY = 4, FINISH = 5};
+static const char* AS_STATE_STR[] = {"Off", "Ready", "Driving", "Emergency", "Finish"};
 
 enum SERVICE_BRAKE_STATE {DISENGAGED = 1, ENGAGED = 2, AVAILABLE = 3};
 static const char* SERVICE_BRAKE_STATE_STR[] = {"Disengaged", "Engaged", "Available"};

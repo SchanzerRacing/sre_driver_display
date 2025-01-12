@@ -53,7 +53,7 @@ uint8_t read_and_match()
         return 0;
     }
 
-        // Find the corresponding union for the CAN ID
+    // Find the corresponding union for the CAN ID
     for (size_t i = 0; i < NUM_MAPPINGS; i++) {
         if (can_mappings[i].can_id == frame.can_id) {
             // Update the union with the CAN frame data

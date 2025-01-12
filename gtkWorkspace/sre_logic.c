@@ -3,6 +3,7 @@
  */
 #include <gtk/gtk.h>
 #include <stdio.h>
+#include <time.h>
 
 #include "headers/sre_can.h"
 #include "headers/sre_logic.h"
@@ -12,12 +13,11 @@
 uint32_t displayCallbackCounter = 0;
 
 SRE_State *sre_state;
+SRE_error* vehicle_errors[MAX_ERRORS] = {NULL};
 
-char error_message[100];
-char info_message[100];
-
-void init_sre_state()
+void init_sre_logic()
 {
+    // INITIALIZE SRE_STATE
     printf("init_sre_state\n");
     sre_state = (SRE_State *)malloc(sizeof(SRE_State));
     if (sre_state == NULL)
@@ -55,8 +55,8 @@ void init_sre_state()
     sre_state->r2d_ready = false;
     sre_state->r2d_active = false;
 
-    sre_state->error_show = false;
-    sre_state->info_show = false;
+    sre_state->error_show = true;
+    sre_state->info_show = true;
 
     sre_state->car_state = UNDEFINED_C;
     sre_state->bat_state = UNDEFINED_B;
@@ -265,18 +265,20 @@ void r2d_logic()
     }
 }
 
+/* --- VEHICLE ERROR MANAGMENT --- */
+
 void error_logic()
 {
     if(sre_state->car_state == SCS_ERROR)
     {
-        sre_state->error_show = 1;
-
-        // malloc the error struct
-        SRE_error *scs_error = malloc(sizeof(SRE_error));
-        if(scs_error != NULL)
+        SRE_error *buff_error = check_if_error_exists(VCU, VCU_SCS);
+        if(buff_error == NULL)
         {
-            strcpy(scs_error->error_type, CAR_STATE_STR[sre_state->car_state]);
-            strcpy(scs_error->error_message, "");
+            SRE_error *new_buff_error = create_sre_error(VCU, VCU_SCS);
+            add_error(new_buff_error);
+        } else 
+        {
+            buff_error->last_seen = (uint64_t)time(NULL);
         }
     }
 
@@ -284,55 +286,107 @@ void error_logic()
     || sre_state->bat_state == BMS_ERROR || sre_state->bat_state == IMD_ERROR
     || sre_state->bat_state == BAT_ERROR)
     {
-        sre_state->error_show = 1; //(sre_state->car_state >= RTD_OFF);
-
-        // malloc the error struct
-        SRE_error *bat_error = malloc(sizeof(SRE_error));
-        if(bat_error != NULL)
+        SRE_error *buff_error = check_if_error_exists(BAT_ERR, sre_state->bat_state);
+        if(buff_error == NULL)
         {
-            strcpy(bat_error->error_type, BAT_STATE_STR[sre_state->bat_state]);
-            strcpy(bat_error->error_message, "");
+            SRE_error *new_buff_error = create_sre_error(BAT_ERR, sre_state->bat_state);
+            add_error(new_buff_error);
+        } else 
+        {
+            buff_error->last_seen = (uint64_t)time(NULL);
         }
     }
 
-    if(sre_state->asb_state == EBS_TRIGGERED)
+    if(sre_state->asb_state == EBS_TRIGGERED && sre_state->asb_trigger_cause == 0)
     {
-        sre_state->error_show = 1;
-
-        // malloc the error struct
-        SRE_error *asb_error = malloc(sizeof(SRE_error));
-        if(asb_error != NULL)
+        SRE_error *buff_error = check_if_error_exists(ASB_ERROR, ASB_EBS_TRIGGERED);
+        if(buff_error == NULL)
         {
-            strcpy(asb_error->error_type, ASB_STATE_STR[sre_state->asb_state]);
-            strcpy(asb_error->error_message, "");
+            SRE_error *new_buff_error = create_sre_error(ASB_ERROR, ASB_EBS_TRIGGERED);
+            add_error(new_buff_error);
+        } else 
+        {
+            buff_error->last_seen = (uint64_t)time(NULL);
         }
     }
 
-    if((sre_state->asb_checkup_complete == 0) && (sre_state->asb_trigger_cause != 0))
+    if((sre_state->asb_state == EBS_TRIGGERED) && (sre_state->asb_trigger_cause != 0))
     {
-        sre_state->error_show = 1;
-
-        // malloc the error struct
-        SRE_error *asb_error = malloc(sizeof(SRE_error));
-        if(asb_error != NULL)
+        SRE_error *buff_error = check_if_error_exists(ASB_ERROR, sre_state->asb_trigger_cause);
+        if(buff_error == NULL)
         {
-            strcpy(asb_error->error_type, ASB_TRIGGER_CAUSE_STR[sre_state->asb_trigger_cause]);
-            strcpy(asb_error->error_message, "");
+            SRE_error *new_buff_error = create_sre_error(ASB_ERROR, sre_state->asb_trigger_cause);
+            add_error(new_buff_error);
+        } else 
+        {
+            buff_error->last_seen = (uint64_t)time(NULL);
         }
     }
 
     if(SAF_AIN_F1_Status.data & 0x1F)
     {
-        // malloc the error struct
-        SRE_error *ain_error = malloc(sizeof(SRE_error));
-        
-        if(ain_error != NULL)
-        {
-            strcpy(ain_error->error_type, SAF_AIN_F1_Status_ERRORS_STR[get_bit_position(SAF_AIN_F1_Status.data)]);
-            strcpy(ain_error->error_message, "");
-        }
+        // for(int i = 0; i < 5; i++)
+        // {
+        //     if(SAF_AIN_F1_Status.data & (1 << i))
+        //     {
+        //         SRE_error *buff_error = check_if_error_exists(SCS_ZOCO_FRONT, i);
+        //         if(buff_error == NULL)
+        //         {
+        //             SRE_error *new_buff_error = create_sre_error(SCS_ZOCO_FRONT, i);
+        //             add_error(new_buff_error);
+        //         } else 
+        //         {
+        //             buff_error->last_seen = (uint64_t)time(NULL);
+        //         }
+        //     }
+        // }
     }
 }
+
+SRE_error* create_sre_error(uint16_t error_type, uint16_t sub_error_type)
+{
+    SRE_error* new_error = (SRE_error*)malloc(sizeof(SRE_error));
+    if (!new_error) {
+        fprintf(stderr, "Memory allocation failed.\n");
+        return NULL;
+    }
+    new_error->last_seen = (uint64_t)time(NULL);
+    new_error->error_type = error_type;
+    new_error->sub_error_type = sub_error_type;
+    new_error->dismissed = 0;
+
+    return new_error;
+}
+
+void add_error(SRE_error* error) {
+    for (int i = 0; i < MAX_ERRORS; ++i) {
+        if (vehicle_errors[i] == NULL) {
+            vehicle_errors[i] = error;
+            return;
+        }
+    }
+    fprintf(stderr, "Error list full, cannot add new error.\n");
+}
+
+void remove_error(uint16_t index) {
+    if (index >= MAX_ERRORS || vehicle_errors[index] == NULL) {
+        fprintf(stderr, "Invalid index for error removal.\n");
+        return;
+    }
+    free(vehicle_errors[index]);
+    vehicle_errors[index] = NULL;
+}
+
+SRE_error* check_if_error_exists(uint16_t error_type, uint16_t sub_error_type) {
+    for (int i = 0; i < MAX_ERRORS; i++) {
+        if (vehicle_errors[i] != NULL && vehicle_errors[i]->error_type == error_type && vehicle_errors[i]->sub_error_type == sub_error_type) {
+            return vehicle_errors[i];
+        }
+    }
+    return NULL;
+}
+
+/* ---- VEHICLE INFO MANAGEMENT ---*/
 
 void info_logic()
 {
