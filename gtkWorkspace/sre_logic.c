@@ -192,7 +192,7 @@ void error_label_update()
                 ERROR_SUB_TYPE_MAP[vehicle_errors[i]->error_type] != NULL &&
                 vehicle_errors[i]->sub_error_type < ERROR_SUB_TYPE_COUNT) // avoid out of bounds
             {
-                printf("error_type: %d, sub_error_type: %d\n", vehicle_errors[i]->error_type, vehicle_errors[i]->sub_error_type);
+                printf("error_type: %d, sub_error_type: %d, time_elapsed: %ld\n", vehicle_errors[i]->error_type, vehicle_errors[i]->sub_error_type,(vehicle_errors[i]->last_seen - (uint64_t)time(NULL)));
                 sub_error_str = ERROR_SUB_TYPE_MAP[vehicle_errors[i]->error_type][vehicle_errors[i]->sub_error_type];
             }
             sprintf(buffer, "%s", error_type_str);
@@ -243,28 +243,38 @@ void error_panel_update()
     // cycle error messages
     if(error_count > 0)
     {
-        // Find first error that is not NULL
-        for(int i = 0; i < MAX_ERRORS; i++)
+        static uint8_t cur_err_ind = 0;
+        static uint64_t time_since_last_change = 0;
+
+        if((uint64_t)time(NULL) - time_since_last_change >= ERROR_PANEL_UPDATE_INT)
         {
-            if(vehicle_errors[i] != NULL)
+            // Find next error that is not NULL
+            for (int i = 0; i < MAX_ERRORS; i++) 
             {
-                char buffer[100];
-                const char* error_type_str = ERROR_TYPES_STR[vehicle_errors[i]->error_type];
-                const char* sub_error_str = "N/A"; // default if no subtype exists
-                if(vehicle_errors[i]->error_type < ERROR_TYPE_COUNT && 
-                    ERROR_SUB_TYPE_MAP[vehicle_errors[i]->error_type] != NULL &&
-                    vehicle_errors[i]->sub_error_type < ERROR_SUB_TYPE_COUNT) // avoid out of bounds
+                cur_err_ind = (cur_err_ind + 1) % MAX_ERRORS;
+                if (vehicle_errors[cur_err_ind] != NULL 
+                    && vehicle_errors[cur_err_ind]->dismissed == 0) 
                 {
-                    sub_error_str = ERROR_SUB_TYPE_MAP[vehicle_errors[i]->error_type][vehicle_errors[i]->sub_error_type];
+                    char buffer[100];
+                    const char* error_type_str = ERROR_TYPES_STR[vehicle_errors[cur_err_ind]->error_type];
+                    const char* sub_error_str = "N/A"; // default if no subtype exists
+                    if (vehicle_errors[cur_err_ind]->error_type < ERROR_TYPE_COUNT && 
+                        ERROR_SUB_TYPE_MAP[vehicle_errors[cur_err_ind]->error_type] != NULL &&
+                        vehicle_errors[cur_err_ind]->sub_error_type < ERROR_SUB_TYPE_COUNT) // avoid out of bounds
+                    {
+                        sub_error_str = ERROR_SUB_TYPE_MAP[vehicle_errors[cur_err_ind]->error_type][vehicle_errors[cur_err_ind]->sub_error_type];
+                    }
+                    sprintf(buffer, "%s", error_type_str);
+                    gtk_label_set_text(GTK_LABEL(info_error_type), buffer);
+                    sprintf(buffer, "%s", sub_error_str);
+                    gtk_label_set_text(GTK_LABEL(info_error_message), buffer);
+                    break;
                 }
-                sprintf(buffer, "%s", error_type_str);
-                gtk_label_set_text(GTK_LABEL(info_error_type), buffer);
-                sprintf(buffer, "%s", sub_error_str);
-                gtk_label_set_text(GTK_LABEL(info_error_message), buffer);
-                break;
             }
+            // update last update time
+            time_since_last_change = (uint64_t)time(NULL);
         }
-    } else 
+    } else
     {
         gtk_label_set_text(GTK_LABEL(info_error_type), "");
         gtk_label_set_text(GTK_LABEL(info_error_message), "");
@@ -274,7 +284,7 @@ void error_panel_update()
 
 void graphical_update()
 {
-    printf("graphical_update\n");
+    // printf("graphical_update\n");
 
     // printf("car_state: %s\n", CAR_STATE_STR[sre_state->car_state]);
     // printf("bat_state: %s\n", BAT_STATE_STR[sre_state->bat_state]);

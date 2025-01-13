@@ -73,6 +73,7 @@ extern SRE_error* vehicle_errors[MAX_ERRORS];
 
 #define ERROR_TYPE_COUNT 13
 #define ERROR_SUB_TYPE_COUNT 15
+#define ERROR_PANEL_UPDATE_INT 3 // seconds
 
 enum ERROR_TYPES 
 {
@@ -207,8 +208,8 @@ static const char* ASB_ERROR_TYPES_STR[] = {
     "EBS Triggered by AS",
     "RES SDC Open",
     "SDC Open",
-    "Mechanically Stuck Error",
-    "ASMS Turned Off in Monitoring",
+    "Mech Stuck Error",
+    "ASMS Turned Off",
     "EBS Triggered",
 };
 
@@ -459,8 +460,8 @@ static const char* ASB_TRIGGER_CAUSE_STR[] = {
     "EBS triggered by AS", 
     "RES SDC open", 
     "SDC open", 
-    "Mechanically Stuck Error", 
-    "ASMS Turned Off in Monitoring"
+    "Mech Stuck Error", 
+    "ASMS Turned Off"
 };
 
 #endif // SRE_LOGIC_H

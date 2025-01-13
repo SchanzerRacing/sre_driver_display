@@ -5,6 +5,8 @@
 
 #include <pthread.h>
 
+#define GUI_UPDATE_INTERVALL 500 // ms
+
 pthread_t can_thread;
 
 GtkCssProvider *cssProvider;
