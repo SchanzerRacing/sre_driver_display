@@ -29,6 +29,29 @@ GObject *label_ebs_state = NULL;
 GObject *label_asb_check_sequence = NULL;
 GObject *label_asb_trigger_cause = NULL;
 
+// VEHICLE ERRORS
+GObject *label_error_1 = NULL;
+GObject *label_error_2 = NULL;
+GObject *label_error_3 = NULL;
+GObject *label_error_4 = NULL;
+GObject *label_error_5 = NULL;
+GObject *label_error_6 = NULL;
+GObject *label_error_7 = NULL;
+GObject *label_error_8 = NULL;
+GObject *label_error_9 = NULL;
+
+GObject *info_error_1 = NULL;
+GObject *info_error_2 = NULL;
+GObject *info_error_3 = NULL;
+GObject *info_error_4 = NULL;
+GObject *info_error_5 = NULL;
+GObject *info_error_6 = NULL;
+GObject *info_error_7 = NULL;
+GObject *info_error_8 = NULL;
+GObject *info_error_9 = NULL;
+
+GObject* error_array[ERROR_LABEL_COUNT][2];
+
 // GRAPHICAL ELEMENTS
 GObject *label_tsa = NULL;
 GObject *label_r2d = NULL;
@@ -82,10 +105,49 @@ GtkWidget* create_debug_panel() {
     label_asb_check_sequence = gtk_builder_get_object(builder_debug_panel, "info_asb_cs");
     label_asb_trigger_cause = gtk_builder_get_object(builder_debug_panel, "info_asb_tc");
 
+    // VEHICLE ERRORS
+    label_error_1 = gtk_builder_get_object(builder_debug_panel, "lbl_error_1");
+    label_error_2 = gtk_builder_get_object(builder_debug_panel, "lbl_error_2");
+    label_error_3 = gtk_builder_get_object(builder_debug_panel, "lbl_error_3");
+    label_error_4 = gtk_builder_get_object(builder_debug_panel, "lbl_error_4");
+    label_error_5 = gtk_builder_get_object(builder_debug_panel, "lbl_error_5");
+    label_error_6 = gtk_builder_get_object(builder_debug_panel, "lbl_error_6");
+    label_error_7 = gtk_builder_get_object(builder_debug_panel, "lbl_error_7");
+    label_error_8 = gtk_builder_get_object(builder_debug_panel, "lbl_error_8");
+    label_error_9 = gtk_builder_get_object(builder_debug_panel, "lbl_error_9");
+
+    info_error_1 = gtk_builder_get_object(builder_debug_panel, "info_error_1");
+    info_error_2 = gtk_builder_get_object(builder_debug_panel, "info_error_2");
+    info_error_3 = gtk_builder_get_object(builder_debug_panel, "info_error_3");
+    info_error_4 = gtk_builder_get_object(builder_debug_panel, "info_error_4");
+    info_error_5 = gtk_builder_get_object(builder_debug_panel, "info_error_5");
+    info_error_6 = gtk_builder_get_object(builder_debug_panel, "info_error_6");
+    info_error_7 = gtk_builder_get_object(builder_debug_panel, "info_error_7");
+    info_error_8 = gtk_builder_get_object(builder_debug_panel, "info_error_8");
+    info_error_9 = gtk_builder_get_object(builder_debug_panel, "info_error_9");
+
+    error_array[0][0] = label_error_1;
+    error_array[0][1] = info_error_1;
+    error_array[1][0] = label_error_2;
+    error_array[1][1] = info_error_2;
+    error_array[2][0] = label_error_3;
+    error_array[2][1] = info_error_3;
+    error_array[3][0] = label_error_4;
+    error_array[3][1] = info_error_4;
+    error_array[4][0] = label_error_5;
+    error_array[4][1] = info_error_5;
+    error_array[5][0] = label_error_6;
+    error_array[5][1] = info_error_6;
+    error_array[6][0] = label_error_7;
+    error_array[6][1] = info_error_7;
+    error_array[7][0] = label_error_8;
+    error_array[7][1] = info_error_8;
+    error_array[8][0] = label_error_9;
+    error_array[8][1] = info_error_9;
+
     // Graphical Elements
     label_tsa = gtk_builder_get_object(builder_debug_panel, "lbl_tsa");
     label_r2d = gtk_builder_get_object(builder_debug_panel, "lbl_r2d");
-
 
     // Add debugpanel to the main box
     gtk_box_append(GTK_BOX(main_dp_box), GTK_WIDGET(debug_panel));

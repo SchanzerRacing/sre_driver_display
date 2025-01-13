@@ -99,6 +99,35 @@ static void event_key_release_cb (GtkEventControllerKey *controller, guint keyva
         {
             sre_state->bat_state = WAIT_FOR_TSA_B;
         }
+    } else if(keyval == GDK_KEY_e)
+    {
+        if(sre_state->car_state == SCS_ERROR)
+        {
+            sre_state->car_state = UNDEFINED_C;
+        } else 
+        {
+            sre_state->car_state = SCS_ERROR;
+        }
+    } else if (keyval == GDK_KEY_d)
+    {
+        if(sre_state->asb_state == EBS_TRIGGERED)
+        {
+            sre_state->asb_state = UNINITALIZED;
+            sre_state->asb_trigger_cause = 0;
+        } else 
+        {
+            sre_state->asb_state = EBS_TRIGGERED;
+            sre_state->asb_trigger_cause = 5;
+        }   
+    } else if (keyval == GDK_KEY_c)
+    {
+        if(sre_state->bat_state == ISO_ERROR)
+        {
+            sre_state->bat_state = UNDEFINED_B;
+        } else 
+        {
+            sre_state->bat_state = ISO_ERROR;
+        }
     }
 }
 

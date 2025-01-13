@@ -8,8 +8,6 @@ GtkWidget* create_debug_panel();
 
 extern GtkBuilder *builder_debug_panel;
 
-
-
 // PRESSURES
 extern GObject *label_brake_pressure_1;
 extern GObject *label_brake_pressure_2;
@@ -35,6 +33,30 @@ extern GObject *label_sbs_state;
 extern GObject *label_ebs_state;
 extern GObject *label_asb_check_sequence;
 extern GObject *label_asb_trigger_cause;
+
+// VEHICLE ERRORS
+#define ERROR_LABEL_COUNT 9
+extern GObject* error_array[ERROR_LABEL_COUNT][2];
+
+extern GObject *label_error_1;
+extern GObject *label_error_2;
+extern GObject *label_error_3;
+extern GObject *label_error_4;
+extern GObject *label_error_5;
+extern GObject *label_error_6;
+extern GObject *label_error_7;
+extern GObject *label_error_8;
+extern GObject *label_error_9;
+
+extern GObject *info_error_1;
+extern GObject *info_error_2;
+extern GObject *info_error_3;
+extern GObject *info_error_4;
+extern GObject *info_error_5;
+extern GObject *info_error_6;
+extern GObject *info_error_7;
+extern GObject *info_error_8;
+extern GObject *info_error_9;
 
 // GRAPHICAL ELEMENTS
 extern GObject *label_tsa;

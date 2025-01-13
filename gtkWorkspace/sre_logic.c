@@ -55,8 +55,8 @@ void init_sre_logic()
     sre_state->r2d_ready = false;
     sre_state->r2d_active = false;
 
-    sre_state->error_show = true;
-    sre_state->info_show = true;
+    sre_state->error_show = false;
+    sre_state->info_show = false;
 
     sre_state->car_state = UNDEFINED_C;
     sre_state->bat_state = UNDEFINED_B;
@@ -83,6 +83,9 @@ gboolean sre_run_display()
     r2d_logic();
 
     error_logic();
+    error_label_update();
+    error_panel_update();
+
     info_logic();
 
     // Gathers all the data from the CAN messages and updates the states
@@ -129,7 +132,6 @@ void state_update()
 void label_update()
 {
     // PRESSURES
-
     // printf("label_update\n");
     char buffer[100];
     sprintf(buffer, "%d", sre_state->brake_pressure_1);
@@ -152,8 +154,6 @@ void label_update()
     sprintf(buffer, "%d", sre_state->epos_power);
     gtk_label_set_text(GTK_LABEL(label_epos_power), buffer);
 
-
-
     // STATES
     sprintf(buffer, "%s", CAR_STATE_STR[sre_state->car_state]);
     gtk_label_set_text(GTK_LABEL(label_car_state), buffer);
@@ -172,6 +172,104 @@ void label_update()
 
     sprintf(buffer, "%d", sre_state->asb_trigger_cause);
     gtk_label_set_text(GTK_LABEL(label_asb_trigger_cause), buffer);
+}
+
+void error_label_update()
+{
+    uint8_t label_array_count = 0;
+
+    for(int i = 0; i < ERROR_LABEL_COUNT; i++)
+    {
+        if(vehicle_errors[i] != NULL)
+        {
+            char buffer[100];
+            // get error type string
+            const char* error_type_str = ERROR_TYPES_STR[vehicle_errors[i]->error_type];
+
+            // get sub error type string
+            const char* sub_error_str = "N/A"; // default if no subtype exists
+            if(vehicle_errors[i]->error_type < ERROR_TYPE_COUNT && 
+                ERROR_SUB_TYPE_MAP[vehicle_errors[i]->error_type] != NULL &&
+                vehicle_errors[i]->sub_error_type < ERROR_SUB_TYPE_COUNT) // avoid out of bounds
+            {
+                printf("error_type: %d, sub_error_type: %d\n", vehicle_errors[i]->error_type, vehicle_errors[i]->sub_error_type);
+                sub_error_str = ERROR_SUB_TYPE_MAP[vehicle_errors[i]->error_type][vehicle_errors[i]->sub_error_type];
+            }
+            sprintf(buffer, "%s", error_type_str);
+            gtk_label_set_text(GTK_LABEL(error_array[label_array_count][0]), buffer);
+            sprintf(buffer, "%s", sub_error_str);
+            gtk_label_set_text(GTK_LABEL(error_array[label_array_count][1]), buffer);
+
+            label_array_count++;
+        }
+    }
+
+    for(; label_array_count < ERROR_LABEL_COUNT; label_array_count++)
+    {
+        gtk_label_set_text(GTK_LABEL(error_array[label_array_count][0]), "");
+        gtk_label_set_text(GTK_LABEL(error_array[label_array_count][1]), "");
+    }
+}
+
+void error_panel_update()
+{   
+    uint8_t error_count = 0;
+    for(int i = 0; i < MAX_ERRORS; i++)
+    {
+        if(vehicle_errors[i] != NULL)
+        {
+            error_count++;
+        }
+    }
+
+    if(error_count > 0)
+    {
+        sre_state->error_show = 1;
+    } else 
+    {
+        sre_state->error_show = 0;
+    }
+
+    if(sre_state->error_show)
+    {
+        gtk_widget_set_visible(GTK_WIDGET(box_error), true);
+    } else 
+    {
+        gtk_widget_set_visible(GTK_WIDGET(box_error), false);
+    }
+
+
+    // @todo: add cycling error messages
+    // cycle error messages
+    if(error_count > 0)
+    {
+        // Find first error that is not NULL
+        for(int i = 0; i < MAX_ERRORS; i++)
+        {
+            if(vehicle_errors[i] != NULL)
+            {
+                char buffer[100];
+                const char* error_type_str = ERROR_TYPES_STR[vehicle_errors[i]->error_type];
+                const char* sub_error_str = "N/A"; // default if no subtype exists
+                if(vehicle_errors[i]->error_type < ERROR_TYPE_COUNT && 
+                    ERROR_SUB_TYPE_MAP[vehicle_errors[i]->error_type] != NULL &&
+                    vehicle_errors[i]->sub_error_type < ERROR_SUB_TYPE_COUNT) // avoid out of bounds
+                {
+                    sub_error_str = ERROR_SUB_TYPE_MAP[vehicle_errors[i]->error_type][vehicle_errors[i]->sub_error_type];
+                }
+                sprintf(buffer, "%s", error_type_str);
+                gtk_label_set_text(GTK_LABEL(info_error_type), buffer);
+                sprintf(buffer, "%s", sub_error_str);
+                gtk_label_set_text(GTK_LABEL(info_error_message), buffer);
+                break;
+            }
+        }
+    } else 
+    {
+        gtk_label_set_text(GTK_LABEL(info_error_type), "");
+        gtk_label_set_text(GTK_LABEL(info_error_message), "");
+    }
+
 }
 
 void graphical_update()
@@ -217,8 +315,8 @@ void graphical_update()
         gtk_widget_remove_css_class(GTK_WIDGET(label_tsa), "active");
     }
 
-    printf("error_show: %d\n", sre_state->error_show);
-    printf("info_show: %d\n", sre_state->info_show);
+    // printf("error_show: %d\n", sre_state->error_show);
+    // printf("info_show: %d\n", sre_state->info_show);
     gtk_widget_set_visible(GTK_WIDGET(box_error), sre_state->error_show);
     gtk_widget_set_visible(GTK_WIDGET(box_info), sre_state->info_show);
 }
@@ -274,6 +372,7 @@ void error_logic()
         SRE_error *buff_error = check_if_error_exists(VCU, VCU_SCS);
         if(buff_error == NULL)
         {
+            printf("create buffer error, SCS_ERROR\n");
             SRE_error *new_buff_error = create_sre_error(VCU, VCU_SCS);
             add_error(new_buff_error);
         } else 
@@ -341,6 +440,18 @@ void error_logic()
         //     }
         // }
     }
+
+    // Free old Error Messages
+    for (int i = 0 ; i < MAX_ERRORS; i++)
+    {
+        if(vehicle_errors[i] != NULL)
+        {
+            if(vehicle_errors[i]->last_seen + FREE_AFTER <= (uint64_t)time(NULL))
+            {
+                remove_error(i);
+            }
+        }
+    }
 }
 
 SRE_error* create_sre_error(uint16_t error_type, uint16_t sub_error_type)
@@ -359,7 +470,7 @@ SRE_error* create_sre_error(uint16_t error_type, uint16_t sub_error_type)
 }
 
 void add_error(SRE_error* error) {
-    for (int i = 0; i < MAX_ERRORS; ++i) {
+    for (int i = 0; i < MAX_ERRORS; i++) {
         if (vehicle_errors[i] == NULL) {
             vehicle_errors[i] = error;
             return;

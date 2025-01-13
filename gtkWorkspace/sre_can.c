@@ -93,8 +93,6 @@ void setup_can() {
         perror("Error in socket bind");
         return;
     }
-
-
 }
 
 void close_can() {

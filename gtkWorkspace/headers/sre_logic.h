@@ -8,14 +8,14 @@
 gboolean sre_run_display();
 void graphical_update();
 void label_update();
+void error_label_update();
+void error_panel_update();
 void state_update();
 
 void init_sre_logic();
 
 void tsa_logic();
 void r2d_logic();
-
-
 
 /* ---- VEHICLE INFO MANAGEMENT --- */
 
@@ -31,6 +31,7 @@ uint32_t get_bit_position(uint32_t value);
 // array of errors
 #define SHOW_ERRORS 9
 #define MAX_ERRORS 32
+#define FREE_AFTER 5 // seconds
 
 // Error struct that contains information about the Error
 typedef struct {
@@ -70,6 +71,9 @@ void free_all_errors();
 // array of SRE_error
 extern SRE_error* vehicle_errors[MAX_ERRORS];
 
+#define ERROR_TYPE_COUNT 13
+#define ERROR_SUB_TYPE_COUNT 15
+
 enum ERROR_TYPES 
 {
     UNDEFINED_ERROR = 0,
@@ -86,12 +90,33 @@ enum ERROR_TYPES
     SCS_DIO_DASH,
     SCS_AIN_F1,
 };
+static const char* ERROR_TYPES_STR[] = {
+    "Undefined", 
+    "VCU", 
+    "SDC Open", 
+    "Battery", 
+    "ASB",
+    "SCS ZOCO Front",
+    "SCS ZOCO Rear",
+    "SCS ZOCO Left",
+    "SCS ZOCO Right",
+    "SCS Fuseboard",
+    "SCS DIO AS",
+    "SCS DIO Dash",
+    "SCS AIN F1",
+};
 
 enum VCU_ERROR_TYPES
 {
     VCU_UNDEFINED,
     VCU_SCS,
     VCU_MSG_ERR,
+};
+
+static const char* VCU_ERROR_TYPES_STR[] = {
+    "Undefined",
+    "SCS Error",
+    "Message Error",
 };
 
 enum SDC_ERROR_TYPES
@@ -113,6 +138,24 @@ enum SDC_ERROR_TYPES
     SDC_TSMS,
 };
 
+static const char* SDC_ERROR_TYPES_STR[] = {
+    "Undefined",
+    "RES",
+    "Motor Front Right",
+    "ASB",
+    "BSPD",
+    "BOTS",
+    "Motor Front Left",
+    "Dash Button",
+    "Inertia Switch",
+    "Motor Rear Left",
+    "MP TSAL",
+    "Motor Rear Right",
+    "PLUG IN HVD IDIOTS",
+    "Battery Connector",
+    "TSMS",
+};
+
 enum BAT_ERROR_TYPES
 {
     BAT_UNDEFINED,
@@ -121,6 +164,17 @@ enum BAT_ERROR_TYPES
     BAT_BMS = 8,
     BAT_IMD = 9,
     BAT_GENERAL = 10,
+};
+
+static const char* BAT_ERROR_TYPES_STR[] = {
+    "Undefined",
+    "", "",
+    "SDC Open",
+    "", "", "",
+    "ISO Error",
+    "BMS Error",
+    "IMD Error",
+    "General Error",
 };
 
 enum ASB_ERROR_TYPES
@@ -141,7 +195,39 @@ enum ASB_ERROR_TYPES
     ASB_EBS_TRIGGERED,
 };
 
+static const char* ASB_ERROR_TYPES_STR[] = {
+    "Undefined",
+    "Watchdog Error",
+    "ASB Pressures Invalid",
+    "Brake Pressure Invalid",
+    "EBS1 Pressure Low",
+    "EBS2 Pressure Low",
+    "ASB Pressure Low",
+    "CAN / SCS Error",
+    "EBS Triggered by AS",
+    "RES SDC Open",
+    "SDC Open",
+    "Mechanically Stuck Error",
+    "ASMS Turned Off in Monitoring",
+    "EBS Triggered",
+};
 
+// array of pointers to the sub-error arrays
+static const char** ERROR_SUB_TYPE_MAP[ERROR_TYPE_COUNT] = {
+    NULL,                           // UNDEFINED_ERROR
+    VCU_ERROR_TYPES_STR,            // VCU
+    SDC_ERROR_TYPES_STR,            // ERR_SDC_OPEN
+    BAT_ERROR_TYPES_STR,            // BAT_ERR
+    ASB_ERROR_TYPES_STR,            // ASB_ERROR
+    NULL,                           // SCS_ZOCO_FRONT
+    NULL,                           // SCS_ZOCO_REAR
+    NULL,                           // SCS_ZOCO_LEFT
+    NULL,                           // SCS_ZOCO_RIGHT
+    NULL,                           // SCS_FUSEBOARD
+    NULL,                           // SCS_DIO_AS
+    NULL,                           // SCS_DIO_DASH
+    NULL                            // SCS_AIN_F1
+};
 
 /* ---------- STATE MANAGEMENT ------------------- */
 
@@ -203,36 +289,178 @@ typedef struct {
 
 extern SRE_State* sre_state;
 
-// ENUMS and STRINGS
-
 // ET
-enum CAR_STATE {UNDEFINED_C, WAIT_FOR_TSA_C, RTD_OFF, WAIT_FOR_RTD, DRIVE, LC_ON, SCS_ERROR};
-static const char* CAR_STATE_STR[] = {"Undefined", "Wait for TSA", "RTD Off", "Wait for RTD", "Drive", "LC On", "SCS Error"};
+enum CAR_STATE {
+    UNDEFINED_C,
+    WAIT_FOR_TSA_C,
+    RTD_OFF,
+    WAIT_FOR_RTD,
+    DRIVE,
+    LC_ON,
+    SCS_ERROR
+};
+
+static const char* CAR_STATE_STR[] = {
+    "Undefined",
+    "Wait for TSA",
+    "RTD Off",
+    "Wait for RTD",
+    "Drive",
+    "LC On",
+    "SCS Error"
+};
 
 // HV
-enum BAT_STATE {UNDEFINED_B, START, BMS_RESET, SDC_OPEN, WAIT_FOR_TSA_B, TS_STARTUP, TSA, ISO_ERROR, BMS_ERROR, IMD_ERROR, BAT_ERROR};
-static const char* BAT_STATE_STR[] = {"Undefined", "Start", "BMS Reset", "SDC Open", "Wait for TSA", "TS Startup", "TSA", "ISO Error", "BMS Error", "IMD Error", "BAT Error"};
+enum BAT_STATE {
+    UNDEFINED_B, 
+    START, 
+    BMS_RESET, 
+    SDC_OPEN, 
+    WAIT_FOR_TSA_B, 
+    TS_STARTUP, 
+    TSA, 
+    ISO_ERROR, 
+    BMS_ERROR, 
+    IMD_ERROR, 
+    BAT_ERROR
+};
+static const char* BAT_STATE_STR[] = {
+    "Undefined", 
+    "Start", 
+    "BMS Reset", 
+    "SDC Open", 
+    "Wait for TSA", 
+    "TS Startup", 
+    "TSA", 
+    "ISO Error", 
+    "BMS Error", 
+    "IMD Error", 
+    "BAT Error"
+};
 
 // DV
-enum ASB_STATE {UNINITALIZED, MV_CHECK, PASSIVE, DV_CHECK, MONITORING, EBS_TRIGGERED};
-static const char* ASB_STATE_STR[] = {"Uninitialized", "MV Check", "Passive", "DV Check", "Monitoring", "EBS Triggered"};
+enum ASB_STATE {
+    UNINITALIZED, 
+    MV_CHECK, 
+    PASSIVE, 
+    DV_CHECK, 
+    MONITORING, 
+    EBS_TRIGGERED
+};
+static const char* ASB_STATE_STR[] = {
+    "Uninitialized", 
+    "MV Check", 
+    "Passive", 
+    "DV Check", 
+    "Monitoring", 
+    "EBS Triggered"
+};
 
-enum AMI_STATE {MANUAL, ACCEL, SKIDPAD, TRACKDRIVE, BRAKETEST, INSPECTION, AUTOX};
-static const char* AMI_STATE_STR[] = {"Manual", "Accel", "Skidpad", "Trackdrive", "Braketest", "Inspection", "Autox"};
+enum AMI_STATE {
+    MANUAL, 
+    ACCEL, 
+    SKIDPAD, 
+    TRACKDRIVE, 
+    BRAKETEST, 
+    INSPECTION, 
+    AUTOX
+};
+static const char* AMI_STATE_STR[] = {
+    "Manual", 
+    "Accel", 
+    "Skidpad", 
+    "Trackdrive", 
+    "Braketest", 
+    "Inspection", 
+    "Autox"
+};
 
-enum AS_STATE {OFF = 1, READY = 2, DRIVING = 3, EMERGENCY = 4, FINISH = 5};
-static const char* AS_STATE_STR[] = {"Off", "Ready", "Driving", "Emergency", "Finish"};
+enum AS_STATE {
+    OFF = 1, 
+    READY = 2, 
+    DRIVING = 3, 
+    EMERGENCY = 4, 
+    FINISH = 5
+};
+static const char* AS_STATE_STR[] = {
+    "Off", 
+    "Ready", 
+    "Driving", 
+    "Emergency", 
+    "Finish"
+};
 
-enum SERVICE_BRAKE_STATE {DISENGAGED = 1, ENGAGED = 2, AVAILABLE = 3};
-static const char* SERVICE_BRAKE_STATE_STR[] = {"Disengaged", "Engaged", "Available"};
+enum SERVICE_BRAKE_STATE {
+    DISENGAGED = 1, 
+    ENGAGED = 2, 
+    AVAILABLE = 3
+};
+static const char* SERVICE_BRAKE_STATE_STR[] = {
+    "Disengaged", 
+    "Engaged", 
+    "Available"
+};
 
-enum EBS_STATE {UNAVAILABLE = 1, ARMED = 2, ACTIVATED = 3};
-static const char* EBS_STATE_STR[] = {"Unavailable", "Armed", "Activated"};
+enum EBS_STATE {
+    UNAVAILABLE = 1, 
+    ARMED = 2, 
+    ACTIVATED = 3
+};
+static const char* EBS_STATE_STR[] = {
+    "Unavailable", 
+    "Armed", 
+    "Activated"
+};
 
-enum ASB_CHECK_SEQUENCE {WATCHDOG_NOT_TRIGGERING, WATCHDOG_TRIGGERING, ASB_PRESS_OK, BP_BUILT_UP, CLOSE_SDC_WAIT_TSA, DEAC_EBS2, DEAC_EBS1_AC_EBS2, AC_EBS1_AND_2};
-static const char* ASB_CHECK_SEQUENCE_STR[] = {"Watchdog not triggering", "Watchdog triggering", "ASB Press OK", "BP built up", "Close SDC wait TSA", "Deac EBS2", "Deac EBS1 Act EBS2", "Act EBS1 and 2"};
+enum ASB_CHECK_SEQUENCE {
+    WATCHDOG_NOT_TRIGGERING, 
+    WATCHDOG_TRIGGERING, 
+    ASB_PRESS_OK, 
+    BP_BUILT_UP, 
+    CLOSE_SDC_WAIT_TSA, 
+    DEAC_EBS2, 
+    DEAC_EBS1_AC_EBS2, 
+    AC_EBS1_AND_2
+};
+static const char* ASB_CHECK_SEQUENCE_STR[] = {
+    "Watchdog not triggering", 
+    "Watchdog triggering", 
+    "ASB Press OK", 
+    "BP built up", 
+    "Close SDC wait TSA", 
+    "Deac EBS2", 
+    "Deac EBS1 Act EBS2", 
+    "Act EBS1 and 2"
+};
 
-enum ASB_TRIGGER_CAUSE { WATCHDOG_ERROR = 1, ASB_PRESSURES_INVALID = 2, BRAKE_PRESSURE_INVALID = 3, EBS1_PRESSURE_LOW = 4, EBS2_PRESSURE_LOW = 5, ASB_PRESSURE_LOW = 6, CAN_SCS_ERROR = 7, EBS_TRIGGERED_BY_AS = 8, RES_SDC_OPEN = 9, SDC_OPEN_ASB = 10, MECHANICALLY_STUCK_ERROR = 11, ASMS_TURNED_OFF_IN_MONITORING = 12};
-static const char* ASB_TRIGGER_CAUSE_STR[] = { "Watchdog error", "ASB Pressures invalid", "Brake Pressure invalid", "EBS1 Pressure low", "EBS2 Pressure low", "ASB Pressure low", "CAN / SCS Error", "EBS triggered by AS", "RES SDC open", "SDC open", "Mechanically Stuck Error", "ASMS Turned Off in Monitoring"};
+enum ASB_TRIGGER_CAUSE {
+    UNDEFINED = 0,
+    WATCHDOG_ERROR = 1, 
+    ASB_PRESSURES_INVALID = 2, 
+    BRAKE_PRESSURE_INVALID = 3, 
+    EBS1_PRESSURE_LOW = 4, 
+    EBS2_PRESSURE_LOW = 5, 
+    ASB_PRESSURE_LOW = 6, 
+    CAN_SCS_ERROR = 7, 
+    EBS_TRIGGERED_BY_AS = 8, 
+    RES_SDC_OPEN = 9, 
+    SDC_OPEN_ASB = 10, 
+    MECHANICALLY_STUCK_ERROR = 11, 
+    ASMS_TURNED_OFF_IN_MONITORING = 12
+};
+static const char* ASB_TRIGGER_CAUSE_STR[] = {
+    "Watchdog error", 
+    "ASB Pressures invalid", 
+    "Brake Pressure invalid", 
+    "EBS1 Pressure low", 
+    "EBS2 Pressure low", 
+    "ASB Pressure low", 
+    "CAN / SCS Error", 
+    "EBS triggered by AS", 
+    "RES SDC open", 
+    "SDC open", 
+    "Mechanically Stuck Error", 
+    "ASMS Turned Off in Monitoring"
+};
 
 #endif // SRE_LOGIC_H
