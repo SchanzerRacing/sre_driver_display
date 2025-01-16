@@ -16,6 +16,7 @@
   - Nice Tool but to me (robert) it seemed not really user friendly. But it is still being worked on
 - GLADE: Tool for designing UIs. https://glade.gnome.org/
   - Unfortunately its only useful for GTK3. But it is a nice tool and its possible to convert the UI to GTK4 with some manual work with the help of gtk4-builder-tool with the `--3to4` flag.
+  - `gtk4-builder-tool simplify --3to4 [file] >> [output file]`
 
 
 ## CAN

@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkWindow" id="vehicle_info_panel">
+    <property name="default-width">800</property>
+    <property name="default-height">480</property>
+    <property name="child">
+      <object class="GtkBox" id="box_main_vehicleinfo">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkFixed" id="fixed_header_vehicleinfo">
+            <child>
+              <object class="GtkLabel" id="lbl_debug_mv_panel_vehicleinfo">
+                <layout>
+                  <property name="transform">translate(200, 0)</property>
+                </layout>
+                <property name="width-request">400</property>
+                <property name="height-request">50</property>
+                <property name="label" translatable="1">VEHICLE INFO</property>
+                <property name="justify">fill</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans 20"></attribute>
+                </attributes>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_tsa_vehicleinfo">
+                <property name="name">label_tsa</property>
+                <property name="width-request">100</property>
+                <property name="height-request">50</property>
+                <property name="label" translatable="1">TSA</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans 20"></attribute>
+                </attributes>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_r2d_vehicleinfo">
+                <property name="name">label_r2d</property>
+                <layout>
+                  <property name="transform">translate(700, 0)</property>
+                </layout>
+                <property name="width-request">100</property>
+                <property name="height-request">50</property>
+                <property name="label" translatable="1">R2D</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans 20"></attribute>
+                </attributes>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="box_sidebyside_vehicleinfo">
+            <property name="height-request">380</property>
+            <child>
+              <object class="GtkBox" id="box_left_vehicleinfo">
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkGrid" id="grid_temps_vehicleinfo">
+                    <child>
+                      <object class="GtkLabel" id="info_temp_pef_vehicleinfo">
+                        <property name="width-request">150</property>
+                        <property name="margin-top">20</property>
+                        <property name="label" translatable="1">0°C</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 30"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_temp_per_vehicleinfo">
+                        <property name="width-request">150</property>
+                        <property name="margin-top">20</property>
+                        <property name="label" translatable="1">0°C</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 30"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_temp_pef_vehicleinfo">
+                        <property name="label" translatable="1">PEF</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_temp_per_vehicleinfo">
+                        <property name="label" translatable="1">PER</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_temp_motor_fl_vehicleinfo">
+                        <property name="label" translatable="1">0°C</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 30"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_temp_motor_fr_vehicleinfo">
+                        <property name="label" translatable="1">0°C</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 30"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_temp_motor_fl_vehicleinfo">
+                        <property name="label" translatable="1">Motor FL</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">3</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_temp_motor_fr_vehicleinfo">
+                        <property name="label" translatable="1">Motor FR</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">3</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_temp_motor_rl_vehicleinfo">
+                        <property name="label" translatable="1">0°C</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 30"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">4</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_temp_motor_rr_vehicleinfo">
+                        <property name="label" translatable="1">0°C</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 30"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">4</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_temp_motor_rr_vehicleinfo">
+                        <property name="label" translatable="1">Motor RR</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">5</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_temp_motor_rl_vehicleinfo">
+                        <property name="label" translatable="1">Motor RL</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">5</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="box_middle_vehicleinfo">
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkLabel" id="info_soc_vehicleinfo">
+                    <property name="width-request">200</property>
+                    <property name="label" translatable="1">0%</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Sans 50"></attribute>
+                    </attributes>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label_soc_vehicleinfo">
+                    <property name="label" translatable="1">SOC</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Sans 12"></attribute>
+                    </attributes>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="info_speed_vehicleinfo">
+                    <property name="width-request">200</property>
+                    <property name="label" translatable="1">0</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Sans 40"></attribute>
+                    </attributes>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label_soc_vehicleinfo1">
+                    <property name="label" translatable="1">Speed km/h</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Sans 12"></attribute>
+                    </attributes>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="info_power_vehicleinfo">
+                    <property name="width-request">200</property>
+                    <property name="label" translatable="1">0</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Sans 40"></attribute>
+                    </attributes>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label_power_vehicleinfo">
+                    <property name="label" translatable="1">Power kW</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Sans 12"></attribute>
+                    </attributes>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="info_carstate_vehicleinfo">
+                    <property name="margin-top">10</property>
+                    <property name="label" translatable="1">unconfigured</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Sans 15"></attribute>
+                    </attributes>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label_carstate_vehicleinfo">
+                    <property name="margin-top">5</property>
+                    <property name="label" translatable="1">Carstate</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Sans 15"></attribute>
+                    </attributes>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="box_right_vehicleinfo">
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkGrid" id="grid_bat_vehicleinfo">
+                    <child>
+                      <object class="GtkLabel" id="label_bat_temp_max_vehicleinfo">
+                        <property name="label" translatable="1">Temp MAX</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_bat_temp_max_vehicleinfo">
+                        <property name="width-request">150</property>
+                        <property name="margin-top">30</property>
+                        <property name="label" translatable="1">0°C</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 30"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_bat_temp_min_vehicleinfo">
+                        <property name="width-request">150</property>
+                        <property name="margin-top">30</property>
+                        <property name="label" translatable="1">0°C</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 30"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_bat_temp_min_vehicleinfo">
+                        <property name="label" translatable="1">Temp MIN</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_bat_voltage_max_vehicleinfo">
+                        <property name="label" translatable="1">0°C</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 30"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="info_bat_voltage_min_vehicleinfo">
+                        <property name="label" translatable="1">0°C</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 30"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_bat_voltage_max_vehicleinfo">
+                        <property name="label" translatable="1">Voltage MAX</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">3</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_bat_voltage_min_vehicleinfo">
+                        <property name="label" translatable="1">Voltage MIN</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
+                        </attributes>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">3</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+</interface>
