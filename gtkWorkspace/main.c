@@ -5,15 +5,9 @@
 #include "headers/debug_panel.h"
 #include "headers/endurance_panel.h"
 #include "headers/parameters_panel.h"
+#include "headers/vehicleinfo_panel.h"
 #include "headers/objects.h"
 #include "main.h"
-
-// whether to use can and disable debugging features (key press debug)
-#define USE_CAN 0 
-
-// external functions
-GtkWidget* create_endurance_panel();
-GtkWidget* create_parameters_panel();
 
 GObject* box_error = NULL;
 GObject* box_info = NULL; 
@@ -28,7 +22,6 @@ GtkBuilder *builder_error_info_panel = NULL;
 
 static gboolean on_click(GtkGestureClick *gesture, gint n_press, gdouble x, gdouble y, gpointer user_data);
 
-
 static void switch_panel(GtkWidget *widget, const char *panel_name) {
     // Could be done with overlays that appear and disappear instead of switching panels if switching lag is to high
     GtkWidget *panel;
@@ -36,6 +29,8 @@ static void switch_panel(GtkWidget *widget, const char *panel_name) {
         panel = create_endurance_panel();
     } else if (g_strcmp0(panel_name, "Parameters") == 0) {
         panel = create_parameters_panel();
+    } else if (g_strcmp0(panel_name, "Vehicleinfo") == 0) {
+        panel = create_vehicleinfo_panel();
     } else {
         panel = create_debug_panel();
     }
@@ -43,9 +38,10 @@ static void switch_panel(GtkWidget *widget, const char *panel_name) {
 }
 
 static gboolean on_click(GtkGestureClick *gesture, gint n_press, gdouble x, gdouble y, gpointer user_data) {
-    static int panel_index = 1;
-    const char *panels[] = {"Endurance", "Debug", "Parameters"};
-    panel_index = (panel_index + 1) % 3;
+    static int panel_index = 0;
+    const char *panels[] = {"Endurance", "Debug", "Parameters", "Vehicleinfo"};
+    panel_index = (panel_index + 1) % 4;
+    currentPanel = panel_index;
     switch_panel(GTK_WIDGET(user_data), panels[panel_index]);
     return TRUE;
 }
@@ -127,7 +123,7 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_widget_set_can_target(GTK_WIDGET(main_overlay), FALSE);
     
     // Initial panel
-    GtkWidget *initial_panel = create_debug_panel();
+    GtkWidget *initial_panel = create_endurance_panel();
     gtk_overlay_set_child(GTK_OVERLAY(main_overlay), initial_panel);
 
     #if USE_CAN == 0

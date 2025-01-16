@@ -1,5 +1,5 @@
 /*
- *  This file contains state logics functions.
+ *  This file contains logic functions.
  */
 #include <gtk/gtk.h>
 #include <stdio.h>
@@ -8,15 +8,32 @@
 #include "headers/sre_can.h"
 #include "headers/sre_logic.h"
 #include "headers/debug_panel.h"
+#include "headers/endurance_panel.h"
+#include "headers/vehicleinfo_panel.h"
 #include "headers/objects.h"
 
 uint32_t displayCallbackCounter = 0;
+
+uint8_t currentPanel = 0;
+
+GObject* tsa_label_array[4];
+GObject* r2d_label_array[4];
 
 SRE_State *sre_state;
 SRE_error* vehicle_errors[MAX_ERRORS] = {NULL};
 
 void init_sre_logic()
 {
+    tsa_label_array[0] = label_tsa_endu;
+    tsa_label_array[1] = label_tsa;
+    tsa_label_array[2] = NULL;
+    tsa_label_array[3] = label_tsa_vehicleinfo;
+
+    r2d_label_array[0] = label_r2d_endu;
+    r2d_label_array[1] = label_r2d;
+    r2d_label_array[2] = NULL;
+    r2d_label_array[3] = label_r2d_vehicleinfo;
+
     // INITIALIZE SRE_STATE
     printf("init_sre_state\n");
     sre_state = (SRE_State *)malloc(sizeof(SRE_State));
@@ -88,8 +105,10 @@ gboolean sre_run_display()
 
     info_logic();
 
+#if USE_CAN
     // Gathers all the data from the CAN messages and updates the states
     state_update();
+#endif
 
     // Updates the graphical elements
     graphical_update();
@@ -131,47 +150,57 @@ void state_update()
 
 void label_update()
 {
-    // PRESSURES
-    // printf("label_update\n");
-    char buffer[100];
-    sprintf(buffer, "%d", sre_state->brake_pressure_1);
-    gtk_label_set_text(GTK_LABEL(label_brake_pressure_1), buffer);
-    sprintf(buffer, "%d", sre_state->brake_pressure_2);
-    gtk_label_set_text(GTK_LABEL(label_brake_pressure_2), buffer);
+    // DEBUG PANEL
+    if (currentPanel == DEBUG){
+        // PRESSURES
+        // printf("label_update\n");
+        char buffer[100];
+        sprintf(buffer, "%d", sre_state->brake_pressure_1);
+        gtk_label_set_text(GTK_LABEL(label_brake_pressure_1), buffer);
+        sprintf(buffer, "%d", sre_state->brake_pressure_2);
+        gtk_label_set_text(GTK_LABEL(label_brake_pressure_2), buffer);
 
-    sprintf(buffer, "%d", sre_state->asb_pressure_1);
-    gtk_label_set_text(GTK_LABEL(label_asb_pressure_1), buffer);
-    sprintf(buffer, "%d", sre_state->asb_pressure_2);
-    gtk_label_set_text(GTK_LABEL(label_asb_pressure_2), buffer);
+        sprintf(buffer, "%d", sre_state->asb_pressure_1);
+        gtk_label_set_text(GTK_LABEL(label_asb_pressure_1), buffer);
+        sprintf(buffer, "%d", sre_state->asb_pressure_2);
+        gtk_label_set_text(GTK_LABEL(label_asb_pressure_2), buffer);
 
-    // POWER MEASUREMENT
-    sprintf(buffer, "%d", sre_state->sdc_power);
-    gtk_label_set_text(GTK_LABEL(label_sdc_power), buffer);
-    sprintf(buffer, "%d", sre_state->lv_power);
-    gtk_label_set_text(GTK_LABEL(label_lv_power), buffer);
-    sprintf(buffer, "%d", sre_state->hv_power);
-    gtk_label_set_text(GTK_LABEL(label_hv_power), buffer);
-    sprintf(buffer, "%d", sre_state->epos_power);
-    gtk_label_set_text(GTK_LABEL(label_epos_power), buffer);
+        // POWER MEASUREMENT
+        sprintf(buffer, "%d", sre_state->sdc_power);
+        gtk_label_set_text(GTK_LABEL(label_sdc_power), buffer);
+        sprintf(buffer, "%d", sre_state->lv_power);
+        gtk_label_set_text(GTK_LABEL(label_lv_power), buffer);
+        sprintf(buffer, "%d", sre_state->hv_power);
+        gtk_label_set_text(GTK_LABEL(label_hv_power), buffer);
+        sprintf(buffer, "%d", sre_state->epos_power);
+        gtk_label_set_text(GTK_LABEL(label_epos_power), buffer);
 
-    // STATES
-    sprintf(buffer, "%s", CAR_STATE_STR[sre_state->car_state]);
-    gtk_label_set_text(GTK_LABEL(label_car_state), buffer);
+        // STATES
+        sprintf(buffer, "%s", CAR_STATE_STR[sre_state->car_state]);
+        gtk_label_set_text(GTK_LABEL(label_car_state), buffer);
 
-    sprintf(buffer, "%s", BAT_STATE_STR[sre_state->bat_state]);
-    gtk_label_set_text(GTK_LABEL(label_bat_state), buffer);
+        sprintf(buffer, "%s", BAT_STATE_STR[sre_state->bat_state]);
+        gtk_label_set_text(GTK_LABEL(label_bat_state), buffer);
 
-    sprintf(buffer, "%s", AS_STATE_STR[sre_state->as_state]);
-    gtk_label_set_text(GTK_LABEL(label_as_state), buffer);
+        sprintf(buffer, "%s", AS_STATE_STR[sre_state->as_state]);
+        gtk_label_set_text(GTK_LABEL(label_as_state), buffer);
 
-    sprintf(buffer, "%s", ASB_STATE_STR[sre_state->asb_state]);
-    gtk_label_set_text(GTK_LABEL(label_asb_state), buffer);
+        sprintf(buffer, "%s", ASB_STATE_STR[sre_state->asb_state]);
+        gtk_label_set_text(GTK_LABEL(label_asb_state), buffer);
 
-    sprintf(buffer, "%d", sre_state->asb_check_sequence);
-    gtk_label_set_text(GTK_LABEL(label_asb_check_sequence), buffer);
+        sprintf(buffer, "%d", sre_state->asb_check_sequence);
+        gtk_label_set_text(GTK_LABEL(label_asb_check_sequence), buffer);
 
-    sprintf(buffer, "%d", sre_state->asb_trigger_cause);
-    gtk_label_set_text(GTK_LABEL(label_asb_trigger_cause), buffer);
+        sprintf(buffer, "%d", sre_state->asb_trigger_cause);
+        gtk_label_set_text(GTK_LABEL(label_asb_trigger_cause), buffer);
+    }
+
+    // ENDURANCE PANEL
+    if (currentPanel == ENDURANCE){
+        char buffer[100];
+        sprintf(buffer, "%s", CAR_STATE_STR[sre_state->car_state]);
+        gtk_label_set_text(GTK_LABEL(info_carstate_endu), buffer);
+    }
 }
 
 void error_label_update()
@@ -289,40 +318,41 @@ void graphical_update()
     // printf("car_state: %s\n", CAR_STATE_STR[sre_state->car_state]);
     // printf("bat_state: %s\n", BAT_STATE_STR[sre_state->bat_state]);
 
+    printf("currentPanel %d\n", currentPanel);
     if (sre_state->tsa_ready)
     {
-        gtk_widget_add_css_class(GTK_WIDGET(label_tsa), "blink");
+        gtk_widget_add_css_class(GTK_WIDGET(tsa_label_array[currentPanel]), "blink");
     }
     else
     {
-        gtk_widget_remove_css_class(GTK_WIDGET(label_tsa), "blink");
+        gtk_widget_remove_css_class(GTK_WIDGET(tsa_label_array[currentPanel]), "blink");
     }
 
     if (sre_state->r2d_ready)
     {
-        gtk_widget_add_css_class(GTK_WIDGET(label_r2d), "blink");
+        gtk_widget_add_css_class(GTK_WIDGET(r2d_label_array[currentPanel]), "blink");
     }
     else
     {
-        gtk_widget_remove_css_class(GTK_WIDGET(label_r2d), "blink");
+        gtk_widget_remove_css_class(GTK_WIDGET(r2d_label_array[currentPanel]), "blink");
     }
 
     if (sre_state->r2d_active)
     {
-        gtk_widget_add_css_class(GTK_WIDGET(label_r2d), "active");
+        gtk_widget_add_css_class(GTK_WIDGET(r2d_label_array[currentPanel]), "active");
     }
     else
     {
-        gtk_widget_remove_css_class(GTK_WIDGET(label_r2d), "active");
+        gtk_widget_remove_css_class(GTK_WIDGET(r2d_label_array[currentPanel]), "active");
     }
 
     if (sre_state->tsa_active)
     {
-        gtk_widget_add_css_class(GTK_WIDGET(label_tsa), "active");
+        gtk_widget_add_css_class(GTK_WIDGET(tsa_label_array[currentPanel]), "active");
     }
     else
     {
-        gtk_widget_remove_css_class(GTK_WIDGET(label_tsa), "active");
+        gtk_widget_remove_css_class(GTK_WIDGET(tsa_label_array[currentPanel]), "active");
     }
 
     // printf("error_show: %d\n", sre_state->error_show);

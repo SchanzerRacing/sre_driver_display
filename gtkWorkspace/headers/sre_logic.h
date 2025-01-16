@@ -4,6 +4,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+// whether to use can and disable debugging features (key press debug)
+#define USE_CAN 0
+
 // Functions
 gboolean sre_run_display();
 void graphical_update();
@@ -16,6 +19,17 @@ void init_sre_logic();
 
 void tsa_logic();
 void r2d_logic();
+
+/* ---- PANEL MANAGEMENT ---- */
+extern uint8_t currentPanel;
+
+enum PANELS
+{
+    ENDURANCE,
+    DEBUG,
+    PARAMETERS,
+    VEHICLEINFO,
+};
 
 /* ---- VEHICLE INFO MANAGEMENT --- */
 
