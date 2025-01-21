@@ -64,6 +64,7 @@
     "unistd.h": "c",
     "sre_logic.h": "c",
     "sre_can.h": "c",
-    "endurance_panel.h": "c"
+    "endurance_panel.h": "c",
+    "objects.h": "c"
   }
 }
