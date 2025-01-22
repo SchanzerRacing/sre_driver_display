@@ -1,12 +1,7 @@
-# THIS REPO HAS BEEN MOVED
-repo can be found at https://github.com/SchanzerRacing/sre_driver_display
-
-
-## gtk-driver-display
+# gtk-driver-display
 Playing around and testing gtk for use in a Formula Student Driver Display
 
-
-## Architecture
+# Architecture
 
 One GUI thread, one CAN Thread.
 
