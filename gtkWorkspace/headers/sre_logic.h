@@ -260,12 +260,33 @@ typedef struct {
     int asb_pressure_1;
     int asb_pressure_2;
 
+    // Temperatures
+    int temp_per;
+    int temp_pel;
+    int temp_motor_fl;
+    int temp_motor_fr;
+    int temp_motor_rl;
+    int temp_motor_rr;
+
+    // Battery
+    int bat_soc;
+    int bat_temp_max;
+    int bat_temp_min;
+    int bat_volt_max;
+    int bat_volt_min;
+
     // Power measurement
     int sdc_power;
     int lv_power;
     int hv_power;
     int epos_power;
 
+    // Vehicle Info
+    int car_speed;
+    int car_speed_gps;
+    int car_accel_x;
+    int car_accel_y;
+    int car_accel_z;
 
     // Switch States
     bool acu_switch;
