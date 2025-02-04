@@ -20,7 +20,7 @@ extern GObject* info_temp_motor_rl_endu;
 
 // BATTERY
 extern GObject* info_bat_soc_endu;
-extern GObject* info_battemp_max_end;
+extern GObject* info_bat_temp_max_endu;
 
 // STATE
 extern GObject* info_carstate_endu;

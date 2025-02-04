@@ -50,16 +50,40 @@ void init_sre_logic()
         return;
     }
 
+    // Pressures
     sre_state->brake_pressure_1 = 0;
     sre_state->brake_pressure_2 = 0;
     sre_state->asb_pressure_1 = 0;
     sre_state->asb_pressure_2 = 0;
 
-    sre_state->sdc_power = 0;
-    sre_state->lv_power = 0;
-    sre_state->hv_power = 0;
-    sre_state->epos_power = 0;
+    // Temperatures
+    sre_state->temp_per = 10;
+    sre_state->temp_pef = 11;
+    sre_state->temp_motor_fl = 12;
+    sre_state->temp_motor_fr = 13;
+    sre_state->temp_motor_rl = 14;
+    sre_state->temp_motor_rr = 15;
 
+    // Battery
+    sre_state->bat_soc = 1;
+    sre_state->bat_temp_max = 2;
+    sre_state->bat_temp_min = 3;
+    sre_state->bat_volt_max = 4.3;
+    sre_state->bat_volt_min = 3.1;
+
+    // Power Measurement
+    sre_state->sdc_power = 6;
+    sre_state->lv_power = 7;
+    sre_state->hv_power = 8;
+    sre_state->epos_power = 9;
+
+    // Vehicle Info
+    sre_state->car_speed = 0;
+    sre_state->car_speed_gps = 0;
+    sre_state->car_accel_x = 0;
+    sre_state->car_accel_z = 0;
+
+    // Switch States
     sre_state->acu_switch = false;
     sre_state->asb_switch = false;
     sre_state->dash_switch = false;
@@ -73,15 +97,7 @@ void init_sre_logic()
     sre_state->pumps_switch = false;
     sre_state->sensors_switch = false;
 
-    sre_state->tsa_ready = false;
-    sre_state->tsa_active = false;
-
-    sre_state->r2d_ready = false;
-    sre_state->r2d_active = false;
-
-    sre_state->error_show = false;
-    sre_state->info_show = false;
-
+    // States
     sre_state->car_state = UNDEFINED_C;
     sre_state->bat_state = UNDEFINED_B;
     sre_state->asb_state = UNINITALIZED;
@@ -91,6 +107,16 @@ void init_sre_logic()
     sre_state->ebs_state = 0;
     sre_state->asb_check_sequence = 0;
     sre_state->asb_trigger_cause = 0;
+
+    // Graphical
+    sre_state->tsa_ready = false;
+    sre_state->tsa_active = false;
+
+    sre_state->r2d_ready = false;
+    sre_state->r2d_active = false;
+
+    sre_state->error_show = false;
+    sre_state->info_show = false;
 
     // printf("sre_state batstate: %s\n", BAT_STATE_STR[sre_state->bat_state]);
 }
@@ -162,24 +188,24 @@ void label_update()
         // PRESSURES
         // printf("label_update\n");
         char buffer[100];
-        sprintf(buffer, "%d", sre_state->brake_pressure_1);
+        sprintf(buffer, "%.1f", sre_state->brake_pressure_1);
         gtk_label_set_text(GTK_LABEL(label_brake_pressure_1), buffer);
-        sprintf(buffer, "%d", sre_state->brake_pressure_2);
+        sprintf(buffer, "%.1f", sre_state->brake_pressure_2);
         gtk_label_set_text(GTK_LABEL(label_brake_pressure_2), buffer);
 
-        sprintf(buffer, "%d", sre_state->asb_pressure_1);
+        sprintf(buffer, "%.1f", sre_state->asb_pressure_1);
         gtk_label_set_text(GTK_LABEL(label_asb_pressure_1), buffer);
-        sprintf(buffer, "%d", sre_state->asb_pressure_2);
+        sprintf(buffer, "%.1f", sre_state->asb_pressure_2);
         gtk_label_set_text(GTK_LABEL(label_asb_pressure_2), buffer);
 
         // POWER MEASUREMENT
-        sprintf(buffer, "%d", sre_state->sdc_power);
+        sprintf(buffer, "%.1f", sre_state->sdc_power);
         gtk_label_set_text(GTK_LABEL(label_sdc_power), buffer);
-        sprintf(buffer, "%d", sre_state->lv_power);
+        sprintf(buffer, "%.1f", sre_state->lv_power);
         gtk_label_set_text(GTK_LABEL(label_lv_power), buffer);
-        sprintf(buffer, "%d", sre_state->hv_power);
+        sprintf(buffer, "%.1f", sre_state->hv_power);
         gtk_label_set_text(GTK_LABEL(label_hv_power), buffer);
-        sprintf(buffer, "%d", sre_state->epos_power);
+        sprintf(buffer, "%.1f", sre_state->epos_power);
         gtk_label_set_text(GTK_LABEL(label_epos_power), buffer);
 
         // STATES
@@ -201,12 +227,80 @@ void label_update()
         sprintf(buffer, "%d", sre_state->asb_trigger_cause);
         gtk_label_set_text(GTK_LABEL(label_asb_trigger_cause), buffer);
     }
-
-    // ENDURANCE PANEL
+    else // ENDURANCE PANEL
     if (currentPanel == ENDURANCE){
         char buffer[100];
         sprintf(buffer, "%s", CAR_STATE_STR[sre_state->car_state]);
         gtk_label_set_text(GTK_LABEL(info_carstate_endu), buffer);
+
+        sprintf(buffer, "%.0f%%",sre_state->bat_soc);
+        gtk_label_set_text(GTK_LABEL(info_bat_soc_endu), buffer);
+
+        sprintf(buffer, "%.0f°c",sre_state->bat_temp_max);
+        gtk_label_set_text(GTK_LABEL(info_bat_temp_max_endu), buffer);
+
+        sprintf(buffer, "%.0f°c",sre_state->temp_pef);
+        gtk_label_set_text(GTK_LABEL(info_temp_pef_endu), buffer);
+
+        sprintf(buffer, "%.0f°c",sre_state->temp_per);
+        gtk_label_set_text(GTK_LABEL(info_temp_per_endu), buffer);
+
+        sprintf(buffer, "%.0f°c",sre_state->temp_motor_fl);
+        gtk_label_set_text(GTK_LABEL(info_temp_motor_fl_endu), buffer);
+
+        sprintf(buffer, "%.0f°c",sre_state->temp_motor_fr);
+        gtk_label_set_text(GTK_LABEL(info_temp_motor_fr_endu), buffer);
+
+        sprintf(buffer, "%.0f°c",sre_state->temp_motor_rl);
+        gtk_label_set_text(GTK_LABEL(info_temp_motor_rl_endu), buffer);
+
+        sprintf(buffer, "%.0f°c",sre_state->temp_motor_rr);
+        gtk_label_set_text(GTK_LABEL(info_temp_motor_rr_endu), buffer);
+    }
+    else
+    if(currentPanel == VEHICLEINFO)
+    {
+        char buffer[100];
+
+        // PE TEMPS
+        sprintf(buffer,"%.1fc",sre_state->temp_per);
+        gtk_label_set_text(GTK_LABEL(info_temp_per_vehicleinfo),buffer);
+        sprintf(buffer,"%.1fc",sre_state->temp_pef);
+        gtk_label_set_text(GTK_LABEL(info_temp_pef_vehicleinfo),buffer);
+        
+        // MOTOR TEMPS
+        sprintf(buffer,"%.1fc",sre_state->temp_motor_fl);
+        gtk_label_set_text(GTK_LABEL(info_temp_motor_fl_vehicleinfo),buffer);
+        sprintf(buffer,"%.1fc",sre_state->temp_motor_fr);
+        gtk_label_set_text(GTK_LABEL(info_temp_motor_fr_vehicleinfo),buffer);
+        sprintf(buffer,"%.1fc",sre_state->temp_motor_rl);
+        gtk_label_set_text(GTK_LABEL(info_temp_motor_rl_vehicleinfo),buffer);
+        sprintf(buffer,"%.1fc",sre_state->temp_motor_rr);
+        gtk_label_set_text(GTK_LABEL(info_temp_motor_rr_vehicleinfo),buffer);
+
+        // BATTERY
+        sprintf(buffer,"%.0f%%",sre_state->bat_soc);
+        gtk_label_set_text(GTK_LABEL(info_bat_soc_vehicleinfo),buffer);
+        sprintf(buffer,"%.0fc",sre_state->bat_temp_max);
+        gtk_label_set_text(GTK_LABEL(info_bat_temp_max_vehicleinfo),buffer);
+        sprintf(buffer,"%.0fc",sre_state->bat_temp_min);
+        gtk_label_set_text(GTK_LABEL(info_bat_temp_min_vehicleinfo),buffer);
+        sprintf(buffer,"%.1fv",sre_state->bat_volt_max);
+        gtk_label_set_text(GTK_LABEL(info_bat_voltage_max_vehicleinfo),buffer);
+        sprintf(buffer,"%.1fv",sre_state->bat_volt_min);
+        gtk_label_set_text(GTK_LABEL(info_bat_voltage_min_vehicleinfo),buffer);
+
+        // POWER MEASUREMENT
+        sprintf(buffer,"%.0f",sre_state->hv_power);
+        gtk_label_set_text(GTK_LABEL(info_hv_power_vehicleinfo),buffer);
+
+        // VEHICLE INFO
+        sprintf(buffer,"%.0f",sre_state->car_speed);
+        gtk_label_set_text(GTK_LABEL(info_car_speed_vehicleinfo),buffer);
+
+        // STATES
+        sprintf(buffer, "%s", CAR_STATE_STR[sre_state->car_state]);
+        gtk_label_set_text(GTK_LABEL(info_carstate_vehicleinfo),buffer);
     }
 }
 

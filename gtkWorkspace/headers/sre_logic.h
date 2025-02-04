@@ -254,39 +254,38 @@ static const char** ERROR_SUB_TYPE_MAP[ERROR_TYPE_COUNT] = {
 typedef struct {
 
     // Pressures
-    int brake_pressure_1;
-    int brake_pressure_2;
-
-    int asb_pressure_1;
-    int asb_pressure_2;
+    float brake_pressure_1;
+    float brake_pressure_2;
+    float asb_pressure_1;
+    float asb_pressure_2;
 
     // Temperatures
-    int temp_per;
-    int temp_pel;
-    int temp_motor_fl;
-    int temp_motor_fr;
-    int temp_motor_rl;
-    int temp_motor_rr;
+    float temp_per;
+    float temp_pef;
+    float temp_motor_fl;
+    float temp_motor_fr;
+    float temp_motor_rl;
+    float temp_motor_rr;
 
     // Battery
-    int bat_soc;
-    int bat_temp_max;
-    int bat_temp_min;
-    int bat_volt_max;
-    int bat_volt_min;
+    float bat_soc;
+    float bat_temp_max;
+    float bat_temp_min;
+    float bat_volt_max;
+    float bat_volt_min;
 
     // Power measurement
-    int sdc_power;
-    int lv_power;
-    int hv_power;
-    int epos_power;
+    float sdc_power;
+    float lv_power;
+    float hv_power;
+    float epos_power;
 
     // Vehicle Info
-    int car_speed;
-    int car_speed_gps;
-    int car_accel_x;
-    int car_accel_y;
-    int car_accel_z;
+    float car_speed;
+    float car_speed_gps;
+    float car_accel_x;
+    float car_accel_y;
+    float car_accel_z;
 
     // Switch States
     bool acu_switch;

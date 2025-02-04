@@ -19,8 +19,17 @@ extern GObject* info_temp_motor_rr_vehicleinfo;
 extern GObject* info_temp_motor_rl_vehicleinfo;
 
 // BATTERY
-extern GObject* info_bat_soc_vehicleinfo;
-extern GObject* info_battemp_max_end;
+extern GObject* info_bat_soc_vehicleinfo; 
+extern GObject* info_bat_temp_max_vehicleinfo;
+extern GObject* info_bat_temp_min_vehicleinfo;
+extern GObject* info_bat_voltage_max_vehicleinfo;
+extern GObject* info_bat_voltage_min_vehicleinfo;
+
+// Power Measurement
+extern GObject* info_hv_power_vehicleinfo;
+
+// Vehicle Info
+extern GObject* info_car_speed_vehicleinfo;
 
 // STATES
 extern GObject* info_carstate_vehicleinfo;

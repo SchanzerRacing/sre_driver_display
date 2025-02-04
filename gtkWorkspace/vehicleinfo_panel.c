@@ -17,7 +17,16 @@ GObject* info_temp_motor_rl_vehicleinfo = NULL;
 
 // BATTERY
 GObject* info_bat_soc_vehicleinfo = NULL; 
-GObject* info_battemp_max_vehicleinfo = NULL;
+GObject* info_bat_temp_max_vehicleinfo = NULL;
+GObject* info_bat_temp_min_vehicleinfo = NULL;
+GObject* info_bat_voltage_max_vehicleinfo = NULL;
+GObject* info_bat_voltage_min_vehicleinfo = NULL;
+
+// Power Measurement
+GObject* info_hv_power_vehicleinfo = NULL;
+
+// Vehicle Info
+GObject* info_car_speed_vehicleinfo = NULL;
 
 // STATE
 GObject* info_carstate_vehicleinfo = NULL;
@@ -61,9 +70,18 @@ GtkWidget* create_vehicleinfo_panel() {
 
     // BATTERY
     info_bat_soc_vehicleinfo = gtk_builder_get_object(builder_vehicleinfo_panel, "info_bat_soc_vehicleinfo");
-    info_battemp_max_vehicleinfo = gtk_builder_get_object(builder_vehicleinfo_panel, "info_battemp_max_vehicleinfo");
+    info_bat_temp_max_vehicleinfo = gtk_builder_get_object(builder_vehicleinfo_panel, "info_bat_temp_max_vehicleinfo");
+    info_bat_temp_min_vehicleinfo = gtk_builder_get_object(builder_vehicleinfo_panel, "info_bat_temp_min_vehicleinfo");
+    info_bat_voltage_max_vehicleinfo = gtk_builder_get_object(builder_vehicleinfo_panel, "info_bat_voltage_max_vehicleinfo");
+    info_bat_voltage_min_vehicleinfo = gtk_builder_get_object(builder_vehicleinfo_panel, "info_bat_voltage_min_vehicleinfo");
 
-    // STATE
+    // POWER MEASUREMENT
+    info_hv_power_vehicleinfo = gtk_builder_get_object(builder_vehicleinfo_panel, "info_power_vehicleinfo");
+
+    // VEHICLE INFO
+    info_car_speed_vehicleinfo = gtk_builder_get_object(builder_vehicleinfo_panel, "info_car_speed_vehicleinfo");
+
+    // STATES
     info_carstate_vehicleinfo = gtk_builder_get_object(builder_vehicleinfo_panel, "info_carstate_vehicleinfo");
 
     // GRAPHICAL ELEMENTS

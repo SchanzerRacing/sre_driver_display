@@ -17,7 +17,7 @@ GObject* info_temp_motor_rl_endu = NULL;
 
 // BATTERY
 GObject* info_bat_soc_endu = NULL; 
-GObject* info_battemp_max_endu = NULL;
+GObject* info_bat_temp_max_endu = NULL;
 
 // STATE
 GObject* info_carstate_endu = NULL;
@@ -55,14 +55,14 @@ GtkWidget* create_endurance_panel() {
     info_temp_pef_endu = gtk_builder_get_object(builder_endu_panel, "info_temp_pef_endu");
 
     // MOTOR TEMPS
-    info_temp_motor_fr_endu = gtk_builder_get_object(builder_endu_panel, "info_motor_temp_fr_endu");
-    info_temp_motor_fl_endu = gtk_builder_get_object(builder_endu_panel, "info_motor_temp_fl_endu");
-    info_temp_motor_rr_endu = gtk_builder_get_object(builder_endu_panel, "info_motor_temp_rr_endu");
-    info_temp_motor_rl_endu = gtk_builder_get_object(builder_endu_panel, "info_motor_temp_rl_endu");
+    info_temp_motor_fr_endu = gtk_builder_get_object(builder_endu_panel, "info_temp_motor_fr_endu");
+    info_temp_motor_fl_endu = gtk_builder_get_object(builder_endu_panel, "info_temp_motor_fl_endu");
+    info_temp_motor_rr_endu = gtk_builder_get_object(builder_endu_panel, "info_temp_motor_rr_endu");
+    info_temp_motor_rl_endu = gtk_builder_get_object(builder_endu_panel, "info_temp_motor_rl_endu");
 
     // BATTERY
     info_bat_soc_endu = gtk_builder_get_object(builder_endu_panel, "info_soc_endu");
-    info_battemp_max_endu = gtk_builder_get_object(builder_endu_panel, "info_battemp_max_endu");
+    info_bat_temp_max_endu = gtk_builder_get_object(builder_endu_panel, "info_battemp_max_endu");
 
     // STATE
     info_carstate_endu = gtk_builder_get_object(builder_endu_panel, "info_carstate_endu");
