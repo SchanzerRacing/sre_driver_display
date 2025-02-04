@@ -33,7 +33,6 @@ can_mapping_t can_mappings[] = {
 };
 
 void can_loop() {
-    
     while(1) {
         read_and_match();
 
@@ -42,8 +41,7 @@ void can_loop() {
 }
 
 uint8_t read_and_match()
-{        
-    int n_bytes, i;
+{
     struct can_frame frame;
     // printf("reading...\n");
     // Read a CAN frame from the socket
@@ -67,7 +65,8 @@ uint8_t read_and_match()
     return 1;
 }
 
-void setup_can() {
+void setup_can() 
+{
     int i;
     int nbytes;
     struct can_frame frame;
@@ -95,7 +94,8 @@ void setup_can() {
     }
 }
 
-void close_can() {
+void close_can() 
+{
     printf("closing CAN...\n");
     // Close the socket
     if (close(can_socket) < 0) {
