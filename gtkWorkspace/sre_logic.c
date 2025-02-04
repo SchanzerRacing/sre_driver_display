@@ -19,20 +19,27 @@ uint8_t currentPanel = 0;
 GObject* tsa_label_array[4];
 GObject* r2d_label_array[4];
 
+GObject *label_tsa_current = NULL;
+GObject *label_r2d_current = NULL;
+
 SRE_State *sre_state;
 SRE_error* vehicle_errors[MAX_ERRORS] = {NULL};
 
 void init_sre_logic()
 {
-    tsa_label_array[0] = label_tsa_endu;
-    tsa_label_array[1] = label_tsa;
-    tsa_label_array[2] = NULL;
-    tsa_label_array[3] = label_tsa_vehicleinfo;
+    // This could be completely skipped theoretically?
+    // everytime we draw a panel we can just update the pointer to the current panels tsa label?
+    // if i'm not mistaken this could be done for all panels that do the same.
+    // Keeping this block unused for now for possible further use if panels will be refactored into overlays that get shown and hidden
+    // tsa_label_array[0] = NULL;
+    // tsa_label_array[1] = NULL;
+    // tsa_label_array[2] = NULL;
+    // tsa_label_array[3] = NULL;
 
-    r2d_label_array[0] = label_r2d_endu;
-    r2d_label_array[1] = label_r2d;
-    r2d_label_array[2] = NULL;
-    r2d_label_array[3] = label_r2d_vehicleinfo;
+    // r2d_label_array[0] = NULL;
+    // r2d_label_array[1] = NULL;
+    // r2d_label_array[2] = NULL;
+    // r2d_label_array[3] = NULL;
 
     // INITIALIZE SRE_STATE
     printf("init_sre_state\n");
@@ -321,38 +328,42 @@ void graphical_update()
     printf("currentPanel %d\n", currentPanel);
     if (sre_state->tsa_ready)
     {
-        gtk_widget_add_css_class(GTK_WIDGET(tsa_label_array[currentPanel]), "blink");
+        // gtk_widget_add_css_class(GTK_WIDGET(tsa_label_array[currentPanel]), "blink");
+        gtk_widget_add_css_class(GTK_WIDGET(label_tsa_current), "blink");
     }
     else
     {
-        gtk_widget_remove_css_class(GTK_WIDGET(tsa_label_array[currentPanel]), "blink");
+        // gtk_widget_remove_css_class(GTK_WIDGET(tsa_label_array[currentPanel]), "blink");
+        gtk_widget_remove_css_class(GTK_WIDGET(label_tsa_current), "blink");
     }
 
     if (sre_state->r2d_ready)
     {
-        gtk_widget_add_css_class(GTK_WIDGET(r2d_label_array[currentPanel]), "blink");
+        gtk_widget_add_css_class(GTK_WIDGET(label_r2d_current), "blink");
     }
     else
     {
-        gtk_widget_remove_css_class(GTK_WIDGET(r2d_label_array[currentPanel]), "blink");
+        gtk_widget_remove_css_class(GTK_WIDGET(label_r2d_current), "blink");
     }
 
     if (sre_state->r2d_active)
     {
-        gtk_widget_add_css_class(GTK_WIDGET(r2d_label_array[currentPanel]), "active");
+        gtk_widget_add_css_class(GTK_WIDGET(label_r2d_current), "active");
     }
     else
     {
-        gtk_widget_remove_css_class(GTK_WIDGET(r2d_label_array[currentPanel]), "active");
+        gtk_widget_remove_css_class(GTK_WIDGET(label_r2d_current), "active");
     }
 
     if (sre_state->tsa_active)
     {
-        gtk_widget_add_css_class(GTK_WIDGET(tsa_label_array[currentPanel]), "active");
+        // gtk_widget_add_css_class(GTK_WIDGET(tsa_label_array[currentPanel]), "active");
+        gtk_widget_add_css_class(GTK_WIDGET(label_tsa_current), "active");
     }
     else
     {
-        gtk_widget_remove_css_class(GTK_WIDGET(tsa_label_array[currentPanel]), "active");
+        // gtk_widget_remove_css_class(GTK_WIDGET(tsa_label_array[currentPanel]), "active");
+        gtk_widget_remove_css_class(GTK_WIDGET(label_tsa_current), "active");
     }
 
     // printf("error_show: %d\n", sre_state->error_show);

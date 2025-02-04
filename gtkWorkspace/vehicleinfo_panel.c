@@ -1,5 +1,6 @@
 
 #include "headers/vehicleinfo_panel.h"
+#include "headers/sre_logic.h"  
 #include <gtk/gtk.h>
 
 GtkBuilder *builder_vehicleinfo_panel = NULL;
@@ -67,7 +68,9 @@ GtkWidget* create_vehicleinfo_panel() {
 
     // GRAPHICAL ELEMENTS
     label_tsa_vehicleinfo = gtk_builder_get_object(builder_vehicleinfo_panel, "label_tsa_vehicleinfo");
+    label_tsa_current = label_tsa_vehicleinfo;
     label_r2d_vehicleinfo = gtk_builder_get_object(builder_vehicleinfo_panel, "label_r2d_vehicleinfo");
+    label_r2d_current = label_r2d_vehicleinfo;
     
     // Add vehicleinfo_panel to the main box
     gtk_box_append(GTK_BOX(main_vehicleinfo_box), GTK_WIDGET(vehicleinfo_panel));

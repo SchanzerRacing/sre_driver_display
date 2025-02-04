@@ -23,6 +23,9 @@ void r2d_logic();
 /* ---- PANEL MANAGEMENT ---- */
 extern uint8_t currentPanel;
 
+extern GObject* label_tsa_current;
+extern GObject* label_r2d_current;
+
 enum PANELS
 {
     ENDURANCE,

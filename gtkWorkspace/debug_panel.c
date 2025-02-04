@@ -1,4 +1,5 @@
 #include "headers/debug_panel.h"
+#include "headers/sre_logic.h"
 #include <gtk/gtk.h>
 
 GtkBuilder *builder_debug_panel = NULL;
@@ -147,7 +148,9 @@ GtkWidget* create_debug_panel() {
 
     // Graphical Elements
     label_tsa = gtk_builder_get_object(builder_debug_panel, "lbl_tsa");
+    label_tsa_current = label_tsa;
     label_r2d = gtk_builder_get_object(builder_debug_panel, "lbl_r2d");
+    label_r2d_current = label_r2d;
 
     // Add debugpanel to the main box
     gtk_box_append(GTK_BOX(main_dp_box), GTK_WIDGET(debug_panel));

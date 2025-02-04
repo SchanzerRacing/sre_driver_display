@@ -17,7 +17,7 @@ bool tsa_active;
 bool r2d_ready;
 bool r2d_active;
 
-
+int panel_index;
 
 /// @brief Callback for on_click event when the user clicks anywhere in the gtk window
 /// @param gesture 

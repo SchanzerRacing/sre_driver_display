@@ -37,7 +37,8 @@ static void switch_panel(GtkWidget *widget, const char *panel_name) {
     gtk_overlay_set_child(GTK_OVERLAY(widget), panel);
 }
 
-static gboolean on_click(GtkGestureClick *gesture, gint n_press, gdouble x, gdouble y, gpointer user_data) {
+static gboolean on_click(GtkGestureClick *gesture, gint n_press, gdouble x, gdouble y, gpointer user_data) 
+{
     static int panel_index = 0;
     const char *panels[] = {"Endurance", "Debug", "Parameters", "Vehicleinfo"};
     panel_index = (panel_index + 1) % 4;

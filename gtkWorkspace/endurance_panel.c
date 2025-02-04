@@ -1,5 +1,6 @@
 
 #include "headers/endurance_panel.h"
+#include "headers/sre_logic.h"
 #include <gtk/gtk.h>
 
 GtkBuilder *builder_endu_panel = NULL;
@@ -24,6 +25,7 @@ GObject* info_carstate_endu = NULL;
 // GRAPHICAL ELEMENTS
 GObject *label_tsa_endu = NULL;
 GObject *label_r2d_endu = NULL;
+
 
 GtkWidget* create_endurance_panel() {
     GtkWidget *main_endu_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -67,7 +69,9 @@ GtkWidget* create_endurance_panel() {
 
     // GRAPHICAL ELEMENTS
     label_tsa_endu = gtk_builder_get_object(builder_endu_panel, "label_tsa_endu");
+    label_tsa_current = label_tsa_endu;
     label_r2d_endu = gtk_builder_get_object(builder_endu_panel, "label_r2d_endu");
+    label_r2d_current = label_r2d_endu;
     
     // Add endu_panel to the main box
     gtk_box_append(GTK_BOX(main_endu_box), GTK_WIDGET(endu_panel));
