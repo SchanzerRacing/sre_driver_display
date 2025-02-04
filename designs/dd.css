@@ -2,8 +2,18 @@
     50% {
         background-color: transparent;
     }
+}
 
+.blink-critical{
+    animation: blinker 1s linear infinite;
+    background-color: red;
+    border-radius:  20px;
+}
 
+.blink-warning{
+    animation: blinker 1s linear infinite;
+    background-color: yellow;
+    border-radius:  20px;
 }
 
 .blink {

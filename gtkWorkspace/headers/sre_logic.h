@@ -7,6 +7,12 @@
 // whether to use can and disable debugging features (key press debug)
 #define USE_CAN 0
 
+// Critical or Warning Values
+#define WARNING_BAT_TEMP 48
+#define CRITICAL_BAT_TEMP 53
+#define WARNING_SOC 15
+#define CRITICAL_SOC 10
+
 // Functions
 gboolean sre_run_display();
 void graphical_update();

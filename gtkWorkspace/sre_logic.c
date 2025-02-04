@@ -66,7 +66,7 @@ void init_sre_logic()
 
     // Battery
     sre_state->bat_soc = 1;
-    sre_state->bat_temp_max = 2;
+    sre_state->bat_temp_max = 54;
     sre_state->bat_temp_min = 3;
     sre_state->bat_volt_max = 4.3;
     sre_state->bat_volt_min = 3.1;
@@ -211,19 +211,14 @@ void label_update()
         // STATES
         sprintf(buffer, "%s", CAR_STATE_STR[sre_state->car_state]);
         gtk_label_set_text(GTK_LABEL(label_car_state), buffer);
-
         sprintf(buffer, "%s", BAT_STATE_STR[sre_state->bat_state]);
         gtk_label_set_text(GTK_LABEL(label_bat_state), buffer);
-
         sprintf(buffer, "%s", AS_STATE_STR[sre_state->as_state]);
         gtk_label_set_text(GTK_LABEL(label_as_state), buffer);
-
         sprintf(buffer, "%s", ASB_STATE_STR[sre_state->asb_state]);
         gtk_label_set_text(GTK_LABEL(label_asb_state), buffer);
-
         sprintf(buffer, "%d", sre_state->asb_check_sequence);
         gtk_label_set_text(GTK_LABEL(label_asb_check_sequence), buffer);
-
         sprintf(buffer, "%d", sre_state->asb_trigger_cause);
         gtk_label_set_text(GTK_LABEL(label_asb_trigger_cause), buffer);
     }
@@ -235,8 +230,31 @@ void label_update()
 
         sprintf(buffer, "%.0f%%",sre_state->bat_soc);
         gtk_label_set_text(GTK_LABEL(info_bat_soc_endu), buffer);
+        if(sre_state->bat_soc <= CRITICAL_SOC)
+        {
+            gtk_widget_add_css_class(GTK_WIDGET(info_bat_soc_endu), "blink-critical");
+        }else if (sre_state->bat_soc <= WARNING_SOC)
+        {
+            gtk_widget_add_css_class(GTK_WIDGET(info_bat_soc_endu), "blink-warning");
+        }else
+        {
+            gtk_widget_remove_css_class(GTK_WIDGET(info_bat_soc_endu), "blink-warning");
+            gtk_widget_remove_css_class(GTK_WIDGET(info_bat_soc_endu), "blink-critical");
+        }
 
         sprintf(buffer, "%.0f°c",sre_state->bat_temp_max);
+        if(sre_state->bat_temp_max >= CRITICAL_BAT_TEMP)
+        {
+            gtk_widget_add_css_class(GTK_WIDGET(info_bat_temp_max_endu), "blink-critical");
+        } else if (sre_state->bat_temp_max >= WARNING_BAT_TEMP)
+        {
+            gtk_widget_add_css_class(GTK_WIDGET(info_bat_temp_max_endu), "blink-warning");
+        } else
+        {
+            gtk_widget_remove_css_class(GTK_WIDGET(info_bat_temp_max_endu), "blink-warning");
+            gtk_widget_remove_css_class(GTK_WIDGET(info_bat_temp_max_endu), "blink-critical");
+        }
+
         gtk_label_set_text(GTK_LABEL(info_bat_temp_max_endu), buffer);
 
         sprintf(buffer, "%.0f°c",sre_state->temp_pef);
@@ -281,6 +299,18 @@ void label_update()
         // BATTERY
         sprintf(buffer,"%.0f%%",sre_state->bat_soc);
         gtk_label_set_text(GTK_LABEL(info_bat_soc_vehicleinfo),buffer);
+                if(sre_state->bat_soc <= CRITICAL_SOC)
+        {
+            gtk_widget_add_css_class(GTK_WIDGET(info_bat_soc_vehicleinfo), "blink-critical");
+        }else if (sre_state->bat_soc <= WARNING_SOC)
+        {
+            gtk_widget_add_css_class(GTK_WIDGET(info_bat_soc_vehicleinfo), "blink-warning");
+        }else
+        {
+            gtk_widget_remove_css_class(GTK_WIDGET(info_bat_soc_vehicleinfo), "blink-warning");
+            gtk_widget_remove_css_class(GTK_WIDGET(info_bat_soc_vehicleinfo), "blink-critical");
+        }
+
         sprintf(buffer,"%.0fc",sre_state->bat_temp_max);
         gtk_label_set_text(GTK_LABEL(info_bat_temp_max_vehicleinfo),buffer);
         sprintf(buffer,"%.0fc",sre_state->bat_temp_min);
@@ -367,7 +397,6 @@ void error_panel_update()
     {
         gtk_widget_set_visible(GTK_WIDGET(box_error), false);
     }
-
 
     // @todo: add cycling error messages
     // cycle error messages
