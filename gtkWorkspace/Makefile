@@ -2,7 +2,7 @@
 CC = gcc
 
 # Compiler flags
-CFLAGS = `pkg-config --cflags gtk4` -g -O0
+CFLAGS = `pkg-config --cflags gtk4` -g -O0 -Wall
 
 # Linker flags
 LDFLAGS = `pkg-config --libs gtk4`
