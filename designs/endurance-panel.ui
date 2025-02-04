@@ -59,7 +59,7 @@
                   <object class="GtkLabel" id="info_temp_pef_endu">
                     <property name="width-request">250</property>
                     <property name="margin-top">20</property>
-                    <property name="label" translatable="1">0°C</property>
+                    <property name="label" translatable="1">-°C</property>
                     <attributes>
                       <attribute name="font-desc" value="Sans 30"></attribute>
                     </attributes>
@@ -83,7 +83,7 @@
                 </child>
                 <child>
                   <object class="GtkLabel" id="info_temp_motor_rl_endu">
-                    <property name="label" translatable="1">0°C</property>
+                    <property name="label" translatable="1">-°C</property>
                     <attributes>
                       <attribute name="font-desc" value="Sans 30"></attribute>
                     </attributes>
@@ -107,7 +107,7 @@
                 </child>
                 <child>
                   <object class="GtkLabel" id="info_temp_motor_fl_endu">
-                    <property name="label" translatable="1">0°C</property>
+                    <property name="label" translatable="1">-°C</property>
                     <attributes>
                       <attribute name="font-desc" value="Sans 30"></attribute>
                     </attributes>
@@ -142,7 +142,7 @@
                 <property name="width-request">300</property>
                 <child>
                   <object class="GtkLabel" id="info_soc_endu">
-                    <property name="label" translatable="1">100%</property>
+                    <property name="label" translatable="1">-%</property>
                     <attributes>
                       <attribute name="font-desc" value="Sans Bold 60"></attribute>
                     </attributes>
@@ -167,7 +167,7 @@
                 <child>
                   <object class="GtkLabel" id="info_battemp_max_endu">
                     <property name="width-request">300</property>
-                    <property name="label" translatable="1">0°C</property>
+                    <property name="label" translatable="1">-°C</property>
                     <attributes>
                       <attribute name="font-desc" value="Sans Bold 60"></attribute>
                     </attributes>
@@ -224,7 +224,7 @@
                   <object class="GtkLabel" id="info_temp_per_endu">
                     <property name="width-request">250</property>
                     <property name="margin-top">20</property>
-                    <property name="label" translatable="1">0°C</property>
+                    <property name="label" translatable="1">-°C</property>
                     <attributes>
                       <attribute name="font-desc" value="Sans 30"></attribute>
                     </attributes>
@@ -248,7 +248,7 @@
                 </child>
                 <child>
                   <object class="GtkLabel" id="info_temp_motor_fr_endu">
-                    <property name="label" translatable="1">0°C</property>
+                    <property name="label" translatable="1">-°C</property>
                     <attributes>
                       <attribute name="font-desc" value="Sans 30"></attribute>
                     </attributes>
@@ -272,7 +272,7 @@
                 </child>
                 <child>
                   <object class="GtkLabel" id="info_temp_motor_rr_endu">
-                    <property name="label" translatable="1">0°C</property>
+                    <property name="label" translatable="1">-°C</property>
                     <attributes>
                       <attribute name="font-desc" value="Sans 30"></attribute>
                     </attributes>

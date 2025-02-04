@@ -62,7 +62,7 @@
                       <object class="GtkLabel" id="info_temp_pef_vehicleinfo">
                         <property name="width-request">150</property>
                         <property name="margin-top">20</property>
-                        <property name="label" translatable="1">0°C</property>
+                        <property name="label" translatable="1">-°C</property>
                         <attributes>
                           <attribute name="font-desc" value="Sans 30"></attribute>
                         </attributes>
@@ -76,7 +76,7 @@
                       <object class="GtkLabel" id="info_temp_per_vehicleinfo">
                         <property name="width-request">150</property>
                         <property name="margin-top">20</property>
-                        <property name="label" translatable="1">0°C</property>
+                        <property name="label" translatable="1">-°C</property>
                         <attributes>
                           <attribute name="font-desc" value="Sans 30"></attribute>
                         </attributes>
@@ -112,7 +112,7 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="info_temp_motor_fl_vehicleinfo">
-                        <property name="label" translatable="1">0°C</property>
+                        <property name="label" translatable="1">-°C</property>
                         <attributes>
                           <attribute name="font-desc" value="Sans 30"></attribute>
                         </attributes>
@@ -124,7 +124,7 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="info_temp_motor_fr_vehicleinfo">
-                        <property name="label" translatable="1">0°C</property>
+                        <property name="label" translatable="1">-°C</property>
                         <attributes>
                           <attribute name="font-desc" value="Sans 30"></attribute>
                         </attributes>
@@ -160,7 +160,7 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="info_temp_motor_rl_vehicleinfo">
-                        <property name="label" translatable="1">0°C</property>
+                        <property name="label" translatable="1">-°C</property>
                         <attributes>
                           <attribute name="font-desc" value="Sans 30"></attribute>
                         </attributes>
@@ -172,7 +172,7 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="info_temp_motor_rr_vehicleinfo">
-                        <property name="label" translatable="1">0°C</property>
+                        <property name="label" translatable="1">-°C</property>
                         <attributes>
                           <attribute name="font-desc" value="Sans 30"></attribute>
                         </attributes>
@@ -214,9 +214,9 @@
               <object class="GtkBox" id="box_middle_vehicleinfo">
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkLabel" id="info_soc_vehicleinfo">
+                  <object class="GtkLabel" id="info_bat_soc_vehicleinfo">
                     <property name="width-request">200</property>
-                    <property name="label" translatable="1">0%</property>
+                    <property name="label" translatable="1">-%</property>
                     <attributes>
                       <attribute name="font-desc" value="Sans 50"></attribute>
                     </attributes>
@@ -231,9 +231,9 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="info_speed_vehicleinfo">
+                  <object class="GtkLabel" id="info_car_speed_vehicleinfo">
                     <property name="width-request">200</property>
-                    <property name="label" translatable="1">0</property>
+                    <property name="label" translatable="1">-</property>
                     <attributes>
                       <attribute name="font-desc" value="Sans 40"></attribute>
                     </attributes>
@@ -250,7 +250,7 @@
                 <child>
                   <object class="GtkLabel" id="info_power_vehicleinfo">
                     <property name="width-request">200</property>
-                    <property name="label" translatable="1">0</property>
+                    <property name="label" translatable="1">-</property>
                     <attributes>
                       <attribute name="font-desc" value="Sans 40"></attribute>
                     </attributes>
@@ -305,7 +305,7 @@
                       <object class="GtkLabel" id="info_bat_temp_max_vehicleinfo">
                         <property name="width-request">150</property>
                         <property name="margin-top">30</property>
-                        <property name="label" translatable="1">0°C</property>
+                        <property name="label" translatable="1">-°C</property>
                         <attributes>
                           <attribute name="font-desc" value="Sans 30"></attribute>
                         </attributes>
@@ -319,7 +319,7 @@
                       <object class="GtkLabel" id="info_bat_temp_min_vehicleinfo">
                         <property name="width-request">150</property>
                         <property name="margin-top">30</property>
-                        <property name="label" translatable="1">0°C</property>
+                        <property name="label" translatable="1">-°C</property>
                         <attributes>
                           <attribute name="font-desc" value="Sans 30"></attribute>
                         </attributes>
@@ -343,7 +343,7 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="info_bat_voltage_max_vehicleinfo">
-                        <property name="label" translatable="1">0°C</property>
+                        <property name="label" translatable="1">-°C</property>
                         <attributes>
                           <attribute name="font-desc" value="Sans 30"></attribute>
                         </attributes>
@@ -355,7 +355,7 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="info_bat_voltage_min_vehicleinfo">
-                        <property name="label" translatable="1">0°C</property>
+                        <property name="label" translatable="1">-°C</property>
                         <attributes>
                           <attribute name="font-desc" value="Sans 30"></attribute>
                         </attributes>
