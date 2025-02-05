@@ -57,25 +57,25 @@ void init_sre_logic()
     sre_state->asb_pressure_2 = 0;
 
     // Temperatures
-    sre_state->temp_per = 10;
-    sre_state->temp_pef = 11;
-    sre_state->temp_motor_fl = 12;
-    sre_state->temp_motor_fr = 13;
-    sre_state->temp_motor_rl = 14;
-    sre_state->temp_motor_rr = 15;
+    sre_state->temp_per = 0;
+    sre_state->temp_pef = 0;
+    sre_state->temp_motor_fl = 0;
+    sre_state->temp_motor_fr = 0;
+    sre_state->temp_motor_rl = 0;
+    sre_state->temp_motor_rr = 0;
 
     // Battery
-    sre_state->bat_soc = 1;
-    sre_state->bat_temp_max = 54;
-    sre_state->bat_temp_min = 3;
-    sre_state->bat_volt_max = 4.3;
-    sre_state->bat_volt_min = 3.1;
+    sre_state->bat_soc = 0;
+    sre_state->bat_temp_max = 0;
+    sre_state->bat_temp_min = 0;
+    sre_state->bat_volt_max = 0;
+    sre_state->bat_volt_min = 0;
 
     // Power Measurement
-    sre_state->sdc_power = 6;
-    sre_state->lv_power = 7;
-    sre_state->hv_power = 8;
-    sre_state->epos_power = 9;
+    sre_state->sdc_power = 0;
+    sre_state->lv_power = 0;
+    sre_state->hv_power = 0;
+    sre_state->epos_power = 0;
 
     // Vehicle Info
     sre_state->car_speed = 0;
@@ -155,20 +155,58 @@ gboolean sre_run_display()
 void state_update()
 {
     // printf("state_update\n");
-
+    // PRESSURES
     sre_state->brake_pressure_1 = LOG_BrakePressures.Front;
     sre_state->brake_pressure_2 = LOG_BrakePressures.Rear;
-
     sre_state->asb_pressure_1 = DV_ASB_Pressure.Pressure1;
     sre_state->asb_pressure_2 = DV_ASB_Pressure.Pressure2;
 
+    // TEMPERATURES
+
+    if(GW_PE_RearRight.TempIGBT > GW_PE_RearLeft.TempIGBT)
+    {
+        sre_state->temp_per = GW_PE_RearRight.TempIGBT;
+    } else
+    {
+        sre_state->temp_per = GW_PE_RearLeft.TempIGBT;
+    }
+
+    if(GW_PE_FrontRight.TempIGBT > GW_PE_FrontLeft.TempIGBT)
+    {
+        sre_state->temp_pef = GW_PE_FrontRight.TempIGBT;
+    } else
+    {
+        sre_state->temp_pef = GW_PE_FrontLeft.TempIGBT;
+    }
+
+    sre_state->temp_motor_fl = GW_PE_FrontLeft.TempMotor;
+    sre_state->temp_motor_fr = GW_PE_FrontRight.TempMotor;
+    sre_state->temp_motor_rl = GW_PE_RearLeft.TempMotor;
+    sre_state->temp_motor_rr = GW_PE_RearRight.TempMotor;
+
+    // BATTERY
+    sre_state->bat_soc = GW_Battery_Status.SOC;
+    sre_state->bat_temp_max = GW_Battery_Cells.TempMax;
+    sre_state->bat_temp_min = GW_Battery_Cells.TempMin;
+    sre_state->bat_volt_max = GW_Battery_Cells.Voltage_Max;
+    sre_state->bat_volt_min = GW_Battery_Cells.Voltage_Min;
+
+    // POWER MEASUREMENT
     sre_state->sdc_power = 0; // Does not exist yet
-    sre_state->lv_power = 0; // Does not exist yet
+    sre_state->lv_power = LOG_LEM.LV;
     sre_state->hv_power = GW_Battery_Status.Power;
     sre_state->epos_power =  0; // Does not exist yet
 
+    // VEHICLE INFO
+    sre_state->car_speed = HSC_Vehicle_Status.Velocity;
+    sre_state->car_speed_gps = HSC_SBG_EKF_VEL_BODY.velocity_x;
+    sre_state->car_accel_x = HSC_SBG_ACCEL.accel_x;
+    sre_state->car_accel_y = HSC_SBG_ACCEL.accel_y;
+    sre_state->car_accel_z = HSC_SBG_ACCEL.accel_z;
+
     // Switches do not exist yet
 
+    // STATES
     sre_state->car_state = HSC_Vehicle_Status.State;
     sre_state->bat_state = GW_Battery_Status.State;
     sre_state->as_state = DV_System_Status.AS_State;
@@ -259,21 +297,87 @@ void label_update()
 
         sprintf(buffer, "%.0f°c",sre_state->temp_pef);
         gtk_label_set_text(GTK_LABEL(info_temp_pef_endu), buffer);
+        if(sre_state->temp_pef >= CRITICAL_PE_TEMP)
+        {
+            gtk_widget_add_css_class(GTK_WIDGET(info_temp_pef_endu), "blink-critical");
+        } else if (sre_state->temp_pef >= WARNING_PE_TEMP)
+        {
+            gtk_widget_add_css_class(GTK_WIDGET(info_temp_pef_endu), "blink-warning");
+        } else
+        {
+            gtk_widget_remove_css_class(GTK_WIDGET(info_temp_pef_endu), "blink-warning");
+            gtk_widget_remove_css_class(GTK_WIDGET(info_temp_pef_endu), "blink-critical");
+        }
 
         sprintf(buffer, "%.0f°c",sre_state->temp_per);
         gtk_label_set_text(GTK_LABEL(info_temp_per_endu), buffer);
+        if(sre_state->temp_per >= CRITICAL_PE_TEMP)
+        {
+            gtk_widget_add_css_class(GTK_WIDGET(info_temp_per_endu), "blink-critical");
+        } else if (sre_state->temp_per >= WARNING_PE_TEMP)
+        {
+            gtk_widget_add_css_class(GTK_WIDGET(info_temp_per_endu), "blink-warning");
+        } else
+        {
+            gtk_widget_remove_css_class(GTK_WIDGET(info_temp_per_endu), "blink-warning");
+            gtk_widget_remove_css_class(GTK_WIDGET(info_temp_per_endu), "blink-critical");
+        }
 
         sprintf(buffer, "%.0f°c",sre_state->temp_motor_fl);
         gtk_label_set_text(GTK_LABEL(info_temp_motor_fl_endu), buffer);
+        if(sre_state->temp_motor_fl >= CRITICAL_MOTOR_TEMP)
+        {
+            gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_fl_endu), "blink-critical");
+        } else if (sre_state->temp_motor_fl >= WARNING_MOTOR_TEMP)
+        {
+            gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_fl_endu), "blink-warning");
+        } else
+        {
+            gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_fl_endu), "blink-warning");
+            gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_fl_endu), "blink-critical");
+        }
 
         sprintf(buffer, "%.0f°c",sre_state->temp_motor_fr);
         gtk_label_set_text(GTK_LABEL(info_temp_motor_fr_endu), buffer);
+        if(sre_state->temp_motor_fr >= CRITICAL_MOTOR_TEMP)
+        {
+            gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_fr_endu), "blink-critical");
+        } else if (sre_state->temp_motor_fr >= WARNING_MOTOR_TEMP)
+        {
+            gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_fr_endu), "blink-warning");
+        } else
+        {
+            gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_fr_endu), "blink-warning");
+            gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_fr_endu), "blink-critical");
+        }
 
         sprintf(buffer, "%.0f°c",sre_state->temp_motor_rl);
         gtk_label_set_text(GTK_LABEL(info_temp_motor_rl_endu), buffer);
+        if(sre_state->temp_motor_rl >= CRITICAL_MOTOR_TEMP)
+        {
+            gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_rl_endu), "blink-critical");
+        } else if (sre_state->temp_motor_rl >= WARNING_MOTOR_TEMP)
+        {
+            gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_rl_endu), "blink-warning");
+        } else
+        {
+            gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_rl_endu), "blink-warning");
+            gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_rl_endu), "blink-critical");
+        }
 
         sprintf(buffer, "%.0f°c",sre_state->temp_motor_rr);
         gtk_label_set_text(GTK_LABEL(info_temp_motor_rr_endu), buffer);
+        if(sre_state->temp_motor_rr >= CRITICAL_MOTOR_TEMP)
+        {
+            gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_rr_endu), "blink-critical");
+        } else if (sre_state->temp_motor_rr >= WARNING_MOTOR_TEMP)
+        {
+            gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_rr_endu), "blink-warning");
+        } else
+        {
+            gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_rr_endu), "blink-warning");
+            gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_rr_endu), "blink-critical");
+        }
     }
     else
     if(currentPanel == VEHICLEINFO)

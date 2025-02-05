@@ -12,6 +12,12 @@
 #define CRITICAL_BAT_TEMP 53
 #define WARNING_SOC 15
 #define CRITICAL_SOC 10
+#define WARNING_VOLT 3.0
+#define CRITICAL_VOLT 2.7
+#define WARNING_MOTOR_TEMP 60
+#define CRITICAL_MOTOR_TEMP 70
+#define WARNING_PE_TEMP 60
+#define CRITICAL_PE_TEMP 70
 
 // Functions
 gboolean sre_run_display();
