@@ -123,7 +123,7 @@ void init_sre_logic()
 
 gboolean sre_run_display()
 {
-    displayCallbackCounter = ++displayCallbackCounter;
+    displayCallbackCounter+=1;
     if ((displayCallbackCounter % 10) == 0)
     {
         printf("sre_run_display, %d\n", displayCallbackCounter);
@@ -285,7 +285,7 @@ void label_update()
         gtk_label_set_text(GTK_LABEL(info_temp_per_vehicleinfo),buffer);
         sprintf(buffer,"%.1fc",sre_state->temp_pef);
         gtk_label_set_text(GTK_LABEL(info_temp_pef_vehicleinfo),buffer);
-        
+
         // MOTOR TEMPS
         sprintf(buffer,"%.1fc",sre_state->temp_motor_fl);
         gtk_label_set_text(GTK_LABEL(info_temp_motor_fl_vehicleinfo),buffer);
@@ -348,7 +348,7 @@ void error_label_update()
 
             // get sub error type string
             const char* sub_error_str = "N/A"; // default if no subtype exists
-            if(vehicle_errors[i]->error_type < ERROR_TYPE_COUNT && 
+            if(vehicle_errors[i]->error_type < ERROR_TYPE_COUNT &&
                 ERROR_SUB_TYPE_MAP[vehicle_errors[i]->error_type] != NULL &&
                 vehicle_errors[i]->sub_error_type < ERROR_SUB_TYPE_COUNT) // avoid out of bounds
             {
@@ -372,7 +372,7 @@ void error_label_update()
 }
 
 void error_panel_update()
-{   
+{
     uint8_t error_count = 0;
     for(int i = 0; i < MAX_ERRORS; i++)
     {
@@ -385,7 +385,7 @@ void error_panel_update()
     if(error_count > 0)
     {
         sre_state->error_show = 1;
-    } else 
+    } else
     {
         sre_state->error_show = 0;
     }
@@ -393,7 +393,7 @@ void error_panel_update()
     if(sre_state->error_show)
     {
         gtk_widget_set_visible(GTK_WIDGET(box_error), true);
-    } else 
+    } else
     {
         gtk_widget_set_visible(GTK_WIDGET(box_error), false);
     }
@@ -408,16 +408,16 @@ void error_panel_update()
         if((uint64_t)time(NULL) - time_since_last_change >= ERROR_PANEL_UPDATE_INT)
         {
             // Find next error that is not NULL
-            for (int i = 0; i < MAX_ERRORS; i++) 
+            for (int i = 0; i < MAX_ERRORS; i++)
             {
                 cur_err_ind = (cur_err_ind + 1) % MAX_ERRORS;
-                if (vehicle_errors[cur_err_ind] != NULL 
-                    && vehicle_errors[cur_err_ind]->dismissed == 0) 
+                if (vehicle_errors[cur_err_ind] != NULL
+                    && vehicle_errors[cur_err_ind]->dismissed == 0)
                 {
                     char buffer[100];
                     const char* error_type_str = ERROR_TYPES_STR[vehicle_errors[cur_err_ind]->error_type];
                     const char* sub_error_str = "N/A"; // default if no subtype exists
-                    if (vehicle_errors[cur_err_ind]->error_type < ERROR_TYPE_COUNT && 
+                    if (vehicle_errors[cur_err_ind]->error_type < ERROR_TYPE_COUNT &&
                         ERROR_SUB_TYPE_MAP[vehicle_errors[cur_err_ind]->error_type] != NULL &&
                         vehicle_errors[cur_err_ind]->sub_error_type < ERROR_SUB_TYPE_COUNT) // avoid out of bounds
                     {
@@ -549,13 +549,13 @@ void error_logic()
             printf("create buffer error, SCS_ERROR\n");
             SRE_error *new_buff_error = create_sre_error(VCU, VCU_SCS);
             add_error(new_buff_error);
-        } else 
+        } else
         {
             buff_error->last_seen = (uint64_t)time(NULL);
         }
     }
 
-    if(sre_state->bat_state == SDC_OPEN || sre_state->bat_state == ISO_ERROR 
+    if(sre_state->bat_state == SDC_OPEN || sre_state->bat_state == ISO_ERROR
     || sre_state->bat_state == BMS_ERROR || sre_state->bat_state == IMD_ERROR
     || sre_state->bat_state == BAT_ERROR)
     {
@@ -564,7 +564,7 @@ void error_logic()
         {
             SRE_error *new_buff_error = create_sre_error(BAT_ERR, sre_state->bat_state);
             add_error(new_buff_error);
-        } else 
+        } else
         {
             buff_error->last_seen = (uint64_t)time(NULL);
         }
@@ -577,7 +577,7 @@ void error_logic()
         {
             SRE_error *new_buff_error = create_sre_error(ASB_ERROR, ASB_EBS_TRIGGERED);
             add_error(new_buff_error);
-        } else 
+        } else
         {
             buff_error->last_seen = (uint64_t)time(NULL);
         }
@@ -590,7 +590,7 @@ void error_logic()
         {
             SRE_error *new_buff_error = create_sre_error(ASB_ERROR, sre_state->asb_trigger_cause);
             add_error(new_buff_error);
-        } else 
+        } else
         {
             buff_error->last_seen = (uint64_t)time(NULL);
         }
@@ -607,7 +607,7 @@ void error_logic()
         //         {
         //             SRE_error *new_buff_error = create_sre_error(SCS_ZOCO_FRONT, i);
         //             add_error(new_buff_error);
-        //         } else 
+        //         } else
         //         {
         //             buff_error->last_seen = (uint64_t)time(NULL);
         //         }
