@@ -10,7 +10,7 @@
 #include "main.h"
 
 GObject* box_error = NULL;
-GObject* box_info = NULL; 
+GObject* box_info = NULL;
 
 GObject *info_error_type = NULL;
 GObject *info_error_message = NULL;
@@ -37,7 +37,7 @@ static void switch_panel(GtkWidget *widget, const char *panel_name) {
     gtk_overlay_set_child(GTK_OVERLAY(widget), panel);
 }
 
-static gboolean on_click(GtkGestureClick *gesture, gint n_press, gdouble x, gdouble y, gpointer user_data) 
+static gboolean on_click(GtkGestureClick *gesture, gint n_press, gdouble x, gdouble y, gpointer user_data)
 {
     static int panel_index = 0;
     const char *panels[] = {"Endurance", "Debug", "Parameters", "Vehicleinfo"};
@@ -99,7 +99,7 @@ static void setup_error_info(GObject *main_overlay)
     gtk_widget_set_visible(GTK_WIDGET(box_info), FALSE);
 }
 
-static void activate(GtkApplication *app, gpointer user_data) 
+static void activate(GtkApplication *app, gpointer user_data)
 {
     init_sre_logic();
 
@@ -122,7 +122,7 @@ static void activate(GtkApplication *app, gpointer user_data)
 
     // Disallow being a target
     gtk_widget_set_can_target(GTK_WIDGET(main_overlay), FALSE);
-    
+
     // Initial panel
     GtkWidget *initial_panel = create_endurance_panel();
     gtk_overlay_set_child(GTK_OVERLAY(main_overlay), initial_panel);
@@ -130,8 +130,8 @@ static void activate(GtkApplication *app, gpointer user_data)
     #if USE_CAN == 0
         // Add Key Press Event Controller
         GtkEventController *key_controller = gtk_event_controller_key_new();
-        g_signal_connect_object(key_controller, "key-released", 
-                                G_CALLBACK(event_key_release_cb), 
+        g_signal_connect_object(key_controller, "key-released",
+                                G_CALLBACK(event_key_release_cb),
                                 window, G_CONNECT_SWAPPED);
         gtk_widget_add_controller(window, key_controller);
     #endif
@@ -153,7 +153,7 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_window_present(GTK_WINDOW(window));
 }
 
-int main(int argc, char *argv[]) 
+int main(int argc, char *argv[])
 {
     #if USE_CAN
         setup_can();
@@ -177,6 +177,7 @@ int main(int argc, char *argv[])
     return status;
 }
 
+#if USE_CAN == 0
 static void event_key_release_cb (GtkEventControllerKey *controller, guint keyval, guint keycode, GdkModifierType state, gpointer user_data) {
     printf("Key released: %d\n", keyval);
     if (keyval == GDK_KEY_t)
@@ -185,37 +186,37 @@ static void event_key_release_cb (GtkEventControllerKey *controller, guint keyva
         if(sre_state->car_state == WAIT_FOR_TSA_C)
         {
             sre_state->car_state = UNDEFINED_C;
-        } else 
+        } else
         {
             sre_state->car_state = WAIT_FOR_TSA_C;
         }
-    } else if(keyval == GDK_KEY_r) 
+    } else if(keyval == GDK_KEY_r)
     {
         printf("Key r released\n");
         if(sre_state->car_state == WAIT_FOR_RTD)
         {
             sre_state->car_state = UNDEFINED_C;
-        } else 
+        } else
         {
             sre_state->car_state = WAIT_FOR_RTD;
         }
-    } else if(keyval == GDK_KEY_f) 
+    } else if(keyval == GDK_KEY_f)
     {
         printf("Key f released\n");
         if(sre_state->car_state == DRIVE)
         {
             sre_state->car_state = UNDEFINED_C;
-        } else 
+        } else
         {
             sre_state->car_state = DRIVE;
         }
-    } else if(keyval == GDK_KEY_g) 
+    } else if(keyval == GDK_KEY_g)
     {
         printf("Key g released\n");
         if(sre_state->bat_state == TSA)
         {
             sre_state->bat_state = UNDEFINED_B;
-        } else 
+        } else
         {
             sre_state->bat_state = TSA;
         }
@@ -225,7 +226,7 @@ static void event_key_release_cb (GtkEventControllerKey *controller, guint keyva
         if(sre_state->bat_state == WAIT_FOR_TSA_B)
         {
             sre_state->bat_state = UNDEFINED_B;
-        } else 
+        } else
         {
             sre_state->bat_state = WAIT_FOR_TSA_B;
         }
@@ -234,7 +235,7 @@ static void event_key_release_cb (GtkEventControllerKey *controller, guint keyva
         if(sre_state->car_state == SCS_ERROR)
         {
             sre_state->car_state = UNDEFINED_C;
-        } else 
+        } else
         {
             sre_state->car_state = SCS_ERROR;
         }
@@ -244,17 +245,17 @@ static void event_key_release_cb (GtkEventControllerKey *controller, guint keyva
         {
             sre_state->asb_state = UNINITALIZED;
             sre_state->asb_trigger_cause = 0;
-        } else 
+        } else
         {
             sre_state->asb_state = EBS_TRIGGERED;
             sre_state->asb_trigger_cause = 5;
-        }   
+        }
     } else if (keyval == GDK_KEY_c)
     {
         if(sre_state->bat_state == ISO_ERROR)
         {
             sre_state->bat_state = UNDEFINED_B;
-        } else 
+        } else
         {
             sre_state->bat_state = ISO_ERROR;
         }
@@ -264,10 +265,11 @@ static void event_key_release_cb (GtkEventControllerKey *controller, guint keyva
         {
             sre_state->asb_state = UNINITALIZED;
             sre_state->asb_trigger_cause = 0;
-        } else 
+        } else
         {
             sre_state->asb_state = EBS_TRIGGERED;
             sre_state->asb_trigger_cause = 12;
-        } 
+        }
     }
 }
+#endif
