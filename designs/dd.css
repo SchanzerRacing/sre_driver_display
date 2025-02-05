@@ -1,3 +1,15 @@
+@keyframes blinkerred {
+    50% {
+        background-color: rgba(255, 0, 0, 0.2);
+    }
+}
+
+@keyframes blinkerwarning {
+    50% {
+        background-color: rgba(255, 195, 32, 0.2);
+    }
+}
+
 @keyframes blinker {
     50% {
         background-color: transparent;
@@ -5,14 +17,14 @@
 }
 
 .blink-critical{
-    animation: blinker 1s linear infinite;
-    background-color: red;
+    animation: blinkerred 3s linear infinite;
+    background-color: rgba(255, 0, 0, 0.6);
     border-radius:  20px;
 }
 
 .blink-warning{
-    animation: blinker 1s linear infinite;
-    background-color: yellow;
+    animation: blinkerwarning 3s linear infinite;
+    background-color: rgba(255, 195, 32, 0.5);
     border-radius:  20px;
 }
 
