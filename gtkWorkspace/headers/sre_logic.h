@@ -98,7 +98,89 @@ extern SRE_error* vehicle_errors[MAX_ERRORS];
 #define ERROR_SUB_TYPE_COUNT 15
 #define ERROR_PANEL_UPDATE_INT 3 // seconds
 
-enum ERROR_TYPES 
+// TODO: Refactor this to single structs (switches, states, powers, Errors etc)
+// STRUCT
+typedef struct {
+
+    // Pressures
+    float brake_pressure_1;
+    float brake_pressure_2;
+    float asb_pressure_1;
+    float asb_pressure_2;
+
+    // Temperatures
+    float temp_per;
+    float temp_pef;
+    float temp_motor_fl;
+    float temp_motor_fr;
+    float temp_motor_rl;
+    float temp_motor_rr;
+
+    // Battery
+    float bat_soc;
+    float bat_temp_max;
+    float bat_temp_min;
+    float bat_volt_max;
+    float bat_volt_min;
+
+    // Power measurement
+    float sdc_power;
+    float lv_power;
+    float hv_power;
+    float epos_power;
+
+    // Vehicle Info
+    float car_speed;
+    float car_speed_gps;
+    float car_accel_x;
+    float car_accel_y;
+    float car_accel_z;
+
+    // Switch States
+    bool acu_switch;
+    bool asb_switch;
+    bool dash_switch;
+    bool epos_lc_switch;
+    bool fan_l_switch;
+    bool fan_r_switch;
+    bool sbg_switch;
+    bool vcu_switch;
+    bool pef_switch;
+    bool per_switch;
+    bool pumps_switch;
+    bool sensors_switch;
+
+    // States
+    uint8_t car_state;
+    uint16_t bat_state;
+    uint8_t as_state;
+    uint8_t ami_state;
+    uint8_t asb_state;
+    uint8_t sbs_state;
+    uint8_t ebs_state;
+    uint8_t asb_checkup_complete;
+    uint8_t asb_check_sequence;
+    uint16_t asb_trigger_cause;
+
+    // Graphical
+    bool tsa_ready;
+    bool tsa_active;
+
+    bool r2d_ready;
+    bool r2d_active;
+
+    bool error_show;
+    bool info_show;
+
+} SRE_State;
+
+extern SRE_State* sre_state;
+
+
+// Ignore unused variable warnings for these as they are only used on a need to use basis
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
+enum ERROR_TYPES
 {
     UNDEFINED_ERROR = 0,
     VCU,
@@ -115,10 +197,10 @@ enum ERROR_TYPES
     SCS_AIN_F1,
 };
 static const char* ERROR_TYPES_STR[] = {
-    "Undefined", 
-    "VCU", 
-    "SDC Open", 
-    "Battery", 
+    "Undefined",
+    "VCU",
+    "SDC Open",
+    "Battery",
     "ASB",
     "SCS ZOCO Front",
     "SCS ZOCO Rear",
@@ -255,84 +337,6 @@ static const char** ERROR_SUB_TYPE_MAP[ERROR_TYPE_COUNT] = {
 
 /* ---------- STATE MANAGEMENT ------------------- */
 
-// TODO: Refactor this to single structs (switches, states, powers, Errors etc)
-// STRUCT
-typedef struct {
-
-    // Pressures
-    float brake_pressure_1;
-    float brake_pressure_2;
-    float asb_pressure_1;
-    float asb_pressure_2;
-
-    // Temperatures
-    float temp_per;
-    float temp_pef;
-    float temp_motor_fl;
-    float temp_motor_fr;
-    float temp_motor_rl;
-    float temp_motor_rr;
-
-    // Battery
-    float bat_soc;
-    float bat_temp_max;
-    float bat_temp_min;
-    float bat_volt_max;
-    float bat_volt_min;
-
-    // Power measurement
-    float sdc_power;
-    float lv_power;
-    float hv_power;
-    float epos_power;
-
-    // Vehicle Info
-    float car_speed;
-    float car_speed_gps;
-    float car_accel_x;
-    float car_accel_y;
-    float car_accel_z;
-
-    // Switch States
-    bool acu_switch;
-    bool asb_switch;
-    bool dash_switch;
-    bool epos_lc_switch;
-    bool fan_l_switch;
-    bool fan_r_switch;
-    bool sbg_switch;
-    bool vcu_switch;
-    bool pef_switch;
-    bool per_switch;
-    bool pumps_switch;
-    bool sensors_switch;
-
-    // States
-    uint8_t car_state;
-    uint16_t bat_state;
-    uint8_t as_state;
-    uint8_t ami_state;
-    uint8_t asb_state;
-    uint8_t sbs_state;
-    uint8_t ebs_state;
-    uint8_t asb_checkup_complete;
-    uint8_t asb_check_sequence;
-    uint16_t asb_trigger_cause;
-
-    // Graphical 
-    bool tsa_ready;
-    bool tsa_active;
-
-    bool r2d_ready;
-    bool r2d_active;
-
-    bool error_show;
-    bool info_show;
-
-} SRE_State;
-
-extern SRE_State* sre_state;
-
 // ET
 enum CAR_STATE {
     UNDEFINED_C,
@@ -356,155 +360,158 @@ static const char* CAR_STATE_STR[] = {
 
 // HV
 enum BAT_STATE {
-    UNDEFINED_B, 
-    START, 
-    BMS_RESET, 
-    SDC_OPEN, 
-    WAIT_FOR_TSA_B, 
-    TS_STARTUP, 
-    TSA, 
-    ISO_ERROR, 
-    BMS_ERROR, 
-    IMD_ERROR, 
+    UNDEFINED_B,
+    START,
+    BMS_RESET,
+    SDC_OPEN,
+    WAIT_FOR_TSA_B,
+    TS_STARTUP,
+    TSA,
+    ISO_ERROR,
+    BMS_ERROR,
+    IMD_ERROR,
     BAT_ERROR
 };
 static const char* BAT_STATE_STR[] = {
-    "Undefined", 
-    "Start", 
-    "BMS Reset", 
-    "SDC Open", 
-    "Wait for TSA", 
-    "TS Startup", 
-    "TSA", 
-    "ISO Error", 
-    "BMS Error", 
-    "IMD Error", 
+    "Undefined",
+    "Start",
+    "BMS Reset",
+    "SDC Open",
+    "Wait for TSA",
+    "TS Startup",
+    "TSA",
+    "ISO Error",
+    "BMS Error",
+    "IMD Error",
     "BAT Error"
 };
 
 // DV
 enum ASB_STATE {
-    UNINITALIZED, 
-    MV_CHECK, 
-    PASSIVE, 
-    DV_CHECK, 
-    MONITORING, 
+    UNINITALIZED,
+    MV_CHECK,
+    PASSIVE,
+    DV_CHECK,
+    MONITORING,
     EBS_TRIGGERED
 };
 static const char* ASB_STATE_STR[] = {
-    "Uninitialized", 
-    "MV Check", 
-    "Passive", 
-    "DV Check", 
-    "Monitoring", 
+    "Uninitialized",
+    "MV Check",
+    "Passive",
+    "DV Check",
+    "Monitoring",
     "EBS Triggered"
 };
 
 enum AMI_STATE {
-    MANUAL, 
-    ACCEL, 
-    SKIDPAD, 
-    TRACKDRIVE, 
-    BRAKETEST, 
-    INSPECTION, 
+    MANUAL,
+    ACCEL,
+    SKIDPAD,
+    TRACKDRIVE,
+    BRAKETEST,
+    INSPECTION,
     AUTOX
 };
 static const char* AMI_STATE_STR[] = {
-    "Manual", 
-    "Accel", 
-    "Skidpad", 
-    "Trackdrive", 
-    "Braketest", 
-    "Inspection", 
+    "Manual",
+    "Accel",
+    "Skidpad",
+    "Trackdrive",
+    "Braketest",
+    "Inspection",
     "Autox"
 };
 
 enum AS_STATE {
-    OFF = 1, 
-    READY = 2, 
-    DRIVING = 3, 
-    EMERGENCY = 4, 
+    OFF = 1,
+    READY = 2,
+    DRIVING = 3,
+    EMERGENCY = 4,
     FINISH = 5
 };
 static const char* AS_STATE_STR[] = {
-    "Off", 
-    "Ready", 
-    "Driving", 
-    "Emergency", 
+    "Off",
+    "Ready",
+    "Driving",
+    "Emergency",
     "Finish"
 };
 
 enum SERVICE_BRAKE_STATE {
-    DISENGAGED = 1, 
-    ENGAGED = 2, 
+    DISENGAGED = 1,
+    ENGAGED = 2,
     AVAILABLE = 3
 };
 static const char* SERVICE_BRAKE_STATE_STR[] = {
-    "Disengaged", 
-    "Engaged", 
+    "Disengaged",
+    "Engaged",
     "Available"
 };
 
 enum EBS_STATE {
-    UNAVAILABLE = 1, 
-    ARMED = 2, 
+    UNAVAILABLE = 1,
+    ARMED = 2,
     ACTIVATED = 3
 };
 static const char* EBS_STATE_STR[] = {
-    "Unavailable", 
-    "Armed", 
+    "Unavailable",
+    "Armed",
     "Activated"
 };
 
 enum ASB_CHECK_SEQUENCE {
-    WATCHDOG_NOT_TRIGGERING, 
-    WATCHDOG_TRIGGERING, 
-    ASB_PRESS_OK, 
-    BP_BUILT_UP, 
-    CLOSE_SDC_WAIT_TSA, 
-    DEAC_EBS2, 
-    DEAC_EBS1_AC_EBS2, 
+    WATCHDOG_NOT_TRIGGERING,
+    WATCHDOG_TRIGGERING,
+    ASB_PRESS_OK,
+    BP_BUILT_UP,
+    CLOSE_SDC_WAIT_TSA,
+    DEAC_EBS2,
+    DEAC_EBS1_AC_EBS2,
     AC_EBS1_AND_2
 };
 static const char* ASB_CHECK_SEQUENCE_STR[] = {
-    "Watchdog not triggering", 
-    "Watchdog triggering", 
-    "ASB Press OK", 
-    "BP built up", 
-    "Close SDC wait TSA", 
-    "Deac EBS2", 
-    "Deac EBS1 Act EBS2", 
+    "Watchdog not triggering",
+    "Watchdog triggering",
+    "ASB Press OK",
+    "BP built up",
+    "Close SDC wait TSA",
+    "Deac EBS2",
+    "Deac EBS1 Act EBS2",
     "Act EBS1 and 2"
 };
 
 enum ASB_TRIGGER_CAUSE {
     UNDEFINED = 0,
-    WATCHDOG_ERROR = 1, 
-    ASB_PRESSURES_INVALID = 2, 
-    BRAKE_PRESSURE_INVALID = 3, 
-    EBS1_PRESSURE_LOW = 4, 
-    EBS2_PRESSURE_LOW = 5, 
-    ASB_PRESSURE_LOW = 6, 
-    CAN_SCS_ERROR = 7, 
-    EBS_TRIGGERED_BY_AS = 8, 
-    RES_SDC_OPEN = 9, 
-    SDC_OPEN_ASB = 10, 
-    MECHANICALLY_STUCK_ERROR = 11, 
+    WATCHDOG_ERROR = 1,
+    ASB_PRESSURES_INVALID = 2,
+    BRAKE_PRESSURE_INVALID = 3,
+    EBS1_PRESSURE_LOW = 4,
+    EBS2_PRESSURE_LOW = 5,
+    ASB_PRESSURE_LOW = 6,
+    CAN_SCS_ERROR = 7,
+    EBS_TRIGGERED_BY_AS = 8,
+    RES_SDC_OPEN = 9,
+    SDC_OPEN_ASB = 10,
+    MECHANICALLY_STUCK_ERROR = 11,
     ASMS_TURNED_OFF_IN_MONITORING = 12
 };
 static const char* ASB_TRIGGER_CAUSE_STR[] = {
-    "Watchdog error", 
-    "ASB Pressures invalid", 
-    "Brake Pressure invalid", 
-    "EBS1 Pressure low", 
-    "EBS2 Pressure low", 
-    "ASB Pressure low", 
-    "CAN / SCS Error", 
-    "EBS triggered by AS", 
-    "RES SDC open", 
-    "SDC open", 
-    "Mech Stuck Error", 
+    "Watchdog error",
+    "ASB Pressures invalid",
+    "Brake Pressure invalid",
+    "EBS1 Pressure low",
+    "EBS2 Pressure low",
+    "ASB Pressure low",
+    "CAN / SCS Error",
+    "EBS triggered by AS",
+    "RES SDC open",
+    "SDC open",
+    "Mech Stuck Error",
     "ASMS Turned Off"
 };
+#pragma GCC diagnostic pop
+
+// END unused variable warnings
 
 #endif // SRE_LOGIC_H

@@ -65,12 +65,8 @@ uint8_t read_and_match()
     return 1;
 }
 
-void setup_can() 
+void setup_can()
 {
-    int i;
-    int nbytes;
-    struct can_frame frame;
-
     printf("Setting up CAN...\n");
     // Create a socket
     if((can_socket = socket (PF_CAN, SOCK_RAW, CAN_RAW)) < 0) {
@@ -94,7 +90,7 @@ void setup_can()
     }
 }
 
-void close_can() 
+void close_can()
 {
     printf("closing CAN...\n");
     // Close the socket
