@@ -185,7 +185,7 @@ void state_update()
     sre_state->temp_motor_rr = GW_PE_RearRight.TempMotor;
 
     // BATTERY
-    sre_state->bat_soc = GW_Battery_Status.SOC;
+    sre_state->bat_soc = GW_Battery_Status.SOC_Internal;
     sre_state->bat_temp_max = GW_Battery_Cells.TempMax;
     sre_state->bat_temp_min = GW_Battery_Cells.TempMin;
     sre_state->bat_volt_max = GW_Battery_Cells.Voltage_Max;

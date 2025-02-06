@@ -17,7 +17,7 @@ union DV_ASB_Pressure_UNION DV_ASB_Pressure;
 union DV_ASB_Status_UNION DV_ASB_Status;
 union DV_AMI_Status_UNION DV_AMI_Status;
 union SAF_AIN_F1_Status_UNION SAF_AIN_F1_Status;
-union GW_BATTERY_CELLS_UNION GW_Battery_Cells;
+union GW_Battery_Cells_UNION GW_Battery_Cells;
 union GW_PE_FrontLeft_UNION GW_PE_FrontLeft;
 union GW_PE_FrontRight_UNION GW_PE_FrontRight;
 union GW_PE_RearLeft_UNION GW_PE_RearLeft;
@@ -25,6 +25,7 @@ union GW_PE_RearRight_UNION GW_PE_RearRight;
 union HSC_SBG_EKF_VEL_BODY_UNION HSC_SBG_EKF_VEL_BODY;
 union HSC_SBG_ACCEL_UNION HSC_SBG_ACCEL;
 union LOG_LEM_UNION LOG_LEM;
+
 
 can_mapping_t can_mappings[] = {
     {HSC_VEHICLE_STATUS_ID, &HSC_Vehicle_Status, sizeof(HSC_Vehicle_Status)},

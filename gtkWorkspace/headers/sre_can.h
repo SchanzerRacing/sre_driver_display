@@ -34,7 +34,7 @@ extern union DV_ASB_Pressure_UNION DV_ASB_Pressure;
 extern union DV_ASB_Status_UNION DV_ASB_Status;
 extern union DV_AMI_Status_UNION DV_AMI_Status;
 extern union SAF_AIN_F1_Status_UNION SAF_AIN_F1_Status;
-extern union GW_BATTERY_CELLS_UNION GW_Battery_Cells;
+extern union GW_Battery_Cells_UNION GW_Battery_Cells;
 extern union GW_PE_FrontLeft_UNION GW_PE_FrontLeft;
 extern union GW_PE_FrontRight_UNION GW_PE_FrontRight;
 extern union GW_PE_RearLeft_UNION GW_PE_RearLeft;
