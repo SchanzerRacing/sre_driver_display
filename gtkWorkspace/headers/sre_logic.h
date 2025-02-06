@@ -19,6 +19,14 @@
 #define WARNING_PE_TEMP 60
 #define CRITICAL_PE_TEMP 70
 
+// error configuration
+#define SHOW_ERRORS 9
+#define MAX_ERRORS 32
+#define FREE_AFTER 5 // seconds
+#define ERROR_TYPE_COUNT 13
+#define ERROR_SUB_TYPE_COUNT 15
+#define ERROR_PANEL_UPDATE_INT 3 // seconds
+
 // Functions
 gboolean sre_run_display();
 void graphical_update();
@@ -57,10 +65,7 @@ uint32_t get_bit_position(uint32_t value);
 
 /* -------- VEHICLE ERROR MANAGEMENT ------------ */
 
-// array of errors
-#define SHOW_ERRORS 9
-#define MAX_ERRORS 32
-#define FREE_AFTER 5 // seconds
+
 
 // Error struct that contains information about the Error
 typedef struct {
@@ -100,20 +105,20 @@ void free_all_errors();
 // array of SRE_error
 extern SRE_error* vehicle_errors[MAX_ERRORS];
 
-#define ERROR_TYPE_COUNT 13
-#define ERROR_SUB_TYPE_COUNT 15
-#define ERROR_PANEL_UPDATE_INT 3 // seconds
+
 
 // TODO: Refactor this to single structs (switches, states, powers, Errors etc)
 // STRUCT
-typedef struct {
 
+typedef struct {
     // Pressures
     float brake_pressure_1;
     float brake_pressure_2;
     float asb_pressure_1;
     float asb_pressure_2;
+} SRE_Pressures;
 
+typedef struct {
     // Temperatures
     float temp_per;
     float temp_pef;
@@ -121,27 +126,35 @@ typedef struct {
     float temp_motor_fr;
     float temp_motor_rl;
     float temp_motor_rr;
+} SRE_Temperatures;
 
+typedef struct {
     // Battery
     float bat_soc;
     float bat_temp_max;
     float bat_temp_min;
     float bat_volt_max;
     float bat_volt_min;
+} SRE_Battery;
 
+typedef struct {
     // Power measurement
     float sdc_power;
     float lv_power;
     float hv_power;
     float epos_power;
+} SRE_Power;
 
+typedef struct {
     // Vehicle Info
     float car_speed;
     float car_speed_gps;
     float car_accel_x;
     float car_accel_y;
     float car_accel_z;
+} SRE_Vehicle_info;
 
+typedef struct {
     // Switch States
     bool acu_switch;
     bool asb_switch;
@@ -155,7 +168,21 @@ typedef struct {
     bool per_switch;
     bool pumps_switch;
     bool sensors_switch;
+} SRE_Switch_States;
 
+typedef struct {
+    // Graphical
+    bool tsa_ready;
+    bool tsa_active;
+
+    bool r2d_ready;
+    bool r2d_active;
+
+    bool error_show;
+    bool info_show;
+} SRE_GUI;
+
+typedef struct {
     // States
     uint8_t car_state;
     uint16_t bat_state;
@@ -167,21 +194,16 @@ typedef struct {
     uint8_t asb_checkup_complete;
     uint8_t asb_check_sequence;
     uint16_t asb_trigger_cause;
+} SRE_States;
 
-    // Graphical
-    bool tsa_ready;
-    bool tsa_active;
-
-    bool r2d_ready;
-    bool r2d_active;
-
-    bool error_show;
-    bool info_show;
-
-} SRE_State;
-
-extern SRE_State* sre_state;
-
+extern SRE_Pressures* sre_pressures;
+extern SRE_Temperatures* sre_temperatures;
+extern SRE_Battery* sre_battery;
+extern SRE_Power* sre_power;
+extern SRE_Vehicle_info* sre_vehicle_info;
+extern SRE_Switch_States* sre_switches;
+extern SRE_GUI* sre_gui;
+extern SRE_States* sre_state;
 
 // Ignore unused variable warnings for these as they are only used on a need to use basis
 #pragma GCC diagnostic push
