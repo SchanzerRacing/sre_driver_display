@@ -115,7 +115,9 @@ static void activate(GtkApplication *app, gpointer user_data)
     // Create a new window
     GtkWidget *window = gtk_application_window_new(app);
     gtk_window_set_title(GTK_WINDOW(window), "Driver Display");
-    gtk_window_set_default_size(GTK_WINDOW(window), 800, 480);
+    // Set static window size and disallow resizing
+    gtk_widget_set_size_request(window, 800, 480);
+    gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
 
     // Create the main overlay
     GtkWidget *main_overlay = gtk_overlay_new();
