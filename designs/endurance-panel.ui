@@ -51,7 +51,7 @@
         <child>
           <object class="GtkBox" id="box_sidebyside_endu">
             <property name="width-request">800</property>
-            <property name="height-request">480</property>
+            <property name="height-request">400</property>
             <child>
               <object class="GtkGrid" id="grid_left_endu">
                 <property name="width-request">250</property>
@@ -195,7 +195,7 @@
                     <property name="margin-top">30</property>
                     <property name="label" translatable="1">unconfigured</property>
                     <attributes>
-                      <attribute name="font-desc" value="Sans 30"></attribute>
+                      <attribute name="font-desc" value="Sans 25"></attribute>
                     </attributes>
                     <layout>
                       <property name="column">0</property>

@@ -63,7 +63,7 @@
                       <object class="GtkLabel" id="lbl_states">
                         <property name="label" translatable="1">States</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 20"></attribute>
+                          <attribute name="font-desc" value="Sans 18"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -80,7 +80,7 @@
                         <property name="single-line-mode">1</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -94,7 +94,7 @@
                         <property name="justify">right</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -108,7 +108,7 @@
                         <property name="justify">right</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -122,7 +122,7 @@
                         <property name="justify">right</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -136,7 +136,7 @@
                         <property name="justify">right</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -150,7 +150,7 @@
                         <property name="justify">right</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -164,7 +164,7 @@
                         <property name="justify">right</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -179,7 +179,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -193,7 +193,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -207,7 +207,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -221,7 +221,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -235,7 +235,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -249,7 +249,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -263,7 +263,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -277,7 +277,7 @@
                         <property name="justify">right</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -291,7 +291,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -305,7 +305,7 @@
                         <property name="justify">right</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -319,7 +319,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -333,7 +333,7 @@
                         <property name="justify">right</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -347,7 +347,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -361,7 +361,7 @@
                         <property name="justify">right</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -375,7 +375,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -392,7 +392,7 @@
                       <object class="GtkLabel" id="lbl_power">
                         <property name="label" translatable="1">Power</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 20"></attribute>
+                          <attribute name="font-desc" value="Sans 18"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -406,7 +406,7 @@
                         <property name="label" translatable="1">SDC:</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -419,7 +419,7 @@
                         <property name="label" translatable="1">LV:</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -432,7 +432,7 @@
                         <property name="label" translatable="1">HV:</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -445,7 +445,7 @@
                         <property name="label" translatable="1">EPOS:</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -459,7 +459,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -473,7 +473,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -487,7 +487,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -501,7 +501,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -524,7 +524,7 @@
                       <object class="GtkLabel" id="lbl_errors">
                         <property name="label" translatable="1">Errors</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 20"></attribute>
+                          <attribute name="font-desc" value="Sans 18"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -537,7 +537,7 @@
                       <object class="GtkLabel" id="lbl_error_1">
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -549,7 +549,7 @@
                       <object class="GtkLabel" id="lbl_error_2">
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -561,7 +561,7 @@
                       <object class="GtkLabel" id="lbl_error_3">
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -573,7 +573,7 @@
                       <object class="GtkLabel" id="lbl_error_4">
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -585,7 +585,7 @@
                       <object class="GtkLabel" id="lbl_error_5">
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -598,7 +598,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -611,7 +611,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -624,7 +624,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -637,7 +637,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -650,7 +650,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -662,7 +662,7 @@
                       <object class="GtkLabel" id="lbl_error_6">
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -675,7 +675,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -687,7 +687,7 @@
                       <object class="GtkLabel" id="lbl_error_7">
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -699,7 +699,7 @@
                       <object class="GtkLabel" id="lbl_error_8">
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -712,7 +712,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -725,7 +725,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -737,7 +737,7 @@
                       <object class="GtkLabel" id="lbl_error_9">
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -750,7 +750,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -766,7 +766,7 @@
                       <object class="GtkLabel" id="lbl_switch_states">
                         <property name="label" translatable="1">Switch States</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 20"></attribute>
+                          <attribute name="font-desc" value="Sans 18"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -783,7 +783,7 @@
                         <property name="single-line-mode">1</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -798,7 +798,7 @@
                         <property name="single-line-mode">1</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -813,7 +813,7 @@
                         <property name="single-line-mode">1</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -827,7 +827,7 @@
                         <property name="single-line-mode">1</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -841,7 +841,7 @@
                         <property name="single-line-mode">1</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -856,7 +856,7 @@
                         <property name="single-line-mode">1</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">0</property>
@@ -872,7 +872,7 @@
                         <property name="single-line-mode">1</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">2</property>
@@ -887,7 +887,7 @@
                         <property name="single-line-mode">1</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">2</property>
@@ -902,7 +902,7 @@
                         <property name="single-line-mode">1</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">2</property>
@@ -917,7 +917,7 @@
                         <property name="single-line-mode">1</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">2</property>
@@ -932,7 +932,7 @@
                         <property name="single-line-mode">1</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">2</property>
@@ -947,7 +947,7 @@
                         <property name="single-line-mode">1</property>
                         <property name="xalign">0.05000000074505806</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">2</property>
@@ -963,7 +963,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -978,7 +978,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -993,7 +993,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -1008,7 +1008,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -1023,7 +1023,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -1038,7 +1038,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">1</property>
@@ -1053,7 +1053,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">3</property>
@@ -1069,7 +1069,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">3</property>
@@ -1084,7 +1084,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">3</property>
@@ -1099,7 +1099,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">3</property>
@@ -1114,7 +1114,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">3</property>
@@ -1129,7 +1129,7 @@
                         <property name="xalign">1.0</property>
                         <property name="margin-end">10</property>
                         <attributes>
-                          <attribute name="font-desc" value="Sans 13"></attribute>
+                          <attribute name="font-desc" value="Sans 12"></attribute>
                         </attributes>
                         <layout>
                           <property name="column">3</property>
