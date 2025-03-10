@@ -103,6 +103,11 @@ static void activate(GtkApplication *app, gpointer user_data)
 {
     init_sre_logic();
 
+    
+    // Set dark theme
+    GtkSettings *settings = gtk_settings_get_default();
+    g_object_set(settings, "gtk-theme-name", "Default-hc-dark", NULL);
+
     // Load CSS
     cssProvider = gtk_css_provider_new();
     gtk_css_provider_load_from_path(cssProvider, "../designs/dd.css");
@@ -151,6 +156,9 @@ static void activate(GtkApplication *app, gpointer user_data)
 
     // Add the main overlay to the window
     gtk_window_set_child(GTK_WINDOW(window), main_overlay);
+    
+    // set fullscreen
+    gtk_window_fullscreen(GTK_WINDOW(window));
 
     gtk_window_present(GTK_WINDOW(window));
 }
