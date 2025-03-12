@@ -5,7 +5,7 @@
 
 #include <pthread.h>
 
-#define GUI_UPDATE_INTERVALL 100 // ms
+#define GUI_UPDATE_INTERVALL 50 // ms
 
 pthread_t can_thread;
 
@@ -26,8 +26,9 @@ int panel_index;
 /// @param y
 /// @param user_data
 /// @return
-static gboolean on_click(GtkGestureClick *gesture, gint n_press,
-        gdouble x, gdouble y, gpointer user_data);
+static gboolean on_click(
+	GtkGestureClick *gesture, gint n_press,
+	gdouble x, gdouble y, gpointer user_data);
 
 /// @brief Activates the GTK application
 static void activate(GtkApplication *app, gpointer user_data);
@@ -39,8 +40,9 @@ static void activate(GtkApplication *app, gpointer user_data);
 /// @param keycode
 /// @param state
 /// @param user_data
-static void event_key_release_cb (GtkEventControllerKey *controller,
-    guint keyval, guint keycode, GdkModifierType state, gpointer user_data);
+static void event_key_release_cb(
+	GtkEventControllerKey *controller,
+	guint keyval, guint keycode, GdkModifierType state, gpointer user_data);
 #endif
 
 #endif // MAIN_H

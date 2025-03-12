@@ -19,8 +19,8 @@ OUT = $(OUT_DIR)/driver-display.out
 .PHONY: all rebuild clean
 
 # New rules
-driver-display: $(OUT_DIR)/main.o $(OUT_DIR)/debug_panel.o $(OUT_DIR)/endurance_panel.o $(OUT_DIR)/parameters_panel.o $(OUT_DIR)/sre_logic.o $(OUT_DIR)/sre_can.o $(OUT_DIR)/vehicleinfo_panel.o
-	$(CC) $(OUT_DIR)/main.o $(OUT_DIR)/debug_panel.o $(OUT_DIR)/endurance_panel.o $(OUT_DIR)/parameters_panel.o $(OUT_DIR)/sre_logic.o $(OUT_DIR)/sre_can.o $(OUT_DIR)/vehicleinfo_panel.o $(LDFLAGS) -o $(OUT)
+driver-display: $(OUT_DIR)/main.o $(OUT_DIR)/debug_panel.o $(OUT_DIR)/endurance_panel.o $(OUT_DIR)/parameters_panel.o $(OUT_DIR)/sre_logic.o $(OUT_DIR)/sre_can.o $(OUT_DIR)/vehicleinfo_panel.o $(OUT_DIR)/sre_dbc.o
+	$(CC) $(OUT_DIR)/main.o $(OUT_DIR)/debug_panel.o $(OUT_DIR)/endurance_panel.o $(OUT_DIR)/parameters_panel.o $(OUT_DIR)/sre_logic.o $(OUT_DIR)/sre_can.o $(OUT_DIR)/vehicleinfo_panel.o $(OUT_DIR)/sre_dbc.o $(LDFLAGS) -o $(OUT)
 
 $(OUT_DIR)/main.o: main.c
 	$(CC) $(CFLAGS) -c main.c -o $(OUT_DIR)/main.o
@@ -43,6 +43,9 @@ $(OUT_DIR)/sre_can.o: sre_can.c
 $(OUT_DIR)/vehicleinfo_panel.o: vehicleinfo_panel.c
 	$(CC) $(CFLAGS) -c vehicleinfo_panel.c -o $(OUT_DIR)/vehicleinfo_panel.o
 
+$(OUT_DIR)/sre_dbc.o: sre_dbc.c
+	$(CC) $(CFLAGS) -c sre_dbc.c -o $(OUT_DIR)/sre_dbc.o
+
 all: rebuild
 
 rebuild: clean
@@ -61,3 +64,6 @@ $(OUT_DIR)/debug_panel.o: | $(OUT_DIR)
 $(OUT_DIR)/endurance_panel.o: | $(OUT_DIR)
 $(OUT_DIR)/parameters_panel.o: | $(OUT_DIR)
 $(OUT_DIR)/sre_logic.o: | $(OUT_DIR)
+$(OUT_DIR)/sre_can.o: | $(OUT_DIR)
+$(OUT_DIR)/vehicleinfo_panel.o: | $(OUT_DIR)
+$(OUT_DIR)/sre_dbc.o: | $(OUT_DIR)

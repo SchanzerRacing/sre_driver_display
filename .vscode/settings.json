@@ -15,4 +15,9 @@
     "editor.defaultFormatter": "zachflower.uncrustify"
   },
   "uncrustify.configPath.linux": ".vscode/uncrustify.cfg",
+  "files.associations": {
+    "sre_can.h": "c",
+    "type_traits": "c",
+    "sre_dbc.h": "c"
+  },
 }
