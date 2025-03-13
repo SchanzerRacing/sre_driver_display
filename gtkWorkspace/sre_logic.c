@@ -246,6 +246,7 @@ void state_update()
 
 	// STATES
 	sre_state->car_state = HSC_Vehicle_Status.state;
+		printf("GW State: %d/n",GW_Battery_Status.state);
 	sre_state->bat_state = GW_Battery_Status.state;
 	sre_state->as_state = DV_System_Status.as_state;
 	sre_state->ami_state = DV_AMI_Status.state;

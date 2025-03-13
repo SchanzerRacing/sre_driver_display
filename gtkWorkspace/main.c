@@ -38,7 +38,7 @@ static void switch_panel(GtkWidget *widget, const char *panel_name)
 		panel = create_debug_panel();
 	}
 	gtk_overlay_set_child(GTK_OVERLAY(widget), panel);
-	graphical_update();
+	//	graphical_update();
 }
 
 static gboolean on_click(

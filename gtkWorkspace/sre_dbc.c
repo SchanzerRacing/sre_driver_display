@@ -791,6 +791,8 @@ void GW_Battery_Cells_StructToUnion(union GW_Battery_Cells_Union *u,
 
 void GW_Battery_Status_UnionToStruct(struct GW_Battery_Status_Struct *s,
                                             union GW_Battery_Status_Union u) {
+	printf("s.state %d, u.state %d\n",s->state,u.state);
+	printf("s.soc %d, u.soc %d\n",s->soc_internal,u.soc_internal);
   s->state = (GW_Battery_Status_State)u.state;
   s->soc_internal = (float)(u.soc_internal * 0.01f);
   s->power = (float)(u.power * 0.01f);

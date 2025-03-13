@@ -39,7 +39,7 @@ can_mapping_t can_mappings[] = {
 	{LOG_LEM_ID, &LOG_LEM,
 		LOG_LEM_UnionToStruct},
 	{GW_BATTERY_STATUS_ID, &GW_Battery_Status,
-		GW_Battery_Cells_UnionToStruct},
+		GW_Battery_Status_UnionToStruct},
 	{DV_ASB_PRESSURE_ID, &DV_ASB_Pressure,
 		DV_ASB_Pressure_UnionToStruct},
 	{DV_ASB_STATUS_ID, &DV_ASB_Status,
