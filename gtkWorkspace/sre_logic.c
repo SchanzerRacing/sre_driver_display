@@ -196,7 +196,7 @@ gboolean sre_run_display()
 
 void state_update()
 {
-	// printf("state_update\n");
+  printf("state_update\n");
 	// PRESSURES
 	sre_pressures->brake_pressure_1 = LOG_BrakePressures.front;
 	sre_pressures->brake_pressure_2 = LOG_BrakePressures.rear;
@@ -259,20 +259,23 @@ void state_update()
 
 void label_update()
 {
+
+	printf("label_update\n");
 	// DEBUG PANEL
 	if (currentPanel == DEBUG) {
 		// PRESSURES
-		// printf("label_update\n");
 		char buffer[100];
 		sprintf(buffer, "%.1f", sre_pressures->brake_pressure_1);
 		gtk_label_set_text(GTK_LABEL(label_brake_pressure_1), buffer);
 		sprintf(buffer, "%.1f", sre_pressures->brake_pressure_2);
 		gtk_label_set_text(GTK_LABEL(label_brake_pressure_2), buffer);
+		printf("Set Label for Brake Pressures\n");
 
 		sprintf(buffer, "%.1f", sre_pressures->asb_pressure_1);
 		gtk_label_set_text(GTK_LABEL(label_asb_pressure_1), buffer);
 		sprintf(buffer, "%.1f", sre_pressures->asb_pressure_2);
 		gtk_label_set_text(GTK_LABEL(label_asb_pressure_2), buffer);
+		printf("Set Label for ASB Pressures\n");
 
 		// POWER MEASUREMENT
 		sprintf(buffer, "%.1f", sre_power->sdc_power);
@@ -283,6 +286,7 @@ void label_update()
 		gtk_label_set_text(GTK_LABEL(label_hv_power), buffer);
 		sprintf(buffer, "%.1f", sre_power->epos_power);
 		gtk_label_set_text(GTK_LABEL(label_epos_power), buffer);
+		printf("Set Label for Power Measurement\n");
 
 		// STATES
 		sprintf(buffer, "%s", CAR_STATE_STR[sre_state->car_state]);
@@ -297,6 +301,8 @@ void label_update()
 		gtk_label_set_text(GTK_LABEL(label_asb_check_sequence), buffer);
 		sprintf(buffer, "%d", sre_state->asb_trigger_cause);
 		gtk_label_set_text(GTK_LABEL(label_asb_trigger_cause), buffer);
+		printf("set states\n");
+
 	} else // ENDURANCE PANEL
 	if (currentPanel == ENDURANCE) {
 		char buffer[100];
@@ -476,6 +482,7 @@ void label_update()
 
 void error_label_update()
 {
+	printf("error_label_update\n");
 	uint8_t label_array_count = 0;
 
 	for(int i = 0; i < ERROR_LABEL_COUNT; i++) {
@@ -515,6 +522,7 @@ void error_label_update()
 
 void error_panel_update()
 {
+	printf("error_panel_update\n");
 	uint8_t error_count = 0;
 	for(int i = 0; i < MAX_ERRORS; i++) {
 		if(vehicle_errors[i] != NULL) {
@@ -583,7 +591,7 @@ void error_panel_update()
 
 void graphical_update()
 {
-	// printf("graphical_update\n");
+	printf("graphical_update\n");
 
 	// printf("car_state: %s\n", CAR_STATE_STR[sre_state->car_state]);
 	// printf("bat_state: %s\n", BAT_STATE_STR[sre_state->bat_state]);
@@ -657,6 +665,7 @@ void r2d_logic()
 
 void error_logic()
 {
+	printf("error_logic\n");
 	if(sre_state->car_state == SCS_ERROR) {
 		SRE_error *buff_error = check_if_error_exists(VCU, VCU_SCS);
 		if(buff_error == NULL) {
