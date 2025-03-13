@@ -69,7 +69,7 @@ void can_loop()
 	while(1) {
 		read_and_match();
 
-		usleep(10000);
+		usleep(10);
 	}
 }
 
