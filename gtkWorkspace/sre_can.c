@@ -91,14 +91,22 @@ uint8_t read_and_match()
 			// memcpy(can_mappings[i].union_ptr, frame.data, can_mappings[i].union_size);
 
 			uint64_t buffered_data = 0;
-			buffered_data |= (uint64_t)frame.data[0] << 56;
-			buffered_data |= (uint64_t)frame.data[1] >> 48;
-			buffered_data |= (uint64_t)frame.data[2] >> 40;
-			buffered_data |= (uint64_t)frame.data[3] >> 32;
-			buffered_data |= (uint64_t)frame.data[4] >> 24;
-			buffered_data |= (uint64_t)frame.data[5] >> 16;
-			buffered_data |= (uint64_t)frame.data[6] >> 8;
-			buffered_data |= (uint64_t)frame.data[7];
+			// buffered_data |= (uint64_t)frame.data[0] << 56;
+			// buffered_data |= (uint64_t)frame.data[1] >> 48;
+			// buffered_data |= (uint64_t)frame.data[2] >> 40;
+			// buffered_data |= (uint64_t)frame.data[3] >> 32;
+			// buffered_data |= (uint64_t)frame.data[4] >> 24;
+			// buffered_data |= (uint64_t)frame.data[5] >> 16;
+			// buffered_data |= (uint64_t)frame.data[6] >> 8;
+			// buffered_data |= (uint64_t)frame.data[7];
+			buffered_data = frame.data[0];
+			buffered_data |= frame.data[1] << 8;
+			buffered_data |= frame.data[2] << 16;
+			buffered_data |= frame.data[3] << 24;
+			buffered_data |= frame.data[4] << 32;
+			buffered_data |= frame.data[5] << 40;
+			buffered_data |= frame.data[6] << 48;
+			buffered_data |= frame.data[7] << 56;
 
 			printf("Frame ID: %d,BufferData %ld\n",frame.can_id, buffered_data);
 

@@ -939,6 +939,7 @@ void
 HSC_Vehicle_Status_UnionToStruct(struct HSC_Vehicle_Status_Struct *s,
                                  union HSC_Vehicle_Status_Union u) {
 	printf("Called HSC_Vehicle_Status_UnionToStruct\n");
+
   s->state = (HSC_Vehicle_Status_State)u.state;
   s->imd_error = (bool)u.imd_error;
   s->ams_error = (bool)u.ams_error;
