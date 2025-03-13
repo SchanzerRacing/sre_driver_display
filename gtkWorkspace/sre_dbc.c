@@ -2,22 +2,24 @@
 /***
  * Header File from DBC
  * Auto-generated using Python
- * 21.02.2025, 11:29:17 UTC
+ * 13.03.2025, 11:57:38 UTC
  ***/
 
-#include "headers/sre_dbc.h"
+
+#include "headers/sre_dbc.h" //relative path to really make sure
+
 #include <stdio.h>
 
 /* ------------------------------ LOG_aero_SPR ------------------------------ */
 
 void LOG_aero_SPR_UnionToStruct(struct LOG_aero_SPR_Struct *s,
                                        union LOG_aero_SPR_Union u) {
-  s->temp1 = (float)(u.temp1 / 0.05f);
-  s->temp2 = (float)(u.temp2 / 0.05f);
-  s->temp3 = (float)(u.temp3 / 0.05f);
-  s->hum1 = (float)(u.hum1 / 0.1f);
-  s->hum2 = (float)(u.hum2 / 0.1f);
-  s->hum3 = (float)(u.hum3 / 0.1f);
+  s->temp1 = (float)(u.temp1 * 0.05f);
+  s->temp2 = (float)(u.temp2 * 0.05f);
+  s->temp3 = (float)(u.temp3 * 0.05f);
+  s->hum1 = (float)(u.hum1 * 0.1f);
+  s->hum2 = (float)(u.hum2 * 0.1f);
+  s->hum3 = (float)(u.hum3 * 0.1f);
 }
 
 void LOG_aero_SPR_StructToUnion(union LOG_aero_SPR_Union *u,
@@ -34,12 +36,12 @@ void LOG_aero_SPR_StructToUnion(union LOG_aero_SPR_Union *u,
 
 void LOG_aero_SPL_UnionToStruct(struct LOG_aero_SPL_Struct *s,
                                        union LOG_aero_SPL_Union u) {
-  s->temp1 = (float)(u.temp1 / 0.05f);
-  s->temp2 = (float)(u.temp2 / 0.05f);
-  s->temp3 = (float)(u.temp3 / 0.05f);
-  s->hum1 = (float)(u.hum1 / 0.1f);
-  s->hum2 = (float)(u.hum2 / 0.1f);
-  s->hum3 = (float)(u.hum3 / 0.1f);
+  s->temp1 = (float)(u.temp1 * 0.05f);
+  s->temp2 = (float)(u.temp2 * 0.05f);
+  s->temp3 = (float)(u.temp3 * 0.05f);
+  s->hum1 = (float)(u.hum1 * 0.1f);
+  s->hum2 = (float)(u.hum2 * 0.1f);
+  s->hum3 = (float)(u.hum3 * 0.1f);
 }
 
 void LOG_aero_SPL_StructToUnion(union LOG_aero_SPL_Union *u,
@@ -56,10 +58,10 @@ void LOG_aero_SPL_StructToUnion(union LOG_aero_SPL_Union *u,
 
 void LOG_aero_RW_UnionToStruct(struct LOG_aero_RW_Struct *s,
                                       union LOG_aero_RW_Union u) {
-  s->temp1 = (float)(u.temp1 / 0.05f);
-  s->temp2 = (float)(u.temp2 / 0.05f);
-  s->hum1 = (float)(u.hum1 / 0.1f);
-  s->hum2 = (float)(u.hum2 / 0.1f);
+  s->temp1 = (float)(u.temp1 * 0.05f);
+  s->temp2 = (float)(u.temp2 * 0.05f);
+  s->hum1 = (float)(u.hum1 * 0.1f);
+  s->hum2 = (float)(u.hum2 * 0.1f);
 }
 
 void LOG_aero_RW_StructToUnion(union LOG_aero_RW_Union *u,
@@ -74,10 +76,10 @@ void LOG_aero_RW_StructToUnion(union LOG_aero_RW_Union *u,
 
 void LOG_aero_FW_UnionToStruct(struct LOG_aero_FW_Struct *s,
                                       union LOG_aero_FW_Union u) {
-  s->temp1 = (float)(u.temp1 / 0.05f);
-  s->temp2 = (float)(u.temp2 / 0.05f);
-  s->hum1 = (float)(u.hum1 / 0.1f);
-  s->hum2 = (float)(u.hum2 / 0.1f);
+  s->temp1 = (float)(u.temp1 * 0.05f);
+  s->temp2 = (float)(u.temp2 * 0.05f);
+  s->hum1 = (float)(u.hum1 * 0.1f);
+  s->hum2 = (float)(u.hum2 * 0.1f);
 }
 
 void LOG_aero_FW_StructToUnion(union LOG_aero_FW_Union *u,
@@ -356,7 +358,7 @@ SAF_ZoCo_Left_Status_StructToUnion(union SAF_ZoCo_Left_Status_Union *u,
 
 void LOG_Odometry_UnionToStruct(struct LOG_Odometry_Struct *s,
                                        union LOG_Odometry_Union u) {
-  s->rear_average_tire_speed = (float)(u.rear_average_tire_speed / 0.001f);
+  s->rear_average_tire_speed = (float)(u.rear_average_tire_speed * 0.001f);
 }
 
 void LOG_Odometry_StructToUnion(union LOG_Odometry_Union *u,
@@ -401,9 +403,9 @@ void LOG_SBG_ODO_Info_StructToUnion(union LOG_SBG_ODO_Info_Union *u,
 void
 HSC_SBG_Position_Acc_UnionToStruct(struct HSC_SBG_Position_Acc_Struct *s,
                                    union HSC_SBG_Position_Acc_Union u) {
-  s->latitude_acc = (float)(u.latitude_acc / 0.01f);
-  s->longitude_acc = (float)(u.longitude_acc / 0.01f);
-  s->altitude_acc = (float)(u.altitude_acc / 0.01f);
+  s->latitude_acc = (float)(u.latitude_acc * 0.01f);
+  s->longitude_acc = (float)(u.longitude_acc * 0.01f);
+  s->altitude_acc = (float)(u.altitude_acc * 0.01f);
 }
 
 void
@@ -418,9 +420,9 @@ HSC_SBG_Position_Acc_StructToUnion(union HSC_SBG_Position_Acc_Union *u,
 
 void HSC_SBG_Euler_Acc_UnionToStruct(struct HSC_SBG_Euler_Acc_Struct *s,
                                             union HSC_SBG_Euler_Acc_Union u) {
-  s->roll_acc = (float)(u.roll_acc / 0.0001f);
-  s->pitch_acc = (float)(u.pitch_acc / 0.01f);
-  s->yaw_acc = (float)(u.yaw_acc / 0.0001f);
+  s->roll_acc = (float)(u.roll_acc * 0.0001f);
+  s->pitch_acc = (float)(u.pitch_acc * 0.01f);
+  s->yaw_acc = (float)(u.yaw_acc * 0.0001f);
 }
 
 void HSC_SBG_Euler_Acc_StructToUnion(union HSC_SBG_Euler_Acc_Union *u,
@@ -434,9 +436,9 @@ void HSC_SBG_Euler_Acc_StructToUnion(union HSC_SBG_Euler_Acc_Union *u,
 
 void HSC_SBG_Euler_UnionToStruct(struct HSC_SBG_Euler_Struct *s,
                                         union HSC_SBG_Euler_Union u) {
-  s->roll = (float)(u.roll / 0.0001f);
-  s->pitch = (float)(u.pitch / 0.0001f);
-  s->yaw = (float)(u.yaw / 0.0001f);
+  s->roll = (float)(u.roll * 0.0001f);
+  s->pitch = (float)(u.pitch * 0.0001f);
+  s->yaw = (float)(u.yaw * 0.0001f);
 }
 
 void HSC_SBG_Euler_StructToUnion(union HSC_SBG_Euler_Union *u,
@@ -463,7 +465,7 @@ void LOG_SBG_EKF_Info_StructToUnion(union LOG_SBG_EKF_Info_Union *u,
 void LOG_SBG_IMU_Info_UnionToStruct(struct LOG_SBG_IMU_Info_Struct *s,
                                            union LOG_SBG_IMU_Info_Union u) {
   s->time_stamp = (uint32_t)u.time_stamp;
-  s->temperature = (float)(u.temperature / 0.01f);
+  s->temperature = (float)(u.temperature * 0.01f);
 }
 
 void LOG_SBG_IMU_Info_StructToUnion(union LOG_SBG_IMU_Info_Union *u,
@@ -476,10 +478,10 @@ void LOG_SBG_IMU_Info_StructToUnion(union LOG_SBG_IMU_Info_Union *u,
 
 void LOG_TireForces_UnionToStruct(struct LOG_TireForces_Struct *s,
                                          union LOG_TireForces_Union u) {
-  s->tire_force_fl = (float)(u.tire_force_fl / 0.02f);
-  s->tire_force_fr = (float)(u.tire_force_fr / 0.02f);
-  s->tire_force_rl = (float)(u.tire_force_rl / 0.02f);
-  s->tire_force_rr = (float)(u.tire_force_rr / 0.02f);
+  s->tire_force_fl = (float)(u.tire_force_fl * 0.02f);
+  s->tire_force_fr = (float)(u.tire_force_fr * 0.02f);
+  s->tire_force_rl = (float)(u.tire_force_rl * 0.02f);
+  s->tire_force_rr = (float)(u.tire_force_rr * 0.02f);
 }
 
 void LOG_TireForces_StructToUnion(union LOG_TireForces_Union *u,
@@ -494,10 +496,10 @@ void LOG_TireForces_StructToUnion(union LOG_TireForces_Union *u,
 
 void LOG_SlipRatio_UnionToStruct(struct LOG_SlipRatio_Struct *s,
                                         union LOG_SlipRatio_Union u) {
-  s->slip_ratio_fl = (float)(u.slip_ratio_fl / 0.01f);
-  s->slip_ratio_fr = (float)(u.slip_ratio_fr / 0.01f);
-  s->slip_ratio_rl = (float)(u.slip_ratio_rl / 0.01f);
-  s->slip_ratio_rr = (float)(u.slip_ratio_rr / 0.01f);
+  s->slip_ratio_fl = (float)(u.slip_ratio_fl * 0.01f);
+  s->slip_ratio_fr = (float)(u.slip_ratio_fr * 0.01f);
+  s->slip_ratio_rl = (float)(u.slip_ratio_rl * 0.01f);
+  s->slip_ratio_rr = (float)(u.slip_ratio_rr * 0.01f);
 }
 
 void LOG_SlipRatio_StructToUnion(union LOG_SlipRatio_Union *u,
@@ -512,10 +514,10 @@ void LOG_SlipRatio_StructToUnion(union LOG_SlipRatio_Union *u,
 
 void LOG_TV_request_UnionToStruct(struct LOG_TV_request_Struct *s,
                                          union LOG_TV_request_Union u) {
-  s->tv_fl = (float)(u.tv_fl / 0.2f);
-  s->tv_fr = (float)(u.tv_fr / 0.2f);
-  s->tv_rr = (float)(u.tv_rr / 0.2f);
-  s->tv_rl = (float)(u.tv_rl / 0.2f);
+  s->tv_fl = (float)(u.tv_fl * 0.2f);
+  s->tv_fr = (float)(u.tv_fr * 0.2f);
+  s->tv_rr = (float)(u.tv_rr * 0.2f);
+  s->tv_rl = (float)(u.tv_rl * 0.2f);
 }
 
 void LOG_TV_request_StructToUnion(union LOG_TV_request_Union *u,
@@ -530,10 +532,10 @@ void LOG_TV_request_StructToUnion(union LOG_TV_request_Union *u,
 
 void LOG_SlipAngle_UnionToStruct(struct LOG_SlipAngle_Struct *s,
                                         union LOG_SlipAngle_Union u) {
-  s->slip_angle_fl = (float)(u.slip_angle_fl / 0.01f);
-  s->slip_angle_fr = (float)(u.slip_angle_fr / 0.01f);
-  s->slip_angle_rl = (float)(u.slip_angle_rl / 0.01f);
-  s->slip_angle_rr = (float)(u.slip_angle_rr / 0.01f);
+  s->slip_angle_fl = (float)(u.slip_angle_fl * 0.01f);
+  s->slip_angle_fr = (float)(u.slip_angle_fr * 0.01f);
+  s->slip_angle_rl = (float)(u.slip_angle_rl * 0.01f);
+  s->slip_angle_rr = (float)(u.slip_angle_rr * 0.01f);
 }
 
 void LOG_SlipAngle_StructToUnion(union LOG_SlipAngle_Union *u,
@@ -549,9 +551,9 @@ void LOG_SlipAngle_StructToUnion(union LOG_SlipAngle_Union *u,
 void
 HSC_SBG_True_Heading_UnionToStruct(struct HSC_SBG_True_Heading_Struct *s,
                                    union HSC_SBG_True_Heading_Union u) {
-  s->true_heading = (float)(u.true_heading / 0.01f);
-  s->true_heading_acc = (float)(u.true_heading_acc / 0.01f);
-  s->pitch = (float)(u.pitch / 0.01f);
+  s->true_heading = (float)(u.true_heading * 0.01f);
+  s->true_heading_acc = (float)(u.true_heading_acc * 0.01f);
+  s->pitch = (float)(u.pitch * 0.01f);
 }
 
 void
@@ -566,8 +568,8 @@ HSC_SBG_True_Heading_StructToUnion(union HSC_SBG_True_Heading_Union *u,
 
 void HSC_SBG_Altitude_UnionToStruct(struct HSC_SBG_Altitude_Struct *s,
                                            union HSC_SBG_Altitude_Union u) {
-  s->altitude = (float)(u.altitude / 0.001f);
-  s->undulation = (float)(u.undulation / 0.005f);
+  s->altitude = (float)(u.altitude * 0.001f);
+  s->undulation = (float)(u.undulation * 0.005f);
 }
 
 void HSC_SBG_Altitude_StructToUnion(union HSC_SBG_Altitude_Union *u,
@@ -580,8 +582,8 @@ void HSC_SBG_Altitude_StructToUnion(union HSC_SBG_Altitude_Union *u,
 
 void HSC_SBG_Position_UnionToStruct(struct HSC_SBG_Position_Struct *s,
                                            union HSC_SBG_Position_Union u) {
-  s->latitude = (float)(u.latitude / 1e-07f);
-  s->longitude = (float)(u.longitude / 1e-07f);
+  s->latitude = (float)(u.latitude * 1e-07f);
+  s->longitude = (float)(u.longitude * 1e-07f);
 }
 
 void HSC_SBG_Position_StructToUnion(union HSC_SBG_Position_Union *u,
@@ -696,9 +698,9 @@ void LOG_SBG_Status_01_StructToUnion(union LOG_SBG_Status_01_Union *u,
 void HSC_SBG_Track_Slip_Curve_UnionToStruct(
     struct HSC_SBG_Track_Slip_Curve_Struct *s,
     union HSC_SBG_Track_Slip_Curve_Union u) {
-  s->angle_track = (float)(u.angle_track / 0.0001f);
-  s->angle_slip = (float)(u.angle_slip / 0.0001f);
-  s->curvature_radius = (float)(u.curvature_radius / 0.01f);
+  s->angle_track = (float)(u.angle_track * 0.0001f);
+  s->angle_slip = (float)(u.angle_slip * 0.0001f);
+  s->curvature_radius = (float)(u.curvature_radius * 0.01f);
   s->track_valid = (bool)u.track_valid;
   s->slip_valid = (bool)u.slip_valid;
   s->curvature_valid = (bool)u.curvature_valid;
@@ -720,9 +722,9 @@ void HSC_SBG_Track_Slip_Curve_StructToUnion(
 void
 HSC_SBG_EKF_Vel_Body_UnionToStruct(struct HSC_SBG_EKF_Vel_Body_Struct *s,
                                    union HSC_SBG_EKF_Vel_Body_Union u) {
-  s->velocity_x = (float)(u.velocity_x / 0.01f);
-  s->velocity_y = (float)(u.velocity_y / 0.01f);
-  s->velocity_z = (float)(u.velocity_z / 0.01f);
+  s->velocity_x = (float)(u.velocity_x * 0.01f);
+  s->velocity_y = (float)(u.velocity_y * 0.01f);
+  s->velocity_z = (float)(u.velocity_z * 0.01f);
 }
 
 void
@@ -737,9 +739,9 @@ HSC_SBG_EKF_Vel_Body_StructToUnion(union HSC_SBG_EKF_Vel_Body_Union *u,
 
 void HSC_SBG_Gyro_UnionToStruct(struct HSC_SBG_Gyro_Struct *s,
                                        union HSC_SBG_Gyro_Union u) {
-  s->gyro_x = (float)(u.gyro_x / 0.001f);
-  s->gyro_y = (float)(u.gyro_y / 0.001f);
-  s->gyro_z = (float)(u.gyro_z / 0.001f);
+  s->gyro_x = (float)(u.gyro_x * 0.001f);
+  s->gyro_y = (float)(u.gyro_y * 0.001f);
+  s->gyro_z = (float)(u.gyro_z * 0.001f);
 }
 
 void HSC_SBG_Gyro_StructToUnion(union HSC_SBG_Gyro_Union *u,
@@ -753,9 +755,9 @@ void HSC_SBG_Gyro_StructToUnion(union HSC_SBG_Gyro_Union *u,
 
 void HSC_SBG_Accel_UnionToStruct(struct HSC_SBG_Accel_Struct *s,
                                         union HSC_SBG_Accel_Union u) {
-  s->accel_x = (float)(u.accel_x / 0.01f);
-  s->accel_y = (float)(u.accel_y / 0.01f);
-  s->accel_z = (float)(u.accel_z / 0.01f);
+  s->accel_x = (float)(u.accel_x * 0.01f);
+  s->accel_y = (float)(u.accel_y * 0.01f);
+  s->accel_z = (float)(u.accel_z * 0.01f);
 }
 
 void HSC_SBG_Accel_StructToUnion(union HSC_SBG_Accel_Union *u,
@@ -772,8 +774,8 @@ void GW_Battery_Cells_UnionToStruct(struct GW_Battery_Cells_Struct *s,
   s->temp_min = (uint8_t)u.temp_min;
   s->temp_avg = (uint8_t)u.temp_avg;
   s->temp_max = (uint8_t)u.temp_max;
-  s->voltage_min = (float)(u.voltage_min / 0.001f);
-  s->voltage_max = (float)(u.voltage_max / 0.001f);
+  s->voltage_min = (float)(u.voltage_min * 0.001f);
+  s->voltage_max = (float)(u.voltage_max * 0.001f);
 }
 
 void GW_Battery_Cells_StructToUnion(union GW_Battery_Cells_Union *u,
@@ -790,9 +792,9 @@ void GW_Battery_Cells_StructToUnion(union GW_Battery_Cells_Union *u,
 void GW_Battery_Status_UnionToStruct(struct GW_Battery_Status_Struct *s,
                                             union GW_Battery_Status_Union u) {
   s->state = (GW_Battery_Status_State)u.state;
-  s->soc_internal = (float)(u.soc_internal / 0.01f);
-  s->power = (float)(u.power / 0.01f);
-  s->current = (float)(u.current / 0.1f);
+  s->soc_internal = (float)(u.soc_internal * 0.01f);
+  s->power = (float)(u.power * 0.01f);
+  s->current = (float)(u.current * 0.1f);
 }
 
 void GW_Battery_Status_StructToUnion(union GW_Battery_Status_Union *u,
@@ -807,9 +809,9 @@ void GW_Battery_Status_StructToUnion(union GW_Battery_Status_Union *u,
 
 void GW_PE_FrontLeft_UnionToStruct(struct GW_PE_FrontLeft_Struct *s,
                                           union GW_PE_FrontLeft_Union u) {
-  s->temp_motor = (float)(u.temp_motor / 0.1f);
-  s->temp_inverter = (float)(u.temp_inverter / 0.1f);
-  s->tempigbt = (float)(u.tempigbt / 0.1f);
+  s->temp_motor = (float)(u.temp_motor * 0.1f);
+  s->temp_inverter = (float)(u.temp_inverter * 0.1f);
+  s->tempigbt = (float)(u.tempigbt * 0.1f);
   s->actual_velocity = (int16_t)u.actual_velocity;
 }
 
@@ -825,9 +827,9 @@ void GW_PE_FrontLeft_StructToUnion(union GW_PE_FrontLeft_Union *u,
 
 void GW_PE_RearLeft_UnionToStruct(struct GW_PE_RearLeft_Struct *s,
                                          union GW_PE_RearLeft_Union u) {
-  s->temp_motor = (float)(u.temp_motor / 0.1f);
-  s->temp_inverter = (float)(u.temp_inverter / 0.1f);
-  s->tempigbt = (float)(u.tempigbt / 0.1f);
+  s->temp_motor = (float)(u.temp_motor * 0.1f);
+  s->temp_inverter = (float)(u.temp_inverter * 0.1f);
+  s->tempigbt = (float)(u.tempigbt * 0.1f);
   s->actual_velocity = (int16_t)u.actual_velocity;
 }
 
@@ -843,9 +845,9 @@ void GW_PE_RearLeft_StructToUnion(union GW_PE_RearLeft_Union *u,
 
 void GW_PE_RearRight_UnionToStruct(struct GW_PE_RearRight_Struct *s,
                                           union GW_PE_RearRight_Union u) {
-  s->temp_motor = (float)(u.temp_motor / 0.1f);
-  s->temp_inverter = (float)(u.temp_inverter / 0.1f);
-  s->tempigbt = (float)(u.tempigbt / 0.1f);
+  s->temp_motor = (float)(u.temp_motor * 0.1f);
+  s->temp_inverter = (float)(u.temp_inverter * 0.1f);
+  s->tempigbt = (float)(u.tempigbt * 0.1f);
   s->actual_velocity = (int16_t)u.actual_velocity;
 }
 
@@ -861,9 +863,9 @@ void GW_PE_RearRight_StructToUnion(union GW_PE_RearRight_Union *u,
 
 void GW_PE_FrontRight_UnionToStruct(struct GW_PE_FrontRight_Struct *s,
                                            union GW_PE_FrontRight_Union u) {
-  s->temp_motor = (float)(u.temp_motor / 0.1f);
-  s->temp_inverter = (float)(u.temp_inverter / 0.1f);
-  s->tempigbt = (float)(u.tempigbt / 0.1f);
+  s->temp_motor = (float)(u.temp_motor * 0.1f);
+  s->temp_inverter = (float)(u.temp_inverter * 0.1f);
+  s->tempigbt = (float)(u.tempigbt * 0.1f);
   s->actual_velocity = (int16_t)u.actual_velocity;
 }
 
@@ -938,15 +940,14 @@ void EXC_PUMP_Control_StructToUnion(union EXC_PUMP_Control_Union *u,
 void
 HSC_Vehicle_Status_UnionToStruct(struct HSC_Vehicle_Status_Struct *s,
                                  union HSC_Vehicle_Status_Union u) {
-	printf("Called HSC_Vehicle_Status_UnionToStruct\n");
-
   s->state = (HSC_Vehicle_Status_State)u.state;
   s->imd_error = (bool)u.imd_error;
   s->ams_error = (bool)u.ams_error;
   s->gen_scs = (uint8_t)u.gen_scs;
-  s->velocity = (float)(u.velocity / 0.5f);
-  s->velocity_ms = (float)(u.velocity_ms / 0.001f);
+  s->velocity = (float)(u.velocity * 0.5f);
+  s->velocity_ms = (float)(u.velocity_ms * 0.001f);
 	printf("State: %d,%d\n", s->state, u.state);
+	printf("Velocity: %lf, u.vel %d \n",s->velocity_ms, u.velocity_ms);
 }
 
 void
@@ -1102,8 +1103,8 @@ void SAF_ECU_Status_StructToUnion(union SAF_ECU_Status_Union *u,
 
 void HSC_Steering_UnionToStruct(struct HSC_Steering_Struct *s,
                                        union HSC_Steering_Union u) {
-  s->steering_wheel_angle = (float)(u.steering_wheel_angle / 0.075f);
-  s->steering_angle = (float)(u.steering_angle / 0.075f);
+  s->steering_wheel_angle = (float)(u.steering_wheel_angle * 0.075f);
+  s->steering_angle = (float)(u.steering_angle * 0.075f);
   s->angle_valid = (bool)u.angle_valid;
   s->gen_scs = (uint8_t)u.gen_scs;
 }
@@ -1120,7 +1121,7 @@ void HSC_Steering_StructToUnion(union HSC_Steering_Union *u,
 
 void HSC_DriverInput_UnionToStruct(struct HSC_DriverInput_Struct *s,
                                           union HSC_DriverInput_Union u) {
-  s->throttle = (float)(u.throttle / 0.002f);
+  s->throttle = (float)(u.throttle * 0.002f);
   s->brake_pressed = (bool)u.brake_pressed;
   s->throttle_valid = (bool)u.throttle_valid;
   s->brake_valid = (bool)u.brake_valid;
@@ -1202,8 +1203,8 @@ void DV_AMI_Status_StructToUnion(union DV_AMI_Status_Union *u,
 
 void DV_ASB_Pressure_UnionToStruct(struct DV_ASB_Pressure_Struct *s,
                                           union DV_ASB_Pressure_Union u) {
-  s->pressure1 = (float)(u.pressure1 / 4.0f);
-  s->pressure2 = (float)(u.pressure2 / 4.0f);
+  s->pressure1 = (float)(u.pressure1 * 4.0f);
+  s->pressure2 = (float)(u.pressure2 * 4.0f);
 }
 
 void DV_ASB_Pressure_StructToUnion(union DV_ASB_Pressure_Union *u,
@@ -1219,8 +1220,8 @@ DV_DrivingDynamics1_UnionToStruct(struct DV_DrivingDynamics1_Struct *s,
                                   union DV_DrivingDynamics1_Union u) {
   s->speed_actual = (uint8_t)u.speed_actual;
   s->speed_target = (uint8_t)u.speed_target;
-  s->steering_angle_actual = (float)(u.steering_angle_actual / 0.5f);
-  s->steering_angle_target = (float)(u.steering_angle_target / 0.5f);
+  s->steering_angle_actual = (float)(u.steering_angle_actual * 0.5f);
+  s->steering_angle_target = (float)(u.steering_angle_target * 0.5f);
   s->brake_hydr_actual = (uint8_t)u.brake_hydr_actual;
   s->brake_hydr_target = (uint8_t)u.brake_hydr_target;
   s->motor_moment_actual = (int8_t)u.motor_moment_actual;
@@ -1246,9 +1247,9 @@ void
 DV_DrivingDynamics2_UnionToStruct(struct DV_DrivingDynamics2_Struct *s,
                                   union DV_DrivingDynamics2_Union u) {
   s->acceleration_longitudinal =
-      (float)(u.acceleration_longitudinal / 0.001953125f);
-  s->acceleration_lateral = (float)(u.acceleration_lateral / 0.001953125f);
-  s->yaw_rate = (float)(u.yaw_rate / 0.0078125f);
+      (float)(u.acceleration_longitudinal * 0.001953125f);
+  s->acceleration_lateral = (float)(u.acceleration_lateral * 0.001953125f);
+  s->yaw_rate = (float)(u.yaw_rate * 0.0078125f);
 }
 
 void
@@ -1437,8 +1438,8 @@ void CAL_APPS_UnionToStruct(struct CAL_APPS_Struct *s,
                                    union CAL_APPS_Union u) {
   s->upper_3v3 = (uint16_t)u.upper_3v3;
   s->lower_3v3 = (uint16_t)u.lower_3v3;
-  s->upper_5v = (float)(u.upper_5v / 1.22f);
-  s->lower_5v = (float)(u.lower_5v / 1.22f);
+  s->upper_5v = (float)(u.upper_5v * 1.22f);
+  s->lower_5v = (float)(u.lower_5v * 1.22f);
 }
 
 void CAL_APPS_StructToUnion(union CAL_APPS_Union *u,
@@ -1456,8 +1457,8 @@ CAL_BrakePressures_UnionToStruct(struct CAL_BrakePressures_Struct *s,
                                  union CAL_BrakePressures_Union u) {
   s->front_3v3 = (uint16_t)u.front_3v3;
   s->rear_3v3 = (uint16_t)u.rear_3v3;
-  s->front_5v = (float)(u.front_5v / 1.22f);
-  s->rear_5v = (float)(u.rear_5v / 1.22f);
+  s->front_5v = (float)(u.front_5v * 1.22f);
+  s->rear_5v = (float)(u.rear_5v * 1.22f);
 }
 
 void
@@ -1474,8 +1475,8 @@ CAL_BrakePressures_StructToUnion(union CAL_BrakePressures_Union *u,
 void
 CAL_SpringTravel_Rear_UnionToStruct(struct CAL_SpringTravel_Rear_Struct *s,
                                     union CAL_SpringTravel_Rear_Union u) {
-  s->rear_right_converted = (float)(u.rear_right_converted / 0.01f);
-  s->rear_left_converted = (float)(u.rear_left_converted / 0.01f);
+  s->rear_right_converted = (float)(u.rear_right_converted * 0.01f);
+  s->rear_left_converted = (float)(u.rear_left_converted * 0.01f);
   s->rear_right_voltage = (uint16_t)u.rear_right_voltage;
   s->rear_left_voltage = (uint16_t)u.rear_left_voltage;
 }
@@ -1494,8 +1495,8 @@ CAL_SpringTravel_Rear_StructToUnion(union CAL_SpringTravel_Rear_Union *u,
 void
 CAL_SpringTravel_Front_UnionToStruct(struct CAL_SpringTravel_Front_Struct *s,
                                      union CAL_SpringTravel_Front_Union u) {
-  s->front_right_converted = (float)(u.front_right_converted / 0.01f);
-  s->front_left_converted = (float)(u.front_left_converted / 0.01f);
+  s->front_right_converted = (float)(u.front_right_converted * 0.01f);
+  s->front_left_converted = (float)(u.front_left_converted * 0.01f);
   s->front_right_voltage = (uint16_t)u.front_right_voltage;
   s->front_left_voltage = (uint16_t)u.front_left_voltage;
 }
@@ -1525,9 +1526,9 @@ void DV_DriveCommand_UnionToStruct(struct DV_DriveCommand_Struct *s,
                                           union DV_DriveCommand_Union u) {
   s->rtd_request = (bool)u.rtd_request;
   s->ebs_trigger = (bool)u.ebs_trigger;
-  s->throttle_command = (float)(u.throttle_command / 0.1f);
-  s->brake_command = (float)(u.brake_command / 0.1f);
-  s->recu_command = (float)(u.recu_command / 0.1f);
+  s->throttle_command = (float)(u.throttle_command * 0.1f);
+  s->brake_command = (float)(u.brake_command * 0.1f);
+  s->recu_command = (float)(u.recu_command * 0.1f);
   s->gen_scs = (uint8_t)u.gen_scs;
 }
 
@@ -1546,10 +1547,10 @@ void DV_DriveCommand_StructToUnion(union DV_DriveCommand_Union *u,
 void
 LOG_WaterTemps_Left_UnionToStruct(struct LOG_WaterTemps_Left_Struct *s,
                                   union LOG_WaterTemps_Left_Union u) {
-  s->wt_1 = (float)(u.wt_1 / 0.5f);
-  s->wt_2 = (float)(u.wt_2 / 0.5f);
-  s->wt_3 = (float)(u.wt_3 / 0.5f);
-  s->wt_4 = (float)(u.wt_4 / 0.5f);
+  s->wt_1 = (float)(u.wt_1 * 0.5f);
+  s->wt_2 = (float)(u.wt_2 * 0.5f);
+  s->wt_3 = (float)(u.wt_3 * 0.5f);
+  s->wt_4 = (float)(u.wt_4 * 0.5f);
 }
 
 void
@@ -1566,10 +1567,10 @@ LOG_WaterTemps_Left_StructToUnion(union LOG_WaterTemps_Left_Union *u,
 void
 LOG_WaterTemps_Right_UnionToStruct(struct LOG_WaterTemps_Right_Struct *s,
                                    union LOG_WaterTemps_Right_Union u) {
-  s->wt_1 = (float)(u.wt_1 / 0.5f);
-  s->wt_2 = (float)(u.wt_2 / 0.5f);
-  s->wt_3 = (float)(u.wt_3 / 0.5f);
-  s->wt_4 = (float)(u.wt_4 / 0.5f);
+  s->wt_1 = (float)(u.wt_1 * 0.5f);
+  s->wt_2 = (float)(u.wt_2 * 0.5f);
+  s->wt_3 = (float)(u.wt_3 * 0.5f);
+  s->wt_4 = (float)(u.wt_4 * 0.5f);
 }
 
 void
@@ -1586,8 +1587,8 @@ LOG_WaterTemps_Right_StructToUnion(union LOG_WaterTemps_Right_Union *u,
 void
 LOG_SpringTravel_Front_UnionToStruct(struct LOG_SpringTravel_Front_Struct *s,
                                      union LOG_SpringTravel_Front_Union u) {
-  s->front_left = (float)(u.front_left / 0.01f);
-  s->front_right = (float)(u.front_right / 0.01f);
+  s->front_left = (float)(u.front_left * 0.01f);
+  s->front_right = (float)(u.front_right * 0.01f);
 }
 
 void
@@ -1602,8 +1603,8 @@ LOG_SpringTravel_Front_StructToUnion(union LOG_SpringTravel_Front_Union *u,
 void
 LOG_SpringTravel_Rear_UnionToStruct(struct LOG_SpringTravel_Rear_Struct *s,
                                     union LOG_SpringTravel_Rear_Union u) {
-  s->rear_left = (float)(u.rear_left / 0.01f);
-  s->rear_right = (float)(u.rear_right / 0.01f);
+  s->rear_left = (float)(u.rear_left * 0.01f);
+  s->rear_right = (float)(u.rear_right * 0.01f);
 }
 
 void
@@ -1618,8 +1619,8 @@ LOG_SpringTravel_Rear_StructToUnion(union LOG_SpringTravel_Rear_Union *u,
 void
 LOG_BrakePressures_UnionToStruct(struct LOG_BrakePressures_Struct *s,
                                  union LOG_BrakePressures_Union u) {
-  s->front = (float)(u.front / 50.0f);
-  s->rear = (float)(u.rear / 50.0f);
+  s->front = (float)(u.front * 50.0f);
+  s->rear = (float)(u.rear * 50.0f);
 }
 
 void
@@ -1659,8 +1660,8 @@ void LOG_DashLEDs_StructToUnion(union LOG_DashLEDs_Union *u,
 
 void LOG_airp_FW_UnionToStruct(struct LOG_airp_FW_Struct *s,
                                       union LOG_airp_FW_Union u) {
-  s->airp1 = (float)(u.airp1 / 2.0f);
-  s->airp2 = (float)(u.airp2 / 2.0f);
+  s->airp1 = (float)(u.airp1 * 2.0f);
+  s->airp2 = (float)(u.airp2 * 2.0f);
 }
 
 void LOG_airp_FW_StructToUnion(union LOG_airp_FW_Union *u,
@@ -1673,9 +1674,9 @@ void LOG_airp_FW_StructToUnion(union LOG_airp_FW_Union *u,
 
 void LOG_airp_SPL_UnionToStruct(struct LOG_airp_SPL_Struct *s,
                                        union LOG_airp_SPL_Union u) {
-  s->airp1 = (float)(u.airp1 / 2.0f);
-  s->airp2 = (float)(u.airp2 / 2.0f);
-  s->airp3 = (float)(u.airp3 / 2.0f);
+  s->airp1 = (float)(u.airp1 * 2.0f);
+  s->airp2 = (float)(u.airp2 * 2.0f);
+  s->airp3 = (float)(u.airp3 * 2.0f);
 }
 
 void LOG_airp_SPL_StructToUnion(union LOG_airp_SPL_Union *u,
@@ -1689,9 +1690,9 @@ void LOG_airp_SPL_StructToUnion(union LOG_airp_SPL_Union *u,
 
 void LOG_airp_SPR_UnionToStruct(struct LOG_airp_SPR_Struct *s,
                                        union LOG_airp_SPR_Union u) {
-  s->airp1 = (float)(u.airp1 / 2.0f);
-  s->airp2 = (float)(u.airp2 / 2.0f);
-  s->airp3 = (float)(u.airp3 / 2.0f);
+  s->airp1 = (float)(u.airp1 * 2.0f);
+  s->airp2 = (float)(u.airp2 * 2.0f);
+  s->airp3 = (float)(u.airp3 * 2.0f);
 }
 
 void LOG_airp_SPR_StructToUnion(union LOG_airp_SPR_Union *u,
@@ -1705,8 +1706,8 @@ void LOG_airp_SPR_StructToUnion(union LOG_airp_SPR_Union *u,
 
 void LOG_airp_RW_UnionToStruct(struct LOG_airp_RW_Struct *s,
                                       union LOG_airp_RW_Union u) {
-  s->airp1 = (float)(u.airp1 / 2.0f);
-  s->airp2 = (float)(u.airp2 / 2.0f);
+  s->airp1 = (float)(u.airp1 * 2.0f);
+  s->airp2 = (float)(u.airp2 * 2.0f);
 }
 
 void LOG_airp_RW_StructToUnion(union LOG_airp_RW_Union *u,
@@ -1719,14 +1720,14 @@ void LOG_airp_RW_StructToUnion(union LOG_airp_RW_Union *u,
 
 void LOG_PE_MaxTemps_UnionToStruct(struct LOG_PE_MaxTemps_Struct *s,
                                           union LOG_PE_MaxTemps_Union u) {
-  s->front = (float)(u.front / 0.6f);
-  s->rear = (float)(u.rear / 0.6f);
-  s->left = (float)(u.left / 0.6f);
-  s->right = (float)(u.right / 0.6f);
-  s->usage_front = (float)(u.usage_front / 0.5f);
-  s->usage_rear = (float)(u.usage_rear / 0.5f);
-  s->usage_left = (float)(u.usage_left / 0.5f);
-  s->usage_right = (float)(u.usage_right / 0.5f);
+  s->front = (float)(u.front * 0.6f);
+  s->rear = (float)(u.rear * 0.6f);
+  s->left = (float)(u.left * 0.6f);
+  s->right = (float)(u.right * 0.6f);
+  s->usage_front = (float)(u.usage_front * 0.5f);
+  s->usage_rear = (float)(u.usage_rear * 0.5f);
+  s->usage_left = (float)(u.usage_left * 0.5f);
+  s->usage_right = (float)(u.usage_right * 0.5f);
 }
 
 void LOG_PE_MaxTemps_StructToUnion(union LOG_PE_MaxTemps_Union *u,
@@ -1746,10 +1747,10 @@ void LOG_PE_MaxTemps_StructToUnion(union LOG_PE_MaxTemps_Union *u,
 void
 LOG_EKF_Translation_UnionToStruct(struct LOG_EKF_Translation_Struct *s,
                                   union LOG_EKF_Translation_Union u) {
-  s->velocity_vx = (float)(u.velocity_vx / 0.002f);
-  s->velocity_vy = (float)(u.velocity_vy / 0.002f);
-  s->acceleration_ax = (float)(u.acceleration_ax / 0.002f);
-  s->acceleration_ay = (float)(u.acceleration_ay / 0.002f);
+  s->velocity_vx = (float)(u.velocity_vx * 0.002f);
+  s->velocity_vy = (float)(u.velocity_vy * 0.002f);
+  s->acceleration_ax = (float)(u.acceleration_ax * 0.002f);
+  s->acceleration_ay = (float)(u.acceleration_ay * 0.002f);
 }
 
 void
@@ -1765,8 +1766,8 @@ LOG_EKF_Translation_StructToUnion(union LOG_EKF_Translation_Union *u,
 
 void LOG_EKF_Rotation_UnionToStruct(struct LOG_EKF_Rotation_Struct *s,
                                            union LOG_EKF_Rotation_Union u) {
-  s->heading_psi = (float)(u.heading_psi / 0.0003f);
-  s->yaw_rate = (float)(u.yaw_rate / 0.00018f);
+  s->heading_psi = (float)(u.heading_psi * 0.0003f);
+  s->yaw_rate = (float)(u.yaw_rate * 0.00018f);
 }
 
 void LOG_EKF_Rotation_StructToUnion(union LOG_EKF_Rotation_Union *u,
