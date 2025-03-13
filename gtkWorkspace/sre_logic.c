@@ -289,6 +289,13 @@ void label_update()
 		printf("Set Label for Power Measurement\n");
 
 		// STATES
+		printf("car_state: %d\n", sre_state->car_state);
+		printf("bat_state: %d\n", sre_state->bat_state);
+		printf("as_state: %d\n", sre_state->as_state);
+		printf("asb_state: %d\n", sre_state->asb_state);
+		printf("asb_check_sequence: %d\n", sre_state->asb_check_sequence);
+		printf("asb_trigger_cause: %d\n", sre_state->asb_trigger_cause);
+
 		sprintf(buffer, "%s", CAR_STATE_STR[sre_state->car_state]);
 		gtk_label_set_text(GTK_LABEL(label_car_state), buffer);
 		sprintf(buffer, "%s", BAT_STATE_STR[sre_state->bat_state]);
