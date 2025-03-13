@@ -260,7 +260,6 @@ void state_update()
 
 void label_update()
 {
-
 	printf("label_update\n");
 	// DEBUG PANEL
 	if (currentPanel == DEBUG) {
@@ -331,9 +330,13 @@ void label_update()
 
 		sprintf(buffer, "%.0f°c", sre_battery->bat_temp_max);
 		if(sre_battery->bat_temp_max >= CRITICAL_BAT_TEMP) {
+			gtk_widget_remove_css_class(GTK_WIDGET(info_bat_temp_max_endu),
+			  "blink-warning");
 			gtk_widget_add_css_class(GTK_WIDGET(info_bat_temp_max_endu),
 			  "blink-critical");
 		} else if (sre_battery->bat_temp_max >= WARNING_BAT_TEMP) {
+			gtk_widget_remove_css_class(GTK_WIDGET(info_bat_temp_max_endu),
+			  "blink-critical");
 			gtk_widget_add_css_class(GTK_WIDGET(info_bat_temp_max_endu),
 			  "blink-warning");
 		} else {
