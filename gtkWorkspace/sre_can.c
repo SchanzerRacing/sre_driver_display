@@ -108,7 +108,7 @@ uint8_t read_and_match()
 			buffered_data |= (uint64_t)frame.data[6] << 48;
 			buffered_data |= (uint64_t)frame.data[7] << 56;
 
-			printf("Frame ID: %d,BufferData %ld\n",frame.can_id, buffered_data);
+			// printf("Frame ID: %d,BufferData %ld\n",frame.can_id, buffered_data);
 
 			// Convert the frame data to a struct
 			can_mappings[i].union_to_struct(can_mappings[i].struct_ptr, buffered_data);
