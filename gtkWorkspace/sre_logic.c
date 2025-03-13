@@ -108,7 +108,7 @@ void init_sre_logic()
 	sre_temperatures->temp_motor_rr = 0;
 
 	// Battery
-	sre_battery->bat_soc = 0;
+	sre_battery->bat_soc = 10.0;
 	sre_battery->bat_temp_max = 0;
 	sre_battery->bat_temp_min = 0;
 	sre_battery->bat_volt_max = 0;

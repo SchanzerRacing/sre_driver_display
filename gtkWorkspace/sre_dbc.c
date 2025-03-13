@@ -6,6 +6,7 @@
  ***/
 
 #include "headers/sre_dbc.h"
+#include <stdio.h>
 
 /* ------------------------------ LOG_aero_SPR ------------------------------ */
 
@@ -937,12 +938,14 @@ void EXC_PUMP_Control_StructToUnion(union EXC_PUMP_Control_Union *u,
 void
 HSC_Vehicle_Status_UnionToStruct(struct HSC_Vehicle_Status_Struct *s,
                                  union HSC_Vehicle_Status_Union u) {
+	printf("Called HSC_Vehicle_Status_UnionToStruct\n");
   s->state = (HSC_Vehicle_Status_State)u.state;
   s->imd_error = (bool)u.imd_error;
   s->ams_error = (bool)u.ams_error;
   s->gen_scs = (uint8_t)u.gen_scs;
   s->velocity = (float)(u.velocity / 0.5f);
   s->velocity_ms = (float)(u.velocity_ms / 0.001f);
+	printf("State: %d,%d\n", s->state, u.state);
 }
 
 void
