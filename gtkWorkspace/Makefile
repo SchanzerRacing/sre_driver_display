@@ -2,13 +2,13 @@
 CC = gcc
 
 # Compiler flags
-CFLAGS = `pkg-config --cflags gtk4` -g -O0 -Wall
+CFLAGS = `pkg-config --cflags gtk4` -Iheaders/
 
 # Linker flags
 LDFLAGS = `pkg-config --libs gtk4`
 
 # Source files
-SRC = main.c
+SRC = main.c debug_panel.c endurance_panel.c parameters_panel.c sre_logic.c sre_can.c vehicleinfo_panel.c sre_dbc.c
 
 # Output folder
 OUT_DIR = build

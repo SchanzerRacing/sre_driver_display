@@ -90,8 +90,18 @@ uint8_t read_and_match()
 			// Update the union with the CAN frame data
 			// memcpy(can_mappings[i].union_ptr, frame.data, can_mappings[i].union_size);
 
+			uint64_t buffered_data = 0;
+			buffered_data |= (uint64_t)frame.data[0] << 56;
+			buffered_data |= (uint64_t)frame.data[1] >> 48;
+			buffered_data |= (uint64_t)frame.data[2] >> 40;
+			buffered_data |= (uint64_t)frame.data[3] >> 32;
+			buffered_data |= (uint64_t)frame.data[4] >> 24;
+			buffered_data |= (uint64_t)frame.data[5] >> 16;
+			buffered_data |= (uint64_t)frame.data[6] >> 8;
+			buffered_data |= (uint64_t)frame.data[7];
+
 			// Convert the frame data to a struct
-			can_mappings[i].union_to_struct(can_mappings[i].struct_ptr, frame.data);
+			can_mappings[i].union_to_struct(can_mappings[i].struct_ptr, buffered_data);
 			// printf("CAN ID: %x\n", frame.can_id);
 			return 0;
 		}

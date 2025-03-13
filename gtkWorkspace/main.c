@@ -7,7 +7,7 @@
 #include "headers/parameters_panel.h"
 #include "headers/vehicleinfo_panel.h"
 #include "headers/objects.h"
-#include "main.h"
+#include "headers/main.h"
 
 GObject * box_error = NULL;
 GObject * box_info = NULL;

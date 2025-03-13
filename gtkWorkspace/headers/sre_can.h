@@ -51,7 +51,7 @@ typedef struct
 {
 	int can_id;
 	void *struct_ptr;
-	void (*union_to_struct)(void *, void *);
+	void (*union_to_struct)(void *, uint64_t);
 } can_mapping_t;
 
 #define NUM_MAPPINGS (sizeof(can_mappings) / sizeof(can_mappings[0]))
