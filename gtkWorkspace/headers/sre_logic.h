@@ -471,6 +471,7 @@ enum AS_STATE
 	FINISH = 5
 };
 static const char * AS_STATE_STR[] = {
+	"undefined",
 	"Off",
 	"Ready",
 	"Driving",
@@ -514,6 +515,7 @@ enum ASB_CHECK_SEQUENCE
 	AC_EBS1_AND_2
 };
 static const char * ASB_CHECK_SEQUENCE_STR[] = {
+	"undefined",
 	"Watchdog not triggering",
 	"Watchdog triggering",
 	"ASB Press OK",
@@ -541,6 +543,7 @@ enum ASB_TRIGGER_CAUSE
 	ASMS_TURNED_OFF_IN_MONITORING = 12
 };
 static const char * ASB_TRIGGER_CAUSE_STR[] = {
+	"undefined",
 	"Watchdog error",
 	"ASB Pressures invalid",
 	"Brake Pressure invalid",
