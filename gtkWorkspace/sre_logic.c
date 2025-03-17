@@ -230,19 +230,31 @@ void state_update()
 	sre_battery->bat_volt_min = GW_Battery_Cells.voltage_min;
 
 	// POWER MEASUREMENT
-	sre_power->sdc_power = 0; // Does not exist yet
+	sre_power->sdc_power = LOG_Fuse_Currents.sdc_current;
 	sre_power->lv_power = LOG_LEM.lv;
 	sre_power->hv_power = GW_Battery_Status.power;
-	sre_power->epos_power = 0; // Does not exist yet
+	sre_power->epos_power = LOG_Fuse_Currents.epos_current;
 
 	// VEHICLE INFO
-	sre_vehicle_info->car_speed = HSC_Vehicle_Status.velocity;
+	sre_vehicle_info->car_speed = HSC_Vehicle_Status.velocity_ms;
 	sre_vehicle_info->car_speed_gps = HSC_SBG_EKF_VEL_BODY.velocity_x;
 	sre_vehicle_info->car_accel_x = HSC_SBG_ACCEL.accel_x;
 	sre_vehicle_info->car_accel_y = HSC_SBG_ACCEL.accel_y;
 	sre_vehicle_info->car_accel_z = HSC_SBG_ACCEL.accel_z;
 
-	// Switches do not exist yet
+	// Switches
+	sre_switches->acu_switch = PARC_FUSE_States.fb_acu;
+	sre_switches->asb_switch = PARC_FUSE_States.fb_asb;
+	sre_switches->dash_switch = PARC_FUSE_States.fb_dash;
+	sre_switches->epos_lc_switch = PARC_FUSE_States.fb_epos;
+	sre_switches->fan_l_switch = PARC_FUSE_States.fb_fan_l;
+	sre_switches->fan_r_switch = PARC_FUSE_States.fb_fan_r;
+	sre_switches->sbg_switch = PARC_FUSE_States.fb_gps;
+	sre_switches->vcu_switch = PARC_FUSE_States.fb_vcu;
+	sre_switches->pef_switch = PARC_FUSE_States.fb_pef;
+	sre_switches->per_switch = PARC_FUSE_States.fb_per;
+	sre_switches->pumps_switch = PARC_FUSE_States.fb_pumps;
+	sre_switches->sensors_switch = PARC_FUSE_States.fb_sensors;
 
 	// STATES
 	sre_state->car_state = HSC_Vehicle_Status.state;
@@ -264,24 +276,24 @@ void label_update()
 	if (currentPanel == DEBUG) {
 		// PRESSURES
 		char buffer[100];
-		sprintf(buffer, "%.1f", sre_pressures->brake_pressure_1);
+		sprintf(buffer, "%.0f Bar", sre_pressures->brake_pressure_1);
 		gtk_label_set_text(GTK_LABEL(label_brake_pressure_1), buffer);
-		sprintf(buffer, "%.1f", sre_pressures->brake_pressure_2);
+		sprintf(buffer, "%.0f Bar", sre_pressures->brake_pressure_2);
 		gtk_label_set_text(GTK_LABEL(label_brake_pressure_2), buffer);
 
-		sprintf(buffer, "%.1f", sre_pressures->asb_pressure_1);
+		sprintf(buffer, "%.0f Bar", sre_pressures->asb_pressure_1);
 		gtk_label_set_text(GTK_LABEL(label_asb_pressure_1), buffer);
-		sprintf(buffer, "%.1f", sre_pressures->asb_pressure_2);
+		sprintf(buffer, "%.0f Bar", sre_pressures->asb_pressure_2);
 		gtk_label_set_text(GTK_LABEL(label_asb_pressure_2), buffer);
 
 		// POWER MEASUREMENT
-		sprintf(buffer, "%.1f", sre_power->sdc_power);
+		sprintf(buffer, "%.0f mA", sre_power->sdc_power);
 		gtk_label_set_text(GTK_LABEL(label_sdc_power), buffer);
-		sprintf(buffer, "%.1f", sre_power->lv_power);
+		sprintf(buffer, "%.0f mA", sre_power->lv_power);
 		gtk_label_set_text(GTK_LABEL(label_lv_power), buffer);
-		sprintf(buffer, "%.1f", sre_power->hv_power);
+		sprintf(buffer, "%.1f kW", sre_power->hv_power);
 		gtk_label_set_text(GTK_LABEL(label_hv_power), buffer);
-		sprintf(buffer, "%.1f", sre_power->epos_power);
+		sprintf(buffer, "%.0f mA", sre_power->epos_power);
 		gtk_label_set_text(GTK_LABEL(label_epos_power), buffer);
 
 		// STATES
@@ -293,9 +305,9 @@ void label_update()
 		gtk_label_set_text(GTK_LABEL(label_as_state), buffer);
 		sprintf(buffer, "%s", ASB_STATE_STR[sre_state->asb_state]);
 		gtk_label_set_text(GTK_LABEL(label_asb_state), buffer);
-		sprintf(buffer, "%d", sre_state->asb_check_sequence);
+		sprintf(buffer, "%s", ASB_CHECK_SEQUENCE_STR[sre_state->asb_check_sequence]);
 		gtk_label_set_text(GTK_LABEL(label_asb_check_sequence), buffer);
-		sprintf(buffer, "%d", sre_state->asb_trigger_cause);
+		sprintf(buffer, "%s", ASB_TRIGGER_CAUSE_STR[sre_state->asb_trigger_cause]);
 		gtk_label_set_text(GTK_LABEL(label_asb_trigger_cause), buffer);
 
 	} else // ENDURANCE PANEL
@@ -425,19 +437,19 @@ void label_update()
 		char buffer[100];
 
 		// PE TEMPS
-		sprintf(buffer, "%.1fc", sre_temperatures->temp_per);
+		sprintf(buffer, "%.1f°c", sre_temperatures->temp_per);
 		gtk_label_set_text(GTK_LABEL(info_temp_per_vehicleinfo), buffer);
-		sprintf(buffer, "%.1fc", sre_temperatures->temp_pef);
+		sprintf(buffer, "%.1f°c", sre_temperatures->temp_pef);
 		gtk_label_set_text(GTK_LABEL(info_temp_pef_vehicleinfo), buffer);
 
 		// MOTOR TEMPS
-		sprintf(buffer, "%.1fc", sre_temperatures->temp_motor_fl);
+		sprintf(buffer, "%.1f°c", sre_temperatures->temp_motor_fl);
 		gtk_label_set_text(GTK_LABEL(info_temp_motor_fl_vehicleinfo), buffer);
-		sprintf(buffer, "%.1fc", sre_temperatures->temp_motor_fr);
+		sprintf(buffer, "%.1f°c", sre_temperatures->temp_motor_fr);
 		gtk_label_set_text(GTK_LABEL(info_temp_motor_fr_vehicleinfo), buffer);
-		sprintf(buffer, "%.1fc", sre_temperatures->temp_motor_rl);
+		sprintf(buffer, "%.1f°c", sre_temperatures->temp_motor_rl);
 		gtk_label_set_text(GTK_LABEL(info_temp_motor_rl_vehicleinfo), buffer);
-		sprintf(buffer, "%.1fc", sre_temperatures->temp_motor_rr);
+		sprintf(buffer, "%.1f°c", sre_temperatures->temp_motor_rr);
 		gtk_label_set_text(GTK_LABEL(info_temp_motor_rr_vehicleinfo), buffer);
 
 		// BATTERY
@@ -456,9 +468,9 @@ void label_update()
 			  "blink-critical");
 		}
 
-		sprintf(buffer, "%.0fc", sre_battery->bat_temp_max);
+		sprintf(buffer, "%.0f°c", sre_battery->bat_temp_max);
 		gtk_label_set_text(GTK_LABEL(info_bat_temp_max_vehicleinfo), buffer);
-		sprintf(buffer, "%.0fc", sre_battery->bat_temp_min);
+		sprintf(buffer, "%.0f°c", sre_battery->bat_temp_min);
 		gtk_label_set_text(GTK_LABEL(info_bat_temp_min_vehicleinfo), buffer);
 		sprintf(buffer, "%.1fv", sre_battery->bat_volt_max);
 		gtk_label_set_text(GTK_LABEL(info_bat_voltage_max_vehicleinfo), buffer);
@@ -470,7 +482,7 @@ void label_update()
 		gtk_label_set_text(GTK_LABEL(info_hv_power_vehicleinfo), buffer);
 
 		// VEHICLE INFO
-		sprintf(buffer, "%.0f", sre_vehicle_info->car_speed);
+		sprintf(buffer, "%.0f", sre_vehicle_info->car_speed*3.6);
 		gtk_label_set_text(GTK_LABEL(info_car_speed_vehicleinfo), buffer);
 
 		// STATES
