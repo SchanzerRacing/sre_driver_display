@@ -24,6 +24,8 @@ struct GW_PE_RearRight_Struct GW_PE_RearRight;
 struct HSC_SBG_EKF_Vel_Body_Struct HSC_SBG_EKF_VEL_BODY;
 struct HSC_SBG_Accel_Struct HSC_SBG_ACCEL;
 struct LOG_LEM_Struct LOG_LEM;
+struct LOG_FUSE_Currents_Struct LOG_Fuse_Currents;
+struct PARC_FUSE_States_Struct PARC_FUSE_States;
 
 can_mapping_t can_mappings[] = {
 	{HSC_VEHICLE_STATUS_ID, &HSC_Vehicle_Status,
@@ -62,6 +64,10 @@ can_mapping_t can_mappings[] = {
 		HSC_SBG_Accel_UnionToStruct},
 	{LOG_LEM_ID, &LOG_LEM,
 		LOG_LEM_UnionToStruct},
+	{LOG_FUSE_CURRENTS_ID, &LOG_Fuse_Currents,
+		LOG_FUSE_Currents_UnionToStruct},
+	{PARC_FUSE_STATES_ID, &PARC_FUSE_States,
+		PARC_FUSE_States_UnionToStruct},
 };
 
 void can_loop()
@@ -131,7 +137,7 @@ void setup_can()
 	}
 
 	// Specify the CAN interface name
-	strcpy(ifr.ifr_name, "vcan0");
+	strcpy(ifr.ifr_name, "can0");
 	ioctl(can_socket, SIOCGIFINDEX, &ifr);
 
 	// Initialize the address structure
