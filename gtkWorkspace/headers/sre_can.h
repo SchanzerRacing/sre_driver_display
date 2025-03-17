@@ -41,6 +41,8 @@ extern struct GW_PE_RearRight_Struct GW_PE_RearRight;
 extern struct HSC_SBG_EKF_Vel_Body_Struct HSC_SBG_EKF_VEL_BODY;
 extern struct HSC_SBG_Accel_Struct HSC_SBG_ACCEL;
 extern struct LOG_LEM_Struct LOG_LEM;
+extern struct LOG_FUSE_Currents_Struct LOG_Fuse_Currents;
+extern struct PARC_FUSE_States_Struct PARC_FUSE_States;
 
 // Safety Messages
 // enum SAF_AIN_F1_Status_ERRORS {SCS_ERROR_AIN, Throttle_Lower_ERROR, Throttle_Upper_ERROR, Throttle_Differential_ERROR, Brake_ERROR, GEN_SCS};
