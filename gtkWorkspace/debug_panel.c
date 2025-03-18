@@ -17,7 +17,18 @@ GObject *label_hv_power = NULL;
 GObject *label_epos_power = NULL;
 
 // SWITCH STATES
-// TODO
+GObject *label_acu_switch_state = NULL;
+GObject *label_asb_switch_state = NULL;
+GObject *label_dash_switch_state = NULL;
+GObject *label_epos_switch_state = NULL;
+GObject *label_fan_l_switch_state = NULL;
+GObject *label_fan_r_switch_state = NULL;
+GObject *label_sbg_switch_state = NULL;
+GObject *label_vcu_switch_state = NULL;
+GObject *label_pef_switch_state = NULL;
+GObject *label_per_switch_state = NULL;
+GObject *label_pumps_switch_state = NULL;
+GObject *label_sensors_switch_state = NULL;
 
 // STATES
 GObject *label_car_state = NULL;
@@ -80,7 +91,7 @@ GtkWidget* create_debug_panel() {
     if (parent != NULL) {
         gtk_widget_unparent(GTK_WIDGET(debug_panel));
     }
-    
+
     // Get the labels and save them for later use
 
     // PRESSURES
@@ -94,6 +105,20 @@ GtkWidget* create_debug_panel() {
     label_lv_power = gtk_builder_get_object(builder_debug_panel, "info_lv_power");
     label_hv_power = gtk_builder_get_object(builder_debug_panel, "info_hv_power");
     label_epos_power = gtk_builder_get_object(builder_debug_panel, "info_epos_power");
+
+    // SWITCH STATES
+    label_acu_switch_state = gtk_builder_get_object(builder_debug_panel, "info_acu_switch_state");
+    label_asb_switch_state = gtk_builder_get_object(builder_debug_panel, "info_asb_switch_state");
+    label_dash_switch_state = gtk_builder_get_object(builder_debug_panel, "info_dash_switch_state");
+    label_epos_switch_state = gtk_builder_get_object(builder_debug_panel, "info_epos_switch_state");
+    label_fan_l_switch_state = gtk_builder_get_object(builder_debug_panel, "info_fan_l_switch_state");
+    label_fan_r_switch_state = gtk_builder_get_object(builder_debug_panel, "info_fan_r_switch_state");
+    label_sbg_switch_state = gtk_builder_get_object(builder_debug_panel, "info_sbg_switch_state");
+    label_vcu_switch_state = gtk_builder_get_object(builder_debug_panel, "info_vcu_switch_state");
+    label_pef_switch_state = gtk_builder_get_object(builder_debug_panel, "info_pef_switch_state");
+    label_per_switch_state = gtk_builder_get_object(builder_debug_panel, "info_per_switch_state");
+    label_pumps_switch_state = gtk_builder_get_object(builder_debug_panel, "info_pumps_switch_state");
+    label_sensors_switch_state = gtk_builder_get_object(builder_debug_panel, "info_sensors_switch_state");
 
     // STATES
     label_car_state = gtk_builder_get_object(builder_debug_panel, "info_car_state");

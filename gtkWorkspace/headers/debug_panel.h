@@ -21,7 +21,18 @@ extern GObject *label_hv_power;
 extern GObject *label_epos_power;
 
 // SWITCH STATES
-// TODO
+extern GObject *label_acu_switch_state;
+extern GObject *label_asb_switch_state;
+extern GObject *label_dash_switch_state;
+extern GObject *label_epos_switch_state;
+extern GObject *label_fan_l_switch_state;
+extern GObject *label_fan_r_switch_state;
+extern GObject *label_sbg_switch_state;
+extern GObject *label_vcu_switch_state;
+extern GObject *label_pef_switch_state;
+extern GObject *label_per_switch_state;
+extern GObject *label_pumps_switch_state;
+extern GObject *label_sensors_switch_state;
 
 // STATES
 extern GObject *label_car_state;

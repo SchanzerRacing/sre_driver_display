@@ -276,14 +276,14 @@ void label_update()
 	if (currentPanel == DEBUG) {
 		// PRESSURES
 		char buffer[100];
-		sprintf(buffer, "%.0f Bar", sre_pressures->brake_pressure_1);
+		sprintf(buffer, "%.0f mBar", sre_pressures->brake_pressure_1);
 		gtk_label_set_text(GTK_LABEL(label_brake_pressure_1), buffer);
-		sprintf(buffer, "%.0f Bar", sre_pressures->brake_pressure_2);
+		sprintf(buffer, "%.0f mBar", sre_pressures->brake_pressure_2);
 		gtk_label_set_text(GTK_LABEL(label_brake_pressure_2), buffer);
 
-		sprintf(buffer, "%.0f Bar", sre_pressures->asb_pressure_1);
+		sprintf(buffer, "%.0f mBar", sre_pressures->asb_pressure_1);
 		gtk_label_set_text(GTK_LABEL(label_asb_pressure_1), buffer);
-		sprintf(buffer, "%.0f Bar", sre_pressures->asb_pressure_2);
+		sprintf(buffer, "%.0f mBar", sre_pressures->asb_pressure_2);
 		gtk_label_set_text(GTK_LABEL(label_asb_pressure_2), buffer);
 
 		// POWER MEASUREMENT
@@ -309,6 +309,32 @@ void label_update()
 		gtk_label_set_text(GTK_LABEL(label_asb_check_sequence), buffer);
 		sprintf(buffer, "%s", ASB_TRIGGER_CAUSE_STR[sre_state->asb_trigger_cause]);
 		gtk_label_set_text(GTK_LABEL(label_asb_trigger_cause), buffer);
+
+		// SWITCH STATES
+		sprintf(buffer, "%s", sre_switches->acu_switch ? "ON" : "OFF");
+		gtk_label_set_text(GTK_LABEL(label_acu_switch_state), buffer);
+		sprintf(buffer, "%s", sre_switches->asb_switch ? "ON" : "OFF");
+		gtk_label_set_text(GTK_LABEL(label_asb_switch_state), buffer);
+		sprintf(buffer, "%s", sre_switches->dash_switch ? "ON" : "OFF");
+		gtk_label_set_text(GTK_LABEL(label_dash_switch_state), buffer);
+		sprintf(buffer, "%s", sre_switches->epos_lc_switch ? "ON" : "OFF");
+		gtk_label_set_text(GTK_LABEL(label_epos_switch_state), buffer);
+		sprintf(buffer, "%s", sre_switches->fan_l_switch ? "ON" : "OFF");
+		gtk_label_set_text(GTK_LABEL(label_fan_l_switch_state), buffer);
+		sprintf(buffer, "%s", sre_switches->fan_r_switch ? "ON" : "OFF");
+		gtk_label_set_text(GTK_LABEL(label_fan_r_switch_state), buffer);
+		sprintf(buffer, "%s", sre_switches->sbg_switch ? "ON" : "OFF");
+		gtk_label_set_text(GTK_LABEL(label_sbg_switch_state), buffer);
+		sprintf(buffer, "%s", sre_switches->vcu_switch ? "ON" : "OFF");
+		gtk_label_set_text(GTK_LABEL(label_vcu_switch_state), buffer);
+		sprintf(buffer, "%s", sre_switches->pef_switch ? "ON" : "OFF");
+		gtk_label_set_text(GTK_LABEL(label_pef_switch_state), buffer);
+		sprintf(buffer, "%s", sre_switches->per_switch ? "ON" : "OFF");
+		gtk_label_set_text(GTK_LABEL(label_per_switch_state), buffer);
+		sprintf(buffer, "%s", sre_switches->pumps_switch ? "ON" : "OFF");
+		gtk_label_set_text(GTK_LABEL(label_pumps_switch_state), buffer);
+		sprintf(buffer, "%s", sre_switches->sensors_switch ? "ON" : "OFF");
+		gtk_label_set_text(GTK_LABEL(label_sensors_switch_state), buffer);
 
 	} else // ENDURANCE PANEL
 	if (currentPanel == ENDURANCE) {
