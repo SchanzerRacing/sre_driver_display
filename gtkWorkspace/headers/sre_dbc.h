@@ -2,15 +2,24 @@
 /***
  * Header File from DBC
  * Auto-generated using Python
- * 21.02.2025, 11:29:17 UTC
+ * 17.03.2025, 15:39:18 UTC
  ***/
 
-#ifndef SRE_DBC_H
-#define SRE_DBC_H
+#ifndef SYSTEM_DBC_H
+#define SYSTEM_DBC_H
 
 #include <stdint.h>
 #include <stdbool.h>
 
+#ifdef f280013x_DEVICE_H
+#ifdef INLINE
+#define SOFT_INLINE INLINE
+#else
+#define SOFT_INLINE inline
+#endif
+#else
+#define SOFT_INLINE
+#endif
 /* ------------------------------ LOG_aero_SPR ------------------------------ */
 
 #define LOG_AERO_SPR_ID 0x7C6
@@ -22,13 +31,14 @@ union LOG_aero_SPR_Union {
   uint64_t data;
 
   struct {
+
     uint64_t temp1 : 10;
     uint64_t temp2 : 10;
     uint64_t temp3 : 10;
     uint64_t hum1 : 10;
     uint64_t hum2 : 10;
     uint64_t hum3 : 10;
-    uint64_t reserved : 4;
+    uint64_t reserved_1 : 4;
   };
 };
 
@@ -41,11 +51,13 @@ struct LOG_aero_SPR_Struct {
   float hum3;
 };
 
-void LOG_aero_SPR_UnionToStruct(struct LOG_aero_SPR_Struct *s,
-                                              union LOG_aero_SPR_Union u);
+extern SOFT_INLINE void
+LOG_aero_SPR_UnionToStruct(struct LOG_aero_SPR_Struct *s,
+                           union LOG_aero_SPR_Union u);
 
-void LOG_aero_SPR_StructToUnion(union LOG_aero_SPR_Union *u,
-                                              struct LOG_aero_SPR_Struct s);
+extern SOFT_INLINE void
+LOG_aero_SPR_StructToUnion(union LOG_aero_SPR_Union *u,
+                           struct LOG_aero_SPR_Struct s);
 
 /* ------------------------------ LOG_aero_SPL ------------------------------ */
 
@@ -58,13 +70,14 @@ union LOG_aero_SPL_Union {
   uint64_t data;
 
   struct {
+
     uint64_t temp1 : 10;
     uint64_t temp2 : 10;
     uint64_t temp3 : 10;
     uint64_t hum1 : 10;
     uint64_t hum2 : 10;
     uint64_t hum3 : 10;
-    uint64_t reserved : 4;
+    uint64_t reserved_1 : 4;
   };
 };
 
@@ -77,11 +90,13 @@ struct LOG_aero_SPL_Struct {
   float hum3;
 };
 
-void LOG_aero_SPL_UnionToStruct(struct LOG_aero_SPL_Struct *s,
-                                              union LOG_aero_SPL_Union u);
+extern SOFT_INLINE void
+LOG_aero_SPL_UnionToStruct(struct LOG_aero_SPL_Struct *s,
+                           union LOG_aero_SPL_Union u);
 
-void LOG_aero_SPL_StructToUnion(union LOG_aero_SPL_Union *u,
-                                              struct LOG_aero_SPL_Struct s);
+extern SOFT_INLINE void
+LOG_aero_SPL_StructToUnion(union LOG_aero_SPL_Union *u,
+                           struct LOG_aero_SPL_Struct s);
 
 /* ------------------------------ LOG_aero_RW ------------------------------ */
 
@@ -94,11 +109,12 @@ union LOG_aero_RW_Union {
   uint64_t data;
 
   struct {
+
     uint64_t temp1 : 10;
     uint64_t temp2 : 10;
     uint64_t hum1 : 10;
     uint64_t hum2 : 10;
-    uint64_t reserved : 24;
+    uint64_t reserved_1 : 24;
   };
 };
 
@@ -109,11 +125,11 @@ struct LOG_aero_RW_Struct {
   float hum2;
 };
 
-void LOG_aero_RW_UnionToStruct(struct LOG_aero_RW_Struct *s,
-                                             union LOG_aero_RW_Union u);
+extern SOFT_INLINE void LOG_aero_RW_UnionToStruct(struct LOG_aero_RW_Struct *s,
+                                                  union LOG_aero_RW_Union u);
 
-void LOG_aero_RW_StructToUnion(union LOG_aero_RW_Union *u,
-                                             struct LOG_aero_RW_Struct s);
+extern SOFT_INLINE void LOG_aero_RW_StructToUnion(union LOG_aero_RW_Union *u,
+                                                  struct LOG_aero_RW_Struct s);
 
 /* ------------------------------ LOG_aero_FW ------------------------------ */
 
@@ -126,11 +142,12 @@ union LOG_aero_FW_Union {
   uint64_t data;
 
   struct {
+
     uint64_t temp1 : 10;
     uint64_t temp2 : 10;
     uint64_t hum1 : 10;
     uint64_t hum2 : 10;
-    uint64_t reserved : 24;
+    uint64_t reserved_1 : 24;
   };
 };
 
@@ -141,11 +158,11 @@ struct LOG_aero_FW_Struct {
   float hum2;
 };
 
-void LOG_aero_FW_UnionToStruct(struct LOG_aero_FW_Struct *s,
-                                             union LOG_aero_FW_Union u);
+extern SOFT_INLINE void LOG_aero_FW_UnionToStruct(struct LOG_aero_FW_Struct *s,
+                                                  union LOG_aero_FW_Union u);
 
-void LOG_aero_FW_StructToUnion(union LOG_aero_FW_Union *u,
-                                             struct LOG_aero_FW_Struct s);
+extern SOFT_INLINE void LOG_aero_FW_StructToUnion(union LOG_aero_FW_Union *u,
+                                                  struct LOG_aero_FW_Struct s);
 
 /* ------------------------------ CAL_EPOS_HC ------------------------------ */
 
@@ -158,8 +175,9 @@ union CAL_EPOS_HC_Union {
   uint64_t data;
 
   struct {
+
     uint64_t voltage : 12;
-    uint64_t reserved : 52;
+    uint64_t reserved_1 : 52;
   };
 };
 
@@ -167,11 +185,11 @@ struct CAL_EPOS_HC_Struct {
   uint16_t voltage;
 };
 
-void CAL_EPOS_HC_UnionToStruct(struct CAL_EPOS_HC_Struct *s,
-                                             union CAL_EPOS_HC_Union u);
+extern SOFT_INLINE void CAL_EPOS_HC_UnionToStruct(struct CAL_EPOS_HC_Struct *s,
+                                                  union CAL_EPOS_HC_Union u);
 
-void CAL_EPOS_HC_StructToUnion(union CAL_EPOS_HC_Union *u,
-                                             struct CAL_EPOS_HC_Struct s);
+extern SOFT_INLINE void CAL_EPOS_HC_StructToUnion(union CAL_EPOS_HC_Union *u,
+                                                  struct CAL_EPOS_HC_Struct s);
 
 /* -------------------------------- CAL_SDC -------------------------------- */
 
@@ -184,8 +202,9 @@ union CAL_SDC_Union {
   uint64_t data;
 
   struct {
+
     uint64_t voltage : 12;
-    uint64_t reserved : 52;
+    uint64_t reserved_1 : 52;
   };
 };
 
@@ -193,11 +212,11 @@ struct CAL_SDC_Struct {
   uint16_t voltage;
 };
 
-void CAL_SDC_UnionToStruct(struct CAL_SDC_Struct *s,
-                                         union CAL_SDC_Union u);
+extern SOFT_INLINE void CAL_SDC_UnionToStruct(struct CAL_SDC_Struct *s,
+                                              union CAL_SDC_Union u);
 
-void CAL_SDC_StructToUnion(union CAL_SDC_Union *u,
-                                         struct CAL_SDC_Struct s);
+extern SOFT_INLINE void CAL_SDC_StructToUnion(union CAL_SDC_Union *u,
+                                              struct CAL_SDC_Struct s);
 
 /* ------------------------------ CAL_WT_Right ------------------------------ */
 
@@ -210,6 +229,7 @@ union CAL_WT_Right_Union {
   uint64_t data;
 
   struct {
+
     uint64_t vin_1 : 16;
     uint64_t vin_2 : 16;
     uint64_t vin_3 : 16;
@@ -224,11 +244,13 @@ struct CAL_WT_Right_Struct {
   uint16_t vin_4;
 };
 
-void CAL_WT_Right_UnionToStruct(struct CAL_WT_Right_Struct *s,
-                                              union CAL_WT_Right_Union u);
+extern SOFT_INLINE void
+CAL_WT_Right_UnionToStruct(struct CAL_WT_Right_Struct *s,
+                           union CAL_WT_Right_Union u);
 
-void CAL_WT_Right_StructToUnion(union CAL_WT_Right_Union *u,
-                                              struct CAL_WT_Right_Struct s);
+extern SOFT_INLINE void
+CAL_WT_Right_StructToUnion(union CAL_WT_Right_Union *u,
+                           struct CAL_WT_Right_Struct s);
 
 /* ------------------------------ CAL_WT_Left ------------------------------ */
 
@@ -241,6 +263,7 @@ union CAL_WT_Left_Union {
   uint64_t data;
 
   struct {
+
     uint64_t vin_1 : 16;
     uint64_t vin_2 : 16;
     uint64_t vin_3 : 16;
@@ -255,11 +278,11 @@ struct CAL_WT_Left_Struct {
   uint16_t vin_4;
 };
 
-void CAL_WT_Left_UnionToStruct(struct CAL_WT_Left_Struct *s,
-                                             union CAL_WT_Left_Union u);
+extern SOFT_INLINE void CAL_WT_Left_UnionToStruct(struct CAL_WT_Left_Struct *s,
+                                                  union CAL_WT_Left_Union u);
 
-void CAL_WT_Left_StructToUnion(union CAL_WT_Left_Union *u,
-                                             struct CAL_WT_Left_Struct s);
+extern SOFT_INLINE void CAL_WT_Left_StructToUnion(union CAL_WT_Left_Union *u,
+                                                  struct CAL_WT_Left_Struct s);
 
 /* ------------------------------- CAL_LV_LEM ------------------------------- */
 
@@ -272,8 +295,9 @@ union CAL_LV_LEM_Union {
   uint64_t data;
 
   struct {
+
     uint64_t voltage : 12;
-    uint64_t reserved : 52;
+    uint64_t reserved_1 : 52;
   };
 };
 
@@ -281,11 +305,11 @@ struct CAL_LV_LEM_Struct {
   uint16_t voltage;
 };
 
-void CAL_LV_LEM_UnionToStruct(struct CAL_LV_LEM_Struct *s,
-                                            union CAL_LV_LEM_Union u);
+extern SOFT_INLINE void CAL_LV_LEM_UnionToStruct(struct CAL_LV_LEM_Struct *s,
+                                                 union CAL_LV_LEM_Union u);
 
-void CAL_LV_LEM_StructToUnion(union CAL_LV_LEM_Union *u,
-                                            struct CAL_LV_LEM_Struct s);
+extern SOFT_INLINE void CAL_LV_LEM_StructToUnion(union CAL_LV_LEM_Union *u,
+                                                 struct CAL_LV_LEM_Struct s);
 
 /* -------------------------------- LOG_SDC -------------------------------- */
 
@@ -298,6 +322,7 @@ union LOG_SDC_Union {
   uint64_t data;
 
   struct {
+
     uint64_t sdc_res : 1;
     uint64_t sdc_fr : 1;
     uint64_t sdc_asb : 1;
@@ -312,7 +337,7 @@ union LOG_SDC_Union {
     uint64_t sdc_hvd : 1;
     uint64_t sdc_ts_connector : 1;
     uint64_t sdc_tsms : 1;
-    uint64_t reserved : 50;
+    uint64_t reserved_1 : 50;
   };
 };
 
@@ -333,11 +358,11 @@ struct LOG_SDC_Struct {
   bool sdc_tsms;
 };
 
-void LOG_SDC_UnionToStruct(struct LOG_SDC_Struct *s,
-                                         union LOG_SDC_Union u);
+extern SOFT_INLINE void LOG_SDC_UnionToStruct(struct LOG_SDC_Struct *s,
+                                              union LOG_SDC_Union u);
 
-void LOG_SDC_StructToUnion(union LOG_SDC_Union *u,
-                                         struct LOG_SDC_Struct s);
+extern SOFT_INLINE void LOG_SDC_StructToUnion(union LOG_SDC_Union *u,
+                                              struct LOG_SDC_Struct s);
 
 /* --------------------------- LOG_FUSE_Currents --------------------------- */
 
@@ -350,9 +375,10 @@ union LOG_FUSE_Currents_Union {
   uint64_t data;
 
   struct {
+
     uint64_t epos_current : 16;
     uint64_t sdc_current : 16;
-    uint64_t reserved : 32;
+    uint64_t reserved_1 : 32;
   };
 };
 
@@ -361,11 +387,11 @@ struct LOG_FUSE_Currents_Struct {
   uint16_t sdc_current;
 };
 
-void
+extern SOFT_INLINE void
 LOG_FUSE_Currents_UnionToStruct(struct LOG_FUSE_Currents_Struct *s,
                                 union LOG_FUSE_Currents_Union u);
 
-void
+extern SOFT_INLINE void
 LOG_FUSE_Currents_StructToUnion(union LOG_FUSE_Currents_Union *u,
                                 struct LOG_FUSE_Currents_Struct s);
 
@@ -380,6 +406,7 @@ union PARC_FUSE_States_Union {
   uint64_t data;
 
   struct {
+
     uint64_t fb_acu : 1;
     uint64_t fb_asb : 1;
     uint64_t fb_dash : 1;
@@ -392,7 +419,7 @@ union PARC_FUSE_States_Union {
     uint64_t fb_pumps : 1;
     uint64_t fb_sensors : 1;
     uint64_t fb_vcu : 1;
-    uint64_t reserved : 52;
+    uint64_t reserved_1 : 52;
   };
 };
 
@@ -411,11 +438,11 @@ struct PARC_FUSE_States_Struct {
   bool fb_vcu;
 };
 
-void
+extern SOFT_INLINE void
 PARC_FUSE_States_UnionToStruct(struct PARC_FUSE_States_Struct *s,
                                union PARC_FUSE_States_Union u);
 
-void
+extern SOFT_INLINE void
 PARC_FUSE_States_StructToUnion(union PARC_FUSE_States_Union *u,
                                struct PARC_FUSE_States_Struct s);
 
@@ -430,6 +457,7 @@ union PARS_FUSE_States_Union {
   uint64_t data;
 
   struct {
+
     uint64_t fb_acu : 1;
     uint64_t fb_asb : 1;
     uint64_t fb_dash : 1;
@@ -442,7 +470,7 @@ union PARS_FUSE_States_Union {
     uint64_t fb_pumps : 1;
     uint64_t fb_sensors : 1;
     uint64_t fb_vcu : 1;
-    uint64_t reserved : 52;
+    uint64_t reserved_1 : 52;
   };
 };
 
@@ -461,11 +489,11 @@ struct PARS_FUSE_States_Struct {
   bool fb_vcu;
 };
 
-void
+extern SOFT_INLINE void
 PARS_FUSE_States_UnionToStruct(struct PARS_FUSE_States_Struct *s,
                                union PARS_FUSE_States_Union u);
 
-void
+extern SOFT_INLINE void
 PARS_FUSE_States_StructToUnion(union PARS_FUSE_States_Union *u,
                                struct PARS_FUSE_States_Struct s);
 
@@ -480,11 +508,13 @@ union SAF_Fuseboard_Status_Union {
   uint64_t data;
 
   struct {
+
     uint64_t scs_error : 1;
     uint64_t message_error : 1;
     uint64_t output_no_change_error : 1;
+    uint64_t reserved_1 : 2;
     uint64_t gen_scs : 3;
-    uint64_t reserved : 58;
+    uint64_t reserved_2 : 58;
   };
 };
 
@@ -495,11 +525,11 @@ struct SAF_Fuseboard_Status_Struct {
   uint8_t gen_scs;
 };
 
-void
+extern SOFT_INLINE void
 SAF_Fuseboard_Status_UnionToStruct(struct SAF_Fuseboard_Status_Struct *s,
                                    union SAF_Fuseboard_Status_Union u);
 
-void
+extern SOFT_INLINE void
 SAF_Fuseboard_Status_StructToUnion(union SAF_Fuseboard_Status_Union *u,
                                    struct SAF_Fuseboard_Status_Struct s);
 
@@ -514,11 +544,13 @@ union SAF_StWheel_Status_Union {
   uint64_t data;
 
   struct {
+
     uint64_t scs_error : 1;
     uint64_t message_error : 1;
     uint64_t output_no_change_error : 1;
+    uint64_t reserved_1 : 2;
     uint64_t gen_scs : 3;
-    uint64_t reserved : 58;
+    uint64_t reserved_2 : 58;
   };
 };
 
@@ -529,11 +561,11 @@ struct SAF_StWheel_Status_Struct {
   uint8_t gen_scs;
 };
 
-void
+extern SOFT_INLINE void
 SAF_StWheel_Status_UnionToStruct(struct SAF_StWheel_Status_Struct *s,
                                  union SAF_StWheel_Status_Union u);
 
-void
+extern SOFT_INLINE void
 SAF_StWheel_Status_StructToUnion(union SAF_StWheel_Status_Union *u,
                                  struct SAF_StWheel_Status_Struct s);
 
@@ -548,9 +580,10 @@ union SAF_ZoCo_Right_Status_Union {
   uint64_t data;
 
   struct {
+
     uint64_t scs_error : 1;
     uint64_t gen_scs : 3;
-    uint64_t reserved : 60;
+    uint64_t reserved_1 : 60;
   };
 };
 
@@ -559,11 +592,11 @@ struct SAF_ZoCo_Right_Status_Struct {
   uint8_t gen_scs;
 };
 
-void
+extern SOFT_INLINE void
 SAF_ZoCo_Right_Status_UnionToStruct(struct SAF_ZoCo_Right_Status_Struct *s,
                                     union SAF_ZoCo_Right_Status_Union u);
 
-void
+extern SOFT_INLINE void
 SAF_ZoCo_Right_Status_StructToUnion(union SAF_ZoCo_Right_Status_Union *u,
                                     struct SAF_ZoCo_Right_Status_Struct s);
 
@@ -578,9 +611,10 @@ union SAF_ZoCo_Left_Status_Union {
   uint64_t data;
 
   struct {
+
     uint64_t scs_error : 1;
     uint64_t gen_scs : 3;
-    uint64_t reserved : 60;
+    uint64_t reserved_1 : 60;
   };
 };
 
@@ -589,11 +623,11 @@ struct SAF_ZoCo_Left_Status_Struct {
   uint8_t gen_scs;
 };
 
-void
+extern SOFT_INLINE void
 SAF_ZoCo_Left_Status_UnionToStruct(struct SAF_ZoCo_Left_Status_Struct *s,
                                    union SAF_ZoCo_Left_Status_Union u);
 
-void
+extern SOFT_INLINE void
 SAF_ZoCo_Left_Status_StructToUnion(union SAF_ZoCo_Left_Status_Union *u,
                                    struct SAF_ZoCo_Left_Status_Struct s);
 
@@ -608,8 +642,9 @@ union LOG_Odometry_Union {
   uint64_t data;
 
   struct {
+
     uint64_t rear_average_tire_speed : 16;
-    uint64_t reserved : 48;
+    uint64_t reserved_1 : 48;
   };
 };
 
@@ -617,11 +652,13 @@ struct LOG_Odometry_Struct {
   float rear_average_tire_speed;
 };
 
-void LOG_Odometry_UnionToStruct(struct LOG_Odometry_Struct *s,
-                                              union LOG_Odometry_Union u);
+extern SOFT_INLINE void
+LOG_Odometry_UnionToStruct(struct LOG_Odometry_Struct *s,
+                           union LOG_Odometry_Union u);
 
-void LOG_Odometry_StructToUnion(union LOG_Odometry_Union *u,
-                                              struct LOG_Odometry_Struct s);
+extern SOFT_INLINE void
+LOG_Odometry_StructToUnion(union LOG_Odometry_Union *u,
+                           struct LOG_Odometry_Struct s);
 
 /* ------------------------ LOG_ThrottleBrakeRequest ------------------------ */
 
@@ -634,9 +671,10 @@ union LOG_ThrottleBrakeRequest_Union {
   uint64_t data;
 
   struct {
+
     uint64_t requested_throttle : 8;
     uint64_t requested_brake : 8;
-    uint64_t reserved : 48;
+    uint64_t reserved_1 : 48;
   };
 };
 
@@ -645,11 +683,11 @@ struct LOG_ThrottleBrakeRequest_Struct {
   uint8_t requested_brake;
 };
 
-void LOG_ThrottleBrakeRequest_UnionToStruct(
+extern SOFT_INLINE void LOG_ThrottleBrakeRequest_UnionToStruct(
     struct LOG_ThrottleBrakeRequest_Struct *s,
     union LOG_ThrottleBrakeRequest_Union u);
 
-void LOG_ThrottleBrakeRequest_StructToUnion(
+extern SOFT_INLINE void LOG_ThrottleBrakeRequest_StructToUnion(
     union LOG_ThrottleBrakeRequest_Union *u,
     struct LOG_ThrottleBrakeRequest_Struct s);
 
@@ -664,10 +702,11 @@ union LOG_SBG_ODO_Info_Union {
   uint64_t data;
 
   struct {
+
     uint64_t time_stamp : 32;
     uint64_t odo_real_meas : 1;
     uint64_t odo_time_sync : 1;
-    uint64_t reserved : 30;
+    uint64_t reserved_1 : 30;
   };
 };
 
@@ -677,11 +716,11 @@ struct LOG_SBG_ODO_Info_Struct {
   bool odo_time_sync;
 };
 
-void
+extern SOFT_INLINE void
 LOG_SBG_ODO_Info_UnionToStruct(struct LOG_SBG_ODO_Info_Struct *s,
                                union LOG_SBG_ODO_Info_Union u);
 
-void
+extern SOFT_INLINE void
 LOG_SBG_ODO_Info_StructToUnion(union LOG_SBG_ODO_Info_Union *u,
                                struct LOG_SBG_ODO_Info_Struct s);
 
@@ -696,10 +735,11 @@ union HSC_SBG_Position_Acc_Union {
   uint64_t data;
 
   struct {
+
     uint64_t latitude_acc : 16;
     uint64_t longitude_acc : 16;
     uint64_t altitude_acc : 16;
-    uint64_t reserved : 16;
+    uint64_t reserved_1 : 16;
   };
 };
 
@@ -709,11 +749,11 @@ struct HSC_SBG_Position_Acc_Struct {
   float altitude_acc;
 };
 
-void
+extern SOFT_INLINE void
 HSC_SBG_Position_Acc_UnionToStruct(struct HSC_SBG_Position_Acc_Struct *s,
                                    union HSC_SBG_Position_Acc_Union u);
 
-void
+extern SOFT_INLINE void
 HSC_SBG_Position_Acc_StructToUnion(union HSC_SBG_Position_Acc_Union *u,
                                    struct HSC_SBG_Position_Acc_Struct s);
 
@@ -728,10 +768,11 @@ union HSC_SBG_Euler_Acc_Union {
   uint64_t data;
 
   struct {
+
     uint64_t roll_acc : 16;
     uint64_t pitch_acc : 16;
     uint64_t yaw_acc : 16;
-    uint64_t reserved : 16;
+    uint64_t reserved_1 : 16;
   };
 };
 
@@ -741,11 +782,11 @@ struct HSC_SBG_Euler_Acc_Struct {
   float yaw_acc;
 };
 
-void
+extern SOFT_INLINE void
 HSC_SBG_Euler_Acc_UnionToStruct(struct HSC_SBG_Euler_Acc_Struct *s,
                                 union HSC_SBG_Euler_Acc_Union u);
 
-void
+extern SOFT_INLINE void
 HSC_SBG_Euler_Acc_StructToUnion(union HSC_SBG_Euler_Acc_Union *u,
                                 struct HSC_SBG_Euler_Acc_Struct s);
 
@@ -760,10 +801,11 @@ union HSC_SBG_Euler_Union {
   uint64_t data;
 
   struct {
+
     uint64_t roll : 16;
     uint64_t pitch : 16;
     uint64_t yaw : 16;
-    uint64_t reserved : 16;
+    uint64_t reserved_1 : 16;
   };
 };
 
@@ -773,11 +815,13 @@ struct HSC_SBG_Euler_Struct {
   float yaw;
 };
 
-void HSC_SBG_Euler_UnionToStruct(struct HSC_SBG_Euler_Struct *s,
-                                               union HSC_SBG_Euler_Union u);
+extern SOFT_INLINE void
+HSC_SBG_Euler_UnionToStruct(struct HSC_SBG_Euler_Struct *s,
+                            union HSC_SBG_Euler_Union u);
 
-void HSC_SBG_Euler_StructToUnion(union HSC_SBG_Euler_Union *u,
-                                               struct HSC_SBG_Euler_Struct s);
+extern SOFT_INLINE void
+HSC_SBG_Euler_StructToUnion(union HSC_SBG_Euler_Union *u,
+                            struct HSC_SBG_Euler_Struct s);
 
 /* ---------------------------- LOG_SBG_EKF_Info ---------------------------- */
 
@@ -790,8 +834,9 @@ union LOG_SBG_EKF_Info_Union {
   uint64_t data;
 
   struct {
+
     uint64_t time_stamp : 32;
-    uint64_t reserved : 32;
+    uint64_t reserved_1 : 32;
   };
 };
 
@@ -799,11 +844,11 @@ struct LOG_SBG_EKF_Info_Struct {
   uint32_t time_stamp;
 };
 
-void
+extern SOFT_INLINE void
 LOG_SBG_EKF_Info_UnionToStruct(struct LOG_SBG_EKF_Info_Struct *s,
                                union LOG_SBG_EKF_Info_Union u);
 
-void
+extern SOFT_INLINE void
 LOG_SBG_EKF_Info_StructToUnion(union LOG_SBG_EKF_Info_Union *u,
                                struct LOG_SBG_EKF_Info_Struct s);
 
@@ -818,9 +863,11 @@ union LOG_SBG_IMU_Info_Union {
   uint64_t data;
 
   struct {
+
     uint64_t time_stamp : 32;
+    uint64_t reserved_1 : 16;
     uint64_t temperature : 16;
-    uint64_t reserved : 16;
+    uint64_t reserved_2 : 16;
   };
 };
 
@@ -829,11 +876,11 @@ struct LOG_SBG_IMU_Info_Struct {
   float temperature;
 };
 
-void
+extern SOFT_INLINE void
 LOG_SBG_IMU_Info_UnionToStruct(struct LOG_SBG_IMU_Info_Struct *s,
                                union LOG_SBG_IMU_Info_Union u);
 
-void
+extern SOFT_INLINE void
 LOG_SBG_IMU_Info_StructToUnion(union LOG_SBG_IMU_Info_Union *u,
                                struct LOG_SBG_IMU_Info_Struct s);
 
@@ -848,6 +895,7 @@ union LOG_TireForces_Union {
   uint64_t data;
 
   struct {
+
     uint64_t tire_force_fl : 16;
     uint64_t tire_force_fr : 16;
     uint64_t tire_force_rl : 16;
@@ -862,11 +910,13 @@ struct LOG_TireForces_Struct {
   float tire_force_rr;
 };
 
-void LOG_TireForces_UnionToStruct(struct LOG_TireForces_Struct *s,
-                                                union LOG_TireForces_Union u);
+extern SOFT_INLINE void
+LOG_TireForces_UnionToStruct(struct LOG_TireForces_Struct *s,
+                             union LOG_TireForces_Union u);
 
-void LOG_TireForces_StructToUnion(union LOG_TireForces_Union *u,
-                                                struct LOG_TireForces_Struct s);
+extern SOFT_INLINE void
+LOG_TireForces_StructToUnion(union LOG_TireForces_Union *u,
+                             struct LOG_TireForces_Struct s);
 
 /* ----------------------------- LOG_SlipRatio ----------------------------- */
 
@@ -879,6 +929,7 @@ union LOG_SlipRatio_Union {
   uint64_t data;
 
   struct {
+
     uint64_t slip_ratio_fl : 16;
     uint64_t slip_ratio_fr : 16;
     uint64_t slip_ratio_rl : 16;
@@ -893,11 +944,13 @@ struct LOG_SlipRatio_Struct {
   float slip_ratio_rr;
 };
 
-void LOG_SlipRatio_UnionToStruct(struct LOG_SlipRatio_Struct *s,
-                                               union LOG_SlipRatio_Union u);
+extern SOFT_INLINE void
+LOG_SlipRatio_UnionToStruct(struct LOG_SlipRatio_Struct *s,
+                            union LOG_SlipRatio_Union u);
 
-void LOG_SlipRatio_StructToUnion(union LOG_SlipRatio_Union *u,
-                                               struct LOG_SlipRatio_Struct s);
+extern SOFT_INLINE void
+LOG_SlipRatio_StructToUnion(union LOG_SlipRatio_Union *u,
+                            struct LOG_SlipRatio_Struct s);
 
 /* ----------------------------- LOG_TV_request ----------------------------- */
 
@@ -910,6 +963,7 @@ union LOG_TV_request_Union {
   uint64_t data;
 
   struct {
+
     uint64_t tv_fl : 16;
     uint64_t tv_fr : 16;
     uint64_t tv_rr : 16;
@@ -924,11 +978,13 @@ struct LOG_TV_request_Struct {
   float tv_rl;
 };
 
-void LOG_TV_request_UnionToStruct(struct LOG_TV_request_Struct *s,
-                                                union LOG_TV_request_Union u);
+extern SOFT_INLINE void
+LOG_TV_request_UnionToStruct(struct LOG_TV_request_Struct *s,
+                             union LOG_TV_request_Union u);
 
-void LOG_TV_request_StructToUnion(union LOG_TV_request_Union *u,
-                                                struct LOG_TV_request_Struct s);
+extern SOFT_INLINE void
+LOG_TV_request_StructToUnion(union LOG_TV_request_Union *u,
+                             struct LOG_TV_request_Struct s);
 
 /* ----------------------------- LOG_SlipAngle ----------------------------- */
 
@@ -941,6 +997,7 @@ union LOG_SlipAngle_Union {
   uint64_t data;
 
   struct {
+
     uint64_t slip_angle_fl : 16;
     uint64_t slip_angle_fr : 16;
     uint64_t slip_angle_rl : 16;
@@ -955,11 +1012,13 @@ struct LOG_SlipAngle_Struct {
   float slip_angle_rr;
 };
 
-void LOG_SlipAngle_UnionToStruct(struct LOG_SlipAngle_Struct *s,
-                                               union LOG_SlipAngle_Union u);
+extern SOFT_INLINE void
+LOG_SlipAngle_UnionToStruct(struct LOG_SlipAngle_Struct *s,
+                            union LOG_SlipAngle_Union u);
 
-void LOG_SlipAngle_StructToUnion(union LOG_SlipAngle_Union *u,
-                                               struct LOG_SlipAngle_Struct s);
+extern SOFT_INLINE void
+LOG_SlipAngle_StructToUnion(union LOG_SlipAngle_Union *u,
+                            struct LOG_SlipAngle_Struct s);
 
 /* -------------------------- HSC_SBG_True_Heading -------------------------- */
 
@@ -972,10 +1031,11 @@ union HSC_SBG_True_Heading_Union {
   uint64_t data;
 
   struct {
+
     uint64_t true_heading : 16;
     uint64_t true_heading_acc : 16;
     uint64_t pitch : 16;
-    uint64_t reserved : 16;
+    uint64_t reserved_1 : 16;
   };
 };
 
@@ -985,11 +1045,11 @@ struct HSC_SBG_True_Heading_Struct {
   float pitch;
 };
 
-void
+extern SOFT_INLINE void
 HSC_SBG_True_Heading_UnionToStruct(struct HSC_SBG_True_Heading_Struct *s,
                                    union HSC_SBG_True_Heading_Union u);
 
-void
+extern SOFT_INLINE void
 HSC_SBG_True_Heading_StructToUnion(union HSC_SBG_True_Heading_Union *u,
                                    struct HSC_SBG_True_Heading_Struct s);
 
@@ -1004,9 +1064,10 @@ union HSC_SBG_Altitude_Union {
   uint64_t data;
 
   struct {
+
     uint64_t altitude : 32;
     uint64_t undulation : 16;
-    uint64_t reserved : 16;
+    uint64_t reserved_1 : 16;
   };
 };
 
@@ -1015,11 +1076,11 @@ struct HSC_SBG_Altitude_Struct {
   float undulation;
 };
 
-void
+extern SOFT_INLINE void
 HSC_SBG_Altitude_UnionToStruct(struct HSC_SBG_Altitude_Struct *s,
                                union HSC_SBG_Altitude_Union u);
 
-void
+extern SOFT_INLINE void
 HSC_SBG_Altitude_StructToUnion(union HSC_SBG_Altitude_Union *u,
                                struct HSC_SBG_Altitude_Struct s);
 
@@ -1034,6 +1095,7 @@ union HSC_SBG_Position_Union {
   uint64_t data;
 
   struct {
+
     uint64_t latitude : 32;
     uint64_t longitude : 32;
   };
@@ -1044,11 +1106,11 @@ struct HSC_SBG_Position_Struct {
   float longitude;
 };
 
-void
+extern SOFT_INLINE void
 HSC_SBG_Position_UnionToStruct(struct HSC_SBG_Position_Struct *s,
                                union HSC_SBG_Position_Union u);
 
-void
+extern SOFT_INLINE void
 HSC_SBG_Position_StructToUnion(union HSC_SBG_Position_Union *u,
                                struct HSC_SBG_Position_Struct s);
 
@@ -1063,8 +1125,9 @@ union LOG_SBG_Heading_Info_Union {
   uint64_t data;
 
   struct {
+
     uint64_t time_stamp : 32;
-    uint64_t reserved : 32;
+    uint64_t reserved_1 : 32;
   };
 };
 
@@ -1072,11 +1135,11 @@ struct LOG_SBG_Heading_Info_Struct {
   uint32_t time_stamp;
 };
 
-void
+extern SOFT_INLINE void
 LOG_SBG_Heading_Info_UnionToStruct(struct LOG_SBG_Heading_Info_Struct *s,
                                    union LOG_SBG_Heading_Info_Union u);
 
-void
+extern SOFT_INLINE void
 LOG_SBG_Heading_Info_StructToUnion(union LOG_SBG_Heading_Info_Union *u,
                                    struct LOG_SBG_Heading_Info_Struct s);
 
@@ -1091,8 +1154,9 @@ union LOG_SBG_POS_Info_Union {
   uint64_t data;
 
   struct {
+
     uint64_t time_stamp : 32;
-    uint64_t reserved : 32;
+    uint64_t reserved_1 : 32;
   };
 };
 
@@ -1100,11 +1164,11 @@ struct LOG_SBG_POS_Info_Struct {
   uint32_t time_stamp;
 };
 
-void
+extern SOFT_INLINE void
 LOG_SBG_POS_Info_UnionToStruct(struct LOG_SBG_POS_Info_Struct *s,
                                union LOG_SBG_POS_Info_Union u);
 
-void
+extern SOFT_INLINE void
 LOG_SBG_POS_Info_StructToUnion(union LOG_SBG_POS_Info_Union *u,
                                struct LOG_SBG_POS_Info_Struct s);
 
@@ -1119,8 +1183,9 @@ union LOG_SBG_GPS1_Vel_Info_Union {
   uint64_t data;
 
   struct {
+
     uint64_t time_stamp : 32;
-    uint64_t reserved : 32;
+    uint64_t reserved_1 : 32;
   };
 };
 
@@ -1128,11 +1193,11 @@ struct LOG_SBG_GPS1_Vel_Info_Struct {
   uint32_t time_stamp;
 };
 
-void
+extern SOFT_INLINE void
 LOG_SBG_GPS1_Vel_Info_UnionToStruct(struct LOG_SBG_GPS1_Vel_Info_Struct *s,
                                     union LOG_SBG_GPS1_Vel_Info_Union u);
 
-void
+extern SOFT_INLINE void
 LOG_SBG_GPS1_Vel_Info_StructToUnion(union LOG_SBG_GPS1_Vel_Info_Union *u,
                                     struct LOG_SBG_GPS1_Vel_Info_Struct s);
 
@@ -1147,17 +1212,18 @@ union LOG_SBG_Status_03_Union {
   uint64_t data;
 
   struct {
-    uint64_t reserved : 64;
+
+    uint64_t reserved_1 : 64;
   };
 };
 
 struct LOG_SBG_Status_03_Struct {};
 
-void
+extern SOFT_INLINE void
 LOG_SBG_Status_03_UnionToStruct(struct LOG_SBG_Status_03_Struct *s,
                                 union LOG_SBG_Status_03_Union u);
 
-void
+extern SOFT_INLINE void
 LOG_SBG_Status_03_StructToUnion(union LOG_SBG_Status_03_Union *u,
                                 struct LOG_SBG_Status_03_Struct s);
 
@@ -1172,15 +1238,22 @@ union LOG_SBG_Status_02_Union {
   uint64_t data;
 
   struct {
+
     uint64_t sbg_porta_valid : 1;
     uint64_t sbg_portb_valid : 1;
+    uint64_t reserved_1 : 3;
     uint64_t sbg_porta_rx_ok : 1;
+    uint64_t reserved_2 : 3;
     uint64_t sbg_porta_tx_ok : 1;
+    uint64_t reserved_3 : 3;
     uint64_t sbg_portb_rx_ok : 1;
+    uint64_t reserved_4 : 20;
     uint64_t sbg_can_valid : 1;
+    uint64_t reserved_5 : 20;
     uint64_t sbg_can_rx_ok : 1;
+    uint64_t reserved_6 : 20;
     uint64_t sbg_can_tx_ok : 1;
-    uint64_t reserved : 56;
+    uint64_t reserved_7 : 56;
   };
 };
 
@@ -1195,11 +1268,11 @@ struct LOG_SBG_Status_02_Struct {
   bool sbg_can_tx_ok;
 };
 
-void
+extern SOFT_INLINE void
 LOG_SBG_Status_02_UnionToStruct(struct LOG_SBG_Status_02_Struct *s,
                                 union LOG_SBG_Status_02_Union u);
 
-void
+extern SOFT_INLINE void
 LOG_SBG_Status_02_StructToUnion(union LOG_SBG_Status_02_Union *u,
                                 struct LOG_SBG_Status_02_Struct s);
 
@@ -1214,6 +1287,7 @@ union LOG_SBG_Status_01_Union {
   uint64_t data;
 
   struct {
+
     uint64_t sbg_time_stamp : 32;
     uint64_t sbg_main_power_ok : 1;
     uint64_t sbg_imu_power_ok : 1;
@@ -1222,7 +1296,7 @@ union LOG_SBG_Status_01_Union {
     uint64_t sbg_temp_ok : 1;
     uint64_t sbg_datalogger_ok : 1;
     uint64_t sbg_cpu_ok : 1;
-    uint64_t reserved : 25;
+    uint64_t reserved_1 : 25;
   };
 };
 
@@ -1237,11 +1311,11 @@ struct LOG_SBG_Status_01_Struct {
   bool sbg_cpu_ok;
 };
 
-void
+extern SOFT_INLINE void
 LOG_SBG_Status_01_UnionToStruct(struct LOG_SBG_Status_01_Struct *s,
                                 union LOG_SBG_Status_01_Union u);
 
-void
+extern SOFT_INLINE void
 LOG_SBG_Status_01_StructToUnion(union LOG_SBG_Status_01_Union *u,
                                 struct LOG_SBG_Status_01_Struct s);
 
@@ -1256,13 +1330,14 @@ union HSC_SBG_Track_Slip_Curve_Union {
   uint64_t data;
 
   struct {
+
     uint64_t angle_track : 16;
     uint64_t angle_slip : 16;
     uint64_t curvature_radius : 16;
     uint64_t track_valid : 1;
     uint64_t slip_valid : 1;
     uint64_t curvature_valid : 1;
-    uint64_t reserved : 13;
+    uint64_t reserved_1 : 13;
   };
 };
 
@@ -1275,11 +1350,11 @@ struct HSC_SBG_Track_Slip_Curve_Struct {
   bool curvature_valid;
 };
 
-void HSC_SBG_Track_Slip_Curve_UnionToStruct(
+extern SOFT_INLINE void HSC_SBG_Track_Slip_Curve_UnionToStruct(
     struct HSC_SBG_Track_Slip_Curve_Struct *s,
     union HSC_SBG_Track_Slip_Curve_Union u);
 
-void HSC_SBG_Track_Slip_Curve_StructToUnion(
+extern SOFT_INLINE void HSC_SBG_Track_Slip_Curve_StructToUnion(
     union HSC_SBG_Track_Slip_Curve_Union *u,
     struct HSC_SBG_Track_Slip_Curve_Struct s);
 
@@ -1294,10 +1369,11 @@ union HSC_SBG_EKF_Vel_Body_Union {
   uint64_t data;
 
   struct {
+
     uint64_t velocity_x : 16;
     uint64_t velocity_y : 16;
     uint64_t velocity_z : 16;
-    uint64_t reserved : 16;
+    uint64_t reserved_1 : 16;
   };
 };
 
@@ -1307,11 +1383,11 @@ struct HSC_SBG_EKF_Vel_Body_Struct {
   float velocity_z;
 };
 
-void
+extern SOFT_INLINE void
 HSC_SBG_EKF_Vel_Body_UnionToStruct(struct HSC_SBG_EKF_Vel_Body_Struct *s,
                                    union HSC_SBG_EKF_Vel_Body_Union u);
 
-void
+extern SOFT_INLINE void
 HSC_SBG_EKF_Vel_Body_StructToUnion(union HSC_SBG_EKF_Vel_Body_Union *u,
                                    struct HSC_SBG_EKF_Vel_Body_Struct s);
 
@@ -1326,10 +1402,11 @@ union HSC_SBG_Gyro_Union {
   uint64_t data;
 
   struct {
+
     uint64_t gyro_x : 16;
     uint64_t gyro_y : 16;
     uint64_t gyro_z : 16;
-    uint64_t reserved : 16;
+    uint64_t reserved_1 : 16;
   };
 };
 
@@ -1339,11 +1416,13 @@ struct HSC_SBG_Gyro_Struct {
   float gyro_z;
 };
 
-void HSC_SBG_Gyro_UnionToStruct(struct HSC_SBG_Gyro_Struct *s,
-                                              union HSC_SBG_Gyro_Union u);
+extern SOFT_INLINE void
+HSC_SBG_Gyro_UnionToStruct(struct HSC_SBG_Gyro_Struct *s,
+                           union HSC_SBG_Gyro_Union u);
 
-void HSC_SBG_Gyro_StructToUnion(union HSC_SBG_Gyro_Union *u,
-                                              struct HSC_SBG_Gyro_Struct s);
+extern SOFT_INLINE void
+HSC_SBG_Gyro_StructToUnion(union HSC_SBG_Gyro_Union *u,
+                           struct HSC_SBG_Gyro_Struct s);
 
 /* ----------------------------- HSC_SBG_Accel ----------------------------- */
 
@@ -1356,10 +1435,11 @@ union HSC_SBG_Accel_Union {
   uint64_t data;
 
   struct {
+
     uint64_t accel_x : 16;
     uint64_t accel_y : 16;
     uint64_t accel_z : 16;
-    uint64_t reserved : 16;
+    uint64_t reserved_1 : 16;
   };
 };
 
@@ -1369,11 +1449,13 @@ struct HSC_SBG_Accel_Struct {
   float accel_z;
 };
 
-void HSC_SBG_Accel_UnionToStruct(struct HSC_SBG_Accel_Struct *s,
-                                               union HSC_SBG_Accel_Union u);
+extern SOFT_INLINE void
+HSC_SBG_Accel_UnionToStruct(struct HSC_SBG_Accel_Struct *s,
+                            union HSC_SBG_Accel_Union u);
 
-void HSC_SBG_Accel_StructToUnion(union HSC_SBG_Accel_Union *u,
-                                               struct HSC_SBG_Accel_Struct s);
+extern SOFT_INLINE void
+HSC_SBG_Accel_StructToUnion(union HSC_SBG_Accel_Union *u,
+                            struct HSC_SBG_Accel_Struct s);
 
 /* ---------------------------- GW_Battery_Cells ---------------------------- */
 
@@ -1386,12 +1468,17 @@ union GW_Battery_Cells_Union {
   uint64_t data;
 
   struct {
+
     uint64_t temp_min : 7;
+    uint64_t reserved_1 : 1;
     uint64_t temp_avg : 7;
+    uint64_t reserved_2 : 2;
     uint64_t temp_max : 7;
+    uint64_t reserved_3 : 3;
     uint64_t voltage_min : 16;
+    uint64_t reserved_4 : 3;
     uint64_t voltage_max : 16;
-    uint64_t reserved : 11;
+    uint64_t reserved_5 : 11;
   };
 };
 
@@ -1403,11 +1490,11 @@ struct GW_Battery_Cells_Struct {
   float voltage_max;
 };
 
-void
+extern SOFT_INLINE void
 GW_Battery_Cells_UnionToStruct(struct GW_Battery_Cells_Struct *s,
                                union GW_Battery_Cells_Union u);
 
-void
+extern SOFT_INLINE void
 GW_Battery_Cells_StructToUnion(union GW_Battery_Cells_Union *u,
                                struct GW_Battery_Cells_Struct s);
 
@@ -1435,11 +1522,12 @@ union GW_Battery_Status_Union {
   uint64_t data;
 
   struct {
+
     uint64_t state : 4;
     uint64_t soc_internal : 14;
     uint64_t power : 14;
     uint64_t current : 16;
-    uint64_t reserved : 16;
+    uint64_t reserved_1 : 16;
   };
 };
 
@@ -1450,11 +1538,11 @@ struct GW_Battery_Status_Struct {
   float current;
 };
 
-void
+extern SOFT_INLINE void
 GW_Battery_Status_UnionToStruct(struct GW_Battery_Status_Struct *s,
                                 union GW_Battery_Status_Union u);
 
-void
+extern SOFT_INLINE void
 GW_Battery_Status_StructToUnion(union GW_Battery_Status_Union *u,
                                 struct GW_Battery_Status_Struct s);
 
@@ -1469,6 +1557,7 @@ union GW_PE_FrontLeft_Union {
   uint64_t data;
 
   struct {
+
     uint64_t temp_motor : 16;
     uint64_t temp_inverter : 16;
     uint64_t tempigbt : 16;
@@ -1483,11 +1572,11 @@ struct GW_PE_FrontLeft_Struct {
   int16_t actual_velocity;
 };
 
-void
+extern SOFT_INLINE void
 GW_PE_FrontLeft_UnionToStruct(struct GW_PE_FrontLeft_Struct *s,
                               union GW_PE_FrontLeft_Union u);
 
-void
+extern SOFT_INLINE void
 GW_PE_FrontLeft_StructToUnion(union GW_PE_FrontLeft_Union *u,
                               struct GW_PE_FrontLeft_Struct s);
 
@@ -1502,6 +1591,7 @@ union GW_PE_RearLeft_Union {
   uint64_t data;
 
   struct {
+
     uint64_t temp_motor : 16;
     uint64_t temp_inverter : 16;
     uint64_t tempigbt : 16;
@@ -1516,11 +1606,13 @@ struct GW_PE_RearLeft_Struct {
   int16_t actual_velocity;
 };
 
-void GW_PE_RearLeft_UnionToStruct(struct GW_PE_RearLeft_Struct *s,
-                                                union GW_PE_RearLeft_Union u);
+extern SOFT_INLINE void
+GW_PE_RearLeft_UnionToStruct(struct GW_PE_RearLeft_Struct *s,
+                             union GW_PE_RearLeft_Union u);
 
-void GW_PE_RearLeft_StructToUnion(union GW_PE_RearLeft_Union *u,
-                                                struct GW_PE_RearLeft_Struct s);
+extern SOFT_INLINE void
+GW_PE_RearLeft_StructToUnion(union GW_PE_RearLeft_Union *u,
+                             struct GW_PE_RearLeft_Struct s);
 
 /* ---------------------------- GW_PE_RearRight ---------------------------- */
 
@@ -1533,6 +1625,7 @@ union GW_PE_RearRight_Union {
   uint64_t data;
 
   struct {
+
     uint64_t temp_motor : 16;
     uint64_t temp_inverter : 16;
     uint64_t tempigbt : 16;
@@ -1547,11 +1640,11 @@ struct GW_PE_RearRight_Struct {
   int16_t actual_velocity;
 };
 
-void
+extern SOFT_INLINE void
 GW_PE_RearRight_UnionToStruct(struct GW_PE_RearRight_Struct *s,
                               union GW_PE_RearRight_Union u);
 
-void
+extern SOFT_INLINE void
 GW_PE_RearRight_StructToUnion(union GW_PE_RearRight_Union *u,
                               struct GW_PE_RearRight_Struct s);
 
@@ -1566,6 +1659,7 @@ union GW_PE_FrontRight_Union {
   uint64_t data;
 
   struct {
+
     uint64_t temp_motor : 16;
     uint64_t temp_inverter : 16;
     uint64_t tempigbt : 16;
@@ -1580,11 +1674,11 @@ struct GW_PE_FrontRight_Struct {
   int16_t actual_velocity;
 };
 
-void
+extern SOFT_INLINE void
 GW_PE_FrontRight_UnionToStruct(struct GW_PE_FrontRight_Struct *s,
                                union GW_PE_FrontRight_Union u);
 
-void
+extern SOFT_INLINE void
 GW_PE_FrontRight_StructToUnion(union GW_PE_FrontRight_Union *u,
                                struct GW_PE_FrontRight_Struct s);
 
@@ -1599,9 +1693,10 @@ union EXC_BATFAN_Control_Union {
   uint64_t data;
 
   struct {
+
     uint64_t fan_request : 7;
     uint64_t fan_on : 1;
-    uint64_t reserved : 56;
+    uint64_t reserved_1 : 56;
   };
 };
 
@@ -1610,11 +1705,11 @@ struct EXC_BATFAN_Control_Struct {
   bool fan_on;
 };
 
-void
+extern SOFT_INLINE void
 EXC_BATFAN_Control_UnionToStruct(struct EXC_BATFAN_Control_Struct *s,
                                  union EXC_BATFAN_Control_Union u);
 
-void
+extern SOFT_INLINE void
 EXC_BATFAN_Control_StructToUnion(union EXC_BATFAN_Control_Union *u,
                                  struct EXC_BATFAN_Control_Struct s);
 
@@ -1629,9 +1724,11 @@ union LOG_ASSILEDs_Union {
   uint64_t data;
 
   struct {
+
     uint64_t yellow : 1;
+    uint64_t reserved_1 : 1;
     uint64_t blue : 1;
-    uint64_t reserved : 62;
+    uint64_t reserved_2 : 62;
   };
 };
 
@@ -1640,11 +1737,13 @@ struct LOG_ASSILEDs_Struct {
   bool blue;
 };
 
-void LOG_ASSILEDs_UnionToStruct(struct LOG_ASSILEDs_Struct *s,
-                                              union LOG_ASSILEDs_Union u);
+extern SOFT_INLINE void
+LOG_ASSILEDs_UnionToStruct(struct LOG_ASSILEDs_Struct *s,
+                           union LOG_ASSILEDs_Union u);
 
-void LOG_ASSILEDs_StructToUnion(union LOG_ASSILEDs_Union *u,
-                                              struct LOG_ASSILEDs_Struct s);
+extern SOFT_INLINE void
+LOG_ASSILEDs_StructToUnion(union LOG_ASSILEDs_Union *u,
+                           struct LOG_ASSILEDs_Struct s);
 
 /* ---------------------------- EXC_FAN_Control ---------------------------- */
 
@@ -1657,9 +1756,10 @@ union EXC_FAN_Control_Union {
   uint64_t data;
 
   struct {
+
     uint64_t fan_request : 7;
     uint64_t fan_on : 1;
-    uint64_t reserved : 56;
+    uint64_t reserved_1 : 56;
   };
 };
 
@@ -1668,11 +1768,11 @@ struct EXC_FAN_Control_Struct {
   bool fan_on;
 };
 
-void
+extern SOFT_INLINE void
 EXC_FAN_Control_UnionToStruct(struct EXC_FAN_Control_Struct *s,
                               union EXC_FAN_Control_Union u);
 
-void
+extern SOFT_INLINE void
 EXC_FAN_Control_StructToUnion(union EXC_FAN_Control_Union *u,
                               struct EXC_FAN_Control_Struct s);
 
@@ -1687,9 +1787,10 @@ union EXC_PUMP_Control_Union {
   uint64_t data;
 
   struct {
+
     uint64_t pump_request : 7;
     uint64_t pump_on : 1;
-    uint64_t reserved : 56;
+    uint64_t reserved_1 : 56;
   };
 };
 
@@ -1698,11 +1799,11 @@ struct EXC_PUMP_Control_Struct {
   bool pump_on;
 };
 
-void
+extern SOFT_INLINE void
 EXC_PUMP_Control_UnionToStruct(struct EXC_PUMP_Control_Struct *s,
                                union EXC_PUMP_Control_Union u);
 
-void
+extern SOFT_INLINE void
 EXC_PUMP_Control_StructToUnion(union EXC_PUMP_Control_Union *u,
                                struct EXC_PUMP_Control_Struct s);
 
@@ -1726,13 +1827,14 @@ union HSC_Vehicle_Status_Union {
   uint64_t data;
 
   struct {
+
     uint64_t state : 3;
     uint64_t imd_error : 1;
     uint64_t ams_error : 1;
     uint64_t gen_scs : 3;
     uint64_t velocity : 8;
     uint64_t velocity_ms : 16;
-    uint64_t reserved : 32;
+    uint64_t reserved_1 : 32;
   };
 };
 
@@ -1745,11 +1847,11 @@ struct HSC_Vehicle_Status_Struct {
   float velocity_ms;
 };
 
-void
+extern SOFT_INLINE void
 HSC_Vehicle_Status_UnionToStruct(struct HSC_Vehicle_Status_Struct *s,
                                  union HSC_Vehicle_Status_Union u);
 
-void
+extern SOFT_INLINE void
 HSC_Vehicle_Status_StructToUnion(union HSC_Vehicle_Status_Union *u,
                                  struct HSC_Vehicle_Status_Struct s);
 
@@ -1764,9 +1866,10 @@ union LSC_Extern_Buttons_Union {
   uint64_t data;
 
   struct {
+
     uint64_t tsa : 1;
     uint64_t gen_scs : 3;
-    uint64_t reserved : 60;
+    uint64_t reserved_1 : 60;
   };
 };
 
@@ -1775,11 +1878,11 @@ struct LSC_Extern_Buttons_Struct {
   uint8_t gen_scs;
 };
 
-void
+extern SOFT_INLINE void
 LSC_Extern_Buttons_UnionToStruct(struct LSC_Extern_Buttons_Struct *s,
                                  union LSC_Extern_Buttons_Union u);
 
-void
+extern SOFT_INLINE void
 LSC_Extern_Buttons_StructToUnion(union LSC_Extern_Buttons_Union *u,
                                  struct LSC_Extern_Buttons_Struct s);
 
@@ -1794,10 +1897,12 @@ union LSC_Dash_Buttons_Union {
   uint64_t data;
 
   struct {
+
     uint64_t tsa : 1;
     uint64_t rtd : 1;
+    uint64_t reserved_1 : 3;
     uint64_t gen_scs : 3;
-    uint64_t reserved : 59;
+    uint64_t reserved_2 : 59;
   };
 };
 
@@ -1807,11 +1912,11 @@ struct LSC_Dash_Buttons_Struct {
   uint8_t gen_scs;
 };
 
-void
+extern SOFT_INLINE void
 LSC_Dash_Buttons_UnionToStruct(struct LSC_Dash_Buttons_Struct *s,
                                union LSC_Dash_Buttons_Union u);
 
-void
+extern SOFT_INLINE void
 LSC_Dash_Buttons_StructToUnion(union LSC_Dash_Buttons_Union *u,
                                struct LSC_Dash_Buttons_Struct s);
 
@@ -1826,11 +1931,13 @@ union SAF_SmSe_AS_Status_Union {
   uint64_t data;
 
   struct {
+
     uint64_t scs_error : 1;
     uint64_t message_error : 1;
     uint64_t output_no_change_error : 1;
+    uint64_t reserved_1 : 2;
     uint64_t gen_scs : 3;
-    uint64_t reserved : 58;
+    uint64_t reserved_2 : 58;
   };
 };
 
@@ -1841,11 +1948,11 @@ struct SAF_SmSe_AS_Status_Struct {
   uint8_t gen_scs;
 };
 
-void
+extern SOFT_INLINE void
 SAF_SmSe_AS_Status_UnionToStruct(struct SAF_SmSe_AS_Status_Struct *s,
                                  union SAF_SmSe_AS_Status_Union u);
 
-void
+extern SOFT_INLINE void
 SAF_SmSe_AS_Status_StructToUnion(union SAF_SmSe_AS_Status_Union *u,
                                  struct SAF_SmSe_AS_Status_Struct s);
 
@@ -1860,11 +1967,13 @@ union SAF_DASH_Status_Union {
   uint64_t data;
 
   struct {
+
     uint64_t scs_error : 1;
     uint64_t message_error : 1;
     uint64_t output_no_change_error : 1;
+    uint64_t reserved_1 : 2;
     uint64_t gen_scs : 3;
-    uint64_t reserved : 58;
+    uint64_t reserved_2 : 58;
   };
 };
 
@@ -1875,11 +1984,11 @@ struct SAF_DASH_Status_Struct {
   uint8_t gen_scs;
 };
 
-void
+extern SOFT_INLINE void
 SAF_DASH_Status_UnionToStruct(struct SAF_DASH_Status_Struct *s,
                               union SAF_DASH_Status_Union u);
 
-void
+extern SOFT_INLINE void
 SAF_DASH_Status_StructToUnion(union SAF_DASH_Status_Union *u,
                               struct SAF_DASH_Status_Struct s);
 
@@ -1894,14 +2003,18 @@ union SAF_ZoCo_Rear_Status_Union {
   uint64_t data;
 
   struct {
+
     uint64_t scs_error : 1;
     uint64_t rtds_error : 1;
     uint64_t brake_light_error : 1;
     uint64_t message_error : 1;
+    uint64_t reserved_1 : 1;
     uint64_t gen_scs : 3;
+    uint64_t reserved_2 : 1;
     uint64_t brake_light_state : 1;
+    uint64_t reserved_3 : 1;
     uint64_t rtds_state : 1;
-    uint64_t reserved : 55;
+    uint64_t reserved_4 : 55;
   };
 };
 
@@ -1915,11 +2028,11 @@ struct SAF_ZoCo_Rear_Status_Struct {
   bool rtds_state;
 };
 
-void
+extern SOFT_INLINE void
 SAF_ZoCo_Rear_Status_UnionToStruct(struct SAF_ZoCo_Rear_Status_Struct *s,
                                    union SAF_ZoCo_Rear_Status_Union u);
 
-void
+extern SOFT_INLINE void
 SAF_ZoCo_Rear_Status_StructToUnion(union SAF_ZoCo_Rear_Status_Union *u,
                                    struct SAF_ZoCo_Rear_Status_Struct s);
 
@@ -1934,6 +2047,7 @@ union SAF_ZoCo_Front_Status_Union {
   uint64_t data;
 
   struct {
+
     uint64_t scs_error : 1;
     uint64_t throttle_lower_error : 1;
     uint64_t throttle_upper_error : 1;
@@ -1941,7 +2055,7 @@ union SAF_ZoCo_Front_Status_Union {
     uint64_t brake_error : 1;
     uint64_t gen_scs : 3;
     uint64_t steering_error : 1;
-    uint64_t reserved : 55;
+    uint64_t reserved_1 : 55;
   };
 };
 
@@ -1955,11 +2069,11 @@ struct SAF_ZoCo_Front_Status_Struct {
   bool steering_error;
 };
 
-void
+extern SOFT_INLINE void
 SAF_ZoCo_Front_Status_UnionToStruct(struct SAF_ZoCo_Front_Status_Struct *s,
                                     union SAF_ZoCo_Front_Status_Union u);
 
-void
+extern SOFT_INLINE void
 SAF_ZoCo_Front_Status_StructToUnion(union SAF_ZoCo_Front_Status_Union *u,
                                     struct SAF_ZoCo_Front_Status_Struct s);
 
@@ -1974,10 +2088,11 @@ union SAF_ECU_Status_Union {
   uint64_t data;
 
   struct {
+
     uint64_t scs_error : 1;
     uint64_t message_error : 1;
     uint64_t gen_scs : 3;
-    uint64_t reserved : 59;
+    uint64_t reserved_1 : 59;
   };
 };
 
@@ -1987,11 +2102,13 @@ struct SAF_ECU_Status_Struct {
   uint8_t gen_scs;
 };
 
-void SAF_ECU_Status_UnionToStruct(struct SAF_ECU_Status_Struct *s,
-                                                union SAF_ECU_Status_Union u);
+extern SOFT_INLINE void
+SAF_ECU_Status_UnionToStruct(struct SAF_ECU_Status_Struct *s,
+                             union SAF_ECU_Status_Union u);
 
-void SAF_ECU_Status_StructToUnion(union SAF_ECU_Status_Union *u,
-                                                struct SAF_ECU_Status_Struct s);
+extern SOFT_INLINE void
+SAF_ECU_Status_StructToUnion(union SAF_ECU_Status_Union *u,
+                             struct SAF_ECU_Status_Struct s);
 
 /* ------------------------------ HSC_Steering ------------------------------ */
 
@@ -2004,11 +2121,12 @@ union HSC_Steering_Union {
   uint64_t data;
 
   struct {
+
     uint64_t steering_wheel_angle : 12;
     uint64_t steering_angle : 12;
     uint64_t angle_valid : 1;
     uint64_t gen_scs : 3;
-    uint64_t reserved : 36;
+    uint64_t reserved_1 : 36;
   };
 };
 
@@ -2019,11 +2137,13 @@ struct HSC_Steering_Struct {
   uint8_t gen_scs;
 };
 
-void HSC_Steering_UnionToStruct(struct HSC_Steering_Struct *s,
-                                              union HSC_Steering_Union u);
+extern SOFT_INLINE void
+HSC_Steering_UnionToStruct(struct HSC_Steering_Struct *s,
+                           union HSC_Steering_Union u);
 
-void HSC_Steering_StructToUnion(union HSC_Steering_Union *u,
-                                              struct HSC_Steering_Struct s);
+extern SOFT_INLINE void
+HSC_Steering_StructToUnion(union HSC_Steering_Union *u,
+                           struct HSC_Steering_Struct s);
 
 /* ---------------------------- HSC_DriverInput ---------------------------- */
 
@@ -2036,12 +2156,14 @@ union HSC_DriverInput_Union {
   uint64_t data;
 
   struct {
+
     uint64_t throttle : 16;
     uint64_t brake_pressed : 1;
     uint64_t throttle_valid : 1;
     uint64_t brake_valid : 1;
+    uint64_t reserved_1 : 2;
     uint64_t gen_scs : 3;
-    uint64_t reserved : 42;
+    uint64_t reserved_2 : 42;
   };
 };
 
@@ -2053,11 +2175,11 @@ struct HSC_DriverInput_Struct {
   uint8_t gen_scs;
 };
 
-void
+extern SOFT_INLINE void
 HSC_DriverInput_UnionToStruct(struct HSC_DriverInput_Struct *s,
                               union HSC_DriverInput_Union u);
 
-void
+extern SOFT_INLINE void
 HSC_DriverInput_StructToUnion(union HSC_DriverInput_Union *u,
                               struct HSC_DriverInput_Struct s);
 
@@ -2072,17 +2194,18 @@ union CANO_RES_NMT_EC_Union {
   uint64_t data;
 
   struct {
-    uint64_t reserved : 64;
+
+    uint64_t reserved_1 : 64;
   };
 };
 
 struct CANO_RES_NMT_EC_Struct {};
 
-void
+extern SOFT_INLINE void
 CANO_RES_NMT_EC_UnionToStruct(struct CANO_RES_NMT_EC_Struct *s,
                               union CANO_RES_NMT_EC_Union u);
 
-void
+extern SOFT_INLINE void
 CANO_RES_NMT_EC_StructToUnion(union CANO_RES_NMT_EC_Union *u,
                               struct CANO_RES_NMT_EC_Struct s);
 
@@ -2097,17 +2220,20 @@ union CANO_RES_RSDO_Union {
   uint64_t data;
 
   struct {
-    uint64_t reserved : 64;
+
+    uint64_t reserved_1 : 64;
   };
 };
 
 struct CANO_RES_RSDO_Struct {};
 
-void CANO_RES_RSDO_UnionToStruct(struct CANO_RES_RSDO_Struct *s,
-                                               union CANO_RES_RSDO_Union u);
+extern SOFT_INLINE void
+CANO_RES_RSDO_UnionToStruct(struct CANO_RES_RSDO_Struct *s,
+                            union CANO_RES_RSDO_Union u);
 
-void CANO_RES_RSDO_StructToUnion(union CANO_RES_RSDO_Union *u,
-                                               struct CANO_RES_RSDO_Struct s);
+extern SOFT_INLINE void
+CANO_RES_RSDO_StructToUnion(union CANO_RES_RSDO_Union *u,
+                            struct CANO_RES_RSDO_Struct s);
 
 /* ----------------------------- CANO_RES_TSDO ----------------------------- */
 
@@ -2120,17 +2246,20 @@ union CANO_RES_TSDO_Union {
   uint64_t data;
 
   struct {
-    uint64_t reserved : 64;
+
+    uint64_t reserved_1 : 64;
   };
 };
 
 struct CANO_RES_TSDO_Struct {};
 
-void CANO_RES_TSDO_UnionToStruct(struct CANO_RES_TSDO_Struct *s,
-                                               union CANO_RES_TSDO_Union u);
+extern SOFT_INLINE void
+CANO_RES_TSDO_UnionToStruct(struct CANO_RES_TSDO_Struct *s,
+                            union CANO_RES_TSDO_Union u);
 
-void CANO_RES_TSDO_StructToUnion(union CANO_RES_TSDO_Union *u,
-                                               struct CANO_RES_TSDO_Struct s);
+extern SOFT_INLINE void
+CANO_RES_TSDO_StructToUnion(union CANO_RES_TSDO_Union *u,
+                            struct CANO_RES_TSDO_Struct s);
 
 /* ---------------------------- DV_FREE_TO_USE_2 ---------------------------- */
 
@@ -2143,17 +2272,18 @@ union DV_FREE_TO_USE_2_Union {
   uint64_t data;
 
   struct {
-    uint64_t reserved : 64;
+
+    uint64_t reserved_1 : 64;
   };
 };
 
 struct DV_FREE_TO_USE_2_Struct {};
 
-void
+extern SOFT_INLINE void
 DV_FREE_TO_USE_2_UnionToStruct(struct DV_FREE_TO_USE_2_Struct *s,
                                union DV_FREE_TO_USE_2_Union u);
 
-void
+extern SOFT_INLINE void
 DV_FREE_TO_USE_2_StructToUnion(union DV_FREE_TO_USE_2_Union *u,
                                struct DV_FREE_TO_USE_2_Struct s);
 
@@ -2168,17 +2298,20 @@ union CANO_RES_EMCY_Union {
   uint64_t data;
 
   struct {
-    uint64_t reserved : 64;
+
+    uint64_t reserved_1 : 64;
   };
 };
 
 struct CANO_RES_EMCY_Struct {};
 
-void CANO_RES_EMCY_UnionToStruct(struct CANO_RES_EMCY_Struct *s,
-                                               union CANO_RES_EMCY_Union u);
+extern SOFT_INLINE void
+CANO_RES_EMCY_UnionToStruct(struct CANO_RES_EMCY_Struct *s,
+                            union CANO_RES_EMCY_Union u);
 
-void CANO_RES_EMCY_StructToUnion(union CANO_RES_EMCY_Union *u,
-                                               struct CANO_RES_EMCY_Struct s);
+extern SOFT_INLINE void
+CANO_RES_EMCY_StructToUnion(union CANO_RES_EMCY_Union *u,
+                            struct CANO_RES_EMCY_Struct s);
 
 /* ----------------------------- DV_SCS_Errors ----------------------------- */
 
@@ -2191,17 +2324,20 @@ union DV_SCS_Errors_Union {
   uint64_t data;
 
   struct {
-    uint64_t reserved : 64;
+
+    uint64_t reserved_1 : 64;
   };
 };
 
 struct DV_SCS_Errors_Struct {};
 
-void DV_SCS_Errors_UnionToStruct(struct DV_SCS_Errors_Struct *s,
-                                               union DV_SCS_Errors_Union u);
+extern SOFT_INLINE void
+DV_SCS_Errors_UnionToStruct(struct DV_SCS_Errors_Struct *s,
+                            union DV_SCS_Errors_Union u);
 
-void DV_SCS_Errors_StructToUnion(union DV_SCS_Errors_Union *u,
-                                               struct DV_SCS_Errors_Struct s);
+extern SOFT_INLINE void
+DV_SCS_Errors_StructToUnion(union DV_SCS_Errors_Union *u,
+                            struct DV_SCS_Errors_Struct s);
 
 /* ----------------------------- DV_AMI_Status ----------------------------- */
 typedef enum {
@@ -2223,9 +2359,10 @@ union DV_AMI_Status_Union {
   uint64_t data;
 
   struct {
+
     uint64_t state : 3;
     uint64_t gen_scs : 3;
-    uint64_t reserved : 58;
+    uint64_t reserved_1 : 58;
   };
 };
 
@@ -2234,11 +2371,13 @@ struct DV_AMI_Status_Struct {
   uint8_t gen_scs;
 };
 
-void DV_AMI_Status_UnionToStruct(struct DV_AMI_Status_Struct *s,
-                                               union DV_AMI_Status_Union u);
+extern SOFT_INLINE void
+DV_AMI_Status_UnionToStruct(struct DV_AMI_Status_Struct *s,
+                            union DV_AMI_Status_Union u);
 
-void DV_AMI_Status_StructToUnion(union DV_AMI_Status_Union *u,
-                                               struct DV_AMI_Status_Struct s);
+extern SOFT_INLINE void
+DV_AMI_Status_StructToUnion(union DV_AMI_Status_Union *u,
+                            struct DV_AMI_Status_Struct s);
 
 /* ---------------------------- DV_ASB_Pressure ---------------------------- */
 
@@ -2251,9 +2390,10 @@ union DV_ASB_Pressure_Union {
   uint64_t data;
 
   struct {
+
     uint64_t pressure1 : 12;
     uint64_t pressure2 : 12;
-    uint64_t reserved : 40;
+    uint64_t reserved_1 : 40;
   };
 };
 
@@ -2262,11 +2402,11 @@ struct DV_ASB_Pressure_Struct {
   float pressure2;
 };
 
-void
+extern SOFT_INLINE void
 DV_ASB_Pressure_UnionToStruct(struct DV_ASB_Pressure_Struct *s,
                               union DV_ASB_Pressure_Union u);
 
-void
+extern SOFT_INLINE void
 DV_ASB_Pressure_StructToUnion(union DV_ASB_Pressure_Union *u,
                               struct DV_ASB_Pressure_Struct s);
 
@@ -2281,6 +2421,7 @@ union DV_DrivingDynamics1_Union {
   uint64_t data;
 
   struct {
+
     uint64_t speed_actual : 8;
     uint64_t speed_target : 8;
     uint64_t steering_angle_actual : 8;
@@ -2303,11 +2444,11 @@ struct DV_DrivingDynamics1_Struct {
   int8_t motor_moment_target;
 };
 
-void
+extern SOFT_INLINE void
 DV_DrivingDynamics1_UnionToStruct(struct DV_DrivingDynamics1_Struct *s,
                                   union DV_DrivingDynamics1_Union u);
 
-void
+extern SOFT_INLINE void
 DV_DrivingDynamics1_StructToUnion(union DV_DrivingDynamics1_Union *u,
                                   struct DV_DrivingDynamics1_Struct s);
 
@@ -2322,10 +2463,11 @@ union DV_DrivingDynamics2_Union {
   uint64_t data;
 
   struct {
+
     uint64_t acceleration_longitudinal : 16;
     uint64_t acceleration_lateral : 16;
     uint64_t yaw_rate : 16;
-    uint64_t reserved : 16;
+    uint64_t reserved_1 : 16;
   };
 };
 
@@ -2335,11 +2477,11 @@ struct DV_DrivingDynamics2_Struct {
   float yaw_rate;
 };
 
-void
+extern SOFT_INLINE void
 DV_DrivingDynamics2_UnionToStruct(struct DV_DrivingDynamics2_Struct *s,
                                   union DV_DrivingDynamics2_Union u);
 
-void
+extern SOFT_INLINE void
 DV_DrivingDynamics2_StructToUnion(union DV_DrivingDynamics2_Union *u,
                                   struct DV_DrivingDynamics2_Struct s);
 
@@ -2362,6 +2504,7 @@ union DV_System_Status_Union {
   uint64_t data;
 
   struct {
+
     uint64_t as_state : 3;
     uint64_t ebs_state : 2;
     uint64_t ami_state : 3;
@@ -2370,7 +2513,7 @@ union DV_System_Status_Union {
     uint64_t lap_counter : 4;
     uint64_t cones_count_actual : 8;
     uint64_t cones_count_all : 17;
-    uint64_t reserved : 24;
+    uint64_t reserved_1 : 24;
   };
 };
 
@@ -2385,11 +2528,11 @@ struct DV_System_Status_Struct {
   uint32_t cones_count_all;
 };
 
-void
+extern SOFT_INLINE void
 DV_System_Status_UnionToStruct(struct DV_System_Status_Struct *s,
                                union DV_System_Status_Union u);
 
-void
+extern SOFT_INLINE void
 DV_System_Status_StructToUnion(union DV_System_Status_Union *u,
                                struct DV_System_Status_Struct s);
 
@@ -2404,6 +2547,7 @@ union DV_ASB_Status_Union {
   uint64_t data;
 
   struct {
+
     uint64_t asms : 1;
     uint64_t ebs_state : 2;
     uint64_t service_brake_state : 2;
@@ -2414,7 +2558,7 @@ union DV_ASB_Status_Union {
     uint64_t trigger_cause : 4;
     uint64_t state : 3;
     uint64_t gen_scs : 3;
-    uint64_t reserved : 43;
+    uint64_t reserved_1 : 43;
   };
 };
 
@@ -2431,11 +2575,13 @@ struct DV_ASB_Status_Struct {
   uint8_t gen_scs;
 };
 
-void DV_ASB_Status_UnionToStruct(struct DV_ASB_Status_Struct *s,
-                                               union DV_ASB_Status_Union u);
+extern SOFT_INLINE void
+DV_ASB_Status_UnionToStruct(struct DV_ASB_Status_Struct *s,
+                            union DV_ASB_Status_Union u);
 
-void DV_ASB_Status_StructToUnion(union DV_ASB_Status_Union *u,
-                                               struct DV_ASB_Status_Struct s);
+extern SOFT_INLINE void
+DV_ASB_Status_StructToUnion(union DV_ASB_Status_Union *u,
+                            struct DV_ASB_Status_Struct s);
 
 /* ----------------------------- CANO_RES_TPDO4 ----------------------------- */
 
@@ -2448,17 +2594,20 @@ union CANO_RES_TPDO4_Union {
   uint64_t data;
 
   struct {
-    uint64_t reserved : 64;
+
+    uint64_t reserved_1 : 64;
   };
 };
 
 struct CANO_RES_TPDO4_Struct {};
 
-void CANO_RES_TPDO4_UnionToStruct(struct CANO_RES_TPDO4_Struct *s,
-                                                union CANO_RES_TPDO4_Union u);
+extern SOFT_INLINE void
+CANO_RES_TPDO4_UnionToStruct(struct CANO_RES_TPDO4_Struct *s,
+                             union CANO_RES_TPDO4_Union u);
 
-void CANO_RES_TPDO4_StructToUnion(union CANO_RES_TPDO4_Union *u,
-                                                struct CANO_RES_TPDO4_Struct s);
+extern SOFT_INLINE void
+CANO_RES_TPDO4_StructToUnion(union CANO_RES_TPDO4_Union *u,
+                             struct CANO_RES_TPDO4_Struct s);
 
 /* ----------------------------- CANO_RES_TPDO3 ----------------------------- */
 
@@ -2471,17 +2620,20 @@ union CANO_RES_TPDO3_Union {
   uint64_t data;
 
   struct {
-    uint64_t reserved : 64;
+
+    uint64_t reserved_1 : 64;
   };
 };
 
 struct CANO_RES_TPDO3_Struct {};
 
-void CANO_RES_TPDO3_UnionToStruct(struct CANO_RES_TPDO3_Struct *s,
-                                                union CANO_RES_TPDO3_Union u);
+extern SOFT_INLINE void
+CANO_RES_TPDO3_UnionToStruct(struct CANO_RES_TPDO3_Struct *s,
+                             union CANO_RES_TPDO3_Union u);
 
-void CANO_RES_TPDO3_StructToUnion(union CANO_RES_TPDO3_Union *u,
-                                                struct CANO_RES_TPDO3_Struct s);
+extern SOFT_INLINE void
+CANO_RES_TPDO3_StructToUnion(union CANO_RES_TPDO3_Union *u,
+                             struct CANO_RES_TPDO3_Struct s);
 
 /* ----------------------------- CANO_RES_TPDO2 ----------------------------- */
 
@@ -2494,17 +2646,20 @@ union CANO_RES_TPDO2_Union {
   uint64_t data;
 
   struct {
-    uint64_t reserved : 64;
+
+    uint64_t reserved_1 : 64;
   };
 };
 
 struct CANO_RES_TPDO2_Struct {};
 
-void CANO_RES_TPDO2_UnionToStruct(struct CANO_RES_TPDO2_Struct *s,
-                                                union CANO_RES_TPDO2_Union u);
+extern SOFT_INLINE void
+CANO_RES_TPDO2_UnionToStruct(struct CANO_RES_TPDO2_Struct *s,
+                             union CANO_RES_TPDO2_Union u);
 
-void CANO_RES_TPDO2_StructToUnion(union CANO_RES_TPDO2_Union *u,
-                                                struct CANO_RES_TPDO2_Struct s);
+extern SOFT_INLINE void
+CANO_RES_TPDO2_StructToUnion(union CANO_RES_TPDO2_Union *u,
+                             struct CANO_RES_TPDO2_Struct s);
 
 /* ----------------------------- CANO_RES_RPDO3 ----------------------------- */
 
@@ -2517,17 +2672,20 @@ union CANO_RES_RPDO3_Union {
   uint64_t data;
 
   struct {
-    uint64_t reserved : 64;
+
+    uint64_t reserved_1 : 64;
   };
 };
 
 struct CANO_RES_RPDO3_Struct {};
 
-void CANO_RES_RPDO3_UnionToStruct(struct CANO_RES_RPDO3_Struct *s,
-                                                union CANO_RES_RPDO3_Union u);
+extern SOFT_INLINE void
+CANO_RES_RPDO3_UnionToStruct(struct CANO_RES_RPDO3_Struct *s,
+                             union CANO_RES_RPDO3_Union u);
 
-void CANO_RES_RPDO3_StructToUnion(union CANO_RES_RPDO3_Union *u,
-                                                struct CANO_RES_RPDO3_Struct s);
+extern SOFT_INLINE void
+CANO_RES_RPDO3_StructToUnion(union CANO_RES_RPDO3_Union *u,
+                             struct CANO_RES_RPDO3_Struct s);
 
 /* ----------------------------- CANO_RES_RPDO2 ----------------------------- */
 
@@ -2540,17 +2698,20 @@ union CANO_RES_RPDO2_Union {
   uint64_t data;
 
   struct {
-    uint64_t reserved : 64;
+
+    uint64_t reserved_1 : 64;
   };
 };
 
 struct CANO_RES_RPDO2_Struct {};
 
-void CANO_RES_RPDO2_UnionToStruct(struct CANO_RES_RPDO2_Struct *s,
-                                                union CANO_RES_RPDO2_Union u);
+extern SOFT_INLINE void
+CANO_RES_RPDO2_UnionToStruct(struct CANO_RES_RPDO2_Struct *s,
+                             union CANO_RES_RPDO2_Union u);
 
-void CANO_RES_RPDO2_StructToUnion(union CANO_RES_RPDO2_Union *u,
-                                                struct CANO_RES_RPDO2_Struct s);
+extern SOFT_INLINE void
+CANO_RES_RPDO2_StructToUnion(union CANO_RES_RPDO2_Union *u,
+                             struct CANO_RES_RPDO2_Struct s);
 
 /* ----------------------------- CANO_RES_RPDO1 ----------------------------- */
 
@@ -2563,17 +2724,20 @@ union CANO_RES_RPDO1_Union {
   uint64_t data;
 
   struct {
-    uint64_t reserved : 64;
+
+    uint64_t reserved_1 : 64;
   };
 };
 
 struct CANO_RES_RPDO1_Struct {};
 
-void CANO_RES_RPDO1_UnionToStruct(struct CANO_RES_RPDO1_Struct *s,
-                                                union CANO_RES_RPDO1_Union u);
+extern SOFT_INLINE void
+CANO_RES_RPDO1_UnionToStruct(struct CANO_RES_RPDO1_Struct *s,
+                             union CANO_RES_RPDO1_Union u);
 
-void CANO_RES_RPDO1_StructToUnion(union CANO_RES_RPDO1_Union *u,
-                                                struct CANO_RES_RPDO1_Struct s);
+extern SOFT_INLINE void
+CANO_RES_RPDO1_StructToUnion(union CANO_RES_RPDO1_Union *u,
+                             struct CANO_RES_RPDO1_Struct s);
 
 /* ----------------------------- CANO_RES_State ----------------------------- */
 
@@ -2586,13 +2750,17 @@ union CANO_RES_State_Union {
   uint64_t data;
 
   struct {
+
     uint64_t k1_e_stop : 1;
     uint64_t k2_switch : 1;
     uint64_t k3_button : 1;
+    uint64_t reserved_1 : 45;
     uint64_t link_quality : 8;
+    uint64_t reserved_2 : 51;
     uint64_t pre_alarm : 1;
+    uint64_t reserved_3 : 51;
     uint64_t race_mode : 1;
-    uint64_t reserved : 51;
+    uint64_t reserved_4 : 51;
   };
 };
 
@@ -2605,11 +2773,13 @@ struct CANO_RES_State_Struct {
   bool race_mode;
 };
 
-void CANO_RES_State_UnionToStruct(struct CANO_RES_State_Struct *s,
-                                                union CANO_RES_State_Union u);
+extern SOFT_INLINE void
+CANO_RES_State_UnionToStruct(struct CANO_RES_State_Struct *s,
+                             union CANO_RES_State_Union u);
 
-void CANO_RES_State_StructToUnion(union CANO_RES_State_Union *u,
-                                                struct CANO_RES_State_Struct s);
+extern SOFT_INLINE void
+CANO_RES_State_StructToUnion(union CANO_RES_State_Union *u,
+                             struct CANO_RES_State_Struct s);
 
 /* ------------------------------- CANO_TIME ------------------------------- */
 
@@ -2622,17 +2792,18 @@ union CANO_TIME_Union {
   uint64_t data;
 
   struct {
-    uint64_t reserved : 64;
+
+    uint64_t reserved_1 : 64;
   };
 };
 
 struct CANO_TIME_Struct {};
 
-void CANO_TIME_UnionToStruct(struct CANO_TIME_Struct *s,
-                                           union CANO_TIME_Union u);
+extern SOFT_INLINE void CANO_TIME_UnionToStruct(struct CANO_TIME_Struct *s,
+                                                union CANO_TIME_Union u);
 
-void CANO_TIME_StructToUnion(union CANO_TIME_Union *u,
-                                           struct CANO_TIME_Struct s);
+extern SOFT_INLINE void CANO_TIME_StructToUnion(union CANO_TIME_Union *u,
+                                                struct CANO_TIME_Struct s);
 
 /* ------------------------------- CANO_SYNC ------------------------------- */
 
@@ -2645,17 +2816,18 @@ union CANO_SYNC_Union {
   uint64_t data;
 
   struct {
-    uint64_t reserved : 64;
+
+    uint64_t reserved_1 : 64;
   };
 };
 
 struct CANO_SYNC_Struct {};
 
-void CANO_SYNC_UnionToStruct(struct CANO_SYNC_Struct *s,
-                                           union CANO_SYNC_Union u);
+extern SOFT_INLINE void CANO_SYNC_UnionToStruct(struct CANO_SYNC_Struct *s,
+                                                union CANO_SYNC_Union u);
 
-void CANO_SYNC_StructToUnion(union CANO_SYNC_Union *u,
-                                           struct CANO_SYNC_Struct s);
+extern SOFT_INLINE void CANO_SYNC_StructToUnion(union CANO_SYNC_Union *u,
+                                                struct CANO_SYNC_Struct s);
 
 /* ------------------------- CANO_NMT_Node_Control ------------------------- */
 typedef enum {
@@ -2681,9 +2853,10 @@ union CANO_NMT_Node_Control_Union {
   uint64_t data;
 
   struct {
+
     uint64_t requested_state : 8;
     uint64_t addressed_node_id : 8;
-    uint64_t reserved : 48;
+    uint64_t reserved_1 : 48;
   };
 };
 
@@ -2692,11 +2865,11 @@ struct CANO_NMT_Node_Control_Struct {
   CANO_NMT_Node_Control_Addressed_Node_ID addressed_node_id;
 };
 
-void
+extern SOFT_INLINE void
 CANO_NMT_Node_Control_UnionToStruct(struct CANO_NMT_Node_Control_Struct *s,
                                     union CANO_NMT_Node_Control_Union u);
 
-void
+extern SOFT_INLINE void
 CANO_NMT_Node_Control_StructToUnion(union CANO_NMT_Node_Control_Union *u,
                                     struct CANO_NMT_Node_Control_Struct s);
 
@@ -2711,8 +2884,9 @@ union CAL_SteeringAngle_Union {
   uint64_t data;
 
   struct {
+
     uint64_t voltage : 12;
-    uint64_t reserved : 52;
+    uint64_t reserved_1 : 52;
   };
 };
 
@@ -2720,11 +2894,11 @@ struct CAL_SteeringAngle_Struct {
   uint16_t voltage;
 };
 
-void
+extern SOFT_INLINE void
 CAL_SteeringAngle_UnionToStruct(struct CAL_SteeringAngle_Struct *s,
                                 union CAL_SteeringAngle_Union u);
 
-void
+extern SOFT_INLINE void
 CAL_SteeringAngle_StructToUnion(union CAL_SteeringAngle_Union *u,
                                 struct CAL_SteeringAngle_Struct s);
 
@@ -2739,11 +2913,12 @@ union CAL_APPS_Union {
   uint64_t data;
 
   struct {
+
     uint64_t upper_3v3 : 12;
     uint64_t lower_3v3 : 12;
     uint64_t upper_5v : 12;
     uint64_t lower_5v : 12;
-    uint64_t reserved : 16;
+    uint64_t reserved_1 : 16;
   };
 };
 
@@ -2754,11 +2929,11 @@ struct CAL_APPS_Struct {
   float lower_5v;
 };
 
-void CAL_APPS_UnionToStruct(struct CAL_APPS_Struct *s,
-                                          union CAL_APPS_Union u);
+extern SOFT_INLINE void CAL_APPS_UnionToStruct(struct CAL_APPS_Struct *s,
+                                               union CAL_APPS_Union u);
 
-void CAL_APPS_StructToUnion(union CAL_APPS_Union *u,
-                                          struct CAL_APPS_Struct s);
+extern SOFT_INLINE void CAL_APPS_StructToUnion(union CAL_APPS_Union *u,
+                                               struct CAL_APPS_Struct s);
 
 /* --------------------------- CAL_BrakePressures --------------------------- */
 
@@ -2771,11 +2946,12 @@ union CAL_BrakePressures_Union {
   uint64_t data;
 
   struct {
+
     uint64_t front_3v3 : 12;
     uint64_t rear_3v3 : 12;
     uint64_t front_5v : 12;
     uint64_t rear_5v : 12;
-    uint64_t reserved : 16;
+    uint64_t reserved_1 : 16;
   };
 };
 
@@ -2786,11 +2962,11 @@ struct CAL_BrakePressures_Struct {
   float rear_5v;
 };
 
-void
+extern SOFT_INLINE void
 CAL_BrakePressures_UnionToStruct(struct CAL_BrakePressures_Struct *s,
                                  union CAL_BrakePressures_Union u);
 
-void
+extern SOFT_INLINE void
 CAL_BrakePressures_StructToUnion(union CAL_BrakePressures_Union *u,
                                  struct CAL_BrakePressures_Struct s);
 
@@ -2805,11 +2981,12 @@ union CAL_SpringTravel_Rear_Union {
   uint64_t data;
 
   struct {
+
     uint64_t rear_right_converted : 16;
     uint64_t rear_left_converted : 16;
     uint64_t rear_right_voltage : 12;
     uint64_t rear_left_voltage : 12;
-    uint64_t reserved : 8;
+    uint64_t reserved_1 : 8;
   };
 };
 
@@ -2820,11 +2997,11 @@ struct CAL_SpringTravel_Rear_Struct {
   uint16_t rear_left_voltage;
 };
 
-void
+extern SOFT_INLINE void
 CAL_SpringTravel_Rear_UnionToStruct(struct CAL_SpringTravel_Rear_Struct *s,
                                     union CAL_SpringTravel_Rear_Union u);
 
-void
+extern SOFT_INLINE void
 CAL_SpringTravel_Rear_StructToUnion(union CAL_SpringTravel_Rear_Union *u,
                                     struct CAL_SpringTravel_Rear_Struct s);
 
@@ -2839,11 +3016,12 @@ union CAL_SpringTravel_Front_Union {
   uint64_t data;
 
   struct {
+
     uint64_t front_right_converted : 16;
     uint64_t front_left_converted : 16;
     uint64_t front_right_voltage : 12;
     uint64_t front_left_voltage : 12;
-    uint64_t reserved : 8;
+    uint64_t reserved_1 : 8;
   };
 };
 
@@ -2854,11 +3032,11 @@ struct CAL_SpringTravel_Front_Struct {
   uint16_t front_left_voltage;
 };
 
-void
+extern SOFT_INLINE void
 CAL_SpringTravel_Front_UnionToStruct(struct CAL_SpringTravel_Front_Struct *s,
                                      union CAL_SpringTravel_Front_Union u);
 
-void
+extern SOFT_INLINE void
 CAL_SpringTravel_Front_StructToUnion(union CAL_SpringTravel_Front_Union *u,
                                      struct CAL_SpringTravel_Front_Struct s);
 
@@ -2873,17 +3051,18 @@ union CAL_CalibrationMaster_Union {
   uint64_t data;
 
   struct {
-    uint64_t reserved : 64;
+
+    uint64_t reserved_1 : 64;
   };
 };
 
 struct CAL_CalibrationMaster_Struct {};
 
-void
+extern SOFT_INLINE void
 CAL_CalibrationMaster_UnionToStruct(struct CAL_CalibrationMaster_Struct *s,
                                     union CAL_CalibrationMaster_Union u);
 
-void
+extern SOFT_INLINE void
 CAL_CalibrationMaster_StructToUnion(union CAL_CalibrationMaster_Union *u,
                                     struct CAL_CalibrationMaster_Struct s);
 
@@ -2898,13 +3077,14 @@ union DV_DriveCommand_Union {
   uint64_t data;
 
   struct {
+
     uint64_t rtd_request : 1;
     uint64_t ebs_trigger : 1;
     uint64_t throttle_command : 10;
     uint64_t brake_command : 10;
     uint64_t recu_command : 10;
     uint64_t gen_scs : 3;
-    uint64_t reserved : 29;
+    uint64_t reserved_1 : 29;
   };
 };
 
@@ -2917,11 +3097,11 @@ struct DV_DriveCommand_Struct {
   uint8_t gen_scs;
 };
 
-void
+extern SOFT_INLINE void
 DV_DriveCommand_UnionToStruct(struct DV_DriveCommand_Struct *s,
                               union DV_DriveCommand_Union u);
 
-void
+extern SOFT_INLINE void
 DV_DriveCommand_StructToUnion(union DV_DriveCommand_Union *u,
                               struct DV_DriveCommand_Struct s);
 
@@ -2936,11 +3116,12 @@ union LOG_WaterTemps_Left_Union {
   uint64_t data;
 
   struct {
+
     uint64_t wt_1 : 8;
     uint64_t wt_2 : 8;
     uint64_t wt_3 : 8;
     uint64_t wt_4 : 8;
-    uint64_t reserved : 32;
+    uint64_t reserved_1 : 32;
   };
 };
 
@@ -2951,11 +3132,11 @@ struct LOG_WaterTemps_Left_Struct {
   float wt_4;
 };
 
-void
+extern SOFT_INLINE void
 LOG_WaterTemps_Left_UnionToStruct(struct LOG_WaterTemps_Left_Struct *s,
                                   union LOG_WaterTemps_Left_Union u);
 
-void
+extern SOFT_INLINE void
 LOG_WaterTemps_Left_StructToUnion(union LOG_WaterTemps_Left_Union *u,
                                   struct LOG_WaterTemps_Left_Struct s);
 
@@ -2970,11 +3151,12 @@ union LOG_WaterTemps_Right_Union {
   uint64_t data;
 
   struct {
+
     uint64_t wt_1 : 8;
     uint64_t wt_2 : 8;
     uint64_t wt_3 : 8;
     uint64_t wt_4 : 8;
-    uint64_t reserved : 32;
+    uint64_t reserved_1 : 32;
   };
 };
 
@@ -2985,11 +3167,11 @@ struct LOG_WaterTemps_Right_Struct {
   float wt_4;
 };
 
-void
+extern SOFT_INLINE void
 LOG_WaterTemps_Right_UnionToStruct(struct LOG_WaterTemps_Right_Struct *s,
                                    union LOG_WaterTemps_Right_Union u);
 
-void
+extern SOFT_INLINE void
 LOG_WaterTemps_Right_StructToUnion(union LOG_WaterTemps_Right_Union *u,
                                    struct LOG_WaterTemps_Right_Struct s);
 
@@ -3004,9 +3186,10 @@ union LOG_SpringTravel_Front_Union {
   uint64_t data;
 
   struct {
+
     uint64_t front_left : 16;
     uint64_t front_right : 16;
-    uint64_t reserved : 32;
+    uint64_t reserved_1 : 32;
   };
 };
 
@@ -3015,11 +3198,11 @@ struct LOG_SpringTravel_Front_Struct {
   float front_right;
 };
 
-void
+extern SOFT_INLINE void
 LOG_SpringTravel_Front_UnionToStruct(struct LOG_SpringTravel_Front_Struct *s,
                                      union LOG_SpringTravel_Front_Union u);
 
-void
+extern SOFT_INLINE void
 LOG_SpringTravel_Front_StructToUnion(union LOG_SpringTravel_Front_Union *u,
                                      struct LOG_SpringTravel_Front_Struct s);
 
@@ -3034,9 +3217,10 @@ union LOG_SpringTravel_Rear_Union {
   uint64_t data;
 
   struct {
+
     uint64_t rear_left : 16;
     uint64_t rear_right : 16;
-    uint64_t reserved : 32;
+    uint64_t reserved_1 : 32;
   };
 };
 
@@ -3045,11 +3229,11 @@ struct LOG_SpringTravel_Rear_Struct {
   float rear_right;
 };
 
-void
+extern SOFT_INLINE void
 LOG_SpringTravel_Rear_UnionToStruct(struct LOG_SpringTravel_Rear_Struct *s,
                                     union LOG_SpringTravel_Rear_Union u);
 
-void
+extern SOFT_INLINE void
 LOG_SpringTravel_Rear_StructToUnion(union LOG_SpringTravel_Rear_Union *u,
                                     struct LOG_SpringTravel_Rear_Struct s);
 
@@ -3064,9 +3248,10 @@ union LOG_BrakePressures_Union {
   uint64_t data;
 
   struct {
+
     uint64_t front : 12;
     uint64_t rear : 12;
-    uint64_t reserved : 40;
+    uint64_t reserved_1 : 40;
   };
 };
 
@@ -3075,11 +3260,11 @@ struct LOG_BrakePressures_Struct {
   float rear;
 };
 
-void
+extern SOFT_INLINE void
 LOG_BrakePressures_UnionToStruct(struct LOG_BrakePressures_Struct *s,
                                  union LOG_BrakePressures_Union u);
 
-void
+extern SOFT_INLINE void
 LOG_BrakePressures_StructToUnion(union LOG_BrakePressures_Union *u,
                                  struct LOG_BrakePressures_Struct s);
 
@@ -3094,8 +3279,9 @@ union LOG_LEM_Union {
   uint64_t data;
 
   struct {
+
     uint64_t lv : 16;
-    uint64_t reserved : 48;
+    uint64_t reserved_1 : 48;
   };
 };
 
@@ -3103,11 +3289,11 @@ struct LOG_LEM_Struct {
   uint16_t lv;
 };
 
-void LOG_LEM_UnionToStruct(struct LOG_LEM_Struct *s,
-                                         union LOG_LEM_Union u);
+extern SOFT_INLINE void LOG_LEM_UnionToStruct(struct LOG_LEM_Struct *s,
+                                              union LOG_LEM_Union u);
 
-void LOG_LEM_StructToUnion(union LOG_LEM_Union *u,
-                                         struct LOG_LEM_Struct s);
+extern SOFT_INLINE void LOG_LEM_StructToUnion(union LOG_LEM_Union *u,
+                                              struct LOG_LEM_Struct s);
 
 /* ------------------------------ LOG_DashLEDs ------------------------------ */
 
@@ -3120,9 +3306,11 @@ union LOG_DashLEDs_Union {
   uint64_t data;
 
   struct {
+
     uint64_t imd : 1;
+    uint64_t reserved_1 : 1;
     uint64_t ams : 1;
-    uint64_t reserved : 62;
+    uint64_t reserved_2 : 62;
   };
 };
 
@@ -3131,11 +3319,13 @@ struct LOG_DashLEDs_Struct {
   bool ams;
 };
 
-void LOG_DashLEDs_UnionToStruct(struct LOG_DashLEDs_Struct *s,
-                                              union LOG_DashLEDs_Union u);
+extern SOFT_INLINE void
+LOG_DashLEDs_UnionToStruct(struct LOG_DashLEDs_Struct *s,
+                           union LOG_DashLEDs_Union u);
 
-void LOG_DashLEDs_StructToUnion(union LOG_DashLEDs_Union *u,
-                                              struct LOG_DashLEDs_Struct s);
+extern SOFT_INLINE void
+LOG_DashLEDs_StructToUnion(union LOG_DashLEDs_Union *u,
+                           struct LOG_DashLEDs_Struct s);
 
 /* ------------------------------ LOG_airp_FW ------------------------------ */
 
@@ -3148,9 +3338,10 @@ union LOG_airp_FW_Union {
   uint64_t data;
 
   struct {
+
     uint64_t airp1 : 16;
     uint64_t airp2 : 16;
-    uint64_t reserved : 32;
+    uint64_t reserved_1 : 32;
   };
 };
 
@@ -3159,11 +3350,11 @@ struct LOG_airp_FW_Struct {
   float airp2;
 };
 
-void LOG_airp_FW_UnionToStruct(struct LOG_airp_FW_Struct *s,
-                                             union LOG_airp_FW_Union u);
+extern SOFT_INLINE void LOG_airp_FW_UnionToStruct(struct LOG_airp_FW_Struct *s,
+                                                  union LOG_airp_FW_Union u);
 
-void LOG_airp_FW_StructToUnion(union LOG_airp_FW_Union *u,
-                                             struct LOG_airp_FW_Struct s);
+extern SOFT_INLINE void LOG_airp_FW_StructToUnion(union LOG_airp_FW_Union *u,
+                                                  struct LOG_airp_FW_Struct s);
 
 /* ------------------------------ LOG_airp_SPL ------------------------------ */
 
@@ -3176,10 +3367,11 @@ union LOG_airp_SPL_Union {
   uint64_t data;
 
   struct {
+
     uint64_t airp1 : 16;
     uint64_t airp2 : 16;
     uint64_t airp3 : 16;
-    uint64_t reserved : 16;
+    uint64_t reserved_1 : 16;
   };
 };
 
@@ -3189,11 +3381,13 @@ struct LOG_airp_SPL_Struct {
   float airp3;
 };
 
-void LOG_airp_SPL_UnionToStruct(struct LOG_airp_SPL_Struct *s,
-                                              union LOG_airp_SPL_Union u);
+extern SOFT_INLINE void
+LOG_airp_SPL_UnionToStruct(struct LOG_airp_SPL_Struct *s,
+                           union LOG_airp_SPL_Union u);
 
-void LOG_airp_SPL_StructToUnion(union LOG_airp_SPL_Union *u,
-                                              struct LOG_airp_SPL_Struct s);
+extern SOFT_INLINE void
+LOG_airp_SPL_StructToUnion(union LOG_airp_SPL_Union *u,
+                           struct LOG_airp_SPL_Struct s);
 
 /* ------------------------------ LOG_airp_SPR ------------------------------ */
 
@@ -3206,10 +3400,11 @@ union LOG_airp_SPR_Union {
   uint64_t data;
 
   struct {
+
     uint64_t airp1 : 16;
     uint64_t airp2 : 16;
     uint64_t airp3 : 16;
-    uint64_t reserved : 16;
+    uint64_t reserved_1 : 16;
   };
 };
 
@@ -3219,11 +3414,13 @@ struct LOG_airp_SPR_Struct {
   float airp3;
 };
 
-void LOG_airp_SPR_UnionToStruct(struct LOG_airp_SPR_Struct *s,
-                                              union LOG_airp_SPR_Union u);
+extern SOFT_INLINE void
+LOG_airp_SPR_UnionToStruct(struct LOG_airp_SPR_Struct *s,
+                           union LOG_airp_SPR_Union u);
 
-void LOG_airp_SPR_StructToUnion(union LOG_airp_SPR_Union *u,
-                                              struct LOG_airp_SPR_Struct s);
+extern SOFT_INLINE void
+LOG_airp_SPR_StructToUnion(union LOG_airp_SPR_Union *u,
+                           struct LOG_airp_SPR_Struct s);
 
 /* ------------------------------ LOG_airp_RW ------------------------------ */
 
@@ -3236,9 +3433,10 @@ union LOG_airp_RW_Union {
   uint64_t data;
 
   struct {
+
     uint64_t airp1 : 16;
     uint64_t airp2 : 16;
-    uint64_t reserved : 32;
+    uint64_t reserved_1 : 32;
   };
 };
 
@@ -3247,11 +3445,11 @@ struct LOG_airp_RW_Struct {
   float airp2;
 };
 
-void LOG_airp_RW_UnionToStruct(struct LOG_airp_RW_Struct *s,
-                                             union LOG_airp_RW_Union u);
+extern SOFT_INLINE void LOG_airp_RW_UnionToStruct(struct LOG_airp_RW_Struct *s,
+                                                  union LOG_airp_RW_Union u);
 
-void LOG_airp_RW_StructToUnion(union LOG_airp_RW_Union *u,
-                                             struct LOG_airp_RW_Struct s);
+extern SOFT_INLINE void LOG_airp_RW_StructToUnion(union LOG_airp_RW_Union *u,
+                                                  struct LOG_airp_RW_Struct s);
 
 /* ---------------------------- LOG_PE_MaxTemps ---------------------------- */
 
@@ -3264,6 +3462,7 @@ union LOG_PE_MaxTemps_Union {
   uint64_t data;
 
   struct {
+
     uint64_t front : 8;
     uint64_t rear : 8;
     uint64_t left : 8;
@@ -3286,11 +3485,11 @@ struct LOG_PE_MaxTemps_Struct {
   float usage_right;
 };
 
-void
+extern SOFT_INLINE void
 LOG_PE_MaxTemps_UnionToStruct(struct LOG_PE_MaxTemps_Struct *s,
                               union LOG_PE_MaxTemps_Union u);
 
-void
+extern SOFT_INLINE void
 LOG_PE_MaxTemps_StructToUnion(union LOG_PE_MaxTemps_Union *u,
                               struct LOG_PE_MaxTemps_Struct s);
 
@@ -3305,6 +3504,7 @@ union LOG_EKF_Translation_Union {
   uint64_t data;
 
   struct {
+
     uint64_t velocity_vx : 16;
     uint64_t velocity_vy : 16;
     uint64_t acceleration_ax : 16;
@@ -3319,11 +3519,11 @@ struct LOG_EKF_Translation_Struct {
   float acceleration_ay;
 };
 
-void
+extern SOFT_INLINE void
 LOG_EKF_Translation_UnionToStruct(struct LOG_EKF_Translation_Struct *s,
                                   union LOG_EKF_Translation_Union u);
 
-void
+extern SOFT_INLINE void
 LOG_EKF_Translation_StructToUnion(union LOG_EKF_Translation_Union *u,
                                   struct LOG_EKF_Translation_Struct s);
 
@@ -3338,9 +3538,10 @@ union LOG_EKF_Rotation_Union {
   uint64_t data;
 
   struct {
+
     uint64_t heading_psi : 16;
     uint64_t yaw_rate : 16;
-    uint64_t reserved : 32;
+    uint64_t reserved_1 : 32;
   };
 };
 
@@ -3349,11 +3550,11 @@ struct LOG_EKF_Rotation_Struct {
   float yaw_rate;
 };
 
-void
+extern SOFT_INLINE void
 LOG_EKF_Rotation_UnionToStruct(struct LOG_EKF_Rotation_Struct *s,
                                union LOG_EKF_Rotation_Union u);
 
-void
+extern SOFT_INLINE void
 LOG_EKF_Rotation_StructToUnion(union LOG_EKF_Rotation_Union *u,
                                struct LOG_EKF_Rotation_Struct s);
 
@@ -3368,17 +3569,18 @@ union CANO_TLSS_Union {
   uint64_t data;
 
   struct {
-    uint64_t reserved : 64;
+
+    uint64_t reserved_1 : 64;
   };
 };
 
 struct CANO_TLSS_Struct {};
 
-void CANO_TLSS_UnionToStruct(struct CANO_TLSS_Struct *s,
-                                           union CANO_TLSS_Union u);
+extern SOFT_INLINE void CANO_TLSS_UnionToStruct(struct CANO_TLSS_Struct *s,
+                                                union CANO_TLSS_Union u);
 
-void CANO_TLSS_StructToUnion(union CANO_TLSS_Union *u,
-                                           struct CANO_TLSS_Struct s);
+extern SOFT_INLINE void CANO_TLSS_StructToUnion(union CANO_TLSS_Union *u,
+                                                struct CANO_TLSS_Struct s);
 
 /* ------------------------------- CANO_RLSS ------------------------------- */
 
@@ -3391,16 +3593,17 @@ union CANO_RLSS_Union {
   uint64_t data;
 
   struct {
-    uint64_t reserved : 64;
+
+    uint64_t reserved_1 : 64;
   };
 };
 
 struct CANO_RLSS_Struct {};
 
-void CANO_RLSS_UnionToStruct(struct CANO_RLSS_Struct *s,
-                                           union CANO_RLSS_Union u);
+extern SOFT_INLINE void CANO_RLSS_UnionToStruct(struct CANO_RLSS_Struct *s,
+                                                union CANO_RLSS_Union u);
 
-void CANO_RLSS_StructToUnion(union CANO_RLSS_Union *u,
-                                           struct CANO_RLSS_Struct s);
+extern SOFT_INLINE void CANO_RLSS_StructToUnion(union CANO_RLSS_Union *u,
+                                                struct CANO_RLSS_Struct s);
 
 #endif // SYSTEM_DBC
