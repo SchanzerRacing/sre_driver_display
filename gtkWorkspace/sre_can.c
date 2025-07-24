@@ -26,53 +26,63 @@ struct HSC_SBG_Accel_Struct HSC_SBG_ACCEL;
 struct LOG_LEM_Struct LOG_LEM;
 struct LOG_FUSE_Currents_Struct LOG_Fuse_Currents;
 struct PARC_FUSE_States_Struct PARC_FUSE_States;
+struct LOG_ECU_ERRORS_Struct LOG_ECU_Errors;
+
+// Because we're doing some crazy Pointer Casting, we need to disable the warning :)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
 
 can_mapping_t can_mappings[] = {
-	{HSC_VEHICLE_STATUS_ID, &HSC_Vehicle_Status,
-		HSC_Vehicle_Status_UnionToStruct},
-	{HSC_DRIVER_INPUT_ID, &HSC_DriverInput,
-		HSC_DriverInput_UnionToStruct},
-	{HSC_STEERING_ID, &HSC_Steering,
-		HSC_Steering_UnionToStruct},
-	{LOG_BRAKE_PRESSURES_ID, &LOG_BrakePressures,
-		LOG_BrakePressures_UnionToStruct},
-	{DV_SYSTEM_STATUS_ID, &DV_System_Status,
-		DV_System_Status_UnionToStruct},
-	{LOG_LEM_ID, &LOG_LEM,
-		LOG_LEM_UnionToStruct},
-	{GW_BATTERY_STATUS_ID, &GW_Battery_Status,
-		GW_Battery_Status_UnionToStruct},
-	{DV_ASB_PRESSURE_ID, &DV_ASB_Pressure,
-		DV_ASB_Pressure_UnionToStruct},
-	{DV_ASB_STATUS_ID, &DV_ASB_Status,
-		DV_ASB_Status_UnionToStruct},
-	{DV_AMI_STATUS_ID, &DV_AMI_Status,
-		DV_AMI_Status_UnionToStruct},
-	{GW_BATTERY_CELLS_ID, &GW_Battery_Cells,
-		GW_Battery_Cells_UnionToStruct},
-	{GW_PE_FRONT_LEFT_ID, &GW_PE_FrontLeft,
-		GW_PE_FrontLeft_UnionToStruct},
-	{GW_PE_FRONT_RIGHT_ID, &GW_PE_FrontRight,
-		GW_PE_FrontRight_UnionToStruct},
-	{GW_PE_REAR_LEFT_ID, &GW_PE_RearLeft,
-		GW_PE_RearLeft_UnionToStruct},
-	{GW_PE_REAR_RIGHT_ID, &GW_PE_RearRight,
-		GW_PE_RearRight_UnionToStruct},
-	{HSC_SBG_EKF_VEL_BODY_ID, &HSC_SBG_EKF_VEL_BODY,
-		HSC_SBG_EKF_Vel_Body_UnionToStruct},
-	{HSC_SBG_ACCEL_ID, &HSC_SBG_ACCEL,
-		HSC_SBG_Accel_UnionToStruct},
-	{LOG_LEM_ID, &LOG_LEM,
-		LOG_LEM_UnionToStruct},
-	{LOG_FUSE_CURRENTS_ID, &LOG_Fuse_Currents,
-		LOG_FUSE_Currents_UnionToStruct},
-	{PARC_FUSE_STATES_ID, &PARC_FUSE_States,
-		PARC_FUSE_States_UnionToStruct},
+		{HSC_VEHICLE_STATUS_ID, &HSC_Vehicle_Status,
+		 HSC_Vehicle_Status_UnionToStruct},
+		{HSC_DRIVER_INPUT_ID, &HSC_DriverInput,
+		 HSC_DriverInput_UnionToStruct},
+		{HSC_STEERING_ID, &HSC_Steering,
+		 HSC_Steering_UnionToStruct},
+		{LOG_BRAKE_PRESSURES_ID, &LOG_BrakePressures,
+		 LOG_BrakePressures_UnionToStruct},
+		{DV_SYSTEM_STATUS_ID, &DV_System_Status,
+		 DV_System_Status_UnionToStruct},
+		{LOG_LEM_ID, &LOG_LEM,
+		 LOG_LEM_UnionToStruct},
+		{GW_BATTERY_STATUS_ID, &GW_Battery_Status,
+		 GW_Battery_Status_UnionToStruct},
+		{DV_ASB_PRESSURE_ID, &DV_ASB_Pressure,
+		 DV_ASB_Pressure_UnionToStruct},
+		{DV_ASB_STATUS_ID, &DV_ASB_Status,
+		 DV_ASB_Status_UnionToStruct},
+		{DV_AMI_STATUS_ID, &DV_AMI_Status,
+		 DV_AMI_Status_UnionToStruct},
+		{GW_BATTERY_CELLS_ID, &GW_Battery_Cells,
+		 GW_Battery_Cells_UnionToStruct},
+		{GW_PE_FRONT_LEFT_ID, &GW_PE_FrontLeft,
+		 GW_PE_FrontLeft_UnionToStruct},
+		{GW_PE_FRONT_RIGHT_ID, &GW_PE_FrontRight,
+		 GW_PE_FrontRight_UnionToStruct},
+		{GW_PE_REAR_LEFT_ID, &GW_PE_RearLeft,
+		 GW_PE_RearLeft_UnionToStruct},
+		{GW_PE_REAR_RIGHT_ID, &GW_PE_RearRight,
+		 GW_PE_RearRight_UnionToStruct},
+		{HSC_SBG_EKF_VEL_BODY_ID, &HSC_SBG_EKF_VEL_BODY,
+		 HSC_SBG_EKF_Vel_Body_UnionToStruct},
+		{HSC_SBG_ACCEL_ID, &HSC_SBG_ACCEL,
+		 HSC_SBG_Accel_UnionToStruct},
+		{LOG_LEM_ID, &LOG_LEM,
+		 LOG_LEM_UnionToStruct},
+		{LOG_FUSE_CURRENTS_ID, &LOG_Fuse_Currents,
+		 LOG_FUSE_Currents_UnionToStruct},
+		{PARC_FUSE_STATES_ID, &PARC_FUSE_States,
+		 PARC_FUSE_States_UnionToStruct},
+		{LOG_ECU_ERRORS_ID, &LOG_ECU_Errors,
+		 LOG_ECU_ERRORS_UnionToStruct},
 };
+
+#pragma GCC diagnostic pop
 
 void can_loop()
 {
-	while(1) {
+	while (1)
+	{
 		read_and_match();
 
 		usleep(10);
@@ -85,14 +95,17 @@ uint8_t read_and_match()
 	// printf("reading...\n");
 	// Read a CAN frame from the socket
 	int nbytes = read(can_socket, &frame, sizeof(struct can_frame));
-	if(nbytes < 0) {
+	if (nbytes < 0)
+	{
 		perror("Error in reading");
 		return 0;
 	}
 
 	// Find the corresponding union for the CAN ID
-	for (size_t i = 0; i < NUM_MAPPINGS; i++) {
-		if (can_mappings[i].can_id == frame.can_id) {
+	for (size_t i = 0; i < NUM_MAPPINGS; i++)
+	{
+		if (can_mappings[i].can_id == frame.can_id)
+		{
 			// Update the union with the CAN frame data
 			// memcpy(can_mappings[i].union_ptr, frame.data, can_mappings[i].union_size);
 
@@ -123,7 +136,7 @@ uint8_t read_and_match()
 		}
 	}
 
-	printf("Unknown CAN ID: %x\n", frame.can_id);
+	// printf("Unknown CAN ID: %x\n", frame.can_id);
 	return 1;
 }
 
@@ -131,7 +144,8 @@ void setup_can()
 {
 	printf("Setting up CAN...\n");
 	// Create a socket
-	if((can_socket = socket (PF_CAN, SOCK_RAW, CAN_RAW)) < 0) {
+	if ((can_socket = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0)
+	{
 		perror("Error while opening socket");
 		return;
 	}
@@ -146,7 +160,8 @@ void setup_can()
 	addr.can_ifindex = ifr.ifr_ifindex;
 
 	// Bind the socket to the CAN interface
-	if(bind(can_socket, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
+	if (bind(can_socket, (struct sockaddr *)&addr, sizeof(addr)) < 0)
+	{
 		perror("Error in socket bind");
 		return;
 	}
@@ -156,7 +171,8 @@ void close_can()
 {
 	printf("closing CAN...\n");
 	// Close the socket
-	if (close(can_socket) < 0) {
+	if (close(can_socket) < 0)
+	{
 		perror("Error in closing socket");
 		return;
 	}

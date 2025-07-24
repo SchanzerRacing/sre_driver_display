@@ -16,23 +16,22 @@ uint32_t displayCallbackCounter = 0;
 
 uint8_t currentPanel = 0;
 
-GObject * tsa_label_array[4];
-GObject * r2d_label_array[4];
+GObject *tsa_label_array[4];
+GObject *r2d_label_array[4];
 
 GObject *label_tsa_current = NULL;
 GObject *label_r2d_current = NULL;
 
-SRE_Pressures * sre_pressures;
-SRE_Temperatures * sre_temperatures;
-SRE_Battery * sre_battery;
-SRE_Power * sre_power;
-SRE_Vehicle_info * sre_vehicle_info;
-SRE_Switch_States * sre_switches;
-SRE_GUI * sre_gui;
-SRE_States * sre_state;
+SRE_Pressures *sre_pressures;
+SRE_Temperatures *sre_temperatures;
+SRE_Battery *sre_battery;
+SRE_Power *sre_power;
+SRE_Vehicle_info *sre_vehicle_info;
+SRE_Switch_States *sre_switches;
+SRE_GUI *sre_gui;
+SRE_States *sre_state;
 
-
-SRE_error * vehicle_errors[MAX_ERRORS] = {NULL};
+SRE_error *vehicle_errors[MAX_ERRORS] = {NULL};
 
 void init_sre_logic()
 {
@@ -53,42 +52,50 @@ void init_sre_logic()
 	// INITIALIZE SRE Structs
 	printf("init_sre states\n");
 	sre_pressures = (SRE_Pressures *)malloc(sizeof(SRE_Pressures));
-	if(sre_pressures == NULL) {
+	if (sre_pressures == NULL)
+	{
 		printf("Failed to allocate memory for sre_pressures\n");
 		return;
 	}
 	sre_temperatures = (SRE_Temperatures *)malloc(sizeof(SRE_Temperatures));
-	if(sre_temperatures == NULL) {
+	if (sre_temperatures == NULL)
+	{
 		printf("Failed to allocate memory for sre_temperatures\n");
 		return;
 	}
 	sre_battery = (SRE_Battery *)malloc(sizeof(SRE_Battery));
-	if(sre_battery == NULL) {
+	if (sre_battery == NULL)
+	{
 		printf("Failed to allocate memory for sre_battery\n");
 		return;
 	}
 	sre_power = (SRE_Power *)malloc(sizeof(SRE_Power));
-	if(sre_power == NULL) {
+	if (sre_power == NULL)
+	{
 		printf("Failed to allocate memory for sre_power\n");
 		return;
 	}
 	sre_vehicle_info = (SRE_Vehicle_info *)malloc(sizeof(SRE_Vehicle_info));
-	if(sre_vehicle_info == NULL) {
+	if (sre_vehicle_info == NULL)
+	{
 		printf("Failed to allocate memory for sre_vehicle_info\n");
 		return;
 	}
 	sre_switches = (SRE_Switch_States *)malloc(sizeof(SRE_Switch_States));
-	if(sre_switches == NULL) {
+	if (sre_switches == NULL)
+	{
 		printf("Failed to allocate memory for sre_switches\n");
 		return;
 	}
 	sre_gui = (SRE_GUI *)malloc(sizeof(SRE_GUI));
-	if(sre_gui == NULL) {
+	if (sre_gui == NULL)
+	{
 		printf("Failed to allocate memory for sre_gui\n");
 		return;
 	}
 	sre_state = (SRE_States *)malloc(sizeof(SRE_States));
-	if (sre_state == NULL) {
+	if (sre_state == NULL)
+	{
 		printf("Failed to allocate memory for sre_state\n");
 		return;
 	}
@@ -167,7 +174,8 @@ void init_sre_logic()
 gboolean sre_run_display()
 {
 	displayCallbackCounter += 1;
-	if ((displayCallbackCounter % 10) == 0) {
+	if ((displayCallbackCounter % 10) == 0)
+	{
 		printf("sre_run_display, %d\n", displayCallbackCounter);
 	}
 
@@ -196,25 +204,31 @@ gboolean sre_run_display()
 
 void state_update()
 {
-  // printf("state_update\n");
+	// printf("state_update\n");
 	// PRESSURES
 	sre_pressures->brake_pressure_1 = LOG_BrakePressures.front;
 	sre_pressures->brake_pressure_2 = LOG_BrakePressures.rear;
-	sre_pressures->asb_pressure_1 = DV_ASB_Pressure.pressure1;
-	sre_pressures->asb_pressure_2 = DV_ASB_Pressure.pressure2;
+	sre_pressures->asb_pressure_1 = DV_ASB_Pressure.pressure_1;
+	sre_pressures->asb_pressure_2 = DV_ASB_Pressure.pressure_2;
 
 	// TEMPERATURES
 
-	if(GW_PE_RearRight.tempigbt > GW_PE_RearLeft.tempigbt) {
-		sre_temperatures->temp_per = GW_PE_RearRight.tempigbt;
-	} else {
-		sre_temperatures->temp_per = GW_PE_RearLeft.tempigbt;
+	if (GW_PE_RearRight.temp_igbt > GW_PE_RearLeft.temp_igbt)
+	{
+		sre_temperatures->temp_per = GW_PE_RearRight.temp_igbt;
+	}
+	else
+	{
+		sre_temperatures->temp_per = GW_PE_RearLeft.temp_igbt;
 	}
 
-	if(GW_PE_FrontRight.tempigbt > GW_PE_FrontLeft.tempigbt) {
-		sre_temperatures->temp_pef = GW_PE_FrontRight.tempigbt;
-	} else {
-		sre_temperatures->temp_pef = GW_PE_FrontLeft.tempigbt;
+	if (GW_PE_FrontRight.temp_igbt > GW_PE_FrontLeft.temp_igbt)
+	{
+		sre_temperatures->temp_pef = GW_PE_FrontRight.temp_igbt;
+	}
+	else
+	{
+		sre_temperatures->temp_pef = GW_PE_FrontLeft.temp_igbt;
 	}
 
 	sre_temperatures->temp_motor_fl = GW_PE_FrontLeft.temp_motor;
@@ -273,7 +287,8 @@ void label_update()
 {
 	// printf("label_update\n");
 	// DEBUG PANEL
-	if (currentPanel == DEBUG) {
+	if (currentPanel == DEBUG)
+	{
 		// PRESSURES
 		char buffer[100];
 		sprintf(buffer, "%.0f mBar", sre_pressures->brake_pressure_1);
@@ -335,186 +350,234 @@ void label_update()
 		gtk_label_set_text(GTK_LABEL(label_pumps_switch_state), buffer);
 		sprintf(buffer, "%s", sre_switches->sensors_switch ? "ON" : "OFF");
 		gtk_label_set_text(GTK_LABEL(label_sensors_switch_state), buffer);
-
-	} else // ENDURANCE PANEL
-	if (currentPanel == ENDURANCE) {
-		char buffer[100];
-		sprintf(buffer, "%s", CAR_STATE_STR[sre_state->car_state]);
-		gtk_label_set_text(GTK_LABEL(info_carstate_endu), buffer);
-
-		sprintf(buffer, "%.0f%%", sre_battery->bat_soc);
-		gtk_label_set_text(GTK_LABEL(info_bat_soc_endu), buffer);
-		if(sre_battery->bat_soc <= CRITICAL_SOC) {
-			gtk_widget_add_css_class(GTK_WIDGET(info_bat_soc_endu), "blink-critical");
-		} else if (sre_battery->bat_soc <= WARNING_SOC) {
-			gtk_widget_add_css_class(GTK_WIDGET(info_bat_soc_endu), "blink-warning");
-		} else {
-			gtk_widget_remove_css_class(GTK_WIDGET(info_bat_soc_endu), "blink-warning");
-			gtk_widget_remove_css_class(GTK_WIDGET(info_bat_soc_endu),
-			  "blink-critical");
-		}
-
-		sprintf(buffer, "%.0f°c", sre_battery->bat_temp_max);
-		if(sre_battery->bat_temp_max >= CRITICAL_BAT_TEMP) {
-			gtk_widget_remove_css_class(GTK_WIDGET(info_bat_temp_max_endu),
-			  "blink-warning");
-			gtk_widget_add_css_class(GTK_WIDGET(info_bat_temp_max_endu),
-			  "blink-critical");
-		} else if (sre_battery->bat_temp_max >= WARNING_BAT_TEMP) {
-			gtk_widget_remove_css_class(GTK_WIDGET(info_bat_temp_max_endu),
-			  "blink-critical");
-			gtk_widget_add_css_class(GTK_WIDGET(info_bat_temp_max_endu),
-			  "blink-warning");
-		} else {
-			gtk_widget_remove_css_class(GTK_WIDGET(info_bat_temp_max_endu),
-			  "blink-warning");
-			gtk_widget_remove_css_class(GTK_WIDGET(info_bat_temp_max_endu),
-			  "blink-critical");
-		}
-
-		gtk_label_set_text(GTK_LABEL(info_bat_temp_max_endu), buffer);
-
-		sprintf(buffer, "%.0f°c", sre_temperatures->temp_pef);
-		gtk_label_set_text(GTK_LABEL(info_temp_pef_endu), buffer);
-		if(sre_temperatures->temp_pef >= CRITICAL_PE_TEMP) {
-			gtk_widget_add_css_class(GTK_WIDGET(info_temp_pef_endu), "blink-critical");
-		} else if (sre_temperatures->temp_pef >= WARNING_PE_TEMP) {
-			gtk_widget_add_css_class(GTK_WIDGET(info_temp_pef_endu), "blink-warning");
-		} else {
-			gtk_widget_remove_css_class(GTK_WIDGET(info_temp_pef_endu),
-			  "blink-warning");
-			gtk_widget_remove_css_class(GTK_WIDGET(info_temp_pef_endu),
-			  "blink-critical");
-		}
-
-		sprintf(buffer, "%.0f°c", sre_temperatures->temp_per);
-		gtk_label_set_text(GTK_LABEL(info_temp_per_endu), buffer);
-		if(sre_temperatures->temp_per >= CRITICAL_PE_TEMP) {
-			gtk_widget_add_css_class(GTK_WIDGET(info_temp_per_endu), "blink-critical");
-		} else if (sre_temperatures->temp_per >= WARNING_PE_TEMP) {
-			gtk_widget_add_css_class(GTK_WIDGET(info_temp_per_endu), "blink-warning");
-		} else {
-			gtk_widget_remove_css_class(GTK_WIDGET(info_temp_per_endu),
-			  "blink-warning");
-			gtk_widget_remove_css_class(GTK_WIDGET(info_temp_per_endu),
-			  "blink-critical");
-		}
-
-		sprintf(buffer, "%.0f°c", sre_temperatures->temp_motor_fl);
-		gtk_label_set_text(GTK_LABEL(info_temp_motor_fl_endu), buffer);
-		if(sre_temperatures->temp_motor_fl >= CRITICAL_MOTOR_TEMP) {
-			gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_fl_endu),
-			  "blink-critical");
-		} else if (sre_temperatures->temp_motor_fl >= WARNING_MOTOR_TEMP) {
-			gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_fl_endu),
-			  "blink-warning");
-		} else {
-			gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_fl_endu),
-			  "blink-warning");
-			gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_fl_endu),
-			  "blink-critical");
-		}
-
-		sprintf(buffer, "%.0f°c", sre_temperatures->temp_motor_fr);
-		gtk_label_set_text(GTK_LABEL(info_temp_motor_fr_endu), buffer);
-		if(sre_temperatures->temp_motor_fr >= CRITICAL_MOTOR_TEMP) {
-			gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_fr_endu),
-			  "blink-critical");
-		} else if (sre_temperatures->temp_motor_fr >= WARNING_MOTOR_TEMP) {
-			gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_fr_endu),
-			  "blink-warning");
-		} else {
-			gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_fr_endu),
-			  "blink-warning");
-			gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_fr_endu),
-			  "blink-critical");
-		}
-
-		sprintf(buffer, "%.0f°c", sre_temperatures->temp_motor_rl);
-		gtk_label_set_text(GTK_LABEL(info_temp_motor_rl_endu), buffer);
-		if(sre_temperatures->temp_motor_rl >= CRITICAL_MOTOR_TEMP) {
-			gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_rl_endu),
-			  "blink-critical");
-		} else if (sre_temperatures->temp_motor_rl >= WARNING_MOTOR_TEMP) {
-			gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_rl_endu),
-			  "blink-warning");
-		} else {
-			gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_rl_endu),
-			  "blink-warning");
-			gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_rl_endu),
-			  "blink-critical");
-		}
-
-		sprintf(buffer, "%.0f°c", sre_temperatures->temp_motor_rr);
-		gtk_label_set_text(GTK_LABEL(info_temp_motor_rr_endu), buffer);
-		if(sre_temperatures->temp_motor_rr >= CRITICAL_MOTOR_TEMP) {
-			gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_rr_endu),
-			  "blink-critical");
-		} else if (sre_temperatures->temp_motor_rr >= WARNING_MOTOR_TEMP) {
-			gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_rr_endu),
-			  "blink-warning");
-		} else {
-			gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_rr_endu),
-			  "blink-warning");
-			gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_rr_endu),
-			  "blink-critical");
-		}
-	} else if(currentPanel == VEHICLEINFO) {
-		char buffer[100];
-
-		// PE TEMPS
-		sprintf(buffer, "%.1f°c", sre_temperatures->temp_per);
-		gtk_label_set_text(GTK_LABEL(info_temp_per_vehicleinfo), buffer);
-		sprintf(buffer, "%.1f°c", sre_temperatures->temp_pef);
-		gtk_label_set_text(GTK_LABEL(info_temp_pef_vehicleinfo), buffer);
-
-		// MOTOR TEMPS
-		sprintf(buffer, "%.1f°c", sre_temperatures->temp_motor_fl);
-		gtk_label_set_text(GTK_LABEL(info_temp_motor_fl_vehicleinfo), buffer);
-		sprintf(buffer, "%.1f°c", sre_temperatures->temp_motor_fr);
-		gtk_label_set_text(GTK_LABEL(info_temp_motor_fr_vehicleinfo), buffer);
-		sprintf(buffer, "%.1f°c", sre_temperatures->temp_motor_rl);
-		gtk_label_set_text(GTK_LABEL(info_temp_motor_rl_vehicleinfo), buffer);
-		sprintf(buffer, "%.1f°c", sre_temperatures->temp_motor_rr);
-		gtk_label_set_text(GTK_LABEL(info_temp_motor_rr_vehicleinfo), buffer);
-
-		// BATTERY
-		sprintf(buffer, "%.0f%%", sre_battery->bat_soc);
-		gtk_label_set_text(GTK_LABEL(info_bat_soc_vehicleinfo), buffer);
-		if(sre_battery->bat_soc <= CRITICAL_SOC) {
-			gtk_widget_add_css_class(GTK_WIDGET(info_bat_soc_vehicleinfo),
-			  "blink-critical");
-		} else if (sre_battery->bat_soc <= WARNING_SOC) {
-			gtk_widget_add_css_class(GTK_WIDGET(info_bat_soc_vehicleinfo),
-			  "blink-warning");
-		} else {
-			gtk_widget_remove_css_class(GTK_WIDGET(info_bat_soc_vehicleinfo),
-			  "blink-warning");
-			gtk_widget_remove_css_class(GTK_WIDGET(info_bat_soc_vehicleinfo),
-			  "blink-critical");
-		}
-
-		sprintf(buffer, "%.0f°c", sre_battery->bat_temp_max);
-		gtk_label_set_text(GTK_LABEL(info_bat_temp_max_vehicleinfo), buffer);
-		sprintf(buffer, "%.0f°c", sre_battery->bat_temp_min);
-		gtk_label_set_text(GTK_LABEL(info_bat_temp_min_vehicleinfo), buffer);
-		sprintf(buffer, "%.1fv", sre_battery->bat_volt_max);
-		gtk_label_set_text(GTK_LABEL(info_bat_voltage_max_vehicleinfo), buffer);
-		sprintf(buffer, "%.1fv", sre_battery->bat_volt_min);
-		gtk_label_set_text(GTK_LABEL(info_bat_voltage_min_vehicleinfo), buffer);
-
-		// POWER MEASUREMENT
-		sprintf(buffer, "%.0f", sre_power->hv_power);
-		gtk_label_set_text(GTK_LABEL(info_hv_power_vehicleinfo), buffer);
-
-		// VEHICLE INFO
-		sprintf(buffer, "%.0f", sre_vehicle_info->car_speed*3.6);
-		gtk_label_set_text(GTK_LABEL(info_car_speed_vehicleinfo), buffer);
-
-		// STATES
-		sprintf(buffer, "%s", CAR_STATE_STR[sre_state->car_state]);
-		gtk_label_set_text(GTK_LABEL(info_carstate_vehicleinfo), buffer);
 	}
+	else // ENDURANCE PANEL
+		if (currentPanel == ENDURANCE)
+		{
+			char buffer[100];
+			sprintf(buffer, "%s", CAR_STATE_STR[sre_state->car_state]);
+			gtk_label_set_text(GTK_LABEL(info_carstate_endu), buffer);
+
+			sprintf(buffer, "%.0f%%", sre_battery->bat_soc);
+			gtk_label_set_text(GTK_LABEL(info_bat_soc_endu), buffer);
+			if (sre_battery->bat_soc <= CRITICAL_SOC)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_bat_soc_endu), "blink-critical");
+			}
+			else if (sre_battery->bat_soc <= WARNING_SOC)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_bat_soc_endu), "blink-warning");
+			}
+			else
+			{
+				gtk_widget_remove_css_class(GTK_WIDGET(info_bat_soc_endu), "blink-warning");
+				gtk_widget_remove_css_class(GTK_WIDGET(info_bat_soc_endu),
+																		"blink-critical");
+			}
+
+			sprintf(buffer, "%.0f°c", sre_battery->bat_temp_max);
+			if (sre_battery->bat_temp_max >= CRITICAL_BAT_TEMP)
+			{
+				gtk_widget_remove_css_class(GTK_WIDGET(info_bat_temp_max_endu),
+																		"blink-warning");
+				gtk_widget_add_css_class(GTK_WIDGET(info_bat_temp_max_endu),
+																 "blink-critical");
+			}
+			else if (sre_battery->bat_temp_max >= WARNING_BAT_TEMP)
+			{
+				gtk_widget_remove_css_class(GTK_WIDGET(info_bat_temp_max_endu),
+																		"blink-critical");
+				gtk_widget_add_css_class(GTK_WIDGET(info_bat_temp_max_endu),
+																 "blink-warning");
+			}
+			else
+			{
+				gtk_widget_remove_css_class(GTK_WIDGET(info_bat_temp_max_endu),
+																		"blink-warning");
+				gtk_widget_remove_css_class(GTK_WIDGET(info_bat_temp_max_endu),
+																		"blink-critical");
+			}
+
+			gtk_label_set_text(GTK_LABEL(info_bat_temp_max_endu), buffer);
+
+			sprintf(buffer, "%.0f°c", sre_temperatures->temp_pef);
+			gtk_label_set_text(GTK_LABEL(info_temp_pef_endu), buffer);
+			if (sre_temperatures->temp_pef >= CRITICAL_PE_TEMP)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_temp_pef_endu), "blink-critical");
+			}
+			else if (sre_temperatures->temp_pef >= WARNING_PE_TEMP)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_temp_pef_endu), "blink-warning");
+			}
+			else
+			{
+				gtk_widget_remove_css_class(GTK_WIDGET(info_temp_pef_endu),
+																		"blink-warning");
+				gtk_widget_remove_css_class(GTK_WIDGET(info_temp_pef_endu),
+																		"blink-critical");
+			}
+
+			sprintf(buffer, "%.0f°c", sre_temperatures->temp_per);
+			gtk_label_set_text(GTK_LABEL(info_temp_per_endu), buffer);
+			if (sre_temperatures->temp_per >= CRITICAL_PE_TEMP)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_temp_per_endu), "blink-critical");
+			}
+			else if (sre_temperatures->temp_per >= WARNING_PE_TEMP)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_temp_per_endu), "blink-warning");
+			}
+			else
+			{
+				gtk_widget_remove_css_class(GTK_WIDGET(info_temp_per_endu),
+																		"blink-warning");
+				gtk_widget_remove_css_class(GTK_WIDGET(info_temp_per_endu),
+																		"blink-critical");
+			}
+
+			sprintf(buffer, "%.0f°c", sre_temperatures->temp_motor_fl);
+			gtk_label_set_text(GTK_LABEL(info_temp_motor_fl_endu), buffer);
+			if (sre_temperatures->temp_motor_fl >= CRITICAL_MOTOR_TEMP)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_fl_endu),
+																 "blink-critical");
+			}
+			else if (sre_temperatures->temp_motor_fl >= WARNING_MOTOR_TEMP)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_fl_endu),
+																 "blink-warning");
+			}
+			else
+			{
+				gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_fl_endu),
+																		"blink-warning");
+				gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_fl_endu),
+																		"blink-critical");
+			}
+
+			sprintf(buffer, "%.0f°c", sre_temperatures->temp_motor_fr);
+			gtk_label_set_text(GTK_LABEL(info_temp_motor_fr_endu), buffer);
+			if (sre_temperatures->temp_motor_fr >= CRITICAL_MOTOR_TEMP)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_fr_endu),
+																 "blink-critical");
+			}
+			else if (sre_temperatures->temp_motor_fr >= WARNING_MOTOR_TEMP)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_fr_endu),
+																 "blink-warning");
+			}
+			else
+			{
+				gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_fr_endu),
+																		"blink-warning");
+				gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_fr_endu),
+																		"blink-critical");
+			}
+
+			sprintf(buffer, "%.0f°c", sre_temperatures->temp_motor_rl);
+			gtk_label_set_text(GTK_LABEL(info_temp_motor_rl_endu), buffer);
+			if (sre_temperatures->temp_motor_rl >= CRITICAL_MOTOR_TEMP)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_rl_endu),
+																 "blink-critical");
+			}
+			else if (sre_temperatures->temp_motor_rl >= WARNING_MOTOR_TEMP)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_rl_endu),
+																 "blink-warning");
+			}
+			else
+			{
+				gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_rl_endu),
+																		"blink-warning");
+				gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_rl_endu),
+																		"blink-critical");
+			}
+
+			sprintf(buffer, "%.0f°c", sre_temperatures->temp_motor_rr);
+			gtk_label_set_text(GTK_LABEL(info_temp_motor_rr_endu), buffer);
+			if (sre_temperatures->temp_motor_rr >= CRITICAL_MOTOR_TEMP)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_rr_endu),
+																 "blink-critical");
+			}
+			else if (sre_temperatures->temp_motor_rr >= WARNING_MOTOR_TEMP)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_temp_motor_rr_endu),
+																 "blink-warning");
+			}
+			else
+			{
+				gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_rr_endu),
+																		"blink-warning");
+				gtk_widget_remove_css_class(GTK_WIDGET(info_temp_motor_rr_endu),
+																		"blink-critical");
+			}
+		}
+		else if (currentPanel == VEHICLEINFO)
+		{
+			char buffer[100];
+
+			// PE TEMPS
+			sprintf(buffer, "%.1f°c", sre_temperatures->temp_per);
+			gtk_label_set_text(GTK_LABEL(info_temp_per_vehicleinfo), buffer);
+			sprintf(buffer, "%.1f°c", sre_temperatures->temp_pef);
+			gtk_label_set_text(GTK_LABEL(info_temp_pef_vehicleinfo), buffer);
+
+			// MOTOR TEMPS
+			sprintf(buffer, "%.1f°c", sre_temperatures->temp_motor_fl);
+			gtk_label_set_text(GTK_LABEL(info_temp_motor_fl_vehicleinfo), buffer);
+			sprintf(buffer, "%.1f°c", sre_temperatures->temp_motor_fr);
+			gtk_label_set_text(GTK_LABEL(info_temp_motor_fr_vehicleinfo), buffer);
+			sprintf(buffer, "%.1f°c", sre_temperatures->temp_motor_rl);
+			gtk_label_set_text(GTK_LABEL(info_temp_motor_rl_vehicleinfo), buffer);
+			sprintf(buffer, "%.1f°c", sre_temperatures->temp_motor_rr);
+			gtk_label_set_text(GTK_LABEL(info_temp_motor_rr_vehicleinfo), buffer);
+
+			// BATTERY
+			sprintf(buffer, "%.0f%%", sre_battery->bat_soc);
+			gtk_label_set_text(GTK_LABEL(info_bat_soc_vehicleinfo), buffer);
+			if (sre_battery->bat_soc <= CRITICAL_SOC)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_bat_soc_vehicleinfo),
+																 "blink-critical");
+			}
+			else if (sre_battery->bat_soc <= WARNING_SOC)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_bat_soc_vehicleinfo),
+																 "blink-warning");
+			}
+			else
+			{
+				gtk_widget_remove_css_class(GTK_WIDGET(info_bat_soc_vehicleinfo),
+																		"blink-warning");
+				gtk_widget_remove_css_class(GTK_WIDGET(info_bat_soc_vehicleinfo),
+																		"blink-critical");
+			}
+
+			sprintf(buffer, "%.0f°c", sre_battery->bat_temp_max);
+			gtk_label_set_text(GTK_LABEL(info_bat_temp_max_vehicleinfo), buffer);
+			sprintf(buffer, "%.0f°c", sre_battery->bat_temp_min);
+			gtk_label_set_text(GTK_LABEL(info_bat_temp_min_vehicleinfo), buffer);
+			sprintf(buffer, "%.1fv", sre_battery->bat_volt_max);
+			gtk_label_set_text(GTK_LABEL(info_bat_voltage_max_vehicleinfo), buffer);
+			sprintf(buffer, "%.1fv", sre_battery->bat_volt_min);
+			gtk_label_set_text(GTK_LABEL(info_bat_voltage_min_vehicleinfo), buffer);
+
+			// POWER MEASUREMENT
+			sprintf(buffer, "%.0f", sre_power->hv_power);
+			gtk_label_set_text(GTK_LABEL(info_hv_power_vehicleinfo), buffer);
+
+			// VEHICLE INFO
+			sprintf(buffer, "%.0f", sre_vehicle_info->car_speed * 3.6);
+			gtk_label_set_text(GTK_LABEL(info_car_speed_vehicleinfo), buffer);
+
+			// STATES
+			sprintf(buffer, "%s", CAR_STATE_STR[sre_state->car_state]);
+			gtk_label_set_text(GTK_LABEL(info_carstate_vehicleinfo), buffer);
+		}
 }
 
 void error_label_update()
@@ -522,25 +585,27 @@ void error_label_update()
 	// printf("error_label_update\n");
 	uint8_t label_array_count = 0;
 
-	for(int i = 0; i < ERROR_LABEL_COUNT; i++) {
-		if(vehicle_errors[i] != NULL) {
+	for (int i = 0; i < ERROR_LABEL_COUNT; i++)
+	{
+		if (vehicle_errors[i] != NULL)
+		{
 			char buffer[100];
 			// get error type string
-			const char * error_type_str =
-			  ERROR_TYPES_STR[vehicle_errors[i]->error_type];
+			const char *error_type_str =
+					ERROR_TYPES_STR[vehicle_errors[i]->error_type];
 
 			// get sub error type string
-			const char * sub_error_str = "N/A"; // default if no subtype exists
-			if(vehicle_errors[i]->error_type < ERROR_TYPE_COUNT &&
-			  ERROR_SUB_TYPE_MAP[vehicle_errors[i]->error_type] != NULL &&
-			  vehicle_errors[i]->sub_error_type < ERROR_SUB_TYPE_COUNT) // avoid out of bounds
+			const char *sub_error_str = "N/A"; // default if no subtype exists
+			if (vehicle_errors[i]->error_type < ERROR_TYPE_COUNT &&
+					ERROR_SUB_TYPE_MAP[vehicle_errors[i]->error_type] != NULL &&
+					vehicle_errors[i]->sub_error_type < ERROR_SUB_TYPE_COUNT) // avoid out of bounds
 			{
 				printf("error_type: %d, sub_error_type: %d, time_elapsed: %ld\n",
-				  vehicle_errors[i]->error_type, vehicle_errors[i]->sub_error_type,
-				  (vehicle_errors[i]->last_seen - (uint64_t)time(NULL)));
+							 vehicle_errors[i]->error_type, vehicle_errors[i]->sub_error_type,
+							 (vehicle_errors[i]->last_seen - (uint64_t)time(NULL)));
 				sub_error_str =
-				  ERROR_SUB_TYPE_MAP[vehicle_errors[i]->error_type][vehicle_errors[i]
-				    ->sub_error_type];
+						ERROR_SUB_TYPE_MAP[vehicle_errors[i]->error_type][vehicle_errors[i]
+																																	->sub_error_type];
 			}
 			sprintf(buffer, "%s", error_type_str);
 			gtk_label_set_text(GTK_LABEL(error_array[label_array_count][0]), buffer);
@@ -551,7 +616,8 @@ void error_label_update()
 		}
 	}
 
-	for(; label_array_count < ERROR_LABEL_COUNT; label_array_count++) {
+	for (; label_array_count < ERROR_LABEL_COUNT; label_array_count++)
+	{
 		gtk_label_set_text(GTK_LABEL(error_array[label_array_count][0]), "");
 		gtk_label_set_text(GTK_LABEL(error_array[label_array_count][1]), "");
 	}
@@ -561,53 +627,61 @@ void error_panel_update()
 {
 	// printf("error_panel_update\n");
 	uint8_t error_count = 0;
-	for(int i = 0; i < MAX_ERRORS; i++) {
-		if(vehicle_errors[i] != NULL) {
+	for (int i = 0; i < MAX_ERRORS; i++)
+	{
+		if (vehicle_errors[i] != NULL)
+		{
 			error_count++;
 		}
 	}
 
-	if(error_count > 0) {
+	if (error_count > 0)
+	{
 		sre_gui->error_show = 1;
-	} else {
+	}
+	else
+	{
 		sre_gui->error_show = 0;
 	}
 
-	if(sre_gui->error_show) {
+	if (sre_gui->error_show)
+	{
 		gtk_widget_set_visible(GTK_WIDGET(box_error), true);
-	} else {
+	}
+	else
+	{
 		gtk_widget_set_visible(GTK_WIDGET(box_error), false);
 	}
 
 	// @todo: add cycling error messages
 	// cycle error messages
-	if(error_count > 0) {
+	if (error_count > 0)
+	{
 		static uint8_t cur_err_ind = 0;
 		static uint64_t time_since_last_change = 0;
 
-		if((uint64_t)time(NULL) - time_since_last_change >= ERROR_PANEL_UPDATE_INT) {
+		if ((uint64_t)time(NULL) - time_since_last_change >= ERROR_PANEL_UPDATE_INT)
+		{
 			// Find next error that is not NULL
-			for (int i = 0; i < MAX_ERRORS; i++) {
+			for (int i = 0; i < MAX_ERRORS; i++)
+			{
 				cur_err_ind = (cur_err_ind + 1) % MAX_ERRORS;
 				if (vehicle_errors[cur_err_ind] != NULL &&
-				  vehicle_errors[cur_err_ind]->dismissed == 0)
+						vehicle_errors[cur_err_ind]->dismissed == 0)
 				{
 					char buffer[100];
-					const char * error_type_str =
-					  ERROR_TYPES_STR[vehicle_errors[cur_err_ind]->error_type];
-					const char * sub_error_str = "N/A"; // default if no subtype exists
+					const char *error_type_str =
+							ERROR_TYPES_STR[vehicle_errors[cur_err_ind]->error_type];
+					const char *sub_error_str = "N/A"; // default if no subtype exists
 					if (vehicle_errors[cur_err_ind]->error_type <
-					  ERROR_TYPE_COUNT &&
-					  ERROR_SUB_TYPE_MAP[vehicle_errors[cur_err_ind]->error_type]
-					  !=
-					  NULL &&
-					  vehicle_errors[cur_err_ind]->sub_error_type <
-					  ERROR_SUB_TYPE_COUNT)                             // avoid out of bounds
+									ERROR_TYPE_COUNT &&
+							ERROR_SUB_TYPE_MAP[vehicle_errors[cur_err_ind]->error_type] !=
+									NULL &&
+							vehicle_errors[cur_err_ind]->sub_error_type <
+									ERROR_SUB_TYPE_COUNT) // avoid out of bounds
 					{
 						sub_error_str =
-						  ERROR_SUB_TYPE_MAP[vehicle_errors[cur_err_ind]->
-						    error_type][vehicle_errors[cur_err_ind]->
-						    sub_error_type];
+								ERROR_SUB_TYPE_MAP[vehicle_errors[cur_err_ind]->error_type][vehicle_errors[cur_err_ind]->sub_error_type];
 					}
 					sprintf(buffer, "%s", error_type_str);
 					gtk_label_set_text(GTK_LABEL(info_error_type), buffer);
@@ -619,11 +693,12 @@ void error_panel_update()
 			// update last update time
 			time_since_last_change = (uint64_t)time(NULL);
 		}
-	} else {
+	}
+	else
+	{
 		gtk_label_set_text(GTK_LABEL(info_error_type), "");
 		gtk_label_set_text(GTK_LABEL(info_error_message), "");
 	}
-
 }
 
 void graphical_update()
@@ -633,30 +708,42 @@ void graphical_update()
 	// printf("bat_state: %s\n", BAT_STATE_STR[sre_state->bat_state]);
 
 	printf("currentPanel %d\n", currentPanel);
-	if (sre_gui->tsa_ready) {
+	if (sre_gui->tsa_ready)
+	{
 		// gtk_widget_add_css_class(GTK_WIDGET(tsa_label_array[currentPanel]), "blink");
 		gtk_widget_add_css_class(GTK_WIDGET(label_tsa_current), "blink");
-	} else {
+	}
+	else
+	{
 		// gtk_widget_remove_css_class(GTK_WIDGET(tsa_label_array[currentPanel]), "blink");
 		gtk_widget_remove_css_class(GTK_WIDGET(label_tsa_current), "blink");
 	}
 
-	if (sre_gui->r2d_ready) {
+	if (sre_gui->r2d_ready)
+	{
 		gtk_widget_add_css_class(GTK_WIDGET(label_r2d_current), "blink");
-	} else {
+	}
+	else
+	{
 		gtk_widget_remove_css_class(GTK_WIDGET(label_r2d_current), "blink");
 	}
 
-	if (sre_gui->r2d_active) {
+	if (sre_gui->r2d_active)
+	{
 		gtk_widget_add_css_class(GTK_WIDGET(label_r2d_current), "active");
-	} else {
+	}
+	else
+	{
 		gtk_widget_remove_css_class(GTK_WIDGET(label_r2d_current), "active");
 	}
 
-	if (sre_gui->tsa_active) {
+	if (sre_gui->tsa_active)
+	{
 		// gtk_widget_add_css_class(GTK_WIDGET(tsa_label_array[currentPanel]), "active");
 		gtk_widget_add_css_class(GTK_WIDGET(label_tsa_current), "active");
-	} else {
+	}
+	else
+	{
 		// gtk_widget_remove_css_class(GTK_WIDGET(tsa_label_array[currentPanel]), "active");
 		gtk_widget_remove_css_class(GTK_WIDGET(label_tsa_current), "active");
 	}
@@ -669,30 +756,42 @@ void graphical_update()
 
 void tsa_logic()
 {
-	if (sre_state->car_state == WAIT_FOR_TSA_C && sre_state->bat_state == WAIT_FOR_TSA_B) {
+	if (sre_state->car_state == WAIT_FOR_TSA_C && sre_state->bat_state == WAIT_FOR_TSA_B)
+	{
 		sre_gui->tsa_ready = 1;
-	} else {
+	}
+	else
+	{
 		sre_gui->tsa_ready = 0;
 	}
 
-	if (sre_state->bat_state == TSA) {
+	if (sre_state->bat_state == TSA)
+	{
 		sre_gui->tsa_active = 1;
-	} else {
+	}
+	else
+	{
 		sre_gui->tsa_active = 0;
 	}
 }
 
 void r2d_logic()
 {
-	if (sre_state->car_state == WAIT_FOR_RTD && sre_state->bat_state == TSA) {
+	if (sre_state->car_state == WAIT_FOR_RTD && sre_state->bat_state == TSA)
+	{
 		sre_gui->r2d_ready = 1;
-	} else {
+	}
+	else
+	{
 		sre_gui->r2d_ready = 0;
 	}
 
-	if (sre_state->car_state == DRIVE) {
+	if (sre_state->car_state == DRIVE)
+	{
 		sre_gui->r2d_active = 1;
-	} else {
+	}
+	else
+	{
 		sre_gui->r2d_active = 0;
 	}
 }
@@ -701,66 +800,97 @@ void r2d_logic()
 
 void error_logic()
 {
-	if(sre_state->car_state == SCS_ERROR) {
+	if (sre_state->car_state == SCS_ERROR)
+	{
 		SRE_error *buff_error = check_if_error_exists(VCU, VCU_SCS);
-		if(buff_error == NULL) {
+		if (buff_error == NULL)
+		{
 			printf("create buffer error, SCS_ERROR\n");
 			SRE_error *new_buff_error = create_sre_error(VCU, VCU_SCS);
 			add_error(new_buff_error);
-		} else {
+		}
+		else
+		{
 			buff_error->last_seen = (uint64_t)time(NULL);
 		}
 	}
 
-	if(sre_state->bat_state == SDC_OPEN || sre_state->bat_state == ISO_ERROR ||
-	  sre_state->bat_state == BMS_ERROR || sre_state->bat_state == IMD_ERROR ||
-	  sre_state->bat_state == BAT_ERROR)
+	if (sre_state->bat_state == ISO_ERROR ||
+			sre_state->bat_state == BMS_ERROR || sre_state->bat_state == IMD_ERROR ||
+			sre_state->bat_state == BAT_ERROR)
 	{
 		SRE_error *buff_error = check_if_error_exists(BAT_ERR, sre_state->bat_state);
-		if(buff_error == NULL) {
+		if (buff_error == NULL)
+		{
 			SRE_error *new_buff_error = create_sre_error(BAT_ERR, sre_state->bat_state);
 			add_error(new_buff_error);
-		} else {
+		}
+		else
+		{
 			buff_error->last_seen = (uint64_t)time(NULL);
 		}
 	}
 
-	if(sre_state->asb_state == EBS_TRIGGERED && sre_state->asb_trigger_cause == 0) {
+	// If SDC is open check Fuseboard SDC sensing
+	// if(sre_state->bat_state == SDC_ERROR)
+	// {
+	// 	SRE_error *buff_error = check_if_error_exists(SDC_ERR, sre_state->bat_state);
+	// 	if(buff_error == NULL) {
+	// 		SRE_error *new_buff_error = create_sre_error(SDC_ERR, sre_state->bat_state);
+	// 		add_error(new_buff_error);
+	// 	} else {
+	// 		buff_error->last_seen = (uint64_t)time(NULL);
+	// 	}
+	// }
+
+	if (sre_state->asb_state == EBS_TRIGGERED && sre_state->asb_trigger_cause == 0)
+	{
 		SRE_error *buff_error = check_if_error_exists(ASB_ERROR, ASB_EBS_TRIGGERED);
-		if(buff_error == NULL) {
+		if (buff_error == NULL)
+		{
 			SRE_error *new_buff_error = create_sre_error(ASB_ERROR, ASB_EBS_TRIGGERED);
 			add_error(new_buff_error);
-		} else {
+		}
+		else
+		{
 			buff_error->last_seen = (uint64_t)time(NULL);
 		}
 	}
 
-	if((sre_state->asb_state == EBS_TRIGGERED) && (sre_state->asb_trigger_cause != 0)) {
+	if ((sre_state->asb_state == EBS_TRIGGERED) && (sre_state->asb_trigger_cause != 0))
+	{
 		SRE_error *buff_error = check_if_error_exists(ASB_ERROR,
-		  sre_state->asb_trigger_cause);
-		if(buff_error == NULL) {
+																									sre_state->asb_trigger_cause);
+		if (buff_error == NULL)
+		{
 			SRE_error *new_buff_error = create_sre_error(ASB_ERROR,
-			  sre_state->asb_trigger_cause);
+																									 sre_state->asb_trigger_cause);
 			add_error(new_buff_error);
-		} else {
+		}
+		else
+		{
 			buff_error->last_seen = (uint64_t)time(NULL);
 		}
 	}
 
 	// Free old Error Messages
-	for (int i = 0 ; i < MAX_ERRORS; i++) {
-		if(vehicle_errors[i] != NULL) {
-			if(vehicle_errors[i]->last_seen + FREE_AFTER <= (uint64_t)time(NULL)) {
+	for (int i = 0; i < MAX_ERRORS; i++)
+	{
+		if (vehicle_errors[i] != NULL)
+		{
+			if (vehicle_errors[i]->last_seen + FREE_AFTER <= (uint64_t)time(NULL))
+			{
 				remove_error(i);
 			}
 		}
 	}
 }
 
-SRE_error * create_sre_error(uint16_t error_type, uint16_t sub_error_type)
+SRE_error *create_sre_error(uint16_t error_type, uint16_t sub_error_type)
 {
-	SRE_error * new_error = (SRE_error *)malloc(sizeof(SRE_error));
-	if (!new_error) {
+	SRE_error *new_error = (SRE_error *)malloc(sizeof(SRE_error));
+	if (!new_error)
+	{
 		fprintf(stderr, "Memory allocation failed.\n");
 		return NULL;
 	}
@@ -772,10 +902,12 @@ SRE_error * create_sre_error(uint16_t error_type, uint16_t sub_error_type)
 	return new_error;
 }
 
-void add_error(SRE_error * error)
+void add_error(SRE_error *error)
 {
-	for (int i = 0; i < MAX_ERRORS; i++) {
-		if (vehicle_errors[i] == NULL) {
+	for (int i = 0; i < MAX_ERRORS; i++)
+	{
+		if (vehicle_errors[i] == NULL)
+		{
 			vehicle_errors[i] = error;
 			return;
 		}
@@ -785,7 +917,8 @@ void add_error(SRE_error * error)
 
 void remove_error(uint16_t index)
 {
-	if (index >= MAX_ERRORS || vehicle_errors[index] == NULL) {
+	if (index >= MAX_ERRORS || vehicle_errors[index] == NULL)
+	{
 		fprintf(stderr, "Invalid index for error removal.\n");
 		return;
 	}
@@ -793,11 +926,12 @@ void remove_error(uint16_t index)
 	vehicle_errors[index] = NULL;
 }
 
-SRE_error * check_if_error_exists(uint16_t error_type, uint16_t sub_error_type)
+SRE_error *check_if_error_exists(uint16_t error_type, uint16_t sub_error_type)
 {
-	for (int i = 0; i < MAX_ERRORS; i++) {
+	for (int i = 0; i < MAX_ERRORS; i++)
+	{
 		if (vehicle_errors[i] != NULL && vehicle_errors[i]->error_type == error_type &&
-		  vehicle_errors[i]->sub_error_type == sub_error_type)
+				vehicle_errors[i]->sub_error_type == sub_error_type)
 		{
 			return vehicle_errors[i];
 		}
@@ -815,8 +949,10 @@ void info_logic()
 // returns the position of the first bit that is 1
 uint32_t get_bit_position(uint32_t value)
 {
-	for (int i = 0; i < 8; i++) {
-		if (value & (1 << i)) {
+	for (int i = 0; i < 8; i++)
+	{
+		if (value & (1 << i))
+		{
 			return i;
 		}
 	}

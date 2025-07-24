@@ -16,7 +16,7 @@ GObject* info_temp_motor_rr_endu = NULL;
 GObject* info_temp_motor_rl_endu = NULL;
 
 // BATTERY
-GObject* info_bat_soc_endu = NULL; 
+GObject* info_bat_soc_endu = NULL;
 GObject* info_bat_temp_max_endu = NULL;
 
 // STATE
@@ -30,14 +30,14 @@ GObject *label_r2d_endu = NULL;
 GtkWidget* create_endurance_panel() {
     GtkWidget *main_endu_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 
-    //import gtkbuilder ui
+    //import endurance panel ui design file
     builder_endu_panel = gtk_builder_new_from_file("../designs/endurance-panel.ui");
     if(builder_endu_panel == NULL) {
         g_print("Failed to load builder\n");
         return NULL;
     }
 
-    // Look for debug panel and load it
+    // Look for endurance panel and load it
     GObject *endu_panel = gtk_builder_get_object(builder_endu_panel, "box_main_endu");
     if(endu_panel == NULL) {
         g_print("Failed to load endurance panel\n");
@@ -72,7 +72,7 @@ GtkWidget* create_endurance_panel() {
     label_tsa_current = label_tsa_endu;
     label_r2d_endu = gtk_builder_get_object(builder_endu_panel, "label_r2d_endu");
     label_r2d_current = label_r2d_endu;
-    
+
     // Add endu_panel to the main box
     gtk_box_append(GTK_BOX(main_endu_box), GTK_WIDGET(endu_panel));
     return main_endu_box;

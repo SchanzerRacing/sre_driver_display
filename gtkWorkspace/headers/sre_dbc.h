@@ -2,53 +2,533 @@
 /***
  * Header File from DBC
  * Auto-generated using Python
- * 17.03.2025, 15:39:18 UTC
+ * 19.07.2025, 08:44:28 UTC
  ***/
 
-#ifndef SYSTEM_DBC_H
-#define SYSTEM_DBC_H
+#ifndef SRE_DBC_H
+#define SRE_DBC_H
 
-#include <stdint.h>
+#if __has_include("../config.h")
+#include "../config.h"
+
+#else
+#error "No Config found"
+
+#endif
+
 #include <stdbool.h>
 
-#ifdef f280013x_DEVICE_H
+#if defined ARCH_F280013X
+#include <hw_lib.h>
+#include <inttypes.h>
+
+#elif defined ARCH_RPI
+#include <stdint.h>
+
+#else
+#error "No fitting config found"
+
+#endif
+
+#if defined ARCH_F280013X
+
 #ifdef INLINE
 #define SOFT_INLINE INLINE
+
 #else
 #define SOFT_INLINE inline
+
 #endif
+
 #else
 #define SOFT_INLINE
+
 #endif
+
+/* -------------------------------- SF2_Info -------------------------------- */
+
+#define SF2_INFO_ID 0x7FC
+#define SF2_INFO_DLC 8          // Number of Bytes
+#define SF2_INFO_CYCLE_TIME 100 // Milliseconds
+
+union SF2_Info_Union
+{
+
+  uint64_t data;
+
+  struct
+  {
+
+    uint64_t serial_no : 24;
+    uint64_t sensor_no : 8;
+    int64_t temp_sens : 8;
+    uint64_t curr_led : 8;
+    uint64_t st_st : 1;
+    uint64_t self_test : 1;
+    uint64_t sensor_ok : 1;
+    uint64_t temp_ok : 1;
+    uint64_t optic_ok : 1;
+    uint64_t curr_high : 1;
+    uint64_t curr_ok : 1;
+    uint64_t power_ok : 1;
+    uint64_t dbcledcal : 1;
+    uint64_t ledstatus : 2;
+    uint64_t v25_ok : 1;
+    uint64_t v33_ok : 1;
+    uint64_t vdd_ok : 1;
+    uint64_t vee_ok : 1;
+    uint64_t reserved_1 : 1;
+  };
+};
+
+struct SF2_Info_Struct
+{
+  uint32_t serial_no;
+  uint8_t sensor_no;
+  int8_t temp_sens;
+  float curr_led;
+  bool st_st;
+  bool self_test;
+  bool sensor_ok;
+  bool temp_ok;
+  bool optic_ok;
+  bool curr_high;
+  bool curr_ok;
+  bool power_ok;
+  bool dbcledcal;
+  uint8_t ledstatus;
+  bool v25_ok;
+  bool v33_ok;
+  bool vdd_ok;
+  bool vee_ok;
+};
+
+extern SOFT_INLINE void SF2_Info_UnionToStruct(struct SF2_Info_Struct *s,
+                                               union SF2_Info_Union u);
+
+extern SOFT_INLINE void SF2_Info_StructToUnion(union SF2_Info_Union *u,
+                                               struct SF2_Info_Struct s);
+
+/* ------------------------------- SF2_Data2 ------------------------------- */
+
+#define SF2_DATA_2_ID 0x7FB
+#define SF2_DATA_2_DLC 6          // Number of Bytes
+#define SF2_DATA_2_CYCLE_TIME 100 // Milliseconds
+
+union SF2_Data2_Union
+{
+
+  uint64_t data;
+
+  struct
+  {
+
+    int64_t vel_x : 16;
+    int64_t vel_y : 16;
+    int64_t angle : 16;
+    uint64_t reserved_1 : 16;
+  };
+};
+
+struct SF2_Data2_Struct
+{
+  float vel_x;
+  float vel_y;
+  float angle;
+};
+
+extern SOFT_INLINE void SF2_Data2_UnionToStruct(struct SF2_Data2_Struct *s,
+                                                union SF2_Data2_Union u);
+
+extern SOFT_INLINE void SF2_Data2_StructToUnion(union SF2_Data2_Union *u,
+                                                struct SF2_Data2_Struct s);
+
+/* ------------------------------- SF2_Data1 ------------------------------- */
+
+#define SF2_DATA_1_ID 0x7FA
+#define SF2_DATA_1_DLC 8          // Number of Bytes
+#define SF2_DATA_1_CYCLE_TIME 100 // Milliseconds
+
+union SF2_Data1_Union
+{
+
+  uint64_t data;
+
+  struct
+  {
+
+    uint64_t timestamp : 16;
+    uint64_t vel : 16;
+    uint64_t dist : 32;
+  };
+};
+
+struct SF2_Data1_Struct
+{
+  uint16_t timestamp;
+  float vel;
+  float dist;
+};
+
+extern SOFT_INLINE void SF2_Data1_UnionToStruct(struct SF2_Data1_Struct *s,
+                                                union SF2_Data1_Union u);
+
+extern SOFT_INLINE void SF2_Data1_StructToUnion(union SF2_Data1_Union *u,
+                                                struct SF2_Data1_Struct s);
+
+/* ------------------------------ LOG_DashLEDs ------------------------------ */
+
+#define LOG_DASH_LEDS_ID 0x787
+#define LOG_DASH_LEDS_DLC 1          // Number of Bytes
+#define LOG_DASH_LEDS_CYCLE_TIME 100 // Milliseconds
+
+union LOG_DashLEDs_Union
+{
+
+  uint64_t data;
+
+  struct
+  {
+
+    uint64_t imd : 1;
+    uint64_t reserved_1 : 1;
+    uint64_t ams : 1;
+    uint64_t reserved_2 : 61;
+  };
+};
+
+struct LOG_DashLEDs_Struct
+{
+  bool imd;
+  bool ams;
+};
+
+extern SOFT_INLINE void
+LOG_DashLEDs_UnionToStruct(struct LOG_DashLEDs_Struct *s,
+                           union LOG_DashLEDs_Union u);
+
+extern SOFT_INLINE void
+LOG_DashLEDs_StructToUnion(union LOG_DashLEDs_Union *u,
+                           struct LOG_DashLEDs_Struct s);
+
+/* ---------------------------- LSC_DASH_Buttons ---------------------------- */
+
+#define LSC_DASH_BUTTONS_ID 0x181
+#define LSC_DASH_BUTTONS_DLC 1          // Number of Bytes
+#define LSC_DASH_BUTTONS_CYCLE_TIME 100 // Milliseconds
+
+union LSC_DASH_Buttons_Union
+{
+
+  uint64_t data;
+
+  struct
+  {
+
+    uint64_t tsa : 1;
+    uint64_t rtd : 1;
+    uint64_t reserved_1 : 3;
+    uint64_t gen_scs : 3;
+    uint64_t reserved_2 : 56;
+  };
+};
+
+struct LSC_DASH_Buttons_Struct
+{
+  bool tsa;
+  bool rtd;
+  uint8_t gen_scs;
+};
+
+extern SOFT_INLINE void
+LSC_DASH_Buttons_UnionToStruct(struct LSC_DASH_Buttons_Struct *s,
+                               union LSC_DASH_Buttons_Union u);
+
+extern SOFT_INLINE void
+LSC_DASH_Buttons_StructToUnion(union LSC_DASH_Buttons_Union *u,
+                               struct LSC_DASH_Buttons_Struct s);
+
+/* ---------------------------- SAF_DASH_Status ---------------------------- */
+
+#define SAF_DASH_STATUS_ID 0x55
+#define SAF_DASH_STATUS_DLC 1          // Number of Bytes
+#define SAF_DASH_STATUS_CYCLE_TIME 100 // Milliseconds
+
+union SAF_DASH_Status_Union
+{
+
+  uint64_t data;
+
+  struct
+  {
+
+    uint64_t scs_error : 1;
+    uint64_t message_error : 1;
+    uint64_t output_no_change_error : 1;
+    uint64_t reserved_1 : 2;
+    uint64_t gen_scs : 3;
+    uint64_t reserved_2 : 56;
+  };
+};
+
+struct SAF_DASH_Status_Struct
+{
+  bool scs_error;
+  bool message_error;
+  bool output_no_change_error;
+  uint8_t gen_scs;
+};
+
+extern SOFT_INLINE void
+SAF_DASH_Status_UnionToStruct(struct SAF_DASH_Status_Struct *s,
+                              union SAF_DASH_Status_Union u);
+
+extern SOFT_INLINE void
+SAF_DASH_Status_StructToUnion(union SAF_DASH_Status_Union *u,
+                              struct SAF_DASH_Status_Struct s);
+
+/* ----------------------------- LOG_ECU_ERRORS ----------------------------- */
+
+#define LOG_ECU_ERRORS_ID 0x7C8
+#define LOG_ECU_ERRORS_DLC 4          // Number of Bytes
+#define LOG_ECU_ERRORS_CYCLE_TIME 100 // Milliseconds
+
+union LOG_ECU_ERRORS_Union
+{
+
+  uint64_t data;
+
+  struct
+  {
+
+    uint64_t temp : 1;
+    uint64_t mt_driver_input : 1;
+    uint64_t mt_zo_co_front : 1;
+    uint64_t mt_asb_status : 1;
+    uint64_t mt_streeing : 1;
+    uint64_t mt_st_wheel_status : 1;
+    uint64_t mt_zo_co_left : 1;
+    uint64_t mt_zo_co_right : 1;
+    uint64_t mt_drive_command : 1;
+    uint64_t mt_zo_co_rear : 1;
+    uint64_t mt_extern_button : 1;
+    uint64_t mt_saf_fuseboard : 1;
+    uint64_t mt_bat_pcb_info : 1;
+    uint64_t mt_bat_pcb_control : 1;
+    uint64_t mt_bat_pcb_soc : 1;
+    uint64_t mt_temp_pcb_1 : 1;
+    uint64_t mt_temp_pcb_2 : 1;
+    uint64_t mt_temp_pcb_3 : 1;
+    uint64_t mt_temp_pcb_4 : 1;
+    uint64_t mt_temp_pcb_5 : 1;
+    uint64_t mt_temp_pcb_6 : 1;
+    uint64_t mt_lsc_dash_buttons : 1;
+    uint64_t mt_saf_dash_status : 1;
+    uint64_t scs_dash : 1;
+    uint64_t scs_asb_status : 1;
+    uint64_t scs_zo_co_front : 1;
+    uint64_t scs_zo_co_left : 1;
+    uint64_t scs_zo_co_rear : 1;
+    uint64_t scs_zo_co_right : 1;
+    uint64_t scs_st_wheel : 1;
+    uint64_t scs_fuseboard : 1;
+    uint64_t reserved_1 : 33;
+  };
+};
+
+struct LOG_ECU_ERRORS_Struct
+{
+  bool temp;
+  bool mt_driver_input;
+  bool mt_zo_co_front;
+  bool mt_asb_status;
+  bool mt_streeing;
+  bool mt_st_wheel_status;
+  bool mt_zo_co_left;
+  bool mt_zo_co_right;
+  bool mt_drive_command;
+  bool mt_zo_co_rear;
+  bool mt_extern_button;
+  bool mt_saf_fuseboard;
+  bool mt_bat_pcb_info;
+  bool mt_bat_pcb_control;
+  bool mt_bat_pcb_soc;
+  bool mt_temp_pcb_1;
+  bool mt_temp_pcb_2;
+  bool mt_temp_pcb_3;
+  bool mt_temp_pcb_4;
+  bool mt_temp_pcb_5;
+  bool mt_temp_pcb_6;
+  bool mt_lsc_dash_buttons;
+  bool mt_saf_dash_status;
+  bool scs_dash;
+  bool scs_asb_status;
+  bool scs_zo_co_front;
+  bool scs_zo_co_left;
+  bool scs_zo_co_rear;
+  bool scs_zo_co_right;
+  bool scs_st_wheel;
+  bool scs_fuseboard;
+};
+
+extern SOFT_INLINE void
+LOG_ECU_ERRORS_UnionToStruct(struct LOG_ECU_ERRORS_Struct *s,
+                             union LOG_ECU_ERRORS_Union u);
+
+extern SOFT_INLINE void
+LOG_ECU_ERRORS_StructToUnion(union LOG_ECU_ERRORS_Union *u,
+                             struct LOG_ECU_ERRORS_Struct s);
+
+/* --------------------------- PARS_ECU_Settings --------------------------- */
+
+#define PARS_ECU_SETTINGS_ID 0x581
+#define PARS_ECU_SETTINGS_DLC 8          // Number of Bytes
+#define PARS_ECU_SETTINGS_CYCLE_TIME 100 // Milliseconds
+
+union PARS_ECU_Settings_Union
+{
+
+  uint64_t data;
+
+  struct
+  {
+
+    uint64_t recu_enable : 1;
+    uint64_t acc_drosselung_enable : 1;
+    uint64_t tv_enable : 1;
+    uint64_t dtd_enable : 1;
+    uint64_t launch_control_enable : 1;
+    uint64_t torque_limit_enable : 1;
+    uint64_t reserved_1 : 2;
+    uint64_t recu_percentage : 5;
+    uint64_t opd_lower_input : 5;
+    uint64_t opd_output_brake : 5;
+    uint64_t opd_output_drive : 5;
+    uint64_t opd_splitting_point : 5;
+    uint64_t opd_upper_input : 5;
+    uint64_t car_control_speed_switch : 3;
+    uint64_t car_control_max_speed : 5;
+    uint64_t reserved_2 : 18;
+  };
+};
+
+struct PARS_ECU_Settings_Struct
+{
+  bool recu_enable;
+  bool acc_drosselung_enable;
+  bool tv_enable;
+  bool dtd_enable;
+  bool launch_control_enable;
+  bool torque_limit_enable;
+  float recu_percentage;
+  float opd_lower_input;
+  float opd_output_brake;
+  float opd_output_drive;
+  float opd_splitting_point;
+  float opd_upper_input;
+  uint8_t car_control_speed_switch;
+  float car_control_max_speed;
+};
+
+extern SOFT_INLINE void
+PARS_ECU_Settings_UnionToStruct(struct PARS_ECU_Settings_Struct *s,
+                                union PARS_ECU_Settings_Union u);
+
+extern SOFT_INLINE void
+PARS_ECU_Settings_StructToUnion(union PARS_ECU_Settings_Union *u,
+                                struct PARS_ECU_Settings_Struct s);
+
+/* --------------------------- PARC_ECU_Settings --------------------------- */
+
+#define PARC_ECU_SETTINGS_ID 0x5C1
+#define PARC_ECU_SETTINGS_DLC 8          // Number of Bytes
+#define PARC_ECU_SETTINGS_CYCLE_TIME 100 // Milliseconds
+
+union PARC_ECU_Settings_Union
+{
+
+  uint64_t data;
+
+  struct
+  {
+
+    uint64_t recu_enable : 1;
+    uint64_t acc_drosselung_enable : 1;
+    uint64_t tv_enable : 1;
+    uint64_t dtd_enable : 1;
+    uint64_t launch_control_enable : 1;
+    uint64_t torque_limit_enable : 1;
+    uint64_t reserved_1 : 2;
+    uint64_t recu_percentage : 5;
+    uint64_t opd_lower_input : 5;
+    uint64_t opd_output_brake : 5;
+    uint64_t opd_output_drive : 5;
+    uint64_t opd_splitting_point : 5;
+    uint64_t opd_upper_input : 5;
+    uint64_t car_control_speed_switch : 3;
+    uint64_t car_control_max_speed : 5;
+    uint64_t reserved_2 : 18;
+  };
+};
+
+struct PARC_ECU_Settings_Struct
+{
+  bool recu_enable;
+  bool acc_drosselung_enable;
+  bool tv_enable;
+  bool dtd_enable;
+  bool launch_control_enable;
+  bool torque_limit_enable;
+  float recu_percentage;
+  float opd_lower_input;
+  float opd_output_brake;
+  float opd_output_drive;
+  float opd_splitting_point;
+  float opd_upper_input;
+  uint8_t car_control_speed_switch;
+  float car_control_max_speed;
+};
+
+extern SOFT_INLINE void
+PARC_ECU_Settings_UnionToStruct(struct PARC_ECU_Settings_Struct *s,
+                                union PARC_ECU_Settings_Union u);
+
+extern SOFT_INLINE void
+PARC_ECU_Settings_StructToUnion(union PARC_ECU_Settings_Union *u,
+                                struct PARC_ECU_Settings_Struct s);
+
 /* ------------------------------ LOG_aero_SPR ------------------------------ */
 
 #define LOG_AERO_SPR_ID 0x7C6
 #define LOG_AERO_SPR_DLC 8         // Number of Bytes
 #define LOG_AERO_SPR_CYCLE_TIME 10 // Milliseconds
 
-union LOG_aero_SPR_Union {
+union LOG_aero_SPR_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t temp1 : 10;
-    uint64_t temp2 : 10;
-    uint64_t temp3 : 10;
-    uint64_t hum1 : 10;
-    uint64_t hum2 : 10;
-    uint64_t hum3 : 10;
+    uint64_t temp_1 : 10;
+    uint64_t temp_2 : 10;
+    uint64_t temp_3 : 10;
+    uint64_t hum_1 : 10;
+    uint64_t hum_2 : 10;
+    uint64_t hum_3 : 10;
     uint64_t reserved_1 : 4;
   };
 };
 
-struct LOG_aero_SPR_Struct {
-  float temp1;
-  float temp2;
-  float temp3;
-  float hum1;
-  float hum2;
-  float hum3;
+struct LOG_aero_SPR_Struct
+{
+  float temp_1;
+  float temp_2;
+  float temp_3;
+  float hum_1;
+  float hum_2;
+  float hum_3;
 };
 
 extern SOFT_INLINE void
@@ -65,29 +545,32 @@ LOG_aero_SPR_StructToUnion(union LOG_aero_SPR_Union *u,
 #define LOG_AERO_SPL_DLC 8         // Number of Bytes
 #define LOG_AERO_SPL_CYCLE_TIME 10 // Milliseconds
 
-union LOG_aero_SPL_Union {
+union LOG_aero_SPL_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t temp1 : 10;
-    uint64_t temp2 : 10;
-    uint64_t temp3 : 10;
-    uint64_t hum1 : 10;
-    uint64_t hum2 : 10;
-    uint64_t hum3 : 10;
+    uint64_t temp_1 : 10;
+    uint64_t temp_2 : 10;
+    uint64_t temp_3 : 10;
+    uint64_t hum_1 : 10;
+    uint64_t hum_2 : 10;
+    uint64_t hum_3 : 10;
     uint64_t reserved_1 : 4;
   };
 };
 
-struct LOG_aero_SPL_Struct {
-  float temp1;
-  float temp2;
-  float temp3;
-  float hum1;
-  float hum2;
-  float hum3;
+struct LOG_aero_SPL_Struct
+{
+  float temp_1;
+  float temp_2;
+  float temp_3;
+  float hum_1;
+  float hum_2;
+  float hum_3;
 };
 
 extern SOFT_INLINE void
@@ -104,25 +587,28 @@ LOG_aero_SPL_StructToUnion(union LOG_aero_SPL_Union *u,
 #define LOG_AERO_RW_DLC 5         // Number of Bytes
 #define LOG_AERO_RW_CYCLE_TIME 10 // Milliseconds
 
-union LOG_aero_RW_Union {
+union LOG_aero_RW_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t temp1 : 10;
-    uint64_t temp2 : 10;
-    uint64_t hum1 : 10;
-    uint64_t hum2 : 10;
+    uint64_t temp_1 : 10;
+    uint64_t temp_2 : 10;
+    uint64_t hum_1 : 10;
+    uint64_t hum_2 : 10;
     uint64_t reserved_1 : 24;
   };
 };
 
-struct LOG_aero_RW_Struct {
-  float temp1;
-  float temp2;
-  float hum1;
-  float hum2;
+struct LOG_aero_RW_Struct
+{
+  float temp_1;
+  float temp_2;
+  float hum_1;
+  float hum_2;
 };
 
 extern SOFT_INLINE void LOG_aero_RW_UnionToStruct(struct LOG_aero_RW_Struct *s,
@@ -137,25 +623,28 @@ extern SOFT_INLINE void LOG_aero_RW_StructToUnion(union LOG_aero_RW_Union *u,
 #define LOG_AERO_FW_DLC 5         // Number of Bytes
 #define LOG_AERO_FW_CYCLE_TIME 10 // Milliseconds
 
-union LOG_aero_FW_Union {
+union LOG_aero_FW_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t temp1 : 10;
-    uint64_t temp2 : 10;
-    uint64_t hum1 : 10;
-    uint64_t hum2 : 10;
+    uint64_t temp_1 : 10;
+    uint64_t temp_2 : 10;
+    uint64_t hum_1 : 10;
+    uint64_t hum_2 : 10;
     uint64_t reserved_1 : 24;
   };
 };
 
-struct LOG_aero_FW_Struct {
-  float temp1;
-  float temp2;
-  float hum1;
-  float hum2;
+struct LOG_aero_FW_Struct
+{
+  float temp_1;
+  float temp_2;
+  float hum_1;
+  float hum_2;
 };
 
 extern SOFT_INLINE void LOG_aero_FW_UnionToStruct(struct LOG_aero_FW_Struct *s,
@@ -170,18 +659,21 @@ extern SOFT_INLINE void LOG_aero_FW_StructToUnion(union LOG_aero_FW_Union *u,
 #define CAL_EPOS_HC_DLC 2          // Number of Bytes
 #define CAL_EPOS_HC_CYCLE_TIME 100 // Milliseconds
 
-union CAL_EPOS_HC_Union {
+union CAL_EPOS_HC_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t voltage : 12;
     uint64_t reserved_1 : 52;
   };
 };
 
-struct CAL_EPOS_HC_Struct {
+struct CAL_EPOS_HC_Struct
+{
   uint16_t voltage;
 };
 
@@ -197,18 +689,21 @@ extern SOFT_INLINE void CAL_EPOS_HC_StructToUnion(union CAL_EPOS_HC_Union *u,
 #define CAL_SDC_DLC 2          // Number of Bytes
 #define CAL_SDC_CYCLE_TIME 100 // Milliseconds
 
-union CAL_SDC_Union {
+union CAL_SDC_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t voltage : 12;
     uint64_t reserved_1 : 52;
   };
 };
 
-struct CAL_SDC_Struct {
+struct CAL_SDC_Struct
+{
   uint16_t voltage;
 };
 
@@ -224,11 +719,13 @@ extern SOFT_INLINE void CAL_SDC_StructToUnion(union CAL_SDC_Union *u,
 #define CAL_WT_RIGHT_DLC 8          // Number of Bytes
 #define CAL_WT_RIGHT_CYCLE_TIME 100 // Milliseconds
 
-union CAL_WT_Right_Union {
+union CAL_WT_Right_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t vin_1 : 16;
     uint64_t vin_2 : 16;
@@ -237,7 +734,8 @@ union CAL_WT_Right_Union {
   };
 };
 
-struct CAL_WT_Right_Struct {
+struct CAL_WT_Right_Struct
+{
   uint16_t vin_1;
   uint16_t vin_2;
   uint16_t vin_3;
@@ -258,11 +756,13 @@ CAL_WT_Right_StructToUnion(union CAL_WT_Right_Union *u,
 #define CAL_WT_LEFT_DLC 8          // Number of Bytes
 #define CAL_WT_LEFT_CYCLE_TIME 100 // Milliseconds
 
-union CAL_WT_Left_Union {
+union CAL_WT_Left_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t vin_1 : 16;
     uint64_t vin_2 : 16;
@@ -271,7 +771,8 @@ union CAL_WT_Left_Union {
   };
 };
 
-struct CAL_WT_Left_Struct {
+struct CAL_WT_Left_Struct
+{
   uint16_t vin_1;
   uint16_t vin_2;
   uint16_t vin_3;
@@ -290,18 +791,21 @@ extern SOFT_INLINE void CAL_WT_Left_StructToUnion(union CAL_WT_Left_Union *u,
 #define CAL_LV_LEM_DLC 2          // Number of Bytes
 #define CAL_LV_LEM_CYCLE_TIME 100 // Milliseconds
 
-union CAL_LV_LEM_Union {
+union CAL_LV_LEM_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t voltage : 12;
     uint64_t reserved_1 : 52;
   };
 };
 
-struct CAL_LV_LEM_Struct {
+struct CAL_LV_LEM_Struct
+{
   uint16_t voltage;
 };
 
@@ -317,11 +821,13 @@ extern SOFT_INLINE void CAL_LV_LEM_StructToUnion(union CAL_LV_LEM_Union *u,
 #define LOG_SDC_DLC 2          // Number of Bytes
 #define LOG_SDC_CYCLE_TIME 100 // Milliseconds
 
-union LOG_SDC_Union {
+union LOG_SDC_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t sdc_res : 1;
     uint64_t sdc_fr : 1;
@@ -341,7 +847,8 @@ union LOG_SDC_Union {
   };
 };
 
-struct LOG_SDC_Struct {
+struct LOG_SDC_Struct
+{
   bool sdc_res;
   bool sdc_fr;
   bool sdc_asb;
@@ -370,11 +877,13 @@ extern SOFT_INLINE void LOG_SDC_StructToUnion(union LOG_SDC_Union *u,
 #define LOG_FUSE_CURRENTS_DLC 4          // Number of Bytes
 #define LOG_FUSE_CURRENTS_CYCLE_TIME 100 // Milliseconds
 
-union LOG_FUSE_Currents_Union {
+union LOG_FUSE_Currents_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t epos_current : 16;
     uint64_t sdc_current : 16;
@@ -382,7 +891,8 @@ union LOG_FUSE_Currents_Union {
   };
 };
 
-struct LOG_FUSE_Currents_Struct {
+struct LOG_FUSE_Currents_Struct
+{
   uint16_t epos_current;
   uint16_t sdc_current;
 };
@@ -401,11 +911,13 @@ LOG_FUSE_Currents_StructToUnion(union LOG_FUSE_Currents_Union *u,
 #define PARC_FUSE_STATES_DLC 2          // Number of Bytes
 #define PARC_FUSE_STATES_CYCLE_TIME 100 // Milliseconds
 
-union PARC_FUSE_States_Union {
+union PARC_FUSE_States_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t fb_acu : 1;
     uint64_t fb_asb : 1;
@@ -423,7 +935,8 @@ union PARC_FUSE_States_Union {
   };
 };
 
-struct PARC_FUSE_States_Struct {
+struct PARC_FUSE_States_Struct
+{
   bool fb_acu;
   bool fb_asb;
   bool fb_dash;
@@ -452,11 +965,13 @@ PARC_FUSE_States_StructToUnion(union PARC_FUSE_States_Union *u,
 #define PARS_FUSE_STATES_DLC 2          // Number of Bytes
 #define PARS_FUSE_STATES_CYCLE_TIME 100 // Milliseconds
 
-union PARS_FUSE_States_Union {
+union PARS_FUSE_States_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t fb_acu : 1;
     uint64_t fb_asb : 1;
@@ -474,7 +989,8 @@ union PARS_FUSE_States_Union {
   };
 };
 
-struct PARS_FUSE_States_Struct {
+struct PARS_FUSE_States_Struct
+{
   bool fb_acu;
   bool fb_asb;
   bool fb_dash;
@@ -503,22 +1019,25 @@ PARS_FUSE_States_StructToUnion(union PARS_FUSE_States_Union *u,
 #define SAF_FUSEBOARD_STATUS_DLC 1          // Number of Bytes
 #define SAF_FUSEBOARD_STATUS_CYCLE_TIME 100 // Milliseconds
 
-union SAF_Fuseboard_Status_Union {
+union SAF_Fuseboard_Status_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t scs_error : 1;
     uint64_t message_error : 1;
     uint64_t output_no_change_error : 1;
     uint64_t reserved_1 : 2;
     uint64_t gen_scs : 3;
-    uint64_t reserved_2 : 58;
+    uint64_t reserved_2 : 56;
   };
 };
 
-struct SAF_Fuseboard_Status_Struct {
+struct SAF_Fuseboard_Status_Struct
+{
   bool scs_error;
   bool message_error;
   bool output_no_change_error;
@@ -539,22 +1058,25 @@ SAF_Fuseboard_Status_StructToUnion(union SAF_Fuseboard_Status_Union *u,
 #define SAF_ST_WHEEL_STATUS_DLC 1          // Number of Bytes
 #define SAF_ST_WHEEL_STATUS_CYCLE_TIME 100 // Milliseconds
 
-union SAF_StWheel_Status_Union {
+union SAF_StWheel_Status_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t scs_error : 1;
     uint64_t message_error : 1;
     uint64_t output_no_change_error : 1;
     uint64_t reserved_1 : 2;
     uint64_t gen_scs : 3;
-    uint64_t reserved_2 : 58;
+    uint64_t reserved_2 : 56;
   };
 };
 
-struct SAF_StWheel_Status_Struct {
+struct SAF_StWheel_Status_Struct
+{
   bool scs_error;
   bool message_error;
   bool output_no_change_error;
@@ -575,11 +1097,13 @@ SAF_StWheel_Status_StructToUnion(union SAF_StWheel_Status_Union *u,
 #define SAF_ZO_CO_RIGHT_STATUS_DLC 1          // Number of Bytes
 #define SAF_ZO_CO_RIGHT_STATUS_CYCLE_TIME 100 // Milliseconds
 
-union SAF_ZoCo_Right_Status_Union {
+union SAF_ZoCo_Right_Status_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t scs_error : 1;
     uint64_t gen_scs : 3;
@@ -587,7 +1111,8 @@ union SAF_ZoCo_Right_Status_Union {
   };
 };
 
-struct SAF_ZoCo_Right_Status_Struct {
+struct SAF_ZoCo_Right_Status_Struct
+{
   bool scs_error;
   uint8_t gen_scs;
 };
@@ -606,11 +1131,13 @@ SAF_ZoCo_Right_Status_StructToUnion(union SAF_ZoCo_Right_Status_Union *u,
 #define SAF_ZO_CO_LEFT_STATUS_DLC 1          // Number of Bytes
 #define SAF_ZO_CO_LEFT_STATUS_CYCLE_TIME 100 // Milliseconds
 
-union SAF_ZoCo_Left_Status_Union {
+union SAF_ZoCo_Left_Status_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t scs_error : 1;
     uint64_t gen_scs : 3;
@@ -618,7 +1145,8 @@ union SAF_ZoCo_Left_Status_Union {
   };
 };
 
-struct SAF_ZoCo_Left_Status_Struct {
+struct SAF_ZoCo_Left_Status_Struct
+{
   bool scs_error;
   uint8_t gen_scs;
 };
@@ -637,18 +1165,21 @@ SAF_ZoCo_Left_Status_StructToUnion(union SAF_ZoCo_Left_Status_Union *u,
 #define LOG_ODOMETRY_DLC 2          // Number of Bytes
 #define LOG_ODOMETRY_CYCLE_TIME 100 // Milliseconds
 
-union LOG_Odometry_Union {
+union LOG_Odometry_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t rear_average_tire_speed : 16;
+    int64_t rear_average_tire_speed : 16;
     uint64_t reserved_1 : 48;
   };
 };
 
-struct LOG_Odometry_Struct {
+struct LOG_Odometry_Struct
+{
   float rear_average_tire_speed;
 };
 
@@ -666,11 +1197,13 @@ LOG_Odometry_StructToUnion(union LOG_Odometry_Union *u,
 #define LOG_THROTTLE_BRAKE_REQUEST_DLC 2          // Number of Bytes
 #define LOG_THROTTLE_BRAKE_REQUEST_CYCLE_TIME 100 // Milliseconds
 
-union LOG_ThrottleBrakeRequest_Union {
+union LOG_ThrottleBrakeRequest_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t requested_throttle : 8;
     uint64_t requested_brake : 8;
@@ -678,7 +1211,8 @@ union LOG_ThrottleBrakeRequest_Union {
   };
 };
 
-struct LOG_ThrottleBrakeRequest_Struct {
+struct LOG_ThrottleBrakeRequest_Struct
+{
   uint8_t requested_throttle;
   uint8_t requested_brake;
 };
@@ -697,11 +1231,13 @@ extern SOFT_INLINE void LOG_ThrottleBrakeRequest_StructToUnion(
 #define LOG_SBG_ODO_INFO_DLC 6          // Number of Bytes
 #define LOG_SBG_ODO_INFO_CYCLE_TIME 100 // Milliseconds
 
-union LOG_SBG_ODO_Info_Union {
+union LOG_SBG_ODO_Info_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t time_stamp : 32;
     uint64_t odo_real_meas : 1;
@@ -710,7 +1246,8 @@ union LOG_SBG_ODO_Info_Union {
   };
 };
 
-struct LOG_SBG_ODO_Info_Struct {
+struct LOG_SBG_ODO_Info_Struct
+{
   uint32_t time_stamp;
   bool odo_real_meas;
   bool odo_time_sync;
@@ -730,11 +1267,13 @@ LOG_SBG_ODO_Info_StructToUnion(union LOG_SBG_ODO_Info_Union *u,
 #define HSC_SBG_POSITION_ACC_DLC 6          // Number of Bytes
 #define HSC_SBG_POSITION_ACC_CYCLE_TIME 100 // Milliseconds
 
-union HSC_SBG_Position_Acc_Union {
+union HSC_SBG_Position_Acc_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t latitude_acc : 16;
     uint64_t longitude_acc : 16;
@@ -743,7 +1282,8 @@ union HSC_SBG_Position_Acc_Union {
   };
 };
 
-struct HSC_SBG_Position_Acc_Struct {
+struct HSC_SBG_Position_Acc_Struct
+{
   float latitude_acc;
   float longitude_acc;
   float altitude_acc;
@@ -763,11 +1303,13 @@ HSC_SBG_Position_Acc_StructToUnion(union HSC_SBG_Position_Acc_Union *u,
 #define HSC_SBG_EULER_ACC_DLC 6          // Number of Bytes
 #define HSC_SBG_EULER_ACC_CYCLE_TIME 100 // Milliseconds
 
-union HSC_SBG_Euler_Acc_Union {
+union HSC_SBG_Euler_Acc_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t roll_acc : 16;
     uint64_t pitch_acc : 16;
@@ -776,7 +1318,8 @@ union HSC_SBG_Euler_Acc_Union {
   };
 };
 
-struct HSC_SBG_Euler_Acc_Struct {
+struct HSC_SBG_Euler_Acc_Struct
+{
   float roll_acc;
   float pitch_acc;
   float yaw_acc;
@@ -796,20 +1339,23 @@ HSC_SBG_Euler_Acc_StructToUnion(union HSC_SBG_Euler_Acc_Union *u,
 #define HSC_SBG_EULER_DLC 6          // Number of Bytes
 #define HSC_SBG_EULER_CYCLE_TIME 100 // Milliseconds
 
-union HSC_SBG_Euler_Union {
+union HSC_SBG_Euler_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t roll : 16;
-    uint64_t pitch : 16;
-    uint64_t yaw : 16;
+    int64_t roll : 16;
+    int64_t pitch : 16;
+    int64_t yaw : 16;
     uint64_t reserved_1 : 16;
   };
 };
 
-struct HSC_SBG_Euler_Struct {
+struct HSC_SBG_Euler_Struct
+{
   float roll;
   float pitch;
   float yaw;
@@ -829,18 +1375,21 @@ HSC_SBG_Euler_StructToUnion(union HSC_SBG_Euler_Union *u,
 #define LOG_SBG_EKF_INFO_DLC 4          // Number of Bytes
 #define LOG_SBG_EKF_INFO_CYCLE_TIME 100 // Milliseconds
 
-union LOG_SBG_EKF_Info_Union {
+union LOG_SBG_EKF_Info_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t time_stamp : 32;
     uint64_t reserved_1 : 32;
   };
 };
 
-struct LOG_SBG_EKF_Info_Struct {
+struct LOG_SBG_EKF_Info_Struct
+{
   uint32_t time_stamp;
 };
 
@@ -858,20 +1407,22 @@ LOG_SBG_EKF_Info_StructToUnion(union LOG_SBG_EKF_Info_Union *u,
 #define LOG_SBG_IMU_INFO_DLC 8          // Number of Bytes
 #define LOG_SBG_IMU_INFO_CYCLE_TIME 100 // Milliseconds
 
-union LOG_SBG_IMU_Info_Union {
+union LOG_SBG_IMU_Info_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t time_stamp : 32;
-    uint64_t reserved_1 : 16;
-    uint64_t temperature : 16;
-    uint64_t reserved_2 : 16;
+    int64_t reserved_1 : 16;
+    int64_t temperature : 16;
   };
 };
 
-struct LOG_SBG_IMU_Info_Struct {
+struct LOG_SBG_IMU_Info_Struct
+{
   uint32_t time_stamp;
   float temperature;
 };
@@ -890,11 +1441,13 @@ LOG_SBG_IMU_Info_StructToUnion(union LOG_SBG_IMU_Info_Union *u,
 #define LOG_TIRE_FORCES_DLC 8          // Number of Bytes
 #define LOG_TIRE_FORCES_CYCLE_TIME 100 // Milliseconds
 
-union LOG_TireForces_Union {
+union LOG_TireForces_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t tire_force_fl : 16;
     uint64_t tire_force_fr : 16;
@@ -903,7 +1456,8 @@ union LOG_TireForces_Union {
   };
 };
 
-struct LOG_TireForces_Struct {
+struct LOG_TireForces_Struct
+{
   float tire_force_fl;
   float tire_force_fr;
   float tire_force_rl;
@@ -924,20 +1478,23 @@ LOG_TireForces_StructToUnion(union LOG_TireForces_Union *u,
 #define LOG_SLIP_RATIO_DLC 8          // Number of Bytes
 #define LOG_SLIP_RATIO_CYCLE_TIME 100 // Milliseconds
 
-union LOG_SlipRatio_Union {
+union LOG_SlipRatio_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t slip_ratio_fl : 16;
-    uint64_t slip_ratio_fr : 16;
-    uint64_t slip_ratio_rl : 16;
-    uint64_t slip_ratio_rr : 16;
+    int64_t slip_ratio_fl : 16;
+    int64_t slip_ratio_fr : 16;
+    int64_t slip_ratio_rl : 16;
+    int64_t slip_ratio_rr : 16;
   };
 };
 
-struct LOG_SlipRatio_Struct {
+struct LOG_SlipRatio_Struct
+{
   float slip_ratio_fl;
   float slip_ratio_fr;
   float slip_ratio_rl;
@@ -958,20 +1515,23 @@ LOG_SlipRatio_StructToUnion(union LOG_SlipRatio_Union *u,
 #define LOG_TV_REQUEST_DLC 8          // Number of Bytes
 #define LOG_TV_REQUEST_CYCLE_TIME 100 // Milliseconds
 
-union LOG_TV_request_Union {
+union LOG_TV_request_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t tv_fl : 16;
-    uint64_t tv_fr : 16;
-    uint64_t tv_rr : 16;
-    uint64_t tv_rl : 16;
+    int64_t tv_fl : 16;
+    int64_t tv_fr : 16;
+    int64_t tv_rr : 16;
+    int64_t tv_rl : 16;
   };
 };
 
-struct LOG_TV_request_Struct {
+struct LOG_TV_request_Struct
+{
   float tv_fl;
   float tv_fr;
   float tv_rr;
@@ -992,20 +1552,23 @@ LOG_TV_request_StructToUnion(union LOG_TV_request_Union *u,
 #define LOG_SLIP_ANGLE_DLC 8          // Number of Bytes
 #define LOG_SLIP_ANGLE_CYCLE_TIME 100 // Milliseconds
 
-union LOG_SlipAngle_Union {
+union LOG_SlipAngle_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t slip_angle_fl : 16;
-    uint64_t slip_angle_fr : 16;
-    uint64_t slip_angle_rl : 16;
-    uint64_t slip_angle_rr : 16;
+    int64_t slip_angle_fl : 16;
+    int64_t slip_angle_fr : 16;
+    int64_t slip_angle_rl : 16;
+    int64_t slip_angle_rr : 16;
   };
 };
 
-struct LOG_SlipAngle_Struct {
+struct LOG_SlipAngle_Struct
+{
   float slip_angle_fl;
   float slip_angle_fr;
   float slip_angle_rl;
@@ -1026,20 +1589,23 @@ LOG_SlipAngle_StructToUnion(union LOG_SlipAngle_Union *u,
 #define HSC_SBG_TRUE_HEADING_DLC 8          // Number of Bytes
 #define HSC_SBG_TRUE_HEADING_CYCLE_TIME 100 // Milliseconds
 
-union HSC_SBG_True_Heading_Union {
+union HSC_SBG_True_Heading_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t true_heading : 16;
     uint64_t true_heading_acc : 16;
-    uint64_t pitch : 16;
+    int64_t pitch : 16;
     uint64_t reserved_1 : 16;
   };
 };
 
-struct HSC_SBG_True_Heading_Struct {
+struct HSC_SBG_True_Heading_Struct
+{
   float true_heading;
   float true_heading_acc;
   float pitch;
@@ -1059,19 +1625,22 @@ HSC_SBG_True_Heading_StructToUnion(union HSC_SBG_True_Heading_Union *u,
 #define HSC_SBG_ALTITUDE_DLC 6          // Number of Bytes
 #define HSC_SBG_ALTITUDE_CYCLE_TIME 100 // Milliseconds
 
-union HSC_SBG_Altitude_Union {
+union HSC_SBG_Altitude_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t altitude : 32;
-    uint64_t undulation : 16;
+    int64_t altitude : 32;
+    int64_t undulation : 16;
     uint64_t reserved_1 : 16;
   };
 };
 
-struct HSC_SBG_Altitude_Struct {
+struct HSC_SBG_Altitude_Struct
+{
   float altitude;
   float undulation;
 };
@@ -1090,18 +1659,21 @@ HSC_SBG_Altitude_StructToUnion(union HSC_SBG_Altitude_Union *u,
 #define HSC_SBG_POSITION_DLC 8          // Number of Bytes
 #define HSC_SBG_POSITION_CYCLE_TIME 100 // Milliseconds
 
-union HSC_SBG_Position_Union {
+union HSC_SBG_Position_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t latitude : 32;
-    uint64_t longitude : 32;
+    int64_t latitude : 32;
+    int64_t longitude : 32;
   };
 };
 
-struct HSC_SBG_Position_Struct {
+struct HSC_SBG_Position_Struct
+{
   float latitude;
   float longitude;
 };
@@ -1120,18 +1692,21 @@ HSC_SBG_Position_StructToUnion(union HSC_SBG_Position_Union *u,
 #define LOG_SBG_HEADING_INFO_DLC 6          // Number of Bytes
 #define LOG_SBG_HEADING_INFO_CYCLE_TIME 100 // Milliseconds
 
-union LOG_SBG_Heading_Info_Union {
+union LOG_SBG_Heading_Info_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t time_stamp : 32;
     uint64_t reserved_1 : 32;
   };
 };
 
-struct LOG_SBG_Heading_Info_Struct {
+struct LOG_SBG_Heading_Info_Struct
+{
   uint32_t time_stamp;
 };
 
@@ -1149,18 +1724,21 @@ LOG_SBG_Heading_Info_StructToUnion(union LOG_SBG_Heading_Info_Union *u,
 #define LOG_SBG_POS_INFO_DLC 8          // Number of Bytes
 #define LOG_SBG_POS_INFO_CYCLE_TIME 100 // Milliseconds
 
-union LOG_SBG_POS_Info_Union {
+union LOG_SBG_POS_Info_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t time_stamp : 32;
     uint64_t reserved_1 : 32;
   };
 };
 
-struct LOG_SBG_POS_Info_Struct {
+struct LOG_SBG_POS_Info_Struct
+{
   uint32_t time_stamp;
 };
 
@@ -1178,18 +1756,21 @@ LOG_SBG_POS_Info_StructToUnion(union LOG_SBG_POS_Info_Union *u,
 #define LOG_SBG_GPS1_VEL_INFO_DLC 8          // Number of Bytes
 #define LOG_SBG_GPS1_VEL_INFO_CYCLE_TIME 100 // Milliseconds
 
-union LOG_SBG_GPS1_Vel_Info_Union {
+union LOG_SBG_GPS1_Vel_Info_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t time_stamp : 32;
     uint64_t reserved_1 : 32;
   };
 };
 
-struct LOG_SBG_GPS1_Vel_Info_Struct {
+struct LOG_SBG_GPS1_Vel_Info_Struct
+{
   uint32_t time_stamp;
 };
 
@@ -1207,17 +1788,21 @@ LOG_SBG_GPS1_Vel_Info_StructToUnion(union LOG_SBG_GPS1_Vel_Info_Union *u,
 #define LOG_SBG_STATUS_03_DLC 6          // Number of Bytes
 #define LOG_SBG_STATUS_03_CYCLE_TIME 100 // Milliseconds
 
-union LOG_SBG_Status_03_Union {
+union LOG_SBG_Status_03_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t reserved_1 : 64;
   };
 };
 
-struct LOG_SBG_Status_03_Struct {};
+struct LOG_SBG_Status_03_Struct
+{
+};
 
 extern SOFT_INLINE void
 LOG_SBG_Status_03_UnionToStruct(struct LOG_SBG_Status_03_Struct *s,
@@ -1233,31 +1818,30 @@ LOG_SBG_Status_03_StructToUnion(union LOG_SBG_Status_03_Union *u,
 #define LOG_SBG_STATUS_02_DLC 8          // Number of Bytes
 #define LOG_SBG_STATUS_02_CYCLE_TIME 100 // Milliseconds
 
-union LOG_SBG_Status_02_Union {
+union LOG_SBG_Status_02_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t sbg_porta_valid : 1;
     uint64_t sbg_portb_valid : 1;
     uint64_t reserved_1 : 3;
     uint64_t sbg_porta_rx_ok : 1;
-    uint64_t reserved_2 : 3;
     uint64_t sbg_porta_tx_ok : 1;
-    uint64_t reserved_3 : 3;
     uint64_t sbg_portb_rx_ok : 1;
-    uint64_t reserved_4 : 20;
+    uint64_t reserved_2 : 17;
     uint64_t sbg_can_valid : 1;
-    uint64_t reserved_5 : 20;
     uint64_t sbg_can_rx_ok : 1;
-    uint64_t reserved_6 : 20;
     uint64_t sbg_can_tx_ok : 1;
-    uint64_t reserved_7 : 56;
+    uint64_t reserved_3 : 36;
   };
 };
 
-struct LOG_SBG_Status_02_Struct {
+struct LOG_SBG_Status_02_Struct
+{
   bool sbg_porta_valid;
   bool sbg_portb_valid;
   bool sbg_porta_rx_ok;
@@ -1282,11 +1866,13 @@ LOG_SBG_Status_02_StructToUnion(union LOG_SBG_Status_02_Union *u,
 #define LOG_SBG_STATUS_01_DLC 8          // Number of Bytes
 #define LOG_SBG_STATUS_01_CYCLE_TIME 100 // Milliseconds
 
-union LOG_SBG_Status_01_Union {
+union LOG_SBG_Status_01_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t sbg_time_stamp : 32;
     uint64_t sbg_main_power_ok : 1;
@@ -1300,7 +1886,8 @@ union LOG_SBG_Status_01_Union {
   };
 };
 
-struct LOG_SBG_Status_01_Struct {
+struct LOG_SBG_Status_01_Struct
+{
   uint32_t sbg_time_stamp;
   bool sbg_main_power_ok;
   bool sbg_imu_power_ok;
@@ -1325,14 +1912,16 @@ LOG_SBG_Status_01_StructToUnion(union LOG_SBG_Status_01_Union *u,
 #define HSC_SBG_TRACK_SLIP_CURVE_DLC 7          // Number of Bytes
 #define HSC_SBG_TRACK_SLIP_CURVE_CYCLE_TIME 100 // Milliseconds
 
-union HSC_SBG_Track_Slip_Curve_Union {
+union HSC_SBG_Track_Slip_Curve_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t angle_track : 16;
-    uint64_t angle_slip : 16;
+    int64_t angle_track : 16;
+    int64_t angle_slip : 16;
     uint64_t curvature_radius : 16;
     uint64_t track_valid : 1;
     uint64_t slip_valid : 1;
@@ -1341,7 +1930,8 @@ union HSC_SBG_Track_Slip_Curve_Union {
   };
 };
 
-struct HSC_SBG_Track_Slip_Curve_Struct {
+struct HSC_SBG_Track_Slip_Curve_Struct
+{
   float angle_track;
   float angle_slip;
   float curvature_radius;
@@ -1364,20 +1954,23 @@ extern SOFT_INLINE void HSC_SBG_Track_Slip_Curve_StructToUnion(
 #define HSC_SBG_EKF_VEL_BODY_DLC 6          // Number of Bytes
 #define HSC_SBG_EKF_VEL_BODY_CYCLE_TIME 100 // Milliseconds
 
-union HSC_SBG_EKF_Vel_Body_Union {
+union HSC_SBG_EKF_Vel_Body_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t velocity_x : 16;
-    uint64_t velocity_y : 16;
-    uint64_t velocity_z : 16;
+    int64_t velocity_x : 16;
+    int64_t velocity_y : 16;
+    int64_t velocity_z : 16;
     uint64_t reserved_1 : 16;
   };
 };
 
-struct HSC_SBG_EKF_Vel_Body_Struct {
+struct HSC_SBG_EKF_Vel_Body_Struct
+{
   float velocity_x;
   float velocity_y;
   float velocity_z;
@@ -1397,20 +1990,23 @@ HSC_SBG_EKF_Vel_Body_StructToUnion(union HSC_SBG_EKF_Vel_Body_Union *u,
 #define HSC_SBG_GYRO_DLC 6          // Number of Bytes
 #define HSC_SBG_GYRO_CYCLE_TIME 100 // Milliseconds
 
-union HSC_SBG_Gyro_Union {
+union HSC_SBG_Gyro_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t gyro_x : 16;
-    uint64_t gyro_y : 16;
-    uint64_t gyro_z : 16;
+    int64_t gyro_x : 16;
+    int64_t gyro_y : 16;
+    int64_t gyro_z : 16;
     uint64_t reserved_1 : 16;
   };
 };
 
-struct HSC_SBG_Gyro_Struct {
+struct HSC_SBG_Gyro_Struct
+{
   float gyro_x;
   float gyro_y;
   float gyro_z;
@@ -1430,20 +2026,23 @@ HSC_SBG_Gyro_StructToUnion(union HSC_SBG_Gyro_Union *u,
 #define HSC_SBG_ACCEL_DLC 6          // Number of Bytes
 #define HSC_SBG_ACCEL_CYCLE_TIME 100 // Milliseconds
 
-union HSC_SBG_Accel_Union {
+union HSC_SBG_Accel_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t accel_x : 16;
-    uint64_t accel_y : 16;
-    uint64_t accel_z : 16;
+    int64_t accel_x : 16;
+    int64_t accel_y : 16;
+    int64_t accel_z : 16;
     uint64_t reserved_1 : 16;
   };
 };
 
-struct HSC_SBG_Accel_Struct {
+struct HSC_SBG_Accel_Struct
+{
   float accel_x;
   float accel_y;
   float accel_z;
@@ -1463,26 +2062,28 @@ HSC_SBG_Accel_StructToUnion(union HSC_SBG_Accel_Union *u,
 #define GW_BATTERY_CELLS_DLC 7          // Number of Bytes
 #define GW_BATTERY_CELLS_CYCLE_TIME 100 // Milliseconds
 
-union GW_Battery_Cells_Union {
+union GW_Battery_Cells_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t temp_min : 7;
     uint64_t reserved_1 : 1;
     uint64_t temp_avg : 7;
-    uint64_t reserved_2 : 2;
+    uint64_t reserved_2 : 1;
     uint64_t temp_max : 7;
-    uint64_t reserved_3 : 3;
+    uint64_t reserved_3 : 1;
     uint64_t voltage_min : 16;
-    uint64_t reserved_4 : 3;
     uint64_t voltage_max : 16;
-    uint64_t reserved_5 : 11;
+    uint64_t reserved_4 : 8;
   };
 };
 
-struct GW_Battery_Cells_Struct {
+struct GW_Battery_Cells_Struct
+{
   uint8_t temp_min;
   uint8_t temp_avg;
   uint8_t temp_max;
@@ -1499,7 +2100,8 @@ GW_Battery_Cells_StructToUnion(union GW_Battery_Cells_Union *u,
                                struct GW_Battery_Cells_Struct s);
 
 /* --------------------------- GW_Battery_Status --------------------------- */
-typedef enum {
+typedef enum
+{
   STATE_BAT_ERROR = 10,
   STATE_IMD_ERROR = 9,
   STATE_BMS_ERROR = 8,
@@ -1517,21 +2119,24 @@ typedef enum {
 #define GW_BATTERY_STATUS_DLC 6          // Number of Bytes
 #define GW_BATTERY_STATUS_CYCLE_TIME 100 // Milliseconds
 
-union GW_Battery_Status_Union {
+union GW_Battery_Status_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t state : 4;
     uint64_t soc_internal : 14;
     uint64_t power : 14;
-    uint64_t current : 16;
+    int64_t current : 16;
     uint64_t reserved_1 : 16;
   };
 };
 
-struct GW_Battery_Status_Struct {
+struct GW_Battery_Status_Struct
+{
   GW_Battery_Status_State state;
   float soc_internal;
   float power;
@@ -1552,23 +2157,26 @@ GW_Battery_Status_StructToUnion(union GW_Battery_Status_Union *u,
 #define GW_PE_FRONT_LEFT_DLC 8          // Number of Bytes
 #define GW_PE_FRONT_LEFT_CYCLE_TIME 100 // Milliseconds
 
-union GW_PE_FrontLeft_Union {
+union GW_PE_FrontLeft_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t temp_motor : 16;
-    uint64_t temp_inverter : 16;
-    uint64_t tempigbt : 16;
-    uint64_t actual_velocity : 16;
+    int64_t temp_motor : 16;
+    int64_t temp_inverter : 16;
+    int64_t temp_igbt : 16;
+    int64_t actual_velocity : 16;
   };
 };
 
-struct GW_PE_FrontLeft_Struct {
+struct GW_PE_FrontLeft_Struct
+{
   float temp_motor;
   float temp_inverter;
-  float tempigbt;
+  float temp_igbt;
   int16_t actual_velocity;
 };
 
@@ -1586,23 +2194,26 @@ GW_PE_FrontLeft_StructToUnion(union GW_PE_FrontLeft_Union *u,
 #define GW_PE_REAR_LEFT_DLC 8          // Number of Bytes
 #define GW_PE_REAR_LEFT_CYCLE_TIME 100 // Milliseconds
 
-union GW_PE_RearLeft_Union {
+union GW_PE_RearLeft_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t temp_motor : 16;
-    uint64_t temp_inverter : 16;
-    uint64_t tempigbt : 16;
-    uint64_t actual_velocity : 16;
+    int64_t temp_motor : 16;
+    int64_t temp_inverter : 16;
+    int64_t temp_igbt : 16;
+    int64_t actual_velocity : 16;
   };
 };
 
-struct GW_PE_RearLeft_Struct {
+struct GW_PE_RearLeft_Struct
+{
   float temp_motor;
   float temp_inverter;
-  float tempigbt;
+  float temp_igbt;
   int16_t actual_velocity;
 };
 
@@ -1620,23 +2231,26 @@ GW_PE_RearLeft_StructToUnion(union GW_PE_RearLeft_Union *u,
 #define GW_PE_REAR_RIGHT_DLC 8          // Number of Bytes
 #define GW_PE_REAR_RIGHT_CYCLE_TIME 100 // Milliseconds
 
-union GW_PE_RearRight_Union {
+union GW_PE_RearRight_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t temp_motor : 16;
-    uint64_t temp_inverter : 16;
-    uint64_t tempigbt : 16;
-    uint64_t actual_velocity : 16;
+    int64_t temp_motor : 16;
+    int64_t temp_inverter : 16;
+    int64_t temp_igbt : 16;
+    int64_t actual_velocity : 16;
   };
 };
 
-struct GW_PE_RearRight_Struct {
+struct GW_PE_RearRight_Struct
+{
   float temp_motor;
   float temp_inverter;
-  float tempigbt;
+  float temp_igbt;
   int16_t actual_velocity;
 };
 
@@ -1654,23 +2268,26 @@ GW_PE_RearRight_StructToUnion(union GW_PE_RearRight_Union *u,
 #define GW_PE_FRONT_RIGHT_DLC 8          // Number of Bytes
 #define GW_PE_FRONT_RIGHT_CYCLE_TIME 100 // Milliseconds
 
-union GW_PE_FrontRight_Union {
+union GW_PE_FrontRight_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t temp_motor : 16;
-    uint64_t temp_inverter : 16;
-    uint64_t tempigbt : 16;
-    uint64_t actual_velocity : 16;
+    int64_t temp_motor : 16;
+    int64_t temp_inverter : 16;
+    int64_t temp_igbt : 16;
+    int64_t actual_velocity : 16;
   };
 };
 
-struct GW_PE_FrontRight_Struct {
+struct GW_PE_FrontRight_Struct
+{
   float temp_motor;
   float temp_inverter;
-  float tempigbt;
+  float temp_igbt;
   int16_t actual_velocity;
 };
 
@@ -1688,11 +2305,13 @@ GW_PE_FrontRight_StructToUnion(union GW_PE_FrontRight_Union *u,
 #define EXC_BATFAN_CONTROL_DLC 1          // Number of Bytes
 #define EXC_BATFAN_CONTROL_CYCLE_TIME 100 // Milliseconds
 
-union EXC_BATFAN_Control_Union {
+union EXC_BATFAN_Control_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t fan_request : 7;
     uint64_t fan_on : 1;
@@ -1700,7 +2319,8 @@ union EXC_BATFAN_Control_Union {
   };
 };
 
-struct EXC_BATFAN_Control_Struct {
+struct EXC_BATFAN_Control_Struct
+{
   uint8_t fan_request;
   bool fan_on;
 };
@@ -1715,24 +2335,27 @@ EXC_BATFAN_Control_StructToUnion(union EXC_BATFAN_Control_Union *u,
 
 /* ------------------------------ LOG_ASSILEDs ------------------------------ */
 
-#define LOG_ASSILE_DS_ID 0x790
-#define LOG_ASSILE_DS_DLC 1          // Number of Bytes
-#define LOG_ASSILE_DS_CYCLE_TIME 100 // Milliseconds
+#define LOG_ASSILEDS_ID 0x790
+#define LOG_ASSILEDS_DLC 1          // Number of Bytes
+#define LOG_ASSILEDS_CYCLE_TIME 100 // Milliseconds
 
-union LOG_ASSILEDs_Union {
+union LOG_ASSILEDs_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t yellow : 1;
     uint64_t reserved_1 : 1;
     uint64_t blue : 1;
-    uint64_t reserved_2 : 62;
+    uint64_t reserved_2 : 61;
   };
 };
 
-struct LOG_ASSILEDs_Struct {
+struct LOG_ASSILEDs_Struct
+{
   bool yellow;
   bool blue;
 };
@@ -1751,11 +2374,13 @@ LOG_ASSILEDs_StructToUnion(union LOG_ASSILEDs_Union *u,
 #define EXC_FAN_CONTROL_DLC 1          // Number of Bytes
 #define EXC_FAN_CONTROL_CYCLE_TIME 100 // Milliseconds
 
-union EXC_FAN_Control_Union {
+union EXC_FAN_Control_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t fan_request : 7;
     uint64_t fan_on : 1;
@@ -1763,7 +2388,8 @@ union EXC_FAN_Control_Union {
   };
 };
 
-struct EXC_FAN_Control_Struct {
+struct EXC_FAN_Control_Struct
+{
   uint8_t fan_request;
   bool fan_on;
 };
@@ -1782,11 +2408,13 @@ EXC_FAN_Control_StructToUnion(union EXC_FAN_Control_Union *u,
 #define EXC_PUMP_CONTROL_DLC 1          // Number of Bytes
 #define EXC_PUMP_CONTROL_CYCLE_TIME 100 // Milliseconds
 
-union EXC_PUMP_Control_Union {
+union EXC_PUMP_Control_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t pump_request : 7;
     uint64_t pump_on : 1;
@@ -1794,7 +2422,8 @@ union EXC_PUMP_Control_Union {
   };
 };
 
-struct EXC_PUMP_Control_Struct {
+struct EXC_PUMP_Control_Struct
+{
   uint8_t pump_request;
   bool pump_on;
 };
@@ -1808,7 +2437,8 @@ EXC_PUMP_Control_StructToUnion(union EXC_PUMP_Control_Union *u,
                                struct EXC_PUMP_Control_Struct s);
 
 /* --------------------------- HSC_Vehicle_Status --------------------------- */
-typedef enum {
+typedef enum
+{
   STATE_SCS_ERROR = 6,
   STATE_LC_ON = 5,
   STATE_DRIVE = 4,
@@ -1822,23 +2452,26 @@ typedef enum {
 #define HSC_VEHICLE_STATUS_DLC 4         // Number of Bytes
 #define HSC_VEHICLE_STATUS_CYCLE_TIME 10 // Milliseconds
 
-union HSC_Vehicle_Status_Union {
+union HSC_Vehicle_Status_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t state : 3;
     uint64_t imd_error : 1;
     uint64_t ams_error : 1;
     uint64_t gen_scs : 3;
     uint64_t velocity : 8;
-    uint64_t velocity_ms : 16;
+    int64_t velocity_ms : 16;
     uint64_t reserved_1 : 32;
   };
 };
 
-struct HSC_Vehicle_Status_Struct {
+struct HSC_Vehicle_Status_Struct
+{
   HSC_Vehicle_Status_State state;
   bool imd_error;
   bool ams_error;
@@ -1861,11 +2494,13 @@ HSC_Vehicle_Status_StructToUnion(union HSC_Vehicle_Status_Union *u,
 #define LSC_EXTERN_BUTTONS_DLC 1          // Number of Bytes
 #define LSC_EXTERN_BUTTONS_CYCLE_TIME 100 // Milliseconds
 
-union LSC_Extern_Buttons_Union {
+union LSC_Extern_Buttons_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t tsa : 1;
     uint64_t gen_scs : 3;
@@ -1873,7 +2508,8 @@ union LSC_Extern_Buttons_Union {
   };
 };
 
-struct LSC_Extern_Buttons_Struct {
+struct LSC_Extern_Buttons_Struct
+{
   bool tsa;
   uint8_t gen_scs;
 };
@@ -1886,62 +2522,31 @@ extern SOFT_INLINE void
 LSC_Extern_Buttons_StructToUnion(union LSC_Extern_Buttons_Union *u,
                                  struct LSC_Extern_Buttons_Struct s);
 
-/* ---------------------------- LSC_Dash_Buttons ---------------------------- */
-
-#define LSC_DASH_BUTTONS_ID 0x181
-#define LSC_DASH_BUTTONS_DLC 1          // Number of Bytes
-#define LSC_DASH_BUTTONS_CYCLE_TIME 100 // Milliseconds
-
-union LSC_Dash_Buttons_Union {
-
-  uint64_t data;
-
-  struct {
-
-    uint64_t tsa : 1;
-    uint64_t rtd : 1;
-    uint64_t reserved_1 : 3;
-    uint64_t gen_scs : 3;
-    uint64_t reserved_2 : 59;
-  };
-};
-
-struct LSC_Dash_Buttons_Struct {
-  bool tsa;
-  bool rtd;
-  uint8_t gen_scs;
-};
-
-extern SOFT_INLINE void
-LSC_Dash_Buttons_UnionToStruct(struct LSC_Dash_Buttons_Struct *s,
-                               union LSC_Dash_Buttons_Union u);
-
-extern SOFT_INLINE void
-LSC_Dash_Buttons_StructToUnion(union LSC_Dash_Buttons_Union *u,
-                               struct LSC_Dash_Buttons_Struct s);
-
 /* --------------------------- SAF_SmSe_AS_Status --------------------------- */
 
 #define SAF_SM_SE_AS_STATUS_ID 0x56
 #define SAF_SM_SE_AS_STATUS_DLC 1          // Number of Bytes
 #define SAF_SM_SE_AS_STATUS_CYCLE_TIME 100 // Milliseconds
 
-union SAF_SmSe_AS_Status_Union {
+union SAF_SmSe_AS_Status_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t scs_error : 1;
     uint64_t message_error : 1;
     uint64_t output_no_change_error : 1;
     uint64_t reserved_1 : 2;
     uint64_t gen_scs : 3;
-    uint64_t reserved_2 : 58;
+    uint64_t reserved_2 : 56;
   };
 };
 
-struct SAF_SmSe_AS_Status_Struct {
+struct SAF_SmSe_AS_Status_Struct
+{
   bool scs_error;
   bool message_error;
   bool output_no_change_error;
@@ -1956,53 +2561,19 @@ extern SOFT_INLINE void
 SAF_SmSe_AS_Status_StructToUnion(union SAF_SmSe_AS_Status_Union *u,
                                  struct SAF_SmSe_AS_Status_Struct s);
 
-/* ---------------------------- SAF_DASH_Status ---------------------------- */
-
-#define SAF_DASH_STATUS_ID 0x55
-#define SAF_DASH_STATUS_DLC 1          // Number of Bytes
-#define SAF_DASH_STATUS_CYCLE_TIME 100 // Milliseconds
-
-union SAF_DASH_Status_Union {
-
-  uint64_t data;
-
-  struct {
-
-    uint64_t scs_error : 1;
-    uint64_t message_error : 1;
-    uint64_t output_no_change_error : 1;
-    uint64_t reserved_1 : 2;
-    uint64_t gen_scs : 3;
-    uint64_t reserved_2 : 58;
-  };
-};
-
-struct SAF_DASH_Status_Struct {
-  bool scs_error;
-  bool message_error;
-  bool output_no_change_error;
-  uint8_t gen_scs;
-};
-
-extern SOFT_INLINE void
-SAF_DASH_Status_UnionToStruct(struct SAF_DASH_Status_Struct *s,
-                              union SAF_DASH_Status_Union u);
-
-extern SOFT_INLINE void
-SAF_DASH_Status_StructToUnion(union SAF_DASH_Status_Union *u,
-                              struct SAF_DASH_Status_Struct s);
-
 /* -------------------------- SAF_ZoCo_Rear_Status -------------------------- */
 
 #define SAF_ZO_CO_REAR_STATUS_ID 0x52
 #define SAF_ZO_CO_REAR_STATUS_DLC 5          // Number of Bytes
 #define SAF_ZO_CO_REAR_STATUS_CYCLE_TIME 100 // Milliseconds
 
-union SAF_ZoCo_Rear_Status_Union {
+union SAF_ZoCo_Rear_Status_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t scs_error : 1;
     uint64_t rtds_error : 1;
@@ -2010,15 +2581,14 @@ union SAF_ZoCo_Rear_Status_Union {
     uint64_t message_error : 1;
     uint64_t reserved_1 : 1;
     uint64_t gen_scs : 3;
-    uint64_t reserved_2 : 1;
     uint64_t brake_light_state : 1;
-    uint64_t reserved_3 : 1;
     uint64_t rtds_state : 1;
-    uint64_t reserved_4 : 55;
+    uint64_t reserved_2 : 54;
   };
 };
 
-struct SAF_ZoCo_Rear_Status_Struct {
+struct SAF_ZoCo_Rear_Status_Struct
+{
   bool scs_error;
   bool rtds_error;
   bool brake_light_error;
@@ -2042,11 +2612,13 @@ SAF_ZoCo_Rear_Status_StructToUnion(union SAF_ZoCo_Rear_Status_Union *u,
 #define SAF_ZO_CO_FRONT_STATUS_DLC 2          // Number of Bytes
 #define SAF_ZO_CO_FRONT_STATUS_CYCLE_TIME 100 // Milliseconds
 
-union SAF_ZoCo_Front_Status_Union {
+union SAF_ZoCo_Front_Status_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t scs_error : 1;
     uint64_t throttle_lower_error : 1;
@@ -2059,7 +2631,8 @@ union SAF_ZoCo_Front_Status_Union {
   };
 };
 
-struct SAF_ZoCo_Front_Status_Struct {
+struct SAF_ZoCo_Front_Status_Struct
+{
   bool scs_error;
   bool throttle_lower_error;
   bool throttle_upper_error;
@@ -2083,11 +2656,13 @@ SAF_ZoCo_Front_Status_StructToUnion(union SAF_ZoCo_Front_Status_Union *u,
 #define SAF_ECU_STATUS_DLC 1          // Number of Bytes
 #define SAF_ECU_STATUS_CYCLE_TIME 100 // Milliseconds
 
-union SAF_ECU_Status_Union {
+union SAF_ECU_Status_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t scs_error : 1;
     uint64_t message_error : 1;
@@ -2096,7 +2671,8 @@ union SAF_ECU_Status_Union {
   };
 };
 
-struct SAF_ECU_Status_Struct {
+struct SAF_ECU_Status_Struct
+{
   bool scs_error;
   bool message_error;
   uint8_t gen_scs;
@@ -2116,21 +2692,24 @@ SAF_ECU_Status_StructToUnion(union SAF_ECU_Status_Union *u,
 #define HSC_STEERING_DLC 4         // Number of Bytes
 #define HSC_STEERING_CYCLE_TIME 10 // Milliseconds
 
-union HSC_Steering_Union {
+union HSC_Steering_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t steering_wheel_angle : 12;
-    uint64_t steering_angle : 12;
+    int64_t steering_wheel_angle : 12;
+    int64_t steering_angle : 12;
     uint64_t angle_valid : 1;
     uint64_t gen_scs : 3;
     uint64_t reserved_1 : 36;
   };
 };
 
-struct HSC_Steering_Struct {
+struct HSC_Steering_Struct
+{
   float steering_wheel_angle;
   float steering_angle;
   bool angle_valid;
@@ -2151,11 +2730,13 @@ HSC_Steering_StructToUnion(union HSC_Steering_Union *u,
 #define HSC_DRIVER_INPUT_DLC 3         // Number of Bytes
 #define HSC_DRIVER_INPUT_CYCLE_TIME 10 // Milliseconds
 
-union HSC_DriverInput_Union {
+union HSC_DriverInput_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t throttle : 16;
     uint64_t brake_pressed : 1;
@@ -2163,11 +2744,12 @@ union HSC_DriverInput_Union {
     uint64_t brake_valid : 1;
     uint64_t reserved_1 : 2;
     uint64_t gen_scs : 3;
-    uint64_t reserved_2 : 42;
+    uint64_t reserved_2 : 40;
   };
 };
 
-struct HSC_DriverInput_Struct {
+struct HSC_DriverInput_Struct
+{
   float throttle;
   bool brake_pressed;
   bool throttle_valid;
@@ -2189,17 +2771,21 @@ HSC_DriverInput_StructToUnion(union HSC_DriverInput_Union *u,
 #define CANO_RES_NMT_EC_DLC 1          // Number of Bytes
 #define CANO_RES_NMT_EC_CYCLE_TIME 100 // Milliseconds
 
-union CANO_RES_NMT_EC_Union {
+union CANO_RES_NMT_EC_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t reserved_1 : 64;
   };
 };
 
-struct CANO_RES_NMT_EC_Struct {};
+struct CANO_RES_NMT_EC_Struct
+{
+};
 
 extern SOFT_INLINE void
 CANO_RES_NMT_EC_UnionToStruct(struct CANO_RES_NMT_EC_Struct *s,
@@ -2215,17 +2801,21 @@ CANO_RES_NMT_EC_StructToUnion(union CANO_RES_NMT_EC_Union *u,
 #define CANO_RES_RSDO_DLC 8          // Number of Bytes
 #define CANO_RES_RSDO_CYCLE_TIME 100 // Milliseconds
 
-union CANO_RES_RSDO_Union {
+union CANO_RES_RSDO_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t reserved_1 : 64;
   };
 };
 
-struct CANO_RES_RSDO_Struct {};
+struct CANO_RES_RSDO_Struct
+{
+};
 
 extern SOFT_INLINE void
 CANO_RES_RSDO_UnionToStruct(struct CANO_RES_RSDO_Struct *s,
@@ -2241,17 +2831,21 @@ CANO_RES_RSDO_StructToUnion(union CANO_RES_RSDO_Union *u,
 #define CANO_RES_TSDO_DLC 8          // Number of Bytes
 #define CANO_RES_TSDO_CYCLE_TIME 100 // Milliseconds
 
-union CANO_RES_TSDO_Union {
+union CANO_RES_TSDO_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t reserved_1 : 64;
   };
 };
 
-struct CANO_RES_TSDO_Struct {};
+struct CANO_RES_TSDO_Struct
+{
+};
 
 extern SOFT_INLINE void
 CANO_RES_TSDO_UnionToStruct(struct CANO_RES_TSDO_Struct *s,
@@ -2267,17 +2861,21 @@ CANO_RES_TSDO_StructToUnion(union CANO_RES_TSDO_Union *u,
 #define DV_FREE_TO_USE_2_DLC 0          // Number of Bytes
 #define DV_FREE_TO_USE_2_CYCLE_TIME 100 // Milliseconds
 
-union DV_FREE_TO_USE_2_Union {
+union DV_FREE_TO_USE_2_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t reserved_1 : 64;
   };
 };
 
-struct DV_FREE_TO_USE_2_Struct {};
+struct DV_FREE_TO_USE_2_Struct
+{
+};
 
 extern SOFT_INLINE void
 DV_FREE_TO_USE_2_UnionToStruct(struct DV_FREE_TO_USE_2_Struct *s,
@@ -2293,17 +2891,21 @@ DV_FREE_TO_USE_2_StructToUnion(union DV_FREE_TO_USE_2_Union *u,
 #define CANO_RES_EMCY_DLC 8          // Number of Bytes
 #define CANO_RES_EMCY_CYCLE_TIME 100 // Milliseconds
 
-union CANO_RES_EMCY_Union {
+union CANO_RES_EMCY_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t reserved_1 : 64;
   };
 };
 
-struct CANO_RES_EMCY_Struct {};
+struct CANO_RES_EMCY_Struct
+{
+};
 
 extern SOFT_INLINE void
 CANO_RES_EMCY_UnionToStruct(struct CANO_RES_EMCY_Struct *s,
@@ -2319,17 +2921,21 @@ CANO_RES_EMCY_StructToUnion(union CANO_RES_EMCY_Union *u,
 #define DV_SCS_ERRORS_DLC 8         // Number of Bytes
 #define DV_SCS_ERRORS_CYCLE_TIME 10 // Milliseconds
 
-union DV_SCS_Errors_Union {
+union DV_SCS_Errors_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t reserved_1 : 64;
   };
 };
 
-struct DV_SCS_Errors_Struct {};
+struct DV_SCS_Errors_Struct
+{
+};
 
 extern SOFT_INLINE void
 DV_SCS_Errors_UnionToStruct(struct DV_SCS_Errors_Struct *s,
@@ -2340,7 +2946,8 @@ DV_SCS_Errors_StructToUnion(union DV_SCS_Errors_Union *u,
                             struct DV_SCS_Errors_Struct s);
 
 /* ----------------------------- DV_AMI_Status ----------------------------- */
-typedef enum {
+typedef enum
+{
   STATE_AUTOX = 6,
   STATE_INSPECTION = 5,
   STATE_EBSTEST = 4,
@@ -2354,11 +2961,13 @@ typedef enum {
 #define DV_AMI_STATUS_DLC 1          // Number of Bytes
 #define DV_AMI_STATUS_CYCLE_TIME 100 // Milliseconds
 
-union DV_AMI_Status_Union {
+union DV_AMI_Status_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t state : 3;
     uint64_t gen_scs : 3;
@@ -2366,7 +2975,8 @@ union DV_AMI_Status_Union {
   };
 };
 
-struct DV_AMI_Status_Struct {
+struct DV_AMI_Status_Struct
+{
   DV_AMI_Status_State state;
   uint8_t gen_scs;
 };
@@ -2385,21 +2995,24 @@ DV_AMI_Status_StructToUnion(union DV_AMI_Status_Union *u,
 #define DV_ASB_PRESSURE_DLC 3          // Number of Bytes
 #define DV_ASB_PRESSURE_CYCLE_TIME 100 // Milliseconds
 
-union DV_ASB_Pressure_Union {
+union DV_ASB_Pressure_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t pressure1 : 12;
-    uint64_t pressure2 : 12;
+    uint64_t pressure_1 : 12;
+    uint64_t pressure_2 : 12;
     uint64_t reserved_1 : 40;
   };
 };
 
-struct DV_ASB_Pressure_Struct {
-  float pressure1;
-  float pressure2;
+struct DV_ASB_Pressure_Struct
+{
+  float pressure_1;
+  float pressure_2;
 };
 
 extern SOFT_INLINE void
@@ -2412,28 +3025,31 @@ DV_ASB_Pressure_StructToUnion(union DV_ASB_Pressure_Union *u,
 
 /* -------------------------- DV_DrivingDynamics1 -------------------------- */
 
-#define DV_DRIVING_DYNAMICS1_ID 0x500
-#define DV_DRIVING_DYNAMICS1_DLC 8          // Number of Bytes
-#define DV_DRIVING_DYNAMICS1_CYCLE_TIME 100 // Milliseconds
+#define DV_DRIVING_DYNAMICS_1_ID 0x500
+#define DV_DRIVING_DYNAMICS_1_DLC 8          // Number of Bytes
+#define DV_DRIVING_DYNAMICS_1_CYCLE_TIME 100 // Milliseconds
 
-union DV_DrivingDynamics1_Union {
+union DV_DrivingDynamics1_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t speed_actual : 8;
     uint64_t speed_target : 8;
-    uint64_t steering_angle_actual : 8;
-    uint64_t steering_angle_target : 8;
+    int64_t steering_angle_actual : 8;
+    int64_t steering_angle_target : 8;
     uint64_t brake_hydr_actual : 8;
     uint64_t brake_hydr_target : 8;
-    uint64_t motor_moment_actual : 8;
-    uint64_t motor_moment_target : 8;
+    int64_t motor_moment_actual : 8;
+    int64_t motor_moment_target : 8;
   };
 };
 
-struct DV_DrivingDynamics1_Struct {
+struct DV_DrivingDynamics1_Struct
+{
   uint8_t speed_actual;
   uint8_t speed_target;
   float steering_angle_actual;
@@ -2454,24 +3070,27 @@ DV_DrivingDynamics1_StructToUnion(union DV_DrivingDynamics1_Union *u,
 
 /* -------------------------- DV_DrivingDynamics2 -------------------------- */
 
-#define DV_DRIVING_DYNAMICS2_ID 0x501
-#define DV_DRIVING_DYNAMICS2_DLC 6          // Number of Bytes
-#define DV_DRIVING_DYNAMICS2_CYCLE_TIME 100 // Milliseconds
+#define DV_DRIVING_DYNAMICS_2_ID 0x501
+#define DV_DRIVING_DYNAMICS_2_DLC 6          // Number of Bytes
+#define DV_DRIVING_DYNAMICS_2_CYCLE_TIME 100 // Milliseconds
 
-union DV_DrivingDynamics2_Union {
+union DV_DrivingDynamics2_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t acceleration_longitudinal : 16;
-    uint64_t acceleration_lateral : 16;
-    uint64_t yaw_rate : 16;
+    int64_t acceleration_longitudinal : 16;
+    int64_t acceleration_lateral : 16;
+    int64_t yaw_rate : 16;
     uint64_t reserved_1 : 16;
   };
 };
 
-struct DV_DrivingDynamics2_Struct {
+struct DV_DrivingDynamics2_Struct
+{
   float acceleration_longitudinal;
   float acceleration_lateral;
   float yaw_rate;
@@ -2486,7 +3105,8 @@ DV_DrivingDynamics2_StructToUnion(union DV_DrivingDynamics2_Union *u,
                                   struct DV_DrivingDynamics2_Struct s);
 
 /* ---------------------------- DV_System_Status ---------------------------- */
-typedef enum {
+typedef enum
+{
   AS_STATE_FINISHED = 5,
   AS_STATE_EMERGENCY = 4,
   AS_STATE_DRIVING = 3,
@@ -2499,11 +3119,13 @@ typedef enum {
 #define DV_SYSTEM_STATUS_DLC 5          // Number of Bytes
 #define DV_SYSTEM_STATUS_CYCLE_TIME 100 // Milliseconds
 
-union DV_System_Status_Union {
+union DV_System_Status_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t as_state : 3;
     uint64_t ebs_state : 2;
@@ -2517,7 +3139,8 @@ union DV_System_Status_Union {
   };
 };
 
-struct DV_System_Status_Struct {
+struct DV_System_Status_Struct
+{
   DV_System_Status_AS_State as_state;
   uint8_t ebs_state;
   uint8_t ami_state;
@@ -2542,11 +3165,13 @@ DV_System_Status_StructToUnion(union DV_System_Status_Union *u,
 #define DV_ASB_STATUS_DLC 3         // Number of Bytes
 #define DV_ASB_STATUS_CYCLE_TIME 10 // Milliseconds
 
-union DV_ASB_Status_Union {
+union DV_ASB_Status_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t asms : 1;
     uint64_t ebs_state : 2;
@@ -2562,7 +3187,8 @@ union DV_ASB_Status_Union {
   };
 };
 
-struct DV_ASB_Status_Struct {
+struct DV_ASB_Status_Struct
+{
   bool asms;
   uint8_t ebs_state;
   uint8_t service_brake_state;
@@ -2589,17 +3215,21 @@ DV_ASB_Status_StructToUnion(union DV_ASB_Status_Union *u,
 #define CANO_RES_TPDO4_DLC 0          // Number of Bytes
 #define CANO_RES_TPDO4_CYCLE_TIME 100 // Milliseconds
 
-union CANO_RES_TPDO4_Union {
+union CANO_RES_TPDO4_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t reserved_1 : 64;
   };
 };
 
-struct CANO_RES_TPDO4_Struct {};
+struct CANO_RES_TPDO4_Struct
+{
+};
 
 extern SOFT_INLINE void
 CANO_RES_TPDO4_UnionToStruct(struct CANO_RES_TPDO4_Struct *s,
@@ -2615,17 +3245,21 @@ CANO_RES_TPDO4_StructToUnion(union CANO_RES_TPDO4_Union *u,
 #define CANO_RES_TPDO3_DLC 0          // Number of Bytes
 #define CANO_RES_TPDO3_CYCLE_TIME 100 // Milliseconds
 
-union CANO_RES_TPDO3_Union {
+union CANO_RES_TPDO3_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t reserved_1 : 64;
   };
 };
 
-struct CANO_RES_TPDO3_Struct {};
+struct CANO_RES_TPDO3_Struct
+{
+};
 
 extern SOFT_INLINE void
 CANO_RES_TPDO3_UnionToStruct(struct CANO_RES_TPDO3_Struct *s,
@@ -2641,17 +3275,21 @@ CANO_RES_TPDO3_StructToUnion(union CANO_RES_TPDO3_Union *u,
 #define CANO_RES_TPDO2_DLC 0          // Number of Bytes
 #define CANO_RES_TPDO2_CYCLE_TIME 100 // Milliseconds
 
-union CANO_RES_TPDO2_Union {
+union CANO_RES_TPDO2_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t reserved_1 : 64;
   };
 };
 
-struct CANO_RES_TPDO2_Struct {};
+struct CANO_RES_TPDO2_Struct
+{
+};
 
 extern SOFT_INLINE void
 CANO_RES_TPDO2_UnionToStruct(struct CANO_RES_TPDO2_Struct *s,
@@ -2667,17 +3305,21 @@ CANO_RES_TPDO2_StructToUnion(union CANO_RES_TPDO2_Union *u,
 #define CANO_RES_RPDO3_DLC 0          // Number of Bytes
 #define CANO_RES_RPDO3_CYCLE_TIME 100 // Milliseconds
 
-union CANO_RES_RPDO3_Union {
+union CANO_RES_RPDO3_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t reserved_1 : 64;
   };
 };
 
-struct CANO_RES_RPDO3_Struct {};
+struct CANO_RES_RPDO3_Struct
+{
+};
 
 extern SOFT_INLINE void
 CANO_RES_RPDO3_UnionToStruct(struct CANO_RES_RPDO3_Struct *s,
@@ -2693,17 +3335,21 @@ CANO_RES_RPDO3_StructToUnion(union CANO_RES_RPDO3_Union *u,
 #define CANO_RES_RPDO2_DLC 0          // Number of Bytes
 #define CANO_RES_RPDO2_CYCLE_TIME 100 // Milliseconds
 
-union CANO_RES_RPDO2_Union {
+union CANO_RES_RPDO2_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t reserved_1 : 64;
   };
 };
 
-struct CANO_RES_RPDO2_Struct {};
+struct CANO_RES_RPDO2_Struct
+{
+};
 
 extern SOFT_INLINE void
 CANO_RES_RPDO2_UnionToStruct(struct CANO_RES_RPDO2_Struct *s,
@@ -2719,17 +3365,21 @@ CANO_RES_RPDO2_StructToUnion(union CANO_RES_RPDO2_Union *u,
 #define CANO_RES_RPDO1_DLC 0          // Number of Bytes
 #define CANO_RES_RPDO1_CYCLE_TIME 100 // Milliseconds
 
-union CANO_RES_RPDO1_Union {
+union CANO_RES_RPDO1_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t reserved_1 : 64;
   };
 };
 
-struct CANO_RES_RPDO1_Struct {};
+struct CANO_RES_RPDO1_Struct
+{
+};
 
 extern SOFT_INLINE void
 CANO_RES_RPDO1_UnionToStruct(struct CANO_RES_RPDO1_Struct *s,
@@ -2745,26 +3395,27 @@ CANO_RES_RPDO1_StructToUnion(union CANO_RES_RPDO1_Union *u,
 #define CANO_RES_STATE_DLC 8         // Number of Bytes
 #define CANO_RES_STATE_CYCLE_TIME 30 // Milliseconds
 
-union CANO_RES_State_Union {
+union CANO_RES_State_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t k1_e_stop : 1;
     uint64_t k2_switch : 1;
     uint64_t k3_button : 1;
     uint64_t reserved_1 : 45;
     uint64_t link_quality : 8;
-    uint64_t reserved_2 : 51;
+    uint64_t reserved_2 : 6;
     uint64_t pre_alarm : 1;
-    uint64_t reserved_3 : 51;
     uint64_t race_mode : 1;
-    uint64_t reserved_4 : 51;
   };
 };
 
-struct CANO_RES_State_Struct {
+struct CANO_RES_State_Struct
+{
   bool k1_e_stop;
   bool k2_switch;
   bool k3_button;
@@ -2787,17 +3438,21 @@ CANO_RES_State_StructToUnion(union CANO_RES_State_Union *u,
 #define CANO_TIME_DLC 6          // Number of Bytes
 #define CANO_TIME_CYCLE_TIME 100 // Milliseconds
 
-union CANO_TIME_Union {
+union CANO_TIME_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t reserved_1 : 64;
   };
 };
 
-struct CANO_TIME_Struct {};
+struct CANO_TIME_Struct
+{
+};
 
 extern SOFT_INLINE void CANO_TIME_UnionToStruct(struct CANO_TIME_Struct *s,
                                                 union CANO_TIME_Union u);
@@ -2811,17 +3466,21 @@ extern SOFT_INLINE void CANO_TIME_StructToUnion(union CANO_TIME_Union *u,
 #define CANO_SYNC_DLC 0          // Number of Bytes
 #define CANO_SYNC_CYCLE_TIME 100 // Milliseconds
 
-union CANO_SYNC_Union {
+union CANO_SYNC_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t reserved_1 : 64;
   };
 };
 
-struct CANO_SYNC_Struct {};
+struct CANO_SYNC_Struct
+{
+};
 
 extern SOFT_INLINE void CANO_SYNC_UnionToStruct(struct CANO_SYNC_Struct *s,
                                                 union CANO_SYNC_Union u);
@@ -2830,7 +3489,8 @@ extern SOFT_INLINE void CANO_SYNC_StructToUnion(union CANO_SYNC_Union *u,
                                                 struct CANO_SYNC_Struct s);
 
 /* ------------------------- CANO_NMT_Node_Control ------------------------- */
-typedef enum {
+typedef enum
+{
   REQUESTED_STATE_RESET_COMMUNICATION = 130,
   REQUESTED_STATE_RESET_APPLICATION = 129,
   REQUESTED_STATE_STOPPED_MODE = 2,
@@ -2838,7 +3498,8 @@ typedef enum {
   REQUESTED_STATE_OPERATIONAL_MODE = 1,
 } CANO_NMT_Node_Control_Requested_State;
 
-typedef enum {
+typedef enum
+{
   ADDRESSED_NODE_ID_RES = 17,
   ADDRESSED_NODE_ID_EPOS = 12,
   ADDRESSED_NODE_ID_ALL = 0,
@@ -2848,11 +3509,13 @@ typedef enum {
 #define CANO_NMT_NODE_CONTROL_DLC 2          // Number of Bytes
 #define CANO_NMT_NODE_CONTROL_CYCLE_TIME 100 // Milliseconds
 
-union CANO_NMT_Node_Control_Union {
+union CANO_NMT_Node_Control_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t requested_state : 8;
     uint64_t addressed_node_id : 8;
@@ -2860,7 +3523,8 @@ union CANO_NMT_Node_Control_Union {
   };
 };
 
-struct CANO_NMT_Node_Control_Struct {
+struct CANO_NMT_Node_Control_Struct
+{
   CANO_NMT_Node_Control_Requested_State requested_state;
   CANO_NMT_Node_Control_Addressed_Node_ID addressed_node_id;
 };
@@ -2879,18 +3543,21 @@ CANO_NMT_Node_Control_StructToUnion(union CANO_NMT_Node_Control_Union *u,
 #define CAL_STEERING_ANGLE_DLC 2          // Number of Bytes
 #define CAL_STEERING_ANGLE_CYCLE_TIME 100 // Milliseconds
 
-union CAL_SteeringAngle_Union {
+union CAL_SteeringAngle_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t voltage : 12;
     uint64_t reserved_1 : 52;
   };
 };
 
-struct CAL_SteeringAngle_Struct {
+struct CAL_SteeringAngle_Struct
+{
   uint16_t voltage;
 };
 
@@ -2908,11 +3575,13 @@ CAL_SteeringAngle_StructToUnion(union CAL_SteeringAngle_Union *u,
 #define CAL_APPS_DLC 6          // Number of Bytes
 #define CAL_APPS_CYCLE_TIME 100 // Milliseconds
 
-union CAL_APPS_Union {
+union CAL_APPS_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t upper_3v3 : 12;
     uint64_t lower_3v3 : 12;
@@ -2922,7 +3591,8 @@ union CAL_APPS_Union {
   };
 };
 
-struct CAL_APPS_Struct {
+struct CAL_APPS_Struct
+{
   uint16_t upper_3v3;
   uint16_t lower_3v3;
   float upper_5v;
@@ -2941,11 +3611,13 @@ extern SOFT_INLINE void CAL_APPS_StructToUnion(union CAL_APPS_Union *u,
 #define CAL_BRAKE_PRESSURES_DLC 6          // Number of Bytes
 #define CAL_BRAKE_PRESSURES_CYCLE_TIME 100 // Milliseconds
 
-union CAL_BrakePressures_Union {
+union CAL_BrakePressures_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t front_3v3 : 12;
     uint64_t rear_3v3 : 12;
@@ -2955,7 +3627,8 @@ union CAL_BrakePressures_Union {
   };
 };
 
-struct CAL_BrakePressures_Struct {
+struct CAL_BrakePressures_Struct
+{
   uint16_t front_3v3;
   uint16_t rear_3v3;
   float front_5v;
@@ -2976,21 +3649,24 @@ CAL_BrakePressures_StructToUnion(union CAL_BrakePressures_Union *u,
 #define CAL_SPRING_TRAVEL_REAR_DLC 7          // Number of Bytes
 #define CAL_SPRING_TRAVEL_REAR_CYCLE_TIME 100 // Milliseconds
 
-union CAL_SpringTravel_Rear_Union {
+union CAL_SpringTravel_Rear_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t rear_right_converted : 16;
-    uint64_t rear_left_converted : 16;
+    int64_t rear_right_converted : 16;
+    int64_t rear_left_converted : 16;
     uint64_t rear_right_voltage : 12;
     uint64_t rear_left_voltage : 12;
     uint64_t reserved_1 : 8;
   };
 };
 
-struct CAL_SpringTravel_Rear_Struct {
+struct CAL_SpringTravel_Rear_Struct
+{
   float rear_right_converted;
   float rear_left_converted;
   uint16_t rear_right_voltage;
@@ -3011,21 +3687,24 @@ CAL_SpringTravel_Rear_StructToUnion(union CAL_SpringTravel_Rear_Union *u,
 #define CAL_SPRING_TRAVEL_FRONT_DLC 7          // Number of Bytes
 #define CAL_SPRING_TRAVEL_FRONT_CYCLE_TIME 100 // Milliseconds
 
-union CAL_SpringTravel_Front_Union {
+union CAL_SpringTravel_Front_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t front_right_converted : 16;
-    uint64_t front_left_converted : 16;
+    int64_t front_right_converted : 16;
+    int64_t front_left_converted : 16;
     uint64_t front_right_voltage : 12;
     uint64_t front_left_voltage : 12;
     uint64_t reserved_1 : 8;
   };
 };
 
-struct CAL_SpringTravel_Front_Struct {
+struct CAL_SpringTravel_Front_Struct
+{
   float front_right_converted;
   float front_left_converted;
   uint16_t front_right_voltage;
@@ -3046,17 +3725,21 @@ CAL_SpringTravel_Front_StructToUnion(union CAL_SpringTravel_Front_Union *u,
 #define CAL_CALIBRATION_MASTER_DLC 1          // Number of Bytes
 #define CAL_CALIBRATION_MASTER_CYCLE_TIME 100 // Milliseconds
 
-union CAL_CalibrationMaster_Union {
+union CAL_CalibrationMaster_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t reserved_1 : 64;
   };
 };
 
-struct CAL_CalibrationMaster_Struct {};
+struct CAL_CalibrationMaster_Struct
+{
+};
 
 extern SOFT_INLINE void
 CAL_CalibrationMaster_UnionToStruct(struct CAL_CalibrationMaster_Struct *s,
@@ -3072,11 +3755,13 @@ CAL_CalibrationMaster_StructToUnion(union CAL_CalibrationMaster_Union *u,
 #define DV_DRIVE_COMMAND_DLC 5         // Number of Bytes
 #define DV_DRIVE_COMMAND_CYCLE_TIME 10 // Milliseconds
 
-union DV_DriveCommand_Union {
+union DV_DriveCommand_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t rtd_request : 1;
     uint64_t ebs_trigger : 1;
@@ -3088,7 +3773,8 @@ union DV_DriveCommand_Union {
   };
 };
 
-struct DV_DriveCommand_Struct {
+struct DV_DriveCommand_Struct
+{
   bool rtd_request;
   bool ebs_trigger;
   float throttle_command;
@@ -3111,11 +3797,13 @@ DV_DriveCommand_StructToUnion(union DV_DriveCommand_Union *u,
 #define LOG_WATER_TEMPS_LEFT_DLC 4          // Number of Bytes
 #define LOG_WATER_TEMPS_LEFT_CYCLE_TIME 500 // Milliseconds
 
-union LOG_WaterTemps_Left_Union {
+union LOG_WaterTemps_Left_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t wt_1 : 8;
     uint64_t wt_2 : 8;
@@ -3125,7 +3813,8 @@ union LOG_WaterTemps_Left_Union {
   };
 };
 
-struct LOG_WaterTemps_Left_Struct {
+struct LOG_WaterTemps_Left_Struct
+{
   float wt_1;
   float wt_2;
   float wt_3;
@@ -3146,11 +3835,13 @@ LOG_WaterTemps_Left_StructToUnion(union LOG_WaterTemps_Left_Union *u,
 #define LOG_WATER_TEMPS_RIGHT_DLC 4          // Number of Bytes
 #define LOG_WATER_TEMPS_RIGHT_CYCLE_TIME 500 // Milliseconds
 
-union LOG_WaterTemps_Right_Union {
+union LOG_WaterTemps_Right_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t wt_1 : 8;
     uint64_t wt_2 : 8;
@@ -3160,7 +3851,8 @@ union LOG_WaterTemps_Right_Union {
   };
 };
 
-struct LOG_WaterTemps_Right_Struct {
+struct LOG_WaterTemps_Right_Struct
+{
   float wt_1;
   float wt_2;
   float wt_3;
@@ -3181,19 +3873,22 @@ LOG_WaterTemps_Right_StructToUnion(union LOG_WaterTemps_Right_Union *u,
 #define LOG_SPRING_TRAVEL_FRONT_DLC 4          // Number of Bytes
 #define LOG_SPRING_TRAVEL_FRONT_CYCLE_TIME 100 // Milliseconds
 
-union LOG_SpringTravel_Front_Union {
+union LOG_SpringTravel_Front_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t front_left : 16;
-    uint64_t front_right : 16;
+    int64_t front_left : 16;
+    int64_t front_right : 16;
     uint64_t reserved_1 : 32;
   };
 };
 
-struct LOG_SpringTravel_Front_Struct {
+struct LOG_SpringTravel_Front_Struct
+{
   float front_left;
   float front_right;
 };
@@ -3212,19 +3907,22 @@ LOG_SpringTravel_Front_StructToUnion(union LOG_SpringTravel_Front_Union *u,
 #define LOG_SPRING_TRAVEL_REAR_DLC 4          // Number of Bytes
 #define LOG_SPRING_TRAVEL_REAR_CYCLE_TIME 100 // Milliseconds
 
-union LOG_SpringTravel_Rear_Union {
+union LOG_SpringTravel_Rear_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t rear_left : 16;
-    uint64_t rear_right : 16;
+    int64_t rear_left : 16;
+    int64_t rear_right : 16;
     uint64_t reserved_1 : 32;
   };
 };
 
-struct LOG_SpringTravel_Rear_Struct {
+struct LOG_SpringTravel_Rear_Struct
+{
   float rear_left;
   float rear_right;
 };
@@ -3243,11 +3941,13 @@ LOG_SpringTravel_Rear_StructToUnion(union LOG_SpringTravel_Rear_Union *u,
 #define LOG_BRAKE_PRESSURES_DLC 3         // Number of Bytes
 #define LOG_BRAKE_PRESSURES_CYCLE_TIME 10 // Milliseconds
 
-union LOG_BrakePressures_Union {
+union LOG_BrakePressures_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t front : 12;
     uint64_t rear : 12;
@@ -3255,7 +3955,8 @@ union LOG_BrakePressures_Union {
   };
 };
 
-struct LOG_BrakePressures_Struct {
+struct LOG_BrakePressures_Struct
+{
   float front;
   float rear;
 };
@@ -3274,18 +3975,21 @@ LOG_BrakePressures_StructToUnion(union LOG_BrakePressures_Union *u,
 #define LOG_LEM_DLC 2          // Number of Bytes
 #define LOG_LEM_CYCLE_TIME 100 // Milliseconds
 
-union LOG_LEM_Union {
+union LOG_LEM_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t lv : 16;
     uint64_t reserved_1 : 48;
   };
 };
 
-struct LOG_LEM_Struct {
+struct LOG_LEM_Struct
+{
   uint16_t lv;
 };
 
@@ -3295,59 +3999,30 @@ extern SOFT_INLINE void LOG_LEM_UnionToStruct(struct LOG_LEM_Struct *s,
 extern SOFT_INLINE void LOG_LEM_StructToUnion(union LOG_LEM_Union *u,
                                               struct LOG_LEM_Struct s);
 
-/* ------------------------------ LOG_DashLEDs ------------------------------ */
-
-#define LOG_DASHLE_DS_ID 0x787
-#define LOG_DASHLE_DS_DLC 1          // Number of Bytes
-#define LOG_DASHLE_DS_CYCLE_TIME 100 // Milliseconds
-
-union LOG_DashLEDs_Union {
-
-  uint64_t data;
-
-  struct {
-
-    uint64_t imd : 1;
-    uint64_t reserved_1 : 1;
-    uint64_t ams : 1;
-    uint64_t reserved_2 : 62;
-  };
-};
-
-struct LOG_DashLEDs_Struct {
-  bool imd;
-  bool ams;
-};
-
-extern SOFT_INLINE void
-LOG_DashLEDs_UnionToStruct(struct LOG_DashLEDs_Struct *s,
-                           union LOG_DashLEDs_Union u);
-
-extern SOFT_INLINE void
-LOG_DashLEDs_StructToUnion(union LOG_DashLEDs_Union *u,
-                           struct LOG_DashLEDs_Struct s);
-
 /* ------------------------------ LOG_airp_FW ------------------------------ */
 
 #define LOG_AIRP_FW_ID 0x7C0
 #define LOG_AIRP_FW_DLC 4          // Number of Bytes
 #define LOG_AIRP_FW_CYCLE_TIME 100 // Milliseconds
 
-union LOG_airp_FW_Union {
+union LOG_airp_FW_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t airp1 : 16;
-    uint64_t airp2 : 16;
+    uint64_t airp_1 : 16;
+    uint64_t airp_2 : 16;
     uint64_t reserved_1 : 32;
   };
 };
 
-struct LOG_airp_FW_Struct {
-  float airp1;
-  float airp2;
+struct LOG_airp_FW_Struct
+{
+  float airp_1;
+  float airp_2;
 };
 
 extern SOFT_INLINE void LOG_airp_FW_UnionToStruct(struct LOG_airp_FW_Struct *s,
@@ -3362,23 +4037,26 @@ extern SOFT_INLINE void LOG_airp_FW_StructToUnion(union LOG_airp_FW_Union *u,
 #define LOG_AIRP_SPL_DLC 6          // Number of Bytes
 #define LOG_AIRP_SPL_CYCLE_TIME 100 // Milliseconds
 
-union LOG_airp_SPL_Union {
+union LOG_airp_SPL_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t airp1 : 16;
-    uint64_t airp2 : 16;
-    uint64_t airp3 : 16;
+    uint64_t airp_1 : 16;
+    uint64_t airp_2 : 16;
+    uint64_t airp_3 : 16;
     uint64_t reserved_1 : 16;
   };
 };
 
-struct LOG_airp_SPL_Struct {
-  float airp1;
-  float airp2;
-  float airp3;
+struct LOG_airp_SPL_Struct
+{
+  float airp_1;
+  float airp_2;
+  float airp_3;
 };
 
 extern SOFT_INLINE void
@@ -3395,23 +4073,26 @@ LOG_airp_SPL_StructToUnion(union LOG_airp_SPL_Union *u,
 #define LOG_AIRP_SPR_DLC 6          // Number of Bytes
 #define LOG_AIRP_SPR_CYCLE_TIME 100 // Milliseconds
 
-union LOG_airp_SPR_Union {
+union LOG_airp_SPR_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t airp1 : 16;
-    uint64_t airp2 : 16;
-    uint64_t airp3 : 16;
+    uint64_t airp_1 : 16;
+    uint64_t airp_2 : 16;
+    uint64_t airp_3 : 16;
     uint64_t reserved_1 : 16;
   };
 };
 
-struct LOG_airp_SPR_Struct {
-  float airp1;
-  float airp2;
-  float airp3;
+struct LOG_airp_SPR_Struct
+{
+  float airp_1;
+  float airp_2;
+  float airp_3;
 };
 
 extern SOFT_INLINE void
@@ -3428,21 +4109,24 @@ LOG_airp_SPR_StructToUnion(union LOG_airp_SPR_Union *u,
 #define LOG_AIRP_RW_DLC 4          // Number of Bytes
 #define LOG_AIRP_RW_CYCLE_TIME 100 // Milliseconds
 
-union LOG_airp_RW_Union {
+union LOG_airp_RW_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t airp1 : 16;
-    uint64_t airp2 : 16;
+    uint64_t airp_1 : 16;
+    uint64_t airp_2 : 16;
     uint64_t reserved_1 : 32;
   };
 };
 
-struct LOG_airp_RW_Struct {
-  float airp1;
-  float airp2;
+struct LOG_airp_RW_Struct
+{
+  float airp_1;
+  float airp_2;
 };
 
 extern SOFT_INLINE void LOG_airp_RW_UnionToStruct(struct LOG_airp_RW_Struct *s,
@@ -3457,11 +4141,13 @@ extern SOFT_INLINE void LOG_airp_RW_StructToUnion(union LOG_airp_RW_Union *u,
 #define LOG_PE_MAX_TEMPS_DLC 8          // Number of Bytes
 #define LOG_PE_MAX_TEMPS_CYCLE_TIME 100 // Milliseconds
 
-union LOG_PE_MaxTemps_Union {
+union LOG_PE_MaxTemps_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t front : 8;
     uint64_t rear : 8;
@@ -3474,7 +4160,8 @@ union LOG_PE_MaxTemps_Union {
   };
 };
 
-struct LOG_PE_MaxTemps_Struct {
+struct LOG_PE_MaxTemps_Struct
+{
   float front;
   float rear;
   float left;
@@ -3499,20 +4186,23 @@ LOG_PE_MaxTemps_StructToUnion(union LOG_PE_MaxTemps_Union *u,
 #define LOG_EKF_TRANSLATION_DLC 8          // Number of Bytes
 #define LOG_EKF_TRANSLATION_CYCLE_TIME 100 // Milliseconds
 
-union LOG_EKF_Translation_Union {
+union LOG_EKF_Translation_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t velocity_vx : 16;
-    uint64_t velocity_vy : 16;
-    uint64_t acceleration_ax : 16;
-    uint64_t acceleration_ay : 16;
+    int64_t velocity_vx : 16;
+    int64_t velocity_vy : 16;
+    int64_t acceleration_ax : 16;
+    int64_t acceleration_ay : 16;
   };
 };
 
-struct LOG_EKF_Translation_Struct {
+struct LOG_EKF_Translation_Struct
+{
   float velocity_vx;
   float velocity_vy;
   float acceleration_ax;
@@ -3533,19 +4223,22 @@ LOG_EKF_Translation_StructToUnion(union LOG_EKF_Translation_Union *u,
 #define LOG_EKF_ROTATION_DLC 8          // Number of Bytes
 #define LOG_EKF_ROTATION_CYCLE_TIME 100 // Milliseconds
 
-union LOG_EKF_Rotation_Union {
+union LOG_EKF_Rotation_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
-    uint64_t heading_psi : 16;
-    uint64_t yaw_rate : 16;
+    int64_t heading_psi : 16;
+    int64_t yaw_rate : 16;
     uint64_t reserved_1 : 32;
   };
 };
 
-struct LOG_EKF_Rotation_Struct {
+struct LOG_EKF_Rotation_Struct
+{
   float heading_psi;
   float yaw_rate;
 };
@@ -3564,17 +4257,21 @@ LOG_EKF_Rotation_StructToUnion(union LOG_EKF_Rotation_Union *u,
 #define CANO_TLSS_DLC 8          // Number of Bytes
 #define CANO_TLSS_CYCLE_TIME 100 // Milliseconds
 
-union CANO_TLSS_Union {
+union CANO_TLSS_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t reserved_1 : 64;
   };
 };
 
-struct CANO_TLSS_Struct {};
+struct CANO_TLSS_Struct
+{
+};
 
 extern SOFT_INLINE void CANO_TLSS_UnionToStruct(struct CANO_TLSS_Struct *s,
                                                 union CANO_TLSS_Union u);
@@ -3588,17 +4285,21 @@ extern SOFT_INLINE void CANO_TLSS_StructToUnion(union CANO_TLSS_Union *u,
 #define CANO_RLSS_DLC 8          // Number of Bytes
 #define CANO_RLSS_CYCLE_TIME 100 // Milliseconds
 
-union CANO_RLSS_Union {
+union CANO_RLSS_Union
+{
 
   uint64_t data;
 
-  struct {
+  struct
+  {
 
     uint64_t reserved_1 : 64;
   };
 };
 
-struct CANO_RLSS_Struct {};
+struct CANO_RLSS_Struct
+{
+};
 
 extern SOFT_INLINE void CANO_RLSS_UnionToStruct(struct CANO_RLSS_Struct *s,
                                                 union CANO_RLSS_Union u);

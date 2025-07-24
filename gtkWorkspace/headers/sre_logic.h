@@ -5,7 +5,7 @@
 #include <stdbool.h>
 
 // whether to use can and disable debugging features (key press debug)
-#define USE_CAN 1
+#define USE_CAN 0
 
 // Critical or Warning Values
 #define WARNING_BAT_TEMP 48
@@ -22,7 +22,7 @@
 // error configuration
 #define SHOW_ERRORS 9
 #define MAX_ERRORS 32
-#define FREE_AFTER 5 // seconds
+#define FREE_AFTER 2 // seconds
 #define ERROR_TYPE_COUNT 13
 #define ERROR_SUB_TYPE_COUNT 15
 #define ERROR_PANEL_UPDATE_INT 3 // seconds
@@ -43,8 +43,8 @@ void r2d_logic();
 /* ---- PANEL MANAGEMENT ---- */
 extern uint8_t currentPanel;
 
-extern GObject * label_tsa_current;
-extern GObject * label_r2d_current;
+extern GObject *label_tsa_current;
+extern GObject *label_r2d_current;
 
 enum PANELS
 {
@@ -54,27 +54,17 @@ enum PANELS
 	VEHICLEINFO,
 };
 
-/* ---- VEHICLE INFO MANAGEMENT --- */
-
-void info_logic();
-
-/// @brief calculates and returns the position of the first bit that is 1
-/// @param value variable to be checked
-/// @return position of the first bit that is 1
-uint32_t get_bit_position(uint32_t value);
-
 /* -------- VEHICLE ERROR MANAGEMENT ------------ */
-
 
 // Error struct that contains information about the Error
 typedef struct
 {
-	uint64_t last_seen;  // timestamp of last seen in s
+	uint64_t last_seen; // timestamp of last seen in s
 
-	uint16_t error_type;  // General Error Type
+	uint16_t error_type;		 // General Error Type
 	uint16_t sub_error_type; // Specific Error Type
 
-	uint8_t dismissed;    // State of dismissal
+	uint8_t dismissed; // State of dismissal
 } SRE_error;
 
 void error_logic();
@@ -83,31 +73,61 @@ void error_logic();
 /// @param error_type general error type
 /// @param sub_error_type specific error type
 /// @return pointer to the sre_error object
-SRE_error * create_sre_error(uint16_t error_type, uint16_t sub_error_type);
+SRE_error *create_sre_error(uint16_t error_type, uint16_t sub_error_type);
 
-/// @brief Adds the error to the vehicle_errors array
+/// @brief Adds the error to the vehicle_error array
 /// @param error error to be added
-void add_error(SRE_error * error);
+void add_error(SRE_error *error);
 
-/// @brief removes and frees error in vehicle_array on specific position
-/// @param index position of the error in vehicle_array
+/// @brief removes and frees error in vehicle_error array on specific position
+/// @param index position of the error in vehicle_error array
 void remove_error(uint16_t index);
 
 /// @brief checks if an error exists in the vehicle_error array and returns result
 /// @param error_type general error type
 /// @param sub_error_type specific error type
 /// @return returns pointer to the error if it exists, NULL if it does not
-SRE_error * check_if_error_exists(uint16_t error_type, uint16_t sub_error_type);
+SRE_error *check_if_error_exists(uint16_t error_type, uint16_t sub_error_type);
 
 /// @brief frees all errors in the vehicle_error array
 void free_all_errors();
 
-// array of SRE_error
-extern SRE_error * vehicle_errors[MAX_ERRORS];
+// free array of SRE_error
+extern SRE_error *vehicle_errors[MAX_ERRORS];
 
+/* ---- VEHICLE INFO MANAGEMENT --- */
 
-// TODO: Refactor this to single structs (switches, states, powers, Errors etc)
-// STRUCT
+// Utilizing the Error structs for vehicle info as well, since they are similar in structure
+// Could be refactored to use a even more generic structure and methods
+
+/// @brief controls the info panel
+void info_logic();
+
+/// @brief creates an SRE_error object and returns a pointer to it
+/// @param info_type general info type
+void add_info(SRE_error *info);
+
+/// @brief removes and frees info in vehicle_info array on specific position
+/// @param index positionf of the info in vehicle_info array
+void remove_info(uint16_t index);
+
+/// @brief checks if an info object exists in the vehicle_info array and returns result
+/// @param info_type general info type
+/// @param sub_info_type specific info type
+/// @return returns pointer to the info if it exists, NULL if it does not
+SRE_error *check_if_info_exists(uint16_t info_type, uint16_t sub_info_type);
+
+// free array of SRE_info
+void free_all_infos();
+
+extern SRE_error *vehicle_infos[MAX_ERRORS];
+
+/// @brief calculates and returns the position of the first bit that is 1
+/// @param value variable to be checked
+/// @return position of the first bit that is 1
+uint32_t get_bit_position(uint32_t value);
+
+// STRUCTs
 
 typedef struct
 {
@@ -117,6 +137,11 @@ typedef struct
 	float asb_pressure_1;
 	float asb_pressure_2;
 } SRE_Pressures;
+
+typedef struct
+{
+
+} SRE_ECU_Errors;
 
 typedef struct
 {
@@ -177,6 +202,25 @@ typedef struct
 
 typedef struct
 {
+	// SDC States
+	bool res;
+	bool motor_fr;
+	bool asb;
+	bool bspd;
+	bool bots;
+	bool motor_fl;
+	bool dash;
+	bool inertia;
+	bool motor_rl;
+	bool mainhoop;
+	bool motor_rr;
+	bool hvd;
+	bool ts_connector;
+	bool tsms;
+} SRE_sdc;
+
+typedef struct
+{
 	// Graphical
 	bool tsa_ready;
 	bool tsa_active;
@@ -203,18 +247,88 @@ typedef struct
 	uint16_t asb_trigger_cause;
 } SRE_States;
 
-extern SRE_Pressures * sre_pressures;
-extern SRE_Temperatures * sre_temperatures;
-extern SRE_Battery * sre_battery;
-extern SRE_Power * sre_power;
-extern SRE_Vehicle_info * sre_vehicle_info;
-extern SRE_Switch_States * sre_switches;
-extern SRE_GUI * sre_gui;
-extern SRE_States * sre_state;
+extern SRE_Pressures *sre_pressures;
+extern SRE_Temperatures *sre_temperatures;
+extern SRE_Battery *sre_battery;
+extern SRE_Power *sre_power;
+extern SRE_Vehicle_info *sre_vehicle_info;
+extern SRE_Switch_States *sre_switches;
+extern SRE_GUI *sre_gui;
+extern SRE_States *sre_state;
 
 // Ignore unused variable warnings for these as they are only used on a need to use basis
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-variable"
+
+enum ECU_ERROR_TYPE
+{
+	TEMP,
+	MT_DRIVERINPUT,
+	MT_ZOCO_FRONT,
+	MT_ASB_STATUS,
+	MT_STEERING,
+	MT_STWHEEL_STATUS,
+	MT_ZOCO_LEFT,
+	MT_ZOCO_RIGHT,
+	MT_DRIVECOMMAND,
+	MT_ZOCO_REAR,
+	MT_EXTERN_BUTTON,
+	MT_SAF_FUSEBOARD,
+	MT_BATPCB_INFO,
+	MT_BATPCB_CONTROL,
+	MT_BATPCB_SOC,
+	MT_TEMPPCB_1,
+	MT_TEMPPCB_2,
+	MT_TEMPPCB_3,
+	MT_TEMPPCB_4,
+	MT_TEMPPCB_5,
+	MT_TEMPPCB_6,
+	MT_LSC_DASH_BUTTONS,
+	MT_SAF_DASH_STATUS,
+	ECU_SCS_DASH,
+	ECU_SCS_ASB_STATUS,
+	ECU_SCS_ZOCO_FRONT,
+	ECU_SCS_ZOCO_LEFT,
+	ECU_SCS_ZOCO_REAR,
+	ECU_SCS_ZOCO_RIGHT,
+	ECU_SCS_STWHEEL,
+	ECU_SCS_FUSEBOARD,
+};
+
+static const char *ECU_ERROR_TYPE_STR[] = {
+		"Temperature",
+		"Msg Tmt Driver Input",
+		"Msg Tmt ZoCo Front",
+		"Msg Tmt ASB Status",
+		"Msg Tmt Steering",
+		"Msg Tmt StWheel Status",
+		"Msg Tmt ZoCo Left",
+		"Msg Tmt ZoCo Right",
+		"Msg Tmt DriveCommand",
+		"Msg Tmt ZoCo Rear",
+		"Msg Tmt Ext Button",
+		"Msg Tmt SAF Fuseboard",
+		"Msg Tmt BatPCB Info",
+		"Msg Tmt BatPCB Control",
+		"Msg Tmt BatPCB SOC",
+		"Msg Tmt TempPCB 1",
+		"Msg Tmt TempPCB 2",
+		"Msg Tmt TempPCB 3",
+		"Msg Tmt TempPCB 4",
+		"Msg Tmt TempPCB 5",
+		"Msg Tmt TempPCB 6",
+		"Msg Tmt Dash Buttons",
+		"Msg Tmt Dash Status",
+		"SCS Err Dash",
+		"SCS Err ASB Status",
+		"SCS Err ZoCo Front",
+		"SCS Err ZoCo Left",
+		"SCS Err ZoCo Rear",
+		"SCS Err ZoCo Right",
+		"SCS Err StWheel",
+		"SCS Err Fuseboard",
+};
+
 enum ERROR_TYPES
 {
 	UNDEFINED_ERROR = 0,
@@ -231,20 +345,21 @@ enum ERROR_TYPES
 	SCS_DIO_DASH,
 	SCS_AIN_F1,
 };
-static const char * ERROR_TYPES_STR[] = {
-	"Undefined",
-	"VCU",
-	"SDC Open",
-	"Battery",
-	"ASB",
-	"SCS ZOCO Front",
-	"SCS ZOCO Rear",
-	"SCS ZOCO Left",
-	"SCS ZOCO Right",
-	"SCS Fuseboard",
-	"SCS DIO AS",
-	"SCS DIO Dash",
-	"SCS AIN F1",
+
+static const char *ERROR_TYPES_STR[] = {
+		"Undefined",
+		"VCU",
+		"SDC Open",
+		"Battery",
+		"ASB",
+		"SCS ZOCO Front",
+		"SCS ZOCO Rear",
+		"SCS ZOCO Left",
+		"SCS ZOCO Right",
+		"SCS Fuseboard",
+		"SCS DIO AS",
+		"SCS DIO Dash",
+		"SCS AIN F1",
 };
 
 enum VCU_ERROR_TYPES
@@ -254,10 +369,10 @@ enum VCU_ERROR_TYPES
 	VCU_MSG_ERR,
 };
 
-static const char * VCU_ERROR_TYPES_STR[] = {
-	"Undefined",
-	"SCS Error",
-	"Message Error",
+static const char *VCU_ERROR_TYPES_STR[] = {
+		"Undefined",
+		"SCS Error",
+		"Message Error",
 };
 
 enum SDC_ERROR_TYPES
@@ -279,22 +394,22 @@ enum SDC_ERROR_TYPES
 	SDC_TSMS,
 };
 
-static const char * SDC_ERROR_TYPES_STR[] = {
-	"Undefined",
-	"RES",
-	"Motor Front Right",
-	"ASB",
-	"BSPD",
-	"BOTS",
-	"Motor Front Left",
-	"Dash Button",
-	"Inertia Switch",
-	"Motor Rear Left",
-	"MP TSAL",
-	"Motor Rear Right",
-	"PLUG IN HVD IDIOTS",
-	"Battery Connector",
-	"TSMS",
+static const char *SDC_ERROR_TYPES_STR[] = {
+		"Undefined",
+		"RES",
+		"Motor Front Right",
+		"ASB",
+		"BSPD",
+		"BOTS",
+		"Motor Front Left",
+		"Dash Button",
+		"Inertia Switch",
+		"Motor Rear Left",
+		"MP TSAL",
+		"Motor Rear Right",
+		"PLUG IN HVD IDIOTS",
+		"Battery Connector",
+		"TSMS",
 };
 
 enum BAT_ERROR_TYPES
@@ -307,15 +422,18 @@ enum BAT_ERROR_TYPES
 	BAT_GENERAL = 10,
 };
 
-static const char * BAT_ERROR_TYPES_STR[] = {
-	"Undefined",
-	"", "",
-	"SDC Open",
-	"", "", "",
-	"ISO Error",
-	"BMS Error",
-	"IMD Error",
-	"General Error",
+static const char *BAT_ERROR_TYPES_STR[] = {
+		"Undefined",
+		"",
+		"",
+		"SDC Open",
+		"",
+		"",
+		"",
+		"ISO Error",
+		"BMS Error",
+		"IMD Error",
+		"General Error",
 };
 
 enum ASB_ERROR_TYPES
@@ -336,38 +454,38 @@ enum ASB_ERROR_TYPES
 	ASB_EBS_TRIGGERED,
 };
 
-static const char * ASB_ERROR_TYPES_STR[] = {
-	"Undefined",
-	"Watchdog Error",
-	"ASB Pressures Invalid",
-	"Brake Pressure Invalid",
-	"EBS1 Pressure Low",
-	"EBS2 Pressure Low",
-	"ASB Pressure Low",
-	"CAN / SCS Error",
-	"EBS Triggered by AS",
-	"RES SDC Open",
-	"SDC Open",
-	"Mech Stuck Error",
-	"ASMS Turned Off",
-	"EBS Triggered",
+static const char *ASB_ERROR_TYPES_STR[] = {
+		"Undefined",
+		"Watchdog Error",
+		"ASB Pressures Invalid",
+		"Brake Pressure Invalid",
+		"EBS1 Pressure Low",
+		"EBS2 Pressure Low",
+		"ASB Pressure Low",
+		"CAN / SCS Error",
+		"EBS Triggered by AS",
+		"RES SDC Open",
+		"SDC Open",
+		"Mech Stuck Error",
+		"ASMS Turned Off",
+		"EBS Triggered",
 };
 
 // array of pointers to the sub-error arrays
-static const char ** ERROR_SUB_TYPE_MAP[ERROR_TYPE_COUNT] = {
-	NULL,                       // UNDEFINED_ERROR
-	VCU_ERROR_TYPES_STR,        // VCU
-	SDC_ERROR_TYPES_STR,        // ERR_SDC_OPEN
-	BAT_ERROR_TYPES_STR,        // BAT_ERR
-	ASB_ERROR_TYPES_STR,        // ASB_ERROR
-	NULL,                       // SCS_ZOCO_FRONT
-	NULL,                       // SCS_ZOCO_REAR
-	NULL,                       // SCS_ZOCO_LEFT
-	NULL,                       // SCS_ZOCO_RIGHT
-	NULL,                       // SCS_FUSEBOARD
-	NULL,                       // SCS_DIO_AS
-	NULL,                       // SCS_DIO_DASH
-	NULL                        // SCS_AIN_F1
+static const char **ERROR_SUB_TYPE_MAP[ERROR_TYPE_COUNT] = {
+		NULL,								 // UNDEFINED_ERROR
+		VCU_ERROR_TYPES_STR, // VCU
+		SDC_ERROR_TYPES_STR, // ERR_SDC_OPEN
+		BAT_ERROR_TYPES_STR, // BAT_ERR
+		ASB_ERROR_TYPES_STR, // ASB_ERROR
+		NULL,								 // SCS_ZOCO_FRONT
+		NULL,								 // SCS_ZOCO_REAR
+		NULL,								 // SCS_ZOCO_LEFT
+		NULL,								 // SCS_ZOCO_RIGHT
+		NULL,								 // SCS_FUSEBOARD
+		NULL,								 // SCS_DIO_AS
+		NULL,								 // SCS_DIO_DASH
+		NULL								 // SCS_AIN_F1
 };
 
 /* ---------- STATE MANAGEMENT ------------------- */
@@ -384,15 +502,14 @@ enum CAR_STATE
 	SCS_ERROR
 };
 
-static const char * CAR_STATE_STR[] = {
-	"Undefined",
-	"Wait for TSA",
-	"RTD Off",
-	"Wait for RTD",
-	"Drive",
-	"LC On",
-	"SCS Error"
-};
+static const char *CAR_STATE_STR[] = {
+		"Undefined",
+		"Wait for TSA",
+		"RTD Off",
+		"Wait for RTD",
+		"Drive",
+		"LC On",
+		"SCS Error"};
 
 // HV
 enum BAT_STATE
@@ -409,19 +526,18 @@ enum BAT_STATE
 	IMD_ERROR,
 	BAT_ERROR
 };
-static const char * BAT_STATE_STR[] = {
-	"Undefined",
-	"Start",
-	"BMS Reset",
-	"SDC Open",
-	"Wait for TSA",
-	"TS Startup",
-	"TSA",
-	"ISO Error",
-	"BMS Error",
-	"IMD Error",
-	"BAT Error"
-};
+static const char *BAT_STATE_STR[] = {
+		"Undefined",
+		"Start",
+		"BMS Reset",
+		"SDC Open",
+		"Wait for TSA",
+		"TS Startup",
+		"TSA",
+		"ISO Error",
+		"BMS Error",
+		"IMD Error",
+		"BAT Error"};
 
 // DV
 enum ASB_STATE
@@ -433,14 +549,14 @@ enum ASB_STATE
 	MONITORING,
 	EBS_TRIGGERED
 };
-static const char * ASB_STATE_STR[] = {
-	"Uninitialized",
-	"MV Check",
-	"Passive",
-	"DV Check",
-	"Monitoring",
-	"EBS Triggered"
-};
+
+static const char *ASB_STATE_STR[] = {
+		"Uninitialized",
+		"MV Check",
+		"Passive",
+		"DV Check",
+		"Monitoring",
+		"EBS Triggered"};
 
 enum AMI_STATE
 {
@@ -452,15 +568,14 @@ enum AMI_STATE
 	INSPECTION,
 	AUTOX
 };
-static const char * AMI_STATE_STR[] = {
-	"Manual",
-	"Accel",
-	"Skidpad",
-	"Trackdrive",
-	"Braketest",
-	"Inspection",
-	"Autox"
-};
+static const char *AMI_STATE_STR[] = {
+		"Manual",
+		"Accel",
+		"Skidpad",
+		"Trackdrive",
+		"Braketest",
+		"Inspection",
+		"Autox"};
 
 enum AS_STATE
 {
@@ -470,14 +585,13 @@ enum AS_STATE
 	EMERGENCY = 4,
 	FINISH = 5
 };
-static const char * AS_STATE_STR[] = {
-	"undefined",
-	"Off",
-	"Ready",
-	"Driving",
-	"Emergency",
-	"Finish"
-};
+static const char *AS_STATE_STR[] = {
+		"undefined",
+		"Off",
+		"Ready",
+		"Driving",
+		"Emergency",
+		"Finish"};
 
 enum SERVICE_BRAKE_STATE
 {
@@ -485,11 +599,10 @@ enum SERVICE_BRAKE_STATE
 	ENGAGED = 2,
 	AVAILABLE = 3
 };
-static const char * SERVICE_BRAKE_STATE_STR[] = {
-	"Disengaged",
-	"Engaged",
-	"Available"
-};
+static const char *SERVICE_BRAKE_STATE_STR[] = {
+		"Disengaged",
+		"Engaged",
+		"Available"};
 
 enum EBS_STATE
 {
@@ -497,11 +610,10 @@ enum EBS_STATE
 	ARMED = 2,
 	ACTIVATED = 3
 };
-static const char * EBS_STATE_STR[] = {
-	"Unavailable",
-	"Armed",
-	"Activated"
-};
+static const char *EBS_STATE_STR[] = {
+		"Unavailable",
+		"Armed",
+		"Activated"};
 
 enum ASB_CHECK_SEQUENCE
 {
@@ -514,17 +626,16 @@ enum ASB_CHECK_SEQUENCE
 	DEAC_EBS1_AC_EBS2,
 	AC_EBS1_AND_2
 };
-static const char * ASB_CHECK_SEQUENCE_STR[] = {
-	"undefined",
-	"Watchdog not triggering",
-	"Watchdog triggering",
-	"ASB Press OK",
-	"BP built up",
-	"Close SDC wait TSA",
-	"Deac EBS2",
-	"Deac EBS1 Act EBS2",
-	"Act EBS1 and 2"
-};
+static const char *ASB_CHECK_SEQUENCE_STR[] = {
+		"undefined",
+		"Watchdog not triggering",
+		"Watchdog triggering",
+		"ASB Press OK",
+		"BP built up",
+		"Close SDC wait TSA",
+		"Deac EBS2",
+		"Deac EBS1 Act EBS2",
+		"Act EBS1 and 2"};
 
 enum ASB_TRIGGER_CAUSE
 {
@@ -542,21 +653,20 @@ enum ASB_TRIGGER_CAUSE
 	MECHANICALLY_STUCK_ERROR = 11,
 	ASMS_TURNED_OFF_IN_MONITORING = 12
 };
-static const char * ASB_TRIGGER_CAUSE_STR[] = {
-	"undefined",
-	"Watchdog error",
-	"ASB Pressures invalid",
-	"Brake Pressure invalid",
-	"EBS1 Pressure low",
-	"EBS2 Pressure low",
-	"ASB Pressure low",
-	"CAN / SCS Error",
-	"EBS triggered by AS",
-	"RES SDC open",
-	"SDC open",
-	"Mech Stuck Error",
-	"ASMS Turned Off"
-};
+static const char *ASB_TRIGGER_CAUSE_STR[] = {
+		"undefined",
+		"Watchdog error",
+		"ASB Pressures invalid",
+		"Brake Pressure invalid",
+		"EBS1 Pressure low",
+		"EBS2 Pressure low",
+		"ASB Pressure low",
+		"CAN / SCS Error",
+		"EBS triggered by AS",
+		"RES SDC open",
+		"SDC open",
+		"Mech Stuck Error",
+		"ASMS Turned Off"};
 #pragma GCC diagnostic pop
 
 // END unused variable warnings
