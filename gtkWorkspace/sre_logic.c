@@ -231,14 +231,14 @@ void state_update()
 		sre_temperatures->temp_pef = GW_PE_FrontLeft.temp_igbt;
 	}
 
-	sre_temperatures->temp_motor_fl = GW_PE_FrontLeft.temp_motor;
-	sre_temperatures->temp_motor_fr = GW_PE_FrontRight.temp_motor;
+	sre_temperatures->temp_motor_fl = 0;
+	sre_temperatures->temp_motor_fr = 0;
 	sre_temperatures->temp_motor_rl = GW_PE_RearLeft.temp_motor;
 	sre_temperatures->temp_motor_rr = GW_PE_RearRight.temp_motor;
 
 	// BATTERY
 	sre_battery->bat_soc = GW_Battery_Status.soc_internal;
-	sre_battery->bat_temp_max = GW_Battery_Cells.temp_max;
+	sre_battery->bat_temp_max = GW_Battery_Cells.temp_max / 4.0;
 	sre_battery->bat_temp_min = GW_Battery_Cells.temp_min;
 	sre_battery->bat_volt_max = GW_Battery_Cells.voltage_max;
 	sre_battery->bat_volt_min = GW_Battery_Cells.voltage_min;
@@ -943,7 +943,6 @@ SRE_error *check_if_error_exists(uint16_t error_type, uint16_t sub_error_type)
 
 void info_logic()
 {
-
 }
 
 // returns the position of the first bit that is 1
