@@ -22,7 +22,7 @@
 // error configuration
 #define SHOW_ERRORS 9
 #define MAX_ERRORS 32
-#define FREE_AFTER 2 // seconds
+#define FREE_AFTER 1 // seconds
 #define ERROR_TYPE_COUNT 13
 #define ERROR_SUB_TYPE_COUNT 15
 #define ERROR_PANEL_UPDATE_INT 3 // seconds

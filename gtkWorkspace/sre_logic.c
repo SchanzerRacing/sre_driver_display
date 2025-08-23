@@ -238,7 +238,7 @@ void state_update()
 
 	// BATTERY
 	sre_battery->bat_soc = GW_Battery_Status.soc_internal;
-	sre_battery->bat_temp_max = GW_Battery_Cells.temp_max / 4.0;
+	sre_battery->bat_temp_max = GW_Battery_Cells.temp_max;
 	sre_battery->bat_temp_min = GW_Battery_Cells.temp_min;
 	sre_battery->bat_volt_max = GW_Battery_Cells.voltage_max;
 	sre_battery->bat_volt_min = GW_Battery_Cells.voltage_min;
@@ -830,6 +830,8 @@ void error_logic()
 			buff_error->last_seen = (uint64_t)time(NULL);
 		}
 	}
+
+	
 
 	// If SDC is open check Fuseboard SDC sensing
 	// if(sre_state->bat_state == SDC_ERROR)
