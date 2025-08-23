@@ -815,7 +815,7 @@ void error_logic()
 		}
 	}
 
-	if (sre_state->bat_state == ISO_ERROR ||
+	if (sre_state->bat_state == ISO_ERROR || sre_state->bat_state == SDC_OPEN ||
 			sre_state->bat_state == BMS_ERROR || sre_state->bat_state == IMD_ERROR ||
 			sre_state->bat_state == BAT_ERROR)
 	{
