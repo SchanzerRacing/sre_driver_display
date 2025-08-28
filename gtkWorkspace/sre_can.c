@@ -27,6 +27,7 @@ struct LOG_LEM_Struct LOG_LEM;
 struct LOG_FUSE_Currents_Struct LOG_Fuse_Currents;
 struct PARC_FUSE_States_Struct PARC_FUSE_States;
 struct LOG_ECU_ERRORS_Struct LOG_ECU_Errors;
+struct LOG_SDC_Struct LOG_SDC;
 
 // Because we're doing some crazy Pointer Casting, we need to disable the warning :)
 #pragma GCC diagnostic push
@@ -75,6 +76,8 @@ can_mapping_t can_mappings[] = {
 		 PARC_FUSE_States_UnionToStruct},
 		{LOG_ECU_ERRORS_ID, &LOG_ECU_Errors,
 		 LOG_ECU_ERRORS_UnionToStruct},
+		{LOG_SDC_ID, &LOG_SDC,
+		 LOG_SDC_UnionToStruct},
 };
 
 #pragma GCC diagnostic pop

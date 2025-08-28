@@ -214,6 +214,46 @@ static void event_key_release_cb(
 		GdkModifierType state, gpointer user_data)
 {
 	printf("Key released: %d\n", keyval);
+
+	if (keyval == GDK_KEY_u)
+	{
+		sre_state->bat_state = SDC_OPEN;
+		sre_sdc->res = false;
+		sre_sdc->motor_fr = false;
+		sre_sdc->asb = false;
+		sre_sdc->bspd = false;
+		sre_sdc->bots = false;
+		sre_sdc->motor_fl = false;
+		sre_sdc->dash = false;
+		sre_sdc->inertia = false;
+		sre_sdc->motor_rl = false;
+		sre_sdc->mainhoop = false;
+		sre_sdc->motor_rr = false;
+		sre_sdc->hvd = false;
+		sre_sdc->ts_connector = false;
+		sre_sdc->tsms = false;
+	}
+
+	if (keyval == GDK_KEY_i)
+	{
+		sre_sdc->res = true;
+	}
+
+	if (keyval == GDK_KEY_o)
+	{
+		sre_sdc->bspd = true;
+	}
+
+	if (keyval == GDK_KEY_p)
+	{
+		sre_sdc->motor_rl = 1;
+	}
+
+	if (keyval == GDK_KEY_k)
+	{
+		sre_sdc->hvd = 1;
+	}
+
 	if (keyval == GDK_KEY_t)
 	{
 		printf("Key t released\n");

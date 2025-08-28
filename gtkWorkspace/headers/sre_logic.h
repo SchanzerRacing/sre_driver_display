@@ -23,7 +23,7 @@
 #define SHOW_ERRORS 9
 #define MAX_ERRORS 32
 #define FREE_AFTER 1 // seconds
-#define ERROR_TYPE_COUNT 13
+#define ERROR_TYPE_COUNT 14
 #define ERROR_SUB_TYPE_COUNT 15
 #define ERROR_PANEL_UPDATE_INT 3 // seconds
 
@@ -217,7 +217,7 @@ typedef struct
 	bool hvd;
 	bool ts_connector;
 	bool tsms;
-} SRE_sdc;
+} SRE_SDC;
 
 typedef struct
 {
@@ -255,6 +255,7 @@ extern SRE_Vehicle_info *sre_vehicle_info;
 extern SRE_Switch_States *sre_switches;
 extern SRE_GUI *sre_gui;
 extern SRE_States *sre_state;
+extern SRE_SDC *sre_sdc;
 
 // Ignore unused variable warnings for these as they are only used on a need to use basis
 #pragma GCC diagnostic push
@@ -344,6 +345,7 @@ enum ERROR_TYPES
 	SCS_DIO_AS,
 	SCS_DIO_DASH,
 	SCS_AIN_F1,
+	SDC_ERR,
 };
 
 static const char *ERROR_TYPES_STR[] = {
@@ -360,6 +362,7 @@ static const char *ERROR_TYPES_STR[] = {
 		"SCS DIO AS",
 		"SCS DIO Dash",
 		"SCS AIN F1",
+		"SDC OPEN",
 };
 
 enum VCU_ERROR_TYPES
@@ -407,9 +410,9 @@ static const char *SDC_ERROR_TYPES_STR[] = {
 		"Motor Rear Left",
 		"MP TSAL",
 		"Motor Rear Right",
-		"PLUG IN HVD IDIOTS",
-		"Battery Connector",
-		"TSMS",
+		"HVD, BAT CON, TSMS",
+		"HVD, BAT CON, TSMS",
+		"HVD, BAT CON, TSMS",
 };
 
 enum BAT_ERROR_TYPES
@@ -485,7 +488,8 @@ static const char **ERROR_SUB_TYPE_MAP[ERROR_TYPE_COUNT] = {
 		NULL,								 // SCS_FUSEBOARD
 		NULL,								 // SCS_DIO_AS
 		NULL,								 // SCS_DIO_DASH
-		NULL								 // SCS_AIN_F1
+		NULL,								 // SCS_AIN_F1
+		SDC_ERROR_TYPES_STR	 // SDC_ERR
 };
 
 /* ---------- STATE MANAGEMENT ------------------- */

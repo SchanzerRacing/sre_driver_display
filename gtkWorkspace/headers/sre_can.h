@@ -43,6 +43,7 @@ extern struct HSC_SBG_Accel_Struct HSC_SBG_ACCEL;
 extern struct LOG_LEM_Struct LOG_LEM;
 extern struct LOG_FUSE_Currents_Struct LOG_Fuse_Currents;
 extern struct PARC_FUSE_States_Struct PARC_FUSE_States;
+extern struct LOG_SDC_Struct LOG_SDC;
 
 // Safety Messages
 // enum SAF_AIN_F1_Status_ERRORS {SCS_ERROR_AIN, Throttle_Lower_ERROR, Throttle_Upper_ERROR, Throttle_Differential_ERROR, Brake_ERROR, GEN_SCS};

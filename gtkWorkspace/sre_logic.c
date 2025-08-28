@@ -30,6 +30,7 @@ SRE_Vehicle_info *sre_vehicle_info;
 SRE_Switch_States *sre_switches;
 SRE_GUI *sre_gui;
 SRE_States *sre_state;
+SRE_SDC *sre_sdc;
 
 SRE_error *vehicle_errors[MAX_ERRORS] = {NULL};
 
@@ -99,6 +100,12 @@ void init_sre_logic()
 		printf("Failed to allocate memory for sre_state\n");
 		return;
 	}
+	sre_sdc = (SRE_SDC *)malloc(sizeof(SRE_SDC));
+	if (sre_sdc == NULL)
+	{
+		printf("Failed to allocate memory for sre_sdc\n");
+		return;
+	}
 
 	// Pressures
 	sre_pressures->brake_pressure_1 = 0;
@@ -158,6 +165,22 @@ void init_sre_logic()
 	sre_state->asb_check_sequence = 0;
 	sre_state->asb_trigger_cause = 0;
 
+	// SDC States
+	sre_sdc->res = false;
+	sre_sdc->motor_fr = false;
+	sre_sdc->asb = false;
+	sre_sdc->bspd = false;
+	sre_sdc->bots = false;
+	sre_sdc->motor_fl = false;
+	sre_sdc->dash = false;
+	sre_sdc->inertia = false;
+	sre_sdc->motor_rl = false;
+	sre_sdc->mainhoop = false;
+	sre_sdc->motor_rr = false;
+	sre_sdc->hvd = false;
+	sre_sdc->ts_connector = false;
+	sre_sdc->tsms = false;
+
 	// Graphical
 	sre_gui->tsa_ready = false;
 	sre_gui->tsa_active = false;
@@ -176,7 +199,7 @@ gboolean sre_run_display()
 	displayCallbackCounter += 1;
 	if ((displayCallbackCounter % 10) == 0)
 	{
-		printf("sre_run_display, %d\n", displayCallbackCounter);
+		// printf("sre_run_display, %d\n", displayCallbackCounter);
 	}
 
 	tsa_logic();
@@ -281,6 +304,22 @@ void state_update()
 	sre_state->asb_checkup_complete = DV_ASB_Status.checkup_complete;
 	sre_state->asb_check_sequence = DV_ASB_Status.check_sequence;
 	sre_state->asb_trigger_cause = DV_ASB_Status.trigger_cause;
+
+	// Fuses
+	sre_sdc->res = LOG_SDC.sdc_res;
+	sre_sdc->motor_fr = LOG_SDC.sdc_fr;
+	sre_sdc->asb = LOG_SDC.sdc_asb;
+	sre_sdc->bspd = LOG_SDC.sdc_bspd;
+	sre_sdc->bots = LOG_SDC.sdc_bots;
+	sre_sdc->motor_fl = LOG_SDC.sdc_fl;
+	sre_sdc->dash = LOG_SDC.sdc_dash;
+	sre_sdc->inertia = LOG_SDC.sdc_inertia;
+	sre_sdc->motor_rl = LOG_SDC.sdc_rl;
+	sre_sdc->mainhoop = LOG_SDC.sdc_tsal;
+	sre_sdc->motor_rr = LOG_SDC.sdc_rr;
+	sre_sdc->hvd = LOG_SDC.sdc_hvd;
+	sre_sdc->ts_connector = LOG_SDC.sdc_ts_connector;
+	sre_sdc->tsms = LOG_SDC.sdc_tsms;
 }
 
 void label_update()
@@ -707,7 +746,7 @@ void graphical_update()
 	// printf("car_state: %s\n", CAR_STATE_STR[sre_state->car_state]);
 	// printf("bat_state: %s\n", BAT_STATE_STR[sre_state->bat_state]);
 
-	printf("currentPanel %d\n", currentPanel);
+	// printf("currentPanel %d\n", currentPanel);
 	if (sre_gui->tsa_ready)
 	{
 		// gtk_widget_add_css_class(GTK_WIDGET(tsa_label_array[currentPanel]), "blink");
@@ -815,7 +854,7 @@ void error_logic()
 		}
 	}
 
-	if (sre_state->bat_state == ISO_ERROR || sre_state->bat_state == SDC_OPEN ||
+	if (sre_state->bat_state == ISO_ERROR ||
 			sre_state->bat_state == BMS_ERROR || sre_state->bat_state == IMD_ERROR ||
 			sre_state->bat_state == BAT_ERROR)
 	{
@@ -831,9 +870,52 @@ void error_logic()
 		}
 	}
 
-	
+	uint8_t sdc_err_nbr = 0;
+	if (sre_sdc->res == true)
+		sdc_err_nbr = 1;
+	else if (sre_sdc->motor_fr == true)
+		sdc_err_nbr = 2;
+	else if (sre_sdc->asb == true)
+		sdc_err_nbr = 3;
+	else if (sre_sdc->bspd == true)
+		sdc_err_nbr = 4;
+	else if (sre_sdc->bots == true)
+		sdc_err_nbr = 5;
+	else if (sre_sdc->motor_fl == true)
+		sdc_err_nbr = 6;
+	else if (sre_sdc->dash == true)
+		sdc_err_nbr = 7;
+	else if (sre_sdc->inertia == true)
+		sdc_err_nbr = 8;
+	else if (sre_sdc->motor_rl == true)
+		sdc_err_nbr = 9;
+	else if (sre_sdc->mainhoop == true)
+		sdc_err_nbr = 10;
+	else if (sre_sdc->motor_rr == true)
+		sdc_err_nbr = 11;
+	else if (sre_sdc->hvd == true)
+		sdc_err_nbr = 12;
+	else if (sre_sdc->ts_connector == true)
+		sdc_err_nbr = 13;
+	else if (sre_sdc->tsms == true)
+		sdc_err_nbr = 14;
 
 	// If SDC is open check Fuseboard SDC sensing
+	if (sre_state->bat_state == SDC_OPEN && sdc_err_nbr >= 1)
+	{
+		printf("sdc_err_nbr: %d\r\n", sdc_err_nbr);
+		SRE_error *buff_error = check_if_error_exists(SDC_ERR, sdc_err_nbr);
+		if (buff_error == NULL)
+		{
+			SRE_error *new_buff_error = create_sre_error(SDC_ERR, sdc_err_nbr);
+			add_error(new_buff_error);
+		}
+		else
+		{
+			buff_error->last_seen = (uint64_t)time(NULL);
+		}
+	}
+
 	// if(sre_state->bat_state == SDC_ERROR)
 	// {
 	// 	SRE_error *buff_error = check_if_error_exists(SDC_ERR, sre_state->bat_state);
