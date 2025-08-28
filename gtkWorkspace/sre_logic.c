@@ -854,9 +854,7 @@ void error_logic()
 		}
 	}
 
-	if (sre_state->bat_state == ISO_ERROR ||
-			sre_state->bat_state == BMS_ERROR || sre_state->bat_state == IMD_ERROR ||
-			sre_state->bat_state == BAT_ERROR)
+	if (sre_state->bat_state == ISO_ERROR || sre_state->bat_state == BMS_ERROR || sre_state->bat_state == IMD_ERROR || sre_state->bat_state == BAT_ERROR)
 	{
 		SRE_error *buff_error = check_if_error_exists(BAT_ERR, sre_state->bat_state);
 		if (buff_error == NULL)
@@ -901,7 +899,7 @@ void error_logic()
 		sdc_err_nbr = 14;
 
 	// If SDC is open check Fuseboard SDC sensing
-	if (sre_state->bat_state == SDC_OPEN && sdc_err_nbr >= 1)
+	if (sre_state->bat_state == SDC_OPEN)
 	{
 		printf("sdc_err_nbr: %d\r\n", sdc_err_nbr);
 		SRE_error *buff_error = check_if_error_exists(SDC_ERR, sdc_err_nbr);

@@ -217,41 +217,42 @@ static void event_key_release_cb(
 
 	if (keyval == GDK_KEY_u)
 	{
-		sre_state->bat_state = SDC_OPEN;
-		sre_sdc->res = false;
-		sre_sdc->motor_fr = false;
-		sre_sdc->asb = false;
-		sre_sdc->bspd = false;
-		sre_sdc->bots = false;
-		sre_sdc->motor_fl = false;
-		sre_sdc->dash = false;
-		sre_sdc->inertia = false;
-		sre_sdc->motor_rl = false;
-		sre_sdc->mainhoop = false;
-		sre_sdc->motor_rr = false;
-		sre_sdc->hvd = false;
-		sre_sdc->ts_connector = false;
-		sre_sdc->tsms = false;
+		if (sre_state->bat_state != SDC_OPEN)
+			sre_state->bat_state = SDC_OPEN;
+		else
+			sre_state->bat_state = UNDEFINED_B;
 	}
 
 	if (keyval == GDK_KEY_i)
 	{
-		sre_sdc->res = true;
+		if (sre_sdc->res == false)
+			sre_sdc->res = true;
+		else
+			sre_sdc->res = false;
 	}
 
 	if (keyval == GDK_KEY_o)
 	{
-		sre_sdc->bspd = true;
+		if (sre_sdc->bspd == false)
+			sre_sdc->bspd = true;
+		else
+			sre_sdc->bspd = false;
 	}
 
 	if (keyval == GDK_KEY_p)
 	{
-		sre_sdc->motor_rl = 1;
+		if (sre_sdc->motor_rl == false)
+			sre_sdc->motor_rl = true;
+		else
+			sre_sdc->motor_rl = false;
 	}
 
 	if (keyval == GDK_KEY_k)
 	{
-		sre_sdc->hvd = 1;
+		if (sre_sdc->hvd == false)
+			sre_sdc->hvd = true;
+		else
+			sre_sdc->hvd = false;
 	}
 
 	if (keyval == GDK_KEY_t)

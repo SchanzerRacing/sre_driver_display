@@ -25,7 +25,7 @@
 #define FREE_AFTER 1 // seconds
 #define ERROR_TYPE_COUNT 14
 #define ERROR_SUB_TYPE_COUNT 15
-#define ERROR_PANEL_UPDATE_INT 3 // seconds
+#define ERROR_PANEL_UPDATE_INT 1 // seconds
 
 // Functions
 gboolean sre_run_display();
@@ -203,20 +203,20 @@ typedef struct
 typedef struct
 {
 	// SDC States
-	bool res;
-	bool motor_fr;
-	bool asb;
-	bool bspd;
-	bool bots;
-	bool motor_fl;
-	bool dash;
-	bool inertia;
-	bool motor_rl;
-	bool mainhoop;
-	bool motor_rr;
-	bool hvd;
-	bool ts_connector;
-	bool tsms;
+	uint8_t res;
+	uint8_t motor_fr;
+	uint8_t asb;
+	uint8_t bspd;
+	uint8_t bots;
+	uint8_t motor_fl;
+	uint8_t dash;
+	uint8_t inertia;
+	uint8_t motor_rl;
+	uint8_t mainhoop;
+	uint8_t motor_rr;
+	uint8_t hvd;
+	uint8_t ts_connector;
+	uint8_t tsms;
 } SRE_SDC;
 
 typedef struct
