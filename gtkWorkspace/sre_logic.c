@@ -123,10 +123,10 @@ void init_sre_logic()
 
 	// Battery
 	sre_battery->bat_soc = 10.0;
-	sre_battery->bat_temp_max = 0;
-	sre_battery->bat_temp_min = 0;
-	sre_battery->bat_volt_max = 0;
-	sre_battery->bat_volt_min = 0;
+	sre_battery->bat_temp_max = 53;
+	sre_battery->bat_temp_min = 48;
+	sre_battery->bat_volt_max = 3.0;
+	sre_battery->bat_volt_min = 2.6;
 
 	// Power Measurement
 	sre_power->sdc_power = 0;
@@ -235,7 +235,6 @@ void state_update()
 	sre_pressures->asb_pressure_2 = DV_ASB_Pressure.pressure_2;
 
 	// TEMPERATURES
-
 	if (GW_PE_RearRight.temp_igbt > GW_PE_RearLeft.temp_igbt)
 	{
 		sre_temperatures->temp_per = GW_PE_RearRight.temp_igbt;
@@ -254,8 +253,8 @@ void state_update()
 		sre_temperatures->temp_pef = GW_PE_FrontLeft.temp_igbt;
 	}
 
-	sre_temperatures->temp_motor_fl = 0;
-	sre_temperatures->temp_motor_fr = 0;
+	sre_temperatures->temp_motor_fl = GW_PE_FrontLeft.temp_motor;
+	sre_temperatures->temp_motor_fr = GW_PE_FrontRight.temp_motor;
 	sre_temperatures->temp_motor_rl = GW_PE_RearLeft.temp_motor;
 	sre_temperatures->temp_motor_rr = GW_PE_RearRight.temp_motor;
 
@@ -598,12 +597,83 @@ void label_update()
 
 			sprintf(buffer, "%.0f°c", sre_battery->bat_temp_max);
 			gtk_label_set_text(GTK_LABEL(info_bat_temp_max_vehicleinfo), buffer);
+			if (sre_battery->bat_temp_max >= CRITICAL_BAT_TEMP)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_bat_temp_max_vehicleinfo),
+																 "blink-critical");
+			}
+			else if (sre_battery->bat_temp_max >= WARNING_BAT_TEMP)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_bat_temp_max_vehicleinfo),
+																 "blink-warning");
+			}
+			else
+			{
+				gtk_widget_remove_css_class(GTK_WIDGET(info_bat_temp_max_vehicleinfo),
+																		"blink-warning");
+				gtk_widget_remove_css_class(GTK_WIDGET(info_bat_temp_max_vehicleinfo),
+																		"blink-critical");
+			}
+
 			sprintf(buffer, "%.0f°c", sre_battery->bat_temp_min);
 			gtk_label_set_text(GTK_LABEL(info_bat_temp_min_vehicleinfo), buffer);
-			sprintf(buffer, "%.1fv", sre_battery->bat_volt_max);
+			if (sre_battery->bat_temp_min >= CRITICAL_BAT_TEMP)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_bat_temp_min_vehicleinfo),
+																 "blink-critical");
+			}
+			else if (sre_battery->bat_temp_min >= WARNING_BAT_TEMP)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_bat_temp_min_vehicleinfo),
+																 "blink-warning");
+			}
+			else
+			{
+				gtk_widget_remove_css_class(GTK_WIDGET(info_bat_temp_min_vehicleinfo),
+																		"blink-warning");
+				gtk_widget_remove_css_class(GTK_WIDGET(info_bat_temp_min_vehicleinfo),
+																		"blink-critical");
+			}
+
+			sprintf(buffer, "%.2fv", sre_battery->bat_volt_max);
 			gtk_label_set_text(GTK_LABEL(info_bat_voltage_max_vehicleinfo), buffer);
-			sprintf(buffer, "%.1fv", sre_battery->bat_volt_min);
+			if (sre_battery->bat_volt_max <= CRITICAL_VOLT)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_bat_voltage_max_vehicleinfo),
+																 "blink-critical");
+			}
+			else if (sre_battery->bat_volt_max <= WARNING_VOLT)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_bat_voltage_max_vehicleinfo),
+																 "blink-warning");
+			}
+			else
+			{
+				gtk_widget_remove_css_class(GTK_WIDGET(info_bat_voltage_max_vehicleinfo),
+																		"blink-warning");
+				gtk_widget_remove_css_class(GTK_WIDGET(info_bat_voltage_max_vehicleinfo),
+																		"blink-critical");
+			}
+
+			sprintf(buffer, "%.2fv", sre_battery->bat_volt_min);
 			gtk_label_set_text(GTK_LABEL(info_bat_voltage_min_vehicleinfo), buffer);
+			if (sre_battery->bat_volt_min <= CRITICAL_VOLT)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_bat_voltage_min_vehicleinfo),
+																 "blink-critical");
+			}
+			else if (sre_battery->bat_volt_min <= WARNING_VOLT)
+			{
+				gtk_widget_add_css_class(GTK_WIDGET(info_bat_voltage_min_vehicleinfo),
+																 "blink-warning");
+			}
+			else
+			{
+				gtk_widget_remove_css_class(GTK_WIDGET(info_bat_voltage_min_vehicleinfo),
+																		"blink-warning");
+				gtk_widget_remove_css_class(GTK_WIDGET(info_bat_voltage_min_vehicleinfo),
+																		"blink-critical");
+			}
 
 			// POWER MEASUREMENT
 			sprintf(buffer, "%.0f", sre_power->hv_power);
