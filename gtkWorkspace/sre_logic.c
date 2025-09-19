@@ -31,7 +31,7 @@ SRE_Switch_States *sre_switches;
 SRE_GUI *sre_gui;
 SRE_States *sre_state;
 SRE_SDC *sre_sdc;
-SRE_ECU_ERRORS *sre_ecu_errors;
+SRE_ECU_Errors *sre_ecu_errors;
 
 SRE_error *vehicle_errors[MAX_ERRORS] = {NULL};
 
@@ -107,7 +107,7 @@ void init_sre_logic()
 		printf("Failed to allocate memory for sre_sdc\n");
 		return;
 	}
-	sre_ecu_errors = (SRE_ECU_ERRORS *)malloc(sizeof(SRE_ECU_ERRORS));
+	sre_ecu_errors = (SRE_ECU_Errors *)malloc(sizeof(SRE_ECU_Errors));
 	if (sre_ecu_errors == NULL)
 	{
 		printf("Failed to allocate memory for sre_ecu_errors\n");
@@ -982,20 +982,20 @@ void r2d_logic()
 
 void error_logic()
 {
-	if (sre_state->car_state == SCS_ERROR)
-	{
-		SRE_error *buff_error = check_if_error_exists(VCU, VCU_SCS);
-		if (buff_error == NULL)
-		{
-			printf("create buffer error, SCS_ERROR\n");
-			SRE_error *new_buff_error = create_sre_error(VCU, VCU_SCS);
-			add_error(new_buff_error);
-		}
-		else
-		{
-			buff_error->last_seen = (uint64_t)time(NULL);
-		}
-	}
+	// if (sre_state->car_state == SCS_ERROR)
+	// {
+	// 	SRE_error *buff_error = check_if_error_exists(VCU, VCU_SCS);
+	// 	if (buff_error == NULL)
+	// 	{
+	// 		printf("create buffer error, SCS_ERROR\n");
+	// 		SRE_error *new_buff_error = create_sre_error(VCU, VCU_SCS);
+	// 		add_error(new_buff_error);
+	// 	}
+	// 	else
+	// 	{
+	// 		buff_error->last_seen = (uint64_t)time(NULL);
+	// 	}
+	// }
 
 	if (sre_state->bat_state == ISO_ERROR || sre_state->bat_state == BMS_ERROR || sre_state->bat_state == IMD_ERROR || sre_state->bat_state == BAT_ERROR)
 	{
