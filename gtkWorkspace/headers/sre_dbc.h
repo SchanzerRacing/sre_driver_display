@@ -1,8 +1,7 @@
-
 /***
  * Header File from DBC
  * Auto-generated using Python
- * 19.07.2025, 08:44:28 UTC
+ * 18.09.2025, 17:31:54 UTC
  ***/
 
 #ifndef SRE_DBC_H
@@ -44,6 +43,43 @@
 #define SOFT_INLINE
 
 #endif
+
+/* -------------------------- GW_PE_TorqueCurrents -------------------------- */
+
+#define GW_PE_TORQUE_CURRENTS_ID 0x380
+#define GW_PE_TORQUE_CURRENTS_DLC 8         // Number of Bytes
+#define GW_PE_TORQUE_CURRENTS_CYCLE_TIME 10 // Milliseconds
+
+union GW_PE_TorqueCurrents_Union
+{
+
+  uint64_t data;
+
+  struct
+  {
+
+    int64_t tq_fl : 16;
+    int64_t tq_fr : 16;
+    int64_t tq_rl : 16;
+    int64_t tq_rr : 16;
+  };
+};
+
+struct GW_PE_TorqueCurrents_Struct
+{
+  int16_t tq_fl;
+  int16_t tq_fr;
+  int16_t tq_rl;
+  int16_t tq_rr;
+};
+
+extern SOFT_INLINE void
+GW_PE_TorqueCurrents_UnionToStruct(struct GW_PE_TorqueCurrents_Struct *s,
+                                   union GW_PE_TorqueCurrents_Union u);
+
+extern SOFT_INLINE void
+GW_PE_TorqueCurrents_StructToUnion(union GW_PE_TorqueCurrents_Union *u,
+                                   struct GW_PE_TorqueCurrents_Struct s);
 
 /* -------------------------------- SF2_Info -------------------------------- */
 
@@ -303,14 +339,14 @@ union LOG_ECU_ERRORS_Union
 
     uint64_t temp : 1;
     uint64_t mt_driver_input : 1;
-    uint64_t mt_zo_co_front : 1;
+    uint64_t mt_zoco_front : 1;
     uint64_t mt_asb_status : 1;
-    uint64_t mt_streeing : 1;
+    uint64_t mt_steering : 1;
     uint64_t mt_st_wheel_status : 1;
-    uint64_t mt_zo_co_left : 1;
-    uint64_t mt_zo_co_right : 1;
+    uint64_t mt_zoco_left : 1;
+    uint64_t mt_zoco_right : 1;
     uint64_t mt_drive_command : 1;
-    uint64_t mt_zo_co_rear : 1;
+    uint64_t mt_zoco_rear : 1;
     uint64_t mt_extern_button : 1;
     uint64_t mt_saf_fuseboard : 1;
     uint64_t mt_bat_pcb_info : 1;
@@ -326,10 +362,10 @@ union LOG_ECU_ERRORS_Union
     uint64_t mt_saf_dash_status : 1;
     uint64_t scs_dash : 1;
     uint64_t scs_asb_status : 1;
-    uint64_t scs_zo_co_front : 1;
-    uint64_t scs_zo_co_left : 1;
-    uint64_t scs_zo_co_rear : 1;
-    uint64_t scs_zo_co_right : 1;
+    uint64_t scs_zoco_front : 1;
+    uint64_t scs_zoco_left : 1;
+    uint64_t scs_zoco_rear : 1;
+    uint64_t scs_zoco_right : 1;
     uint64_t scs_st_wheel : 1;
     uint64_t scs_fuseboard : 1;
     uint64_t reserved_1 : 33;
@@ -340,14 +376,14 @@ struct LOG_ECU_ERRORS_Struct
 {
   bool temp;
   bool mt_driver_input;
-  bool mt_zo_co_front;
+  bool mt_zoco_front;
   bool mt_asb_status;
-  bool mt_streeing;
+  bool mt_steering;
   bool mt_st_wheel_status;
-  bool mt_zo_co_left;
-  bool mt_zo_co_right;
+  bool mt_zoco_left;
+  bool mt_zoco_right;
   bool mt_drive_command;
-  bool mt_zo_co_rear;
+  bool mt_zoco_rear;
   bool mt_extern_button;
   bool mt_saf_fuseboard;
   bool mt_bat_pcb_info;
@@ -363,10 +399,10 @@ struct LOG_ECU_ERRORS_Struct
   bool mt_saf_dash_status;
   bool scs_dash;
   bool scs_asb_status;
-  bool scs_zo_co_front;
-  bool scs_zo_co_left;
-  bool scs_zo_co_rear;
-  bool scs_zo_co_right;
+  bool scs_zoco_front;
+  bool scs_zoco_left;
+  bool scs_zoco_rear;
+  bool scs_zoco_right;
   bool scs_st_wheel;
   bool scs_fuseboard;
 };

@@ -78,6 +78,8 @@ can_mapping_t can_mappings[] = {
 		 LOG_ECU_ERRORS_UnionToStruct},
 		{LOG_SDC_ID, &LOG_SDC,
 		 LOG_SDC_UnionToStruct},
+		{LOG_ECU_ERRORS_ID, &LOG_ECU_Errors,
+		 LOG_ECU_ERRORS_UnionToStruct},
 };
 
 #pragma GCC diagnostic pop
@@ -100,7 +102,7 @@ uint8_t read_and_match()
 	int nbytes = read(can_socket, &frame, sizeof(struct can_frame));
 	if (nbytes < 0)
 	{
-		perror("Error in reading");
+		perror("Error in reading CAN frame");
 		return 0;
 	}
 

@@ -2,7 +2,7 @@
 /***
  * Header File from DBC
  * Auto-generated using Python
- * 19.07.2025, 08:44:28 UTC
+ * 18.09.2025, 17:31:54 UTC
  ***/
 
 #if defined ARCH_F280013X
@@ -14,6 +14,28 @@
 #endif
 
 #include "headers/sre_dbc.h" //relative path to really make sure
+
+/* -------------------------- GW_PE_TorqueCurrents -------------------------- */
+
+SOFT_INLINE void
+GW_PE_TorqueCurrents_UnionToStruct(struct GW_PE_TorqueCurrents_Struct *s,
+                                   union GW_PE_TorqueCurrents_Union u)
+{
+  s->tq_fl = (int16_t)u.tq_fl;
+  s->tq_fr = (int16_t)u.tq_fr;
+  s->tq_rl = (int16_t)u.tq_rl;
+  s->tq_rr = (int16_t)u.tq_rr;
+}
+
+SOFT_INLINE void
+GW_PE_TorqueCurrents_StructToUnion(union GW_PE_TorqueCurrents_Union *u,
+                                   struct GW_PE_TorqueCurrents_Struct s)
+{
+  u->tq_fl = (int64_t)s.tq_fl;
+  u->tq_fr = (int64_t)s.tq_fr;
+  u->tq_rl = (int64_t)s.tq_rl;
+  u->tq_rr = (int64_t)s.tq_rr;
+}
 
 /* -------------------------------- SF2_Info -------------------------------- */
 
@@ -163,14 +185,14 @@ SOFT_INLINE void LOG_ECU_ERRORS_UnionToStruct(struct LOG_ECU_ERRORS_Struct *s,
 {
   s->temp = (bool)u.temp;
   s->mt_driver_input = (bool)u.mt_driver_input;
-  s->mt_zo_co_front = (bool)u.mt_zo_co_front;
+  s->mt_zoco_front = (bool)u.mt_zoco_front;
   s->mt_asb_status = (bool)u.mt_asb_status;
-  s->mt_streeing = (bool)u.mt_streeing;
+  s->mt_steering = (bool)u.mt_steering;
   s->mt_st_wheel_status = (bool)u.mt_st_wheel_status;
-  s->mt_zo_co_left = (bool)u.mt_zo_co_left;
-  s->mt_zo_co_right = (bool)u.mt_zo_co_right;
+  s->mt_zoco_left = (bool)u.mt_zoco_left;
+  s->mt_zoco_right = (bool)u.mt_zoco_right;
   s->mt_drive_command = (bool)u.mt_drive_command;
-  s->mt_zo_co_rear = (bool)u.mt_zo_co_rear;
+  s->mt_zoco_rear = (bool)u.mt_zoco_rear;
   s->mt_extern_button = (bool)u.mt_extern_button;
   s->mt_saf_fuseboard = (bool)u.mt_saf_fuseboard;
   s->mt_bat_pcb_info = (bool)u.mt_bat_pcb_info;
@@ -186,10 +208,10 @@ SOFT_INLINE void LOG_ECU_ERRORS_UnionToStruct(struct LOG_ECU_ERRORS_Struct *s,
   s->mt_saf_dash_status = (bool)u.mt_saf_dash_status;
   s->scs_dash = (bool)u.scs_dash;
   s->scs_asb_status = (bool)u.scs_asb_status;
-  s->scs_zo_co_front = (bool)u.scs_zo_co_front;
-  s->scs_zo_co_left = (bool)u.scs_zo_co_left;
-  s->scs_zo_co_rear = (bool)u.scs_zo_co_rear;
-  s->scs_zo_co_right = (bool)u.scs_zo_co_right;
+  s->scs_zoco_front = (bool)u.scs_zoco_front;
+  s->scs_zoco_left = (bool)u.scs_zoco_left;
+  s->scs_zoco_rear = (bool)u.scs_zoco_rear;
+  s->scs_zoco_right = (bool)u.scs_zoco_right;
   s->scs_st_wheel = (bool)u.scs_st_wheel;
   s->scs_fuseboard = (bool)u.scs_fuseboard;
 }
@@ -199,14 +221,14 @@ SOFT_INLINE void LOG_ECU_ERRORS_StructToUnion(union LOG_ECU_ERRORS_Union *u,
 {
   u->temp = (uint64_t)s.temp;
   u->mt_driver_input = (uint64_t)s.mt_driver_input;
-  u->mt_zo_co_front = (uint64_t)s.mt_zo_co_front;
+  u->mt_zoco_front = (uint64_t)s.mt_zoco_front;
   u->mt_asb_status = (uint64_t)s.mt_asb_status;
-  u->mt_streeing = (uint64_t)s.mt_streeing;
+  u->mt_steering = (uint64_t)s.mt_steering;
   u->mt_st_wheel_status = (uint64_t)s.mt_st_wheel_status;
-  u->mt_zo_co_left = (uint64_t)s.mt_zo_co_left;
-  u->mt_zo_co_right = (uint64_t)s.mt_zo_co_right;
+  u->mt_zoco_left = (uint64_t)s.mt_zoco_left;
+  u->mt_zoco_right = (uint64_t)s.mt_zoco_right;
   u->mt_drive_command = (uint64_t)s.mt_drive_command;
-  u->mt_zo_co_rear = (uint64_t)s.mt_zo_co_rear;
+  u->mt_zoco_rear = (uint64_t)s.mt_zoco_rear;
   u->mt_extern_button = (uint64_t)s.mt_extern_button;
   u->mt_saf_fuseboard = (uint64_t)s.mt_saf_fuseboard;
   u->mt_bat_pcb_info = (uint64_t)s.mt_bat_pcb_info;
@@ -222,10 +244,10 @@ SOFT_INLINE void LOG_ECU_ERRORS_StructToUnion(union LOG_ECU_ERRORS_Union *u,
   u->mt_saf_dash_status = (uint64_t)s.mt_saf_dash_status;
   u->scs_dash = (uint64_t)s.scs_dash;
   u->scs_asb_status = (uint64_t)s.scs_asb_status;
-  u->scs_zo_co_front = (uint64_t)s.scs_zo_co_front;
-  u->scs_zo_co_left = (uint64_t)s.scs_zo_co_left;
-  u->scs_zo_co_rear = (uint64_t)s.scs_zo_co_rear;
-  u->scs_zo_co_right = (uint64_t)s.scs_zo_co_right;
+  u->scs_zoco_front = (uint64_t)s.scs_zoco_front;
+  u->scs_zoco_left = (uint64_t)s.scs_zoco_left;
+  u->scs_zoco_rear = (uint64_t)s.scs_zoco_rear;
+  u->scs_zoco_right = (uint64_t)s.scs_zoco_right;
   u->scs_st_wheel = (uint64_t)s.scs_st_wheel;
   u->scs_fuseboard = (uint64_t)s.scs_fuseboard;
 }

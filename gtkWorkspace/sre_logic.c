@@ -31,6 +31,7 @@ SRE_Switch_States *sre_switches;
 SRE_GUI *sre_gui;
 SRE_States *sre_state;
 SRE_SDC *sre_sdc;
+SRE_ECU_ERRORS *sre_ecu_errors;
 
 SRE_error *vehicle_errors[MAX_ERRORS] = {NULL};
 
@@ -104,6 +105,12 @@ void init_sre_logic()
 	if (sre_sdc == NULL)
 	{
 		printf("Failed to allocate memory for sre_sdc\n");
+		return;
+	}
+	sre_ecu_errors = (SRE_ECU_ERRORS *)malloc(sizeof(SRE_ECU_ERRORS));
+	if (sre_ecu_errors == NULL)
+	{
+		printf("Failed to allocate memory for sre_ecu_errors\n");
 		return;
 	}
 
@@ -180,6 +187,39 @@ void init_sre_logic()
 	sre_sdc->hvd = false;
 	sre_sdc->ts_connector = false;
 	sre_sdc->tsms = false;
+
+	// ECU Errors
+	sre_ecu_errors->temp = false;
+	sre_ecu_errors->mt_driver_input = false;
+	sre_ecu_errors->mt_zoco_front = false;
+	sre_ecu_errors->mt_asb_status = false;
+	sre_ecu_errors->mt_steering = false;
+	sre_ecu_errors->mt_st_wheel_status = false;
+	sre_ecu_errors->mt_zoco_left = false;
+	sre_ecu_errors->mt_zoco_right = false;
+	sre_ecu_errors->mt_drive_command = false;
+	sre_ecu_errors->mt_zoco_rear = false;
+	sre_ecu_errors->mt_extern_button = false;
+	sre_ecu_errors->mt_saf_fuseboard = false;
+	sre_ecu_errors->mt_bat_pcb_info = false;
+	sre_ecu_errors->mt_bat_pcb_control = false;
+	sre_ecu_errors->mt_bat_pcb_soc = false;
+	sre_ecu_errors->mt_temp_pcb_1 = false;
+	sre_ecu_errors->mt_temp_pcb_2 = false;
+	sre_ecu_errors->mt_temp_pcb_3 = false;
+	sre_ecu_errors->mt_temp_pcb_4 = false;
+	sre_ecu_errors->mt_temp_pcb_5 = false;
+	sre_ecu_errors->mt_temp_pcb_6 = false;
+	sre_ecu_errors->mt_lsc_dash_buttons = false;
+	sre_ecu_errors->mt_saf_dash_status = false;
+	sre_ecu_errors->scs_dash = false;
+	sre_ecu_errors->scs_asb_status = false;
+	sre_ecu_errors->scs_zoco_front = false;
+	sre_ecu_errors->scs_zoco_left = false;
+	sre_ecu_errors->scs_zoco_rear = false;
+	sre_ecu_errors->scs_zoco_right = false;
+	sre_ecu_errors->scs_st_wheel = false;
+	sre_ecu_errors->scs_fuseboard = false;
 
 	// Graphical
 	sre_gui->tsa_ready = false;
@@ -319,6 +359,39 @@ void state_update()
 	sre_sdc->hvd = LOG_SDC.sdc_hvd;
 	sre_sdc->ts_connector = LOG_SDC.sdc_ts_connector;
 	sre_sdc->tsms = LOG_SDC.sdc_tsms;
+
+	// ECU Errors
+	sre_ecu_errors->temp = LOG_ECU_Errors.temp;
+	sre_ecu_errors->mt_driver_input = LOG_ECU_Errors.mt_driver_input;
+	sre_ecu_errors->mt_zoco_front = LOG_ECU_Errors.mt_zoco_front;
+	sre_ecu_errors->mt_asb_status = LOG_ECU_Errors.mt_asb_status;
+	sre_ecu_errors->mt_steering = LOG_ECU_Errors.mt_steering;
+	sre_ecu_errors->mt_st_wheel_status = LOG_ECU_Errors.mt_st_wheel_status;
+	sre_ecu_errors->mt_zoco_left = LOG_ECU_Errors.mt_zoco_left;
+	sre_ecu_errors->mt_zoco_right = LOG_ECU_Errors.mt_zoco_right;
+	sre_ecu_errors->mt_drive_command = LOG_ECU_Errors.mt_drive_command;
+	sre_ecu_errors->mt_zoco_rear = LOG_ECU_Errors.mt_zoco_rear;
+	sre_ecu_errors->mt_extern_button = LOG_ECU_Errors.mt_extern_button;
+	sre_ecu_errors->mt_saf_fuseboard = LOG_ECU_Errors.mt_saf_fuseboard;
+	sre_ecu_errors->mt_bat_pcb_info = LOG_ECU_Errors.mt_bat_pcb_info;
+	sre_ecu_errors->mt_bat_pcb_control = LOG_ECU_Errors.mt_bat_pcb_control;
+	sre_ecu_errors->mt_bat_pcb_soc = LOG_ECU_Errors.mt_bat_pcb_soc;
+	sre_ecu_errors->mt_temp_pcb_1 = LOG_ECU_Errors.mt_temp_pcb_1;
+	sre_ecu_errors->mt_temp_pcb_2 = LOG_ECU_Errors.mt_temp_pcb_2;
+	sre_ecu_errors->mt_temp_pcb_3 = LOG_ECU_Errors.mt_temp_pcb_3;
+	sre_ecu_errors->mt_temp_pcb_4 = LOG_ECU_Errors.mt_temp_pcb_4;
+	sre_ecu_errors->mt_temp_pcb_5 = LOG_ECU_Errors.mt_temp_pcb_5;
+	sre_ecu_errors->mt_temp_pcb_6 = LOG_ECU_Errors.mt_temp_pcb_6;
+	sre_ecu_errors->mt_lsc_dash_buttons = LOG_ECU_Errors.mt_lsc_dash_buttons;
+	sre_ecu_errors->mt_saf_dash_status = LOG_ECU_Errors.mt_saf_dash_status;
+	sre_ecu_errors->scs_dash = LOG_ECU_Errors.scs_dash;
+	sre_ecu_errors->scs_asb_status = LOG_ECU_Errors.scs_asb_status;
+	sre_ecu_errors->scs_zoco_front = LOG_ECU_Errors.scs_zoco_front;
+	sre_ecu_errors->scs_zoco_left = LOG_ECU_Errors.scs_zoco_left;
+	sre_ecu_errors->scs_zoco_rear = LOG_ECU_Errors.scs_zoco_rear;
+	sre_ecu_errors->scs_zoco_right = LOG_ECU_Errors.scs_zoco_right;
+	sre_ecu_errors->scs_st_wheel = LOG_ECU_Errors.scs_st_wheel;
+	sre_ecu_errors->scs_fuseboard = LOG_ECU_Errors.scs_fuseboard;
 }
 
 void label_update()
@@ -938,6 +1011,7 @@ void error_logic()
 		}
 	}
 
+	// Fuseboard
 	uint8_t sdc_err_nbr = 0;
 	if (sre_sdc->res == true)
 		sdc_err_nbr = 1;
@@ -984,16 +1058,85 @@ void error_logic()
 		}
 	}
 
-	// if(sre_state->bat_state == SDC_ERROR)
-	// {
-	// 	SRE_error *buff_error = check_if_error_exists(SDC_ERR, sre_state->bat_state);
-	// 	if(buff_error == NULL) {
-	// 		SRE_error *new_buff_error = create_sre_error(SDC_ERR, sre_state->bat_state);
-	// 		add_error(new_buff_error);
-	// 	} else {
-	// 		buff_error->last_seen = (uint64_t)time(NULL);
-	// 	}
-	// }
+	// ECU Errors
+	uint8_t ecu_err_nbr = 0;
+	if (sre_ecu_errors->temp == true)
+		ecu_err_nbr = 1;
+	else if (sre_ecu_errors->mt_driver_input == true)
+		ecu_err_nbr = 2;
+	else if (sre_ecu_errors->mt_zoco_front == true)
+		ecu_err_nbr = 3;
+	else if (sre_ecu_errors->mt_asb_status == true)
+		ecu_err_nbr = 4;
+	else if (sre_ecu_errors->mt_steering == true)
+		ecu_err_nbr = 5;
+	else if (sre_ecu_errors->mt_st_wheel_status == true)
+		ecu_err_nbr = 6;
+	else if (sre_ecu_errors->mt_zoco_left == true)
+		ecu_err_nbr = 7;
+	else if (sre_ecu_errors->mt_zoco_right == true)
+		ecu_err_nbr = 8;
+	else if (sre_ecu_errors->mt_drive_command == true)
+		ecu_err_nbr = 9;
+	else if (sre_ecu_errors->mt_zoco_rear == true)
+		ecu_err_nbr = 10;
+	else if (sre_ecu_errors->mt_extern_button == true)
+		ecu_err_nbr = 11;
+	else if (sre_ecu_errors->mt_saf_fuseboard == true)
+		ecu_err_nbr = 12;
+	else if (sre_ecu_errors->mt_bat_pcb_info == true)
+		ecu_err_nbr = 13;
+	else if (sre_ecu_errors->mt_bat_pcb_control == true)
+		ecu_err_nbr = 14;
+	else if (sre_ecu_errors->mt_bat_pcb_soc == true)
+		ecu_err_nbr = 15;
+	else if (sre_ecu_errors->mt_temp_pcb_1 == true)
+		ecu_err_nbr = 16;
+	else if (sre_ecu_errors->mt_temp_pcb_2 == true)
+		ecu_err_nbr = 17;
+	else if (sre_ecu_errors->mt_temp_pcb_3 == true)
+		ecu_err_nbr = 18;
+	else if (sre_ecu_errors->mt_temp_pcb_4 == true)
+		ecu_err_nbr = 19;
+	else if (sre_ecu_errors->mt_temp_pcb_5 == true)
+		ecu_err_nbr = 20;
+	else if (sre_ecu_errors->mt_temp_pcb_6 == true)
+		ecu_err_nbr = 21;
+	else if (sre_ecu_errors->mt_lsc_dash_buttons == true)
+		ecu_err_nbr = 22;
+	else if (sre_ecu_errors->mt_saf_dash_status == true)
+		ecu_err_nbr = 23;
+	else if (sre_ecu_errors->scs_dash == true)
+		ecu_err_nbr = 24;
+	else if (sre_ecu_errors->scs_asb_status == true)
+		ecu_err_nbr = 25;
+	else if (sre_ecu_errors->scs_zoco_front == true)
+		ecu_err_nbr = 26;
+	else if (sre_ecu_errors->scs_zoco_left == true)
+		ecu_err_nbr = 27;
+	else if (sre_ecu_errors->scs_zoco_rear == true)
+		ecu_err_nbr = 28;
+	else if (sre_ecu_errors->scs_zoco_right == true)
+		ecu_err_nbr = 29;
+	else if (sre_ecu_errors->scs_st_wheel == true)
+		ecu_err_nbr = 30;
+	else if (sre_ecu_errors->scs_fuseboard == true)
+		ecu_err_nbr = 31;
+
+	if (sre_state->car_state == SCS_ERROR)
+	{
+		printf("ecu_err_nbr: %d\r\n", ecu_err_nbr);
+		SRE_error *buff_error = check_if_error_exists(SCS_ERR, ecu_err_nbr);
+		if (buff_error == NULL)
+		{
+			SRE_error *new_buff_error = create_sre_error(SCS_ERR, ecu_err_nbr);
+			add_error(new_buff_error);
+		}
+		else
+		{
+			buff_error->last_seen = (uint64_t)time(NULL);
+		}
+	}
 
 	if (sre_state->asb_state == EBS_TRIGGERED && sre_state->asb_trigger_cause == 0)
 	{
