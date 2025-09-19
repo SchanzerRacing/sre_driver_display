@@ -275,6 +275,7 @@ typedef struct
   uint8_t asb_checkup_complete;
   uint8_t asb_check_sequence;
   uint16_t asb_trigger_cause;
+  uint8_t asms_state;
 } SRE_States;
 
 extern SRE_Pressures *sre_pressures;

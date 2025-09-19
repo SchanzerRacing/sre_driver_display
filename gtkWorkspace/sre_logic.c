@@ -171,6 +171,7 @@ void init_sre_logic()
 	sre_state->ebs_state = 0;
 	sre_state->asb_check_sequence = 0;
 	sre_state->asb_trigger_cause = 0;
+	sre_state->asms_state = 0;
 
 	// SDC States
 	sre_sdc->res = false;
@@ -343,6 +344,7 @@ void state_update()
 	sre_state->asb_checkup_complete = DV_ASB_Status.checkup_complete;
 	sre_state->asb_check_sequence = DV_ASB_Status.check_sequence;
 	sre_state->asb_trigger_cause = DV_ASB_Status.trigger_cause;
+	sre_state->asms_state = DV_ASB_Status.asms;
 
 	// Fuses
 	sre_sdc->res = LOG_SDC.sdc_res;
@@ -1068,21 +1070,13 @@ void error_logic()
 		ecu_err_nbr = 3;
 	else if (sre_ecu_errors->mt_asb_status == true)
 		ecu_err_nbr = 4;
-	else if (sre_ecu_errors->mt_steering == true)
-		ecu_err_nbr = 5;
-	else if (sre_ecu_errors->mt_st_wheel_status == true)
-		ecu_err_nbr = 6;
-	else if (sre_ecu_errors->mt_zoco_left == true)
-		ecu_err_nbr = 7;
-	else if (sre_ecu_errors->mt_zoco_right == true)
-		ecu_err_nbr = 8;
-	else if (sre_ecu_errors->mt_drive_command == true)
+	else if (sre_ecu_errors->mt_drive_command == true && sre_state->asms_state == 1)
 		ecu_err_nbr = 9;
 	else if (sre_ecu_errors->mt_zoco_rear == true)
 		ecu_err_nbr = 10;
-	else if (sre_ecu_errors->mt_extern_button == true)
+	else if (sre_ecu_errors->mt_extern_button == true && sre_state->asms_state == 1)
 		ecu_err_nbr = 11;
-	else if (sre_ecu_errors->mt_saf_fuseboard == true)
+	else if (sre_ecu_errors->mt_saf_fuseboard == true && sre_state->asms_state == 1)
 		ecu_err_nbr = 12;
 	else if (sre_ecu_errors->mt_bat_pcb_info == true)
 		ecu_err_nbr = 13;
@@ -1112,16 +1106,26 @@ void error_logic()
 		ecu_err_nbr = 25;
 	else if (sre_ecu_errors->scs_zoco_front == true)
 		ecu_err_nbr = 26;
-	else if (sre_ecu_errors->scs_zoco_left == true)
-		ecu_err_nbr = 27;
 	else if (sre_ecu_errors->scs_zoco_rear == true)
 		ecu_err_nbr = 28;
-	else if (sre_ecu_errors->scs_zoco_right == true)
-		ecu_err_nbr = 29;
-	else if (sre_ecu_errors->scs_st_wheel == true)
-		ecu_err_nbr = 30;
-	else if (sre_ecu_errors->scs_fuseboard == true)
+	else if (sre_ecu_errors->scs_fuseboard == true && sre_state->asms_state == 1)
 		ecu_err_nbr = 31;
+
+	// Not driving relevant
+	// else if (sre_ecu_errors->mt_steering == true)
+	// 	ecu_err_nbr = 5;
+	// else if (sre_ecu_errors->mt_st_wheel_status == true)
+	// 	ecu_err_nbr = 6;
+	// else if (sre_ecu_errors->mt_zoco_left == true)
+	// 	ecu_err_nbr = 7;
+	// else if (sre_ecu_errors->mt_zoco_right == true)
+	// 	ecu_err_nbr = 8;
+	// else if (sre_ecu_errors->scs_zoco_left == true)
+	// 	ecu_err_nbr = 27;
+	// else if (sre_ecu_errors->scs_zoco_right == true)
+	// 	ecu_err_nbr = 29;
+	// else if (sre_ecu_errors->scs_st_wheel == true)
+	// 	ecu_err_nbr = 30;
 
 	if (sre_state->car_state == SCS_ERROR)
 	{
