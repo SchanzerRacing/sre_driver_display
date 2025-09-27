@@ -195,7 +195,7 @@ int main(int argc, char *argv[])
 	}
 #endif
 
-	GtkApplication *app = gtk_application_new("org.fsae.driverdisplay",
+	GtkApplication *app = gtk_application_new("org.SchanzerRacing.DriverDisplay",
 																						G_APPLICATION_DEFAULT_FLAGS);
 	g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
 

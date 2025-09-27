@@ -309,7 +309,7 @@ void state_update()
 	// POWER MEASUREMENT
 	sre_power->sdc_power = LOG_Fuse_Currents.sdc_current;
 	sre_power->lv_power = LOG_LEM.lv;
-	sre_power->hv_power = GW_Battery_Status.power;
+	sre_power->hv_power = GW_Battery_Status.current;
 	sre_power->epos_power = LOG_Fuse_Currents.epos_current;
 
 	// VEHICLE INFO
