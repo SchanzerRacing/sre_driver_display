@@ -258,7 +258,7 @@
                 </child>
                 <child>
                   <object class="GtkLabel" id="label_power_vehicleinfo">
-                    <property name="label" translatable="1">Power kW</property>
+                    <property name="label" translatable="1">current A</property>
                     <attributes>
                       <attribute name="font-desc" value="Sans 12"></attribute>
                     </attributes>
