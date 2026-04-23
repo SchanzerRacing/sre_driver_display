@@ -45,6 +45,8 @@ extern struct LOG_FUSE_Currents_Struct LOG_Fuse_Currents;
 extern struct PARC_FUSE_States_Struct PARC_FUSE_States;
 extern struct LOG_SDC_Struct LOG_SDC;
 extern struct LOG_ECU_ERRORS_Struct LOG_ECU_Errors;
+extern struct PARS_ECU_Settings_Struct PARS_ECU_Settings;
+extern struct PARC_ECU_Settings_Struct PARC_ECU_Settings;
 
 // CAN Mapping
 typedef struct

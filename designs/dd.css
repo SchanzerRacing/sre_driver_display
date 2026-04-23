@@ -68,3 +68,25 @@
     border-color: white;
     border-width: 1px;
 }
+
+.param-match {
+    background-color: rgba(0, 200, 80, 0.35);
+    border-radius: 4px;
+}
+
+.param-mismatch {
+    background-color: rgba(220, 50, 50, 0.45);
+    border-radius: 4px;
+}
+
+.signal-on {
+    background-color: rgba(0, 200, 80, 0.85);
+    border-radius: 8px;
+    color: white;
+}
+
+.signal-off {
+    background-color: rgba(220, 50, 50, 0.85);
+    border-radius: 8px;
+    color: white;
+}

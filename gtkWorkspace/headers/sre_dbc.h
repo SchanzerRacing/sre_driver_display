@@ -1,7 +1,8 @@
+
 /***
  * Header File from DBC
  * Auto-generated using Python
- * 18.09.2025, 17:31:54 UTC
+ * 23.04.2026, 17:56:30 UTC
  ***/
 
 #ifndef SRE_DBC_H
@@ -161,7 +162,7 @@ union SF2_Data2_Union
 
     int64_t vel_x : 16;
     int64_t vel_y : 16;
-    int64_t angle : 16;
+    int64_t slip_angle_sf_2 : 16;
     uint64_t reserved_1 : 16;
   };
 };
@@ -170,7 +171,7 @@ struct SF2_Data2_Struct
 {
   float vel_x;
   float vel_y;
-  float angle;
+  float slip_angle_sf_2;
 };
 
 extern SOFT_INLINE void SF2_Data2_UnionToStruct(struct SF2_Data2_Struct *s,
@@ -194,16 +195,16 @@ union SF2_Data1_Union
   {
 
     uint64_t timestamp : 16;
-    uint64_t vel : 16;
-    uint64_t dist : 32;
+    uint64_t velocity_sf_2 : 16;
+    uint64_t dist_sf_2 : 32;
   };
 };
 
 struct SF2_Data1_Struct
 {
   uint16_t timestamp;
-  float vel;
-  float dist;
+  float velocity_sf_2;
+  float dist_sf_2;
 };
 
 extern SOFT_INLINE void SF2_Data1_UnionToStruct(struct SF2_Data1_Struct *s,
@@ -228,7 +229,7 @@ union LOG_DashLEDs_Union
 
     uint64_t imd : 1;
     uint64_t reserved_1 : 1;
-    uint64_t ams : 1;
+    uint64_t ams_led : 1;
     uint64_t reserved_2 : 61;
   };
 };
@@ -236,7 +237,7 @@ union LOG_DashLEDs_Union
 struct LOG_DashLEDs_Struct
 {
   bool imd;
-  bool ams;
+  bool ams_led;
 };
 
 extern SOFT_INLINE void
@@ -337,7 +338,7 @@ union LOG_ECU_ERRORS_Union
   struct
   {
 
-    uint64_t temp : 1;
+    uint64_t temp_err : 1;
     uint64_t mt_driver_input : 1;
     uint64_t mt_zoco_front : 1;
     uint64_t mt_asb_status : 1;
@@ -374,7 +375,7 @@ union LOG_ECU_ERRORS_Union
 
 struct LOG_ECU_ERRORS_Struct
 {
-  bool temp;
+  bool temp_err;
   bool mt_driver_input;
   bool mt_zoco_front;
   bool mt_asb_status;
@@ -429,41 +430,49 @@ union PARS_ECU_Settings_Union
   struct
   {
 
-    uint64_t recu_enable : 1;
-    uint64_t acc_drosselung_enable : 1;
-    uint64_t tv_enable : 1;
-    uint64_t dtd_enable : 1;
-    uint64_t launch_control_enable : 1;
-    uint64_t torque_limit_enable : 1;
-    uint64_t reserved_1 : 2;
-    uint64_t recu_percentage : 5;
-    uint64_t opd_lower_input : 5;
-    uint64_t opd_output_brake : 5;
-    uint64_t opd_output_drive : 5;
-    uint64_t opd_splitting_point : 5;
-    uint64_t opd_upper_input : 5;
-    uint64_t car_control_speed_switch : 3;
-    uint64_t car_control_max_speed : 5;
-    uint64_t reserved_2 : 18;
+    uint64_t enable_recu_s : 1;
+    uint64_t change_params : 1;
+    uint64_t enable_tv_s : 1;
+    uint64_t enable_dynamic_torque_s : 1;
+    uint64_t enable_launch_control_s : 1;
+    uint64_t enable_torque_limit_s : 1;
+    uint64_t enable_opd_s : 1;
+    uint64_t enable_speed_limit_s : 1;
+    uint64_t recu_percentage_s : 5;
+    uint64_t opd_lower_input_s : 5;
+    uint64_t opd_output_brake_s : 5;
+    uint64_t opd_output_drive_s : 5;
+    uint64_t opd_splitting_point_s : 5;
+    uint64_t opd_upper_input_s : 5;
+    uint64_t car_control_speed_switch_s : 3;
+    uint64_t car_control_max_speed_s : 5;
+    uint64_t max_power_s : 8;
+    uint64_t max_torque_s : 8;
+    uint64_t car_control_slip_angle_switch_s : 2;
   };
 };
 
 struct PARS_ECU_Settings_Struct
 {
-  bool recu_enable;
-  bool acc_drosselung_enable;
-  bool tv_enable;
-  bool dtd_enable;
-  bool launch_control_enable;
-  bool torque_limit_enable;
-  float recu_percentage;
-  float opd_lower_input;
-  float opd_output_brake;
-  float opd_output_drive;
-  float opd_splitting_point;
-  float opd_upper_input;
-  uint8_t car_control_speed_switch;
-  float car_control_max_speed;
+  bool enable_recu_s;
+  bool change_params;
+  bool enable_tv_s;
+  bool enable_dynamic_torque_s;
+  bool enable_launch_control_s;
+  bool enable_torque_limit_s;
+  bool enable_opd_s;
+  bool enable_speed_limit_s;
+  float recu_percentage_s;
+  float opd_lower_input_s;
+  float opd_output_brake_s;
+  float opd_output_drive_s;
+  float opd_splitting_point_s;
+  float opd_upper_input_s;
+  uint8_t car_control_speed_switch_s;
+  float car_control_max_speed_s;
+  float max_power_s;
+  float max_torque_s;
+  uint8_t car_control_slip_angle_switch_s;
 };
 
 extern SOFT_INLINE void
@@ -488,41 +497,49 @@ union PARC_ECU_Settings_Union
   struct
   {
 
-    uint64_t recu_enable : 1;
-    uint64_t acc_drosselung_enable : 1;
-    uint64_t tv_enable : 1;
-    uint64_t dtd_enable : 1;
-    uint64_t launch_control_enable : 1;
-    uint64_t torque_limit_enable : 1;
-    uint64_t reserved_1 : 2;
-    uint64_t recu_percentage : 5;
-    uint64_t opd_lower_input : 5;
-    uint64_t opd_output_brake : 5;
-    uint64_t opd_output_drive : 5;
-    uint64_t opd_splitting_point : 5;
-    uint64_t opd_upper_input : 5;
-    uint64_t car_control_speed_switch : 3;
-    uint64_t car_control_max_speed : 5;
-    uint64_t reserved_2 : 18;
+    uint64_t enable_recu_c : 1;
+    uint64_t enable_acc_drosselung_c : 1;
+    uint64_t enable_tv_c : 1;
+    uint64_t enable_dynamic_torque_c : 1;
+    uint64_t enable_launch_control_c : 1;
+    uint64_t enable_torque_limit_c : 1;
+    uint64_t enable_opd_c : 1;
+    uint64_t enable_speed_limit_c : 1;
+    uint64_t recu_percentage_c : 5;
+    uint64_t opd_lower_input_c : 5;
+    uint64_t opd_output_brake_c : 5;
+    uint64_t opd_output_drive_c : 5;
+    uint64_t opd_splitting_point_c : 5;
+    uint64_t opd_upper_input_c : 5;
+    uint64_t car_control_speed_switch_c : 3;
+    uint64_t car_control_max_speed_c : 5;
+    uint64_t max_power_c : 8;
+    uint64_t max_torque_c : 8;
+    uint64_t car_control_slip_angle_switch_c : 2;
   };
 };
 
 struct PARC_ECU_Settings_Struct
 {
-  bool recu_enable;
-  bool acc_drosselung_enable;
-  bool tv_enable;
-  bool dtd_enable;
-  bool launch_control_enable;
-  bool torque_limit_enable;
-  float recu_percentage;
-  float opd_lower_input;
-  float opd_output_brake;
-  float opd_output_drive;
-  float opd_splitting_point;
-  float opd_upper_input;
-  uint8_t car_control_speed_switch;
-  float car_control_max_speed;
+  bool enable_recu_c;
+  bool enable_acc_drosselung_c;
+  bool enable_tv_c;
+  bool enable_dynamic_torque_c;
+  bool enable_launch_control_c;
+  bool enable_torque_limit_c;
+  bool enable_opd_c;
+  bool enable_speed_limit_c;
+  float recu_percentage_c;
+  float opd_lower_input_c;
+  float opd_output_brake_c;
+  float opd_output_drive_c;
+  float opd_splitting_point_c;
+  float opd_upper_input_c;
+  uint8_t car_control_speed_switch_c;
+  float car_control_max_speed_c;
+  float max_power_c;
+  float max_torque_c;
+  uint8_t car_control_slip_angle_switch_c;
 };
 
 extern SOFT_INLINE void
@@ -533,13 +550,13 @@ extern SOFT_INLINE void
 PARC_ECU_Settings_StructToUnion(union PARC_ECU_Settings_Union *u,
                                 struct PARC_ECU_Settings_Struct s);
 
-/* ------------------------------ LOG_aero_SPR ------------------------------ */
+/* ------------------------------ LOG_Aero_SPR ------------------------------ */
 
 #define LOG_AERO_SPR_ID 0x7C6
 #define LOG_AERO_SPR_DLC 8         // Number of Bytes
 #define LOG_AERO_SPR_CYCLE_TIME 10 // Milliseconds
 
-union LOG_aero_SPR_Union
+union LOG_Aero_SPR_Union
 {
 
   uint64_t data;
@@ -547,41 +564,41 @@ union LOG_aero_SPR_Union
   struct
   {
 
-    uint64_t temp_1 : 10;
-    uint64_t temp_2 : 10;
-    uint64_t temp_3 : 10;
-    uint64_t hum_1 : 10;
-    uint64_t hum_2 : 10;
-    uint64_t hum_3 : 10;
+    uint64_t temp_1_spr : 10;
+    uint64_t temp_2_spr : 10;
+    uint64_t temp_3_spr : 10;
+    uint64_t hum_1_spr : 10;
+    uint64_t hum_2_spr : 10;
+    uint64_t hum_3_spr : 10;
     uint64_t reserved_1 : 4;
   };
 };
 
-struct LOG_aero_SPR_Struct
+struct LOG_Aero_SPR_Struct
 {
-  float temp_1;
-  float temp_2;
-  float temp_3;
-  float hum_1;
-  float hum_2;
-  float hum_3;
+  float temp_1_spr;
+  float temp_2_spr;
+  float temp_3_spr;
+  float hum_1_spr;
+  float hum_2_spr;
+  float hum_3_spr;
 };
 
 extern SOFT_INLINE void
-LOG_aero_SPR_UnionToStruct(struct LOG_aero_SPR_Struct *s,
-                           union LOG_aero_SPR_Union u);
+LOG_Aero_SPR_UnionToStruct(struct LOG_Aero_SPR_Struct *s,
+                           union LOG_Aero_SPR_Union u);
 
 extern SOFT_INLINE void
-LOG_aero_SPR_StructToUnion(union LOG_aero_SPR_Union *u,
-                           struct LOG_aero_SPR_Struct s);
+LOG_Aero_SPR_StructToUnion(union LOG_Aero_SPR_Union *u,
+                           struct LOG_Aero_SPR_Struct s);
 
-/* ------------------------------ LOG_aero_SPL ------------------------------ */
+/* ------------------------------ LOG_Aero_SPL ------------------------------ */
 
 #define LOG_AERO_SPL_ID 0x7C5
 #define LOG_AERO_SPL_DLC 8         // Number of Bytes
 #define LOG_AERO_SPL_CYCLE_TIME 10 // Milliseconds
 
-union LOG_aero_SPL_Union
+union LOG_Aero_SPL_Union
 {
 
   uint64_t data;
@@ -589,41 +606,41 @@ union LOG_aero_SPL_Union
   struct
   {
 
-    uint64_t temp_1 : 10;
-    uint64_t temp_2 : 10;
-    uint64_t temp_3 : 10;
-    uint64_t hum_1 : 10;
-    uint64_t hum_2 : 10;
-    uint64_t hum_3 : 10;
+    uint64_t temp_1_spl : 10;
+    uint64_t temp_2_spl : 10;
+    uint64_t temp_3_spl : 10;
+    uint64_t hum_1_spl : 10;
+    uint64_t hum_2_spl : 10;
+    uint64_t hum_3_spl : 10;
     uint64_t reserved_1 : 4;
   };
 };
 
-struct LOG_aero_SPL_Struct
+struct LOG_Aero_SPL_Struct
 {
-  float temp_1;
-  float temp_2;
-  float temp_3;
-  float hum_1;
-  float hum_2;
-  float hum_3;
+  float temp_1_spl;
+  float temp_2_spl;
+  float temp_3_spl;
+  float hum_1_spl;
+  float hum_2_spl;
+  float hum_3_spl;
 };
 
 extern SOFT_INLINE void
-LOG_aero_SPL_UnionToStruct(struct LOG_aero_SPL_Struct *s,
-                           union LOG_aero_SPL_Union u);
+LOG_Aero_SPL_UnionToStruct(struct LOG_Aero_SPL_Struct *s,
+                           union LOG_Aero_SPL_Union u);
 
 extern SOFT_INLINE void
-LOG_aero_SPL_StructToUnion(union LOG_aero_SPL_Union *u,
-                           struct LOG_aero_SPL_Struct s);
+LOG_Aero_SPL_StructToUnion(union LOG_Aero_SPL_Union *u,
+                           struct LOG_Aero_SPL_Struct s);
 
-/* ------------------------------ LOG_aero_RW ------------------------------ */
+/* ------------------------------ LOG_Aero_RW ------------------------------ */
 
 #define LOG_AERO_RW_ID 0x7C7
 #define LOG_AERO_RW_DLC 5         // Number of Bytes
 #define LOG_AERO_RW_CYCLE_TIME 10 // Milliseconds
 
-union LOG_aero_RW_Union
+union LOG_Aero_RW_Union
 {
 
   uint64_t data;
@@ -631,35 +648,35 @@ union LOG_aero_RW_Union
   struct
   {
 
-    uint64_t temp_1 : 10;
-    uint64_t temp_2 : 10;
-    uint64_t hum_1 : 10;
-    uint64_t hum_2 : 10;
+    uint64_t temp_1_rw : 10;
+    uint64_t temp_2_rw : 10;
+    uint64_t hum_1_rw : 10;
+    uint64_t hum_2_rw : 10;
     uint64_t reserved_1 : 24;
   };
 };
 
-struct LOG_aero_RW_Struct
+struct LOG_Aero_RW_Struct
 {
-  float temp_1;
-  float temp_2;
-  float hum_1;
-  float hum_2;
+  float temp_1_rw;
+  float temp_2_rw;
+  float hum_1_rw;
+  float hum_2_rw;
 };
 
-extern SOFT_INLINE void LOG_aero_RW_UnionToStruct(struct LOG_aero_RW_Struct *s,
-                                                  union LOG_aero_RW_Union u);
+extern SOFT_INLINE void LOG_Aero_RW_UnionToStruct(struct LOG_Aero_RW_Struct *s,
+                                                  union LOG_Aero_RW_Union u);
 
-extern SOFT_INLINE void LOG_aero_RW_StructToUnion(union LOG_aero_RW_Union *u,
-                                                  struct LOG_aero_RW_Struct s);
+extern SOFT_INLINE void LOG_Aero_RW_StructToUnion(union LOG_Aero_RW_Union *u,
+                                                  struct LOG_Aero_RW_Struct s);
 
-/* ------------------------------ LOG_aero_FW ------------------------------ */
+/* ------------------------------ LOG_Aero_FW ------------------------------ */
 
 #define LOG_AERO_FW_ID 0x7C4
 #define LOG_AERO_FW_DLC 5         // Number of Bytes
 #define LOG_AERO_FW_CYCLE_TIME 10 // Milliseconds
 
-union LOG_aero_FW_Union
+union LOG_Aero_FW_Union
 {
 
   uint64_t data;
@@ -667,27 +684,27 @@ union LOG_aero_FW_Union
   struct
   {
 
-    uint64_t temp_1 : 10;
-    uint64_t temp_2 : 10;
-    uint64_t hum_1 : 10;
-    uint64_t hum_2 : 10;
+    uint64_t temp_1_fw : 10;
+    uint64_t temp_2_fw : 10;
+    uint64_t hum_1_fw : 10;
+    uint64_t hum_2_fw : 10;
     uint64_t reserved_1 : 24;
   };
 };
 
-struct LOG_aero_FW_Struct
+struct LOG_Aero_FW_Struct
 {
-  float temp_1;
-  float temp_2;
-  float hum_1;
-  float hum_2;
+  float temp_1_fw;
+  float temp_2_fw;
+  float hum_1_fw;
+  float hum_2_fw;
 };
 
-extern SOFT_INLINE void LOG_aero_FW_UnionToStruct(struct LOG_aero_FW_Struct *s,
-                                                  union LOG_aero_FW_Union u);
+extern SOFT_INLINE void LOG_Aero_FW_UnionToStruct(struct LOG_Aero_FW_Struct *s,
+                                                  union LOG_Aero_FW_Union u);
 
-extern SOFT_INLINE void LOG_aero_FW_StructToUnion(union LOG_aero_FW_Union *u,
-                                                  struct LOG_aero_FW_Struct s);
+extern SOFT_INLINE void LOG_Aero_FW_StructToUnion(union LOG_Aero_FW_Union *u,
+                                                  struct LOG_Aero_FW_Struct s);
 
 /* ------------------------------ CAL_EPOS_HC ------------------------------ */
 
@@ -703,14 +720,14 @@ union CAL_EPOS_HC_Union
   struct
   {
 
-    uint64_t voltage : 12;
+    uint64_t voltage_epos : 12;
     uint64_t reserved_1 : 52;
   };
 };
 
 struct CAL_EPOS_HC_Struct
 {
-  uint16_t voltage;
+  uint16_t voltage_epos;
 };
 
 extern SOFT_INLINE void CAL_EPOS_HC_UnionToStruct(struct CAL_EPOS_HC_Struct *s,
@@ -733,14 +750,14 @@ union CAL_SDC_Union
   struct
   {
 
-    uint64_t voltage : 12;
+    uint64_t voltage_sdc : 12;
     uint64_t reserved_1 : 52;
   };
 };
 
 struct CAL_SDC_Struct
 {
-  uint16_t voltage;
+  uint16_t voltage_sdc;
 };
 
 extern SOFT_INLINE void CAL_SDC_UnionToStruct(struct CAL_SDC_Struct *s,
@@ -763,19 +780,19 @@ union CAL_WT_Right_Union
   struct
   {
 
-    uint64_t vin_1 : 16;
-    uint64_t vin_2 : 16;
-    uint64_t vin_3 : 16;
-    uint64_t vin_4 : 16;
+    uint64_t vin_1_r : 16;
+    uint64_t vin_2_r : 16;
+    uint64_t vin_3_r : 16;
+    uint64_t vin_4_r : 16;
   };
 };
 
 struct CAL_WT_Right_Struct
 {
-  uint16_t vin_1;
-  uint16_t vin_2;
-  uint16_t vin_3;
-  uint16_t vin_4;
+  uint16_t vin_1_r;
+  uint16_t vin_2_r;
+  uint16_t vin_3_r;
+  uint16_t vin_4_r;
 };
 
 extern SOFT_INLINE void
@@ -800,19 +817,19 @@ union CAL_WT_Left_Union
   struct
   {
 
-    uint64_t vin_1 : 16;
-    uint64_t vin_2 : 16;
-    uint64_t vin_3 : 16;
-    uint64_t vin_4 : 16;
+    uint64_t vin_1_l : 16;
+    uint64_t vin_2_l : 16;
+    uint64_t vin_3_l : 16;
+    uint64_t vin_4_l : 16;
   };
 };
 
 struct CAL_WT_Left_Struct
 {
-  uint16_t vin_1;
-  uint16_t vin_2;
-  uint16_t vin_3;
-  uint16_t vin_4;
+  uint16_t vin_1_l;
+  uint16_t vin_2_l;
+  uint16_t vin_3_l;
+  uint16_t vin_4_l;
 };
 
 extern SOFT_INLINE void CAL_WT_Left_UnionToStruct(struct CAL_WT_Left_Struct *s,
@@ -835,14 +852,14 @@ union CAL_LV_LEM_Union
   struct
   {
 
-    uint64_t voltage : 12;
+    uint64_t voltage_lvlem : 12;
     uint64_t reserved_1 : 52;
   };
 };
 
 struct CAL_LV_LEM_Struct
 {
-  uint16_t voltage;
+  uint16_t voltage_lvlem;
 };
 
 extern SOFT_INLINE void CAL_LV_LEM_UnionToStruct(struct CAL_LV_LEM_Struct *s,
@@ -1348,7 +1365,7 @@ union HSC_SBG_Euler_Acc_Union
   {
 
     uint64_t roll_acc : 16;
-    uint64_t pitch_acc : 16;
+    uint64_t pitch_euler_acc : 16;
     uint64_t yaw_acc : 16;
     uint64_t reserved_1 : 16;
   };
@@ -1357,7 +1374,7 @@ union HSC_SBG_Euler_Acc_Union
 struct HSC_SBG_Euler_Acc_Struct
 {
   float roll_acc;
-  float pitch_acc;
+  float pitch_euler_acc;
   float yaw_acc;
 };
 
@@ -1383,8 +1400,8 @@ union HSC_SBG_Euler_Union
   struct
   {
 
-    int64_t roll : 16;
-    int64_t pitch : 16;
+    int64_t roll_euler : 16;
+    int64_t pitch_euler : 16;
     int64_t yaw : 16;
     uint64_t reserved_1 : 16;
   };
@@ -1392,8 +1409,8 @@ union HSC_SBG_Euler_Union
 
 struct HSC_SBG_Euler_Struct
 {
-  float roll;
-  float pitch;
+  float roll_euler;
+  float pitch_euler;
   float yaw;
 };
 
@@ -1635,7 +1652,7 @@ union HSC_SBG_True_Heading_Union
 
     uint64_t true_heading : 16;
     uint64_t true_heading_acc : 16;
-    int64_t pitch : 16;
+    int64_t pitch_heading : 16;
     uint64_t reserved_1 : 16;
   };
 };
@@ -1644,7 +1661,7 @@ struct HSC_SBG_True_Heading_Struct
 {
   float true_heading;
   float true_heading_acc;
-  float pitch;
+  float pitch_heading;
 };
 
 extern SOFT_INLINE void
@@ -1956,8 +1973,8 @@ union HSC_SBG_Track_Slip_Curve_Union
   struct
   {
 
-    int64_t angle_track : 16;
-    int64_t angle_slip : 16;
+    int64_t track_angle : 16;
+    int64_t slip_angle_sbg : 16;
     uint64_t curvature_radius : 16;
     uint64_t track_valid : 1;
     uint64_t slip_valid : 1;
@@ -1968,8 +1985,8 @@ union HSC_SBG_Track_Slip_Curve_Union
 
 struct HSC_SBG_Track_Slip_Curve_Struct
 {
-  float angle_track;
-  float angle_slip;
+  float track_angle;
+  float slip_angle_sbg;
   float curvature_radius;
   bool track_valid;
   bool slip_valid;
@@ -2138,18 +2155,18 @@ GW_Battery_Cells_StructToUnion(union GW_Battery_Cells_Union *u,
 /* --------------------------- GW_Battery_Status --------------------------- */
 typedef enum
 {
-  STATE_BAT_ERROR = 10,
-  STATE_IMD_ERROR = 9,
-  STATE_BMS_ERROR = 8,
-  STATE_AIR_WARNING = 7,
-  STATE_TSA = 6,
-  STATE_TS_STARTUP = 5,
-  STATE_WAIT_FOR_TS = 4,
-  STATE_SDC_CAR_OPEN = 3,
-  STATE_BMS_RESET = 2,
-  STATE_START = 1,
-  STATE_UNDEFINED = 0,
-} GW_Battery_Status_State;
+  BATSTATE_BAT_ERROR = 10,
+  BATSTATE_IMD_ERROR = 9,
+  BATSTATE_BMS_ERROR = 8,
+  BATSTATE_AIR_WARNING = 7,
+  BATSTATE_TSA = 6,
+  BATSTATE_TS_STARTUP = 5,
+  BATSTATE_WAIT_FOR_TS = 4,
+  BATSTATE_SDC_CAR_OPEN = 3,
+  BATSTATE_BMS_RESET = 2,
+  BATSTATE_START = 1,
+  BATSTATE_UNDEFINED = 0,
+} GW_Battery_Status_BatState;
 
 #define GW_BATTERY_STATUS_ID 0x385
 #define GW_BATTERY_STATUS_DLC 6          // Number of Bytes
@@ -2163,7 +2180,7 @@ union GW_Battery_Status_Union
   struct
   {
 
-    uint64_t state : 4;
+    uint64_t bat_state : 4;
     uint64_t soc_internal : 14;
     uint64_t power : 14;
     int64_t current : 16;
@@ -2173,7 +2190,7 @@ union GW_Battery_Status_Union
 
 struct GW_Battery_Status_Struct
 {
-  GW_Battery_Status_State state;
+  GW_Battery_Status_BatState bat_state;
   float soc_internal;
   float power;
   float current;
@@ -2201,19 +2218,19 @@ union GW_PE_FrontLeft_Union
   struct
   {
 
-    int64_t temp_motor : 16;
-    int64_t temp_inverter : 16;
-    int64_t temp_igbt : 16;
-    int64_t actual_velocity : 16;
+    int64_t temp_motor_fl : 16;
+    int64_t temp_inverter_fl : 16;
+    int64_t temp_igbt_fl : 16;
+    int64_t actual_velocity_fl : 16;
   };
 };
 
 struct GW_PE_FrontLeft_Struct
 {
-  float temp_motor;
-  float temp_inverter;
-  float temp_igbt;
-  int16_t actual_velocity;
+  float temp_motor_fl;
+  float temp_inverter_fl;
+  float temp_igbt_fl;
+  int16_t actual_velocity_fl;
 };
 
 extern SOFT_INLINE void
@@ -2238,19 +2255,19 @@ union GW_PE_RearLeft_Union
   struct
   {
 
-    int64_t temp_motor : 16;
-    int64_t temp_inverter : 16;
-    int64_t temp_igbt : 16;
-    int64_t actual_velocity : 16;
+    int64_t temp_motor_rl : 16;
+    int64_t temp_inverter_rl : 16;
+    int64_t temp_igbt_rl : 16;
+    int64_t actual_velocity_rl : 16;
   };
 };
 
 struct GW_PE_RearLeft_Struct
 {
-  float temp_motor;
-  float temp_inverter;
-  float temp_igbt;
-  int16_t actual_velocity;
+  float temp_motor_rl;
+  float temp_inverter_rl;
+  float temp_igbt_rl;
+  int16_t actual_velocity_rl;
 };
 
 extern SOFT_INLINE void
@@ -2275,19 +2292,19 @@ union GW_PE_RearRight_Union
   struct
   {
 
-    int64_t temp_motor : 16;
-    int64_t temp_inverter : 16;
-    int64_t temp_igbt : 16;
-    int64_t actual_velocity : 16;
+    int64_t temp_motor_rr : 16;
+    int64_t temp_inverter_rr : 16;
+    int64_t temp_igbt_rr : 16;
+    int64_t actual_velocity_rr : 16;
   };
 };
 
 struct GW_PE_RearRight_Struct
 {
-  float temp_motor;
-  float temp_inverter;
-  float temp_igbt;
-  int16_t actual_velocity;
+  float temp_motor_rr;
+  float temp_inverter_rr;
+  float temp_igbt_rr;
+  int16_t actual_velocity_rr;
 };
 
 extern SOFT_INLINE void
@@ -2312,19 +2329,19 @@ union GW_PE_FrontRight_Union
   struct
   {
 
-    int64_t temp_motor : 16;
-    int64_t temp_inverter : 16;
-    int64_t temp_igbt : 16;
-    int64_t actual_velocity : 16;
+    int64_t temp_motor_fr : 16;
+    int64_t temp_inverter_fr : 16;
+    int64_t temp_igbt_fr : 16;
+    int64_t actual_velocity_fr : 16;
   };
 };
 
 struct GW_PE_FrontRight_Struct
 {
-  float temp_motor;
-  float temp_inverter;
-  float temp_igbt;
-  int16_t actual_velocity;
+  float temp_motor_fr;
+  float temp_inverter_fr;
+  float temp_igbt_fr;
+  int16_t actual_velocity_fr;
 };
 
 extern SOFT_INLINE void
@@ -2385,7 +2402,7 @@ union LOG_ASSILEDs_Union
 
     uint64_t yellow : 1;
     uint64_t reserved_1 : 1;
-    uint64_t blue : 1;
+    uint64_t blue_assi : 1;
     uint64_t reserved_2 : 61;
   };
 };
@@ -2393,7 +2410,7 @@ union LOG_ASSILEDs_Union
 struct LOG_ASSILEDs_Struct
 {
   bool yellow;
-  bool blue;
+  bool blue_assi;
 };
 
 extern SOFT_INLINE void
@@ -2475,14 +2492,14 @@ EXC_PUMP_Control_StructToUnion(union EXC_PUMP_Control_Union *u,
 /* --------------------------- HSC_Vehicle_Status --------------------------- */
 typedef enum
 {
-  STATE_SCS_ERROR = 6,
-  STATE_LC_ON = 5,
-  STATE_DRIVE = 4,
-  STATE_WAIT_FOR_RTD = 3,
-  STATE_RTD_OFF = 2,
-  STATE_WAIT_FOR_TSA = 1,
-  STATE_UNDEFINED_OR_STARTUP = 0,
-} HSC_Vehicle_Status_State;
+  CARSTATE_SCS_ERROR = 6,
+  CARSTATE_LC_ON = 5,
+  CARSTATE_DRIVE = 4,
+  CARSTATE_WAIT_FOR_RTD = 3,
+  CARSTATE_RTD_OFF = 2,
+  CARSTATE_WAIT_FOR_TSA = 1,
+  CARSTATE_UNDEFINED_OR_STARTUP = 0,
+} HSC_Vehicle_Status_CarState;
 
 #define HSC_VEHICLE_STATUS_ID 0x103
 #define HSC_VEHICLE_STATUS_DLC 4         // Number of Bytes
@@ -2496,7 +2513,7 @@ union HSC_Vehicle_Status_Union
   struct
   {
 
-    uint64_t state : 3;
+    uint64_t car_state : 3;
     uint64_t imd_error : 1;
     uint64_t ams_error : 1;
     uint64_t gen_scs : 3;
@@ -2508,7 +2525,7 @@ union HSC_Vehicle_Status_Union
 
 struct HSC_Vehicle_Status_Struct
 {
-  HSC_Vehicle_Status_State state;
+  HSC_Vehicle_Status_CarState car_state;
   bool imd_error;
   bool ams_error;
   uint8_t gen_scs;
@@ -2538,7 +2555,7 @@ union LSC_Extern_Buttons_Union
   struct
   {
 
-    uint64_t tsa : 1;
+    uint64_t tsa_ext : 1;
     uint64_t gen_scs : 3;
     uint64_t reserved_1 : 60;
   };
@@ -2546,7 +2563,7 @@ union LSC_Extern_Buttons_Union
 
 struct LSC_Extern_Buttons_Struct
 {
-  bool tsa;
+  bool tsa_ext;
   uint8_t gen_scs;
 };
 
@@ -2738,7 +2755,7 @@ union HSC_Steering_Union
 
     int64_t steering_wheel_angle : 12;
     int64_t steering_angle : 12;
-    uint64_t angle_valid : 1;
+    uint64_t st_angle_valid : 1;
     uint64_t gen_scs : 3;
     uint64_t reserved_1 : 36;
   };
@@ -2748,7 +2765,7 @@ struct HSC_Steering_Struct
 {
   float steering_wheel_angle;
   float steering_angle;
-  bool angle_valid;
+  bool st_angle_valid;
   uint8_t gen_scs;
 };
 
@@ -2984,14 +3001,14 @@ DV_SCS_Errors_StructToUnion(union DV_SCS_Errors_Union *u,
 /* ----------------------------- DV_AMI_Status ----------------------------- */
 typedef enum
 {
-  STATE_AUTOX = 6,
-  STATE_INSPECTION = 5,
-  STATE_EBSTEST = 4,
-  STATE_TRACKDRIVE = 3,
-  STATE_SKIDPAD = 2,
-  STATE_ACCEL = 1,
-  STATE_MANUAL = 0,
-} DV_AMI_Status_State;
+  AMI_STATE_AUTOX = 6,
+  AMI_STATE_INSPECTION = 5,
+  AMI_STATE_EBSTEST = 4,
+  AMI_STATE_TRACKDRIVE = 3,
+  AMI_STATE_SKIDPAD = 2,
+  AMI_STATE_ACCEL = 1,
+  AMI_STATE_MANUAL = 0,
+} DV_AMI_Status_AMI_State;
 
 #define DV_AMI_STATUS_ID 0x505
 #define DV_AMI_STATUS_DLC 1          // Number of Bytes
@@ -3005,7 +3022,7 @@ union DV_AMI_Status_Union
   struct
   {
 
-    uint64_t state : 3;
+    uint64_t ami_state : 3;
     uint64_t gen_scs : 3;
     uint64_t reserved_1 : 58;
   };
@@ -3013,7 +3030,7 @@ union DV_AMI_Status_Union
 
 struct DV_AMI_Status_Struct
 {
-  DV_AMI_Status_State state;
+  DV_AMI_Status_AMI_State ami_state;
   uint8_t gen_scs;
 };
 
@@ -3151,6 +3168,17 @@ typedef enum
   AS_STATE__ = 0,
 } DV_System_Status_AS_State;
 
+typedef enum
+{
+  SYS_AMI_STATE_AUTOX = 6,
+  SYS_AMI_STATE_INSPECTION = 5,
+  SYS_AMI_STATE_EBSTEST = 4,
+  SYS_AMI_STATE_TRACKDRIVE = 3,
+  SYS_AMI_STATE_SKIDPAD = 2,
+  SYS_AMI_STATE_ACCEL = 1,
+  SYS_AMI_STATE_MANUAL = 0,
+} DV_System_Status_AMI_State;
+
 #define DV_SYSTEM_STATUS_ID 0x502
 #define DV_SYSTEM_STATUS_DLC 5          // Number of Bytes
 #define DV_SYSTEM_STATUS_CYCLE_TIME 100 // Milliseconds
@@ -3179,7 +3207,7 @@ struct DV_System_Status_Struct
 {
   DV_System_Status_AS_State as_state;
   uint8_t ebs_state;
-  uint8_t ami_state;
+  DV_System_Status_AMI_State ami_state;
   bool steering_state;
   uint8_t service_brake_state;
   uint8_t lap_counter;
@@ -3217,7 +3245,7 @@ union DV_ASB_Status_Union
     uint64_t sdc_closed : 1;
     uint64_t scs_error : 1;
     uint64_t trigger_cause : 4;
-    uint64_t state : 3;
+    uint64_t asb_state : 3;
     uint64_t gen_scs : 3;
     uint64_t reserved_1 : 43;
   };
@@ -3233,7 +3261,7 @@ struct DV_ASB_Status_Struct
   bool sdc_closed;
   bool scs_error;
   uint8_t trigger_cause;
-  uint8_t state;
+  uint8_t asb_state;
   uint8_t gen_scs;
 };
 
@@ -3587,14 +3615,14 @@ union CAL_SteeringAngle_Union
   struct
   {
 
-    uint64_t voltage : 12;
+    uint64_t voltage_stang : 12;
     uint64_t reserved_1 : 52;
   };
 };
 
 struct CAL_SteeringAngle_Struct
 {
-  uint16_t voltage;
+  uint16_t voltage_stang;
 };
 
 extern SOFT_INLINE void
@@ -3841,20 +3869,20 @@ union LOG_WaterTemps_Left_Union
   struct
   {
 
-    uint64_t wt_1 : 8;
-    uint64_t wt_2 : 8;
-    uint64_t wt_3 : 8;
-    uint64_t wt_4 : 8;
+    uint64_t wt_1_l : 8;
+    uint64_t wt_2_l : 8;
+    uint64_t wt_3_l : 8;
+    uint64_t wt_4_l : 8;
     uint64_t reserved_1 : 32;
   };
 };
 
 struct LOG_WaterTemps_Left_Struct
 {
-  float wt_1;
-  float wt_2;
-  float wt_3;
-  float wt_4;
+  float wt_1_l;
+  float wt_2_l;
+  float wt_3_l;
+  float wt_4_l;
 };
 
 extern SOFT_INLINE void
@@ -3879,20 +3907,20 @@ union LOG_WaterTemps_Right_Union
   struct
   {
 
-    uint64_t wt_1 : 8;
-    uint64_t wt_2 : 8;
-    uint64_t wt_3 : 8;
-    uint64_t wt_4 : 8;
+    uint64_t wt_1_r : 8;
+    uint64_t wt_2_r : 8;
+    uint64_t wt_3_r : 8;
+    uint64_t wt_4_r : 8;
     uint64_t reserved_1 : 32;
   };
 };
 
 struct LOG_WaterTemps_Right_Struct
 {
-  float wt_1;
-  float wt_2;
-  float wt_3;
-  float wt_4;
+  float wt_1_r;
+  float wt_2_r;
+  float wt_3_r;
+  float wt_4_r;
 };
 
 extern SOFT_INLINE void
@@ -3985,16 +4013,16 @@ union LOG_BrakePressures_Union
   struct
   {
 
-    uint64_t front : 12;
-    uint64_t rear : 12;
+    uint64_t front_bp : 12;
+    uint64_t rear_bp : 12;
     uint64_t reserved_1 : 40;
   };
 };
 
 struct LOG_BrakePressures_Struct
 {
-  float front;
-  float rear;
+  float front_bp;
+  float rear_bp;
 };
 
 extern SOFT_INLINE void
@@ -4019,14 +4047,14 @@ union LOG_LEM_Union
   struct
   {
 
-    uint64_t lv : 16;
+    uint64_t lv_current : 16;
     uint64_t reserved_1 : 48;
   };
 };
 
 struct LOG_LEM_Struct
 {
-  uint16_t lv;
+  uint16_t lv_current;
 };
 
 extern SOFT_INLINE void LOG_LEM_UnionToStruct(struct LOG_LEM_Struct *s,
@@ -4035,13 +4063,13 @@ extern SOFT_INLINE void LOG_LEM_UnionToStruct(struct LOG_LEM_Struct *s,
 extern SOFT_INLINE void LOG_LEM_StructToUnion(union LOG_LEM_Union *u,
                                               struct LOG_LEM_Struct s);
 
-/* ------------------------------ LOG_airp_FW ------------------------------ */
+/* ------------------------------ LOG_Airp_FW ------------------------------ */
 
 #define LOG_AIRP_FW_ID 0x7C0
 #define LOG_AIRP_FW_DLC 4          // Number of Bytes
 #define LOG_AIRP_FW_CYCLE_TIME 100 // Milliseconds
 
-union LOG_airp_FW_Union
+union LOG_Airp_FW_Union
 {
 
   uint64_t data;
@@ -4049,31 +4077,31 @@ union LOG_airp_FW_Union
   struct
   {
 
-    uint64_t airp_1 : 16;
-    uint64_t airp_2 : 16;
+    uint64_t airp_1_fw : 16;
+    uint64_t airp_2_fw : 16;
     uint64_t reserved_1 : 32;
   };
 };
 
-struct LOG_airp_FW_Struct
+struct LOG_Airp_FW_Struct
 {
-  float airp_1;
-  float airp_2;
+  float airp_1_fw;
+  float airp_2_fw;
 };
 
-extern SOFT_INLINE void LOG_airp_FW_UnionToStruct(struct LOG_airp_FW_Struct *s,
-                                                  union LOG_airp_FW_Union u);
+extern SOFT_INLINE void LOG_Airp_FW_UnionToStruct(struct LOG_Airp_FW_Struct *s,
+                                                  union LOG_Airp_FW_Union u);
 
-extern SOFT_INLINE void LOG_airp_FW_StructToUnion(union LOG_airp_FW_Union *u,
-                                                  struct LOG_airp_FW_Struct s);
+extern SOFT_INLINE void LOG_Airp_FW_StructToUnion(union LOG_Airp_FW_Union *u,
+                                                  struct LOG_Airp_FW_Struct s);
 
-/* ------------------------------ LOG_airp_SPL ------------------------------ */
+/* ------------------------------ LOG_Airp_SPL ------------------------------ */
 
 #define LOG_AIRP_SPL_ID 0x7C1
 #define LOG_AIRP_SPL_DLC 6          // Number of Bytes
 #define LOG_AIRP_SPL_CYCLE_TIME 100 // Milliseconds
 
-union LOG_airp_SPL_Union
+union LOG_Airp_SPL_Union
 {
 
   uint64_t data;
@@ -4081,35 +4109,35 @@ union LOG_airp_SPL_Union
   struct
   {
 
-    uint64_t airp_1 : 16;
-    uint64_t airp_2 : 16;
-    uint64_t airp_3 : 16;
+    uint64_t airp_1_spl : 16;
+    uint64_t airp_2_spl : 16;
+    uint64_t airp_3_spl : 16;
     uint64_t reserved_1 : 16;
   };
 };
 
-struct LOG_airp_SPL_Struct
+struct LOG_Airp_SPL_Struct
 {
-  float airp_1;
-  float airp_2;
-  float airp_3;
+  float airp_1_spl;
+  float airp_2_spl;
+  float airp_3_spl;
 };
 
 extern SOFT_INLINE void
-LOG_airp_SPL_UnionToStruct(struct LOG_airp_SPL_Struct *s,
-                           union LOG_airp_SPL_Union u);
+LOG_Airp_SPL_UnionToStruct(struct LOG_Airp_SPL_Struct *s,
+                           union LOG_Airp_SPL_Union u);
 
 extern SOFT_INLINE void
-LOG_airp_SPL_StructToUnion(union LOG_airp_SPL_Union *u,
-                           struct LOG_airp_SPL_Struct s);
+LOG_Airp_SPL_StructToUnion(union LOG_Airp_SPL_Union *u,
+                           struct LOG_Airp_SPL_Struct s);
 
-/* ------------------------------ LOG_airp_SPR ------------------------------ */
+/* ------------------------------ LOG_Airp_SPR ------------------------------ */
 
 #define LOG_AIRP_SPR_ID 0x7C2
 #define LOG_AIRP_SPR_DLC 6          // Number of Bytes
 #define LOG_AIRP_SPR_CYCLE_TIME 100 // Milliseconds
 
-union LOG_airp_SPR_Union
+union LOG_Airp_SPR_Union
 {
 
   uint64_t data;
@@ -4117,35 +4145,35 @@ union LOG_airp_SPR_Union
   struct
   {
 
-    uint64_t airp_1 : 16;
-    uint64_t airp_2 : 16;
-    uint64_t airp_3 : 16;
+    uint64_t airp_1_spr : 16;
+    uint64_t airp_2_spr : 16;
+    uint64_t airp_3_spr : 16;
     uint64_t reserved_1 : 16;
   };
 };
 
-struct LOG_airp_SPR_Struct
+struct LOG_Airp_SPR_Struct
 {
-  float airp_1;
-  float airp_2;
-  float airp_3;
+  float airp_1_spr;
+  float airp_2_spr;
+  float airp_3_spr;
 };
 
 extern SOFT_INLINE void
-LOG_airp_SPR_UnionToStruct(struct LOG_airp_SPR_Struct *s,
-                           union LOG_airp_SPR_Union u);
+LOG_Airp_SPR_UnionToStruct(struct LOG_Airp_SPR_Struct *s,
+                           union LOG_Airp_SPR_Union u);
 
 extern SOFT_INLINE void
-LOG_airp_SPR_StructToUnion(union LOG_airp_SPR_Union *u,
-                           struct LOG_airp_SPR_Struct s);
+LOG_Airp_SPR_StructToUnion(union LOG_Airp_SPR_Union *u,
+                           struct LOG_Airp_SPR_Struct s);
 
-/* ------------------------------ LOG_airp_RW ------------------------------ */
+/* ------------------------------ LOG_Airp_RW ------------------------------ */
 
 #define LOG_AIRP_RW_ID 0x7C3
 #define LOG_AIRP_RW_DLC 4          // Number of Bytes
 #define LOG_AIRP_RW_CYCLE_TIME 100 // Milliseconds
 
-union LOG_airp_RW_Union
+union LOG_Airp_RW_Union
 {
 
   uint64_t data;
@@ -4153,23 +4181,23 @@ union LOG_airp_RW_Union
   struct
   {
 
-    uint64_t airp_1 : 16;
-    uint64_t airp_2 : 16;
+    uint64_t airp_1_rw : 16;
+    uint64_t airp_2_rw : 16;
     uint64_t reserved_1 : 32;
   };
 };
 
-struct LOG_airp_RW_Struct
+struct LOG_Airp_RW_Struct
 {
-  float airp_1;
-  float airp_2;
+  float airp_1_rw;
+  float airp_2_rw;
 };
 
-extern SOFT_INLINE void LOG_airp_RW_UnionToStruct(struct LOG_airp_RW_Struct *s,
-                                                  union LOG_airp_RW_Union u);
+extern SOFT_INLINE void LOG_Airp_RW_UnionToStruct(struct LOG_Airp_RW_Struct *s,
+                                                  union LOG_Airp_RW_Union u);
 
-extern SOFT_INLINE void LOG_airp_RW_StructToUnion(union LOG_airp_RW_Union *u,
-                                                  struct LOG_airp_RW_Struct s);
+extern SOFT_INLINE void LOG_Airp_RW_StructToUnion(union LOG_Airp_RW_Union *u,
+                                                  struct LOG_Airp_RW_Struct s);
 
 /* ---------------------------- LOG_PE_MaxTemps ---------------------------- */
 
@@ -4185,10 +4213,10 @@ union LOG_PE_MaxTemps_Union
   struct
   {
 
-    uint64_t front : 8;
-    uint64_t rear : 8;
-    uint64_t left : 8;
-    uint64_t right : 8;
+    uint64_t front_pe : 8;
+    uint64_t rear_pe : 8;
+    uint64_t left_pe : 8;
+    uint64_t right_pe : 8;
     uint64_t usage_front : 8;
     uint64_t usage_rear : 8;
     uint64_t usage_left : 8;
@@ -4198,10 +4226,10 @@ union LOG_PE_MaxTemps_Union
 
 struct LOG_PE_MaxTemps_Struct
 {
-  float front;
-  float rear;
-  float left;
-  float right;
+  float front_pe;
+  float rear_pe;
+  float left_pe;
+  float right_pe;
   float usage_front;
   float usage_rear;
   float usage_left;
@@ -4268,7 +4296,7 @@ union LOG_EKF_Rotation_Union
   {
 
     int64_t heading_psi : 16;
-    int64_t yaw_rate : 16;
+    int64_t yaw_rate_np : 16;
     uint64_t reserved_1 : 32;
   };
 };
@@ -4276,7 +4304,7 @@ union LOG_EKF_Rotation_Union
 struct LOG_EKF_Rotation_Struct
 {
   float heading_psi;
-  float yaw_rate;
+  float yaw_rate_np;
 };
 
 extern SOFT_INLINE void

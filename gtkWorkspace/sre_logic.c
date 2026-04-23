@@ -9,6 +9,7 @@
 #include "headers/sre_logic.h"
 #include "headers/debug_panel.h"
 #include "headers/endurance_panel.h"
+#include "headers/parameters_panel.h"
 #include "headers/vehicleinfo_panel.h"
 #include "headers/objects.h"
 
@@ -270,34 +271,34 @@ void state_update()
 {
 	// printf("state_update\n");
 	// PRESSURES
-	sre_pressures->brake_pressure_1 = LOG_BrakePressures.front;
-	sre_pressures->brake_pressure_2 = LOG_BrakePressures.rear;
+	sre_pressures->brake_pressure_1 = LOG_BrakePressures.front_bp;
+	sre_pressures->brake_pressure_2 = LOG_BrakePressures.rear_bp;
 	sre_pressures->asb_pressure_1 = DV_ASB_Pressure.pressure_1;
 	sre_pressures->asb_pressure_2 = DV_ASB_Pressure.pressure_2;
 
 	// TEMPERATURES
-	if (GW_PE_RearRight.temp_igbt > GW_PE_RearLeft.temp_igbt)
+	if (GW_PE_RearRight.temp_igbt_rr > GW_PE_RearLeft.temp_igbt_rl)
 	{
-		sre_temperatures->temp_per = GW_PE_RearRight.temp_igbt;
+		sre_temperatures->temp_per = GW_PE_RearRight.temp_igbt_rr;
 	}
 	else
 	{
-		sre_temperatures->temp_per = GW_PE_RearLeft.temp_igbt;
+		sre_temperatures->temp_per = GW_PE_RearLeft.temp_igbt_rl;
 	}
 
-	if (GW_PE_FrontRight.temp_igbt > GW_PE_FrontLeft.temp_igbt)
+	if (GW_PE_FrontRight.temp_igbt_fr > GW_PE_FrontLeft.temp_igbt_fl)
 	{
-		sre_temperatures->temp_pef = GW_PE_FrontRight.temp_igbt;
+		sre_temperatures->temp_pef = GW_PE_FrontRight.temp_igbt_fr;
 	}
 	else
 	{
-		sre_temperatures->temp_pef = GW_PE_FrontLeft.temp_igbt;
+		sre_temperatures->temp_pef = GW_PE_FrontLeft.temp_igbt_fl;
 	}
 
-	sre_temperatures->temp_motor_fl = GW_PE_FrontLeft.temp_motor;
-	sre_temperatures->temp_motor_fr = GW_PE_FrontRight.temp_motor;
-	sre_temperatures->temp_motor_rl = GW_PE_RearLeft.temp_motor;
-	sre_temperatures->temp_motor_rr = GW_PE_RearRight.temp_motor;
+	sre_temperatures->temp_motor_fl = GW_PE_FrontLeft.temp_motor_fl;
+	sre_temperatures->temp_motor_fr = GW_PE_FrontRight.temp_motor_fr;
+	sre_temperatures->temp_motor_rl = GW_PE_RearLeft.temp_motor_rl;
+	sre_temperatures->temp_motor_rr = GW_PE_RearRight.temp_motor_rr;
 
 	// BATTERY
 	sre_battery->bat_soc = GW_Battery_Status.soc_internal;
@@ -308,7 +309,7 @@ void state_update()
 
 	// POWER MEASUREMENT
 	sre_power->sdc_power = LOG_Fuse_Currents.sdc_current;
-	sre_power->lv_power = LOG_LEM.lv;
+	sre_power->lv_power = LOG_LEM.lv_current;
 	sre_power->hv_power = GW_Battery_Status.current;
 	sre_power->epos_power = LOG_Fuse_Currents.epos_current;
 
@@ -334,11 +335,11 @@ void state_update()
 	sre_switches->sensors_switch = PARC_FUSE_States.fb_sensors;
 
 	// STATES
-	sre_state->car_state = HSC_Vehicle_Status.state;
-	sre_state->bat_state = GW_Battery_Status.state;
+	sre_state->car_state = HSC_Vehicle_Status.car_state;
+	sre_state->bat_state = GW_Battery_Status.bat_state;
 	sre_state->as_state = DV_System_Status.as_state;
-	sre_state->ami_state = DV_AMI_Status.state;
-	sre_state->asb_state = DV_ASB_Status.state;
+	sre_state->ami_state = DV_AMI_Status.ami_state;
+	sre_state->asb_state = DV_ASB_Status.asb_state;
 	sre_state->sbs_state = DV_ASB_Status.service_brake_state;
 	sre_state->ebs_state = DV_ASB_Status.ebs_state;
 	sre_state->asb_checkup_complete = DV_ASB_Status.checkup_complete;
@@ -363,7 +364,7 @@ void state_update()
 	sre_sdc->tsms = LOG_SDC.sdc_tsms;
 
 	// ECU Errors
-	sre_ecu_errors->temp = LOG_ECU_Errors.temp;
+	sre_ecu_errors->temp = LOG_ECU_Errors.temp_err;
 	sre_ecu_errors->mt_driver_input = LOG_ECU_Errors.mt_driver_input;
 	sre_ecu_errors->mt_zoco_front = LOG_ECU_Errors.mt_zoco_front;
 	sre_ecu_errors->mt_asb_status = LOG_ECU_Errors.mt_asb_status;
@@ -761,6 +762,10 @@ void label_update()
 			// STATES
 			sprintf(buffer, "%s", CAR_STATE_STR[sre_state->car_state]);
 			gtk_label_set_text(GTK_LABEL(info_carstate_vehicleinfo), buffer);
+		}
+		else if (currentPanel == PARAMETERS)
+		{
+			update_parameters_panel();
 		}
 }
 

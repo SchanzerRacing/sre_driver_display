@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkWindow" id="parameters_panel_window">
+    <property name="default-width">800</property>
+    <property name="default-height">480</property>
+    <property name="child">
+      <object class="GtkBox" id="box_main_params">
+        <property name="orientation">vertical</property>
+
+        <!-- Header -->
+        <child>
+          <object class="GtkFixed" id="fixed_header_params">
+            <child>
+              <object class="GtkLabel" id="label_tsa_params">
+                <property name="name">label_tsa</property>
+                <property name="width-request">100</property>
+                <property name="height-request">40</property>
+                <property name="label" translatable="1">TSA</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans 18"></attribute>
+                </attributes>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="lbl_params_title">
+                <layout>
+                  <property name="transform">translate(300, 0)</property>
+                </layout>
+                <property name="width-request">200</property>
+                <property name="height-request">40</property>
+                <property name="label" translatable="1">PARAMETERS</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans 18"></attribute>
+                </attributes>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_r2d_params">
+                <property name="name">label_r2d</property>
+                <layout>
+                  <property name="transform">translate(700, 0)</property>
+                </layout>
+                <property name="width-request">100</property>
+                <property name="height-request">40</property>
+                <property name="label" translatable="1">R2D</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans 18"></attribute>
+                </attributes>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <!-- Section header -->
+        <child>
+          <object class="GtkLabel" id="lbl_ecu_section_params">
+            <property name="label" translatable="1">ECU SETTINGS</property>
+            <property name="xalign">0</property>
+            <property name="margin-start">15</property>
+            <property name="margin-top">6</property>
+            <property name="margin-bottom">4</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans 14"></attribute>
+            </attributes>
+          </object>
+        </child>
+
+        <!-- Parameter comparison grid -->
+        <child>
+          <object class="GtkGrid" id="grid_ecu_params">
+            <property name="margin-start">15</property>
+            <property name="row-spacing">4</property>
+            <property name="column-spacing">5</property>
+
+            <!-- Column headers (row 0) -->
+            <child>
+              <object class="GtkLabel">
+                <property name="width-request">170</property>
+                <property name="label" translatable="1">Parameter</property>
+                <property name="xalign">0</property>
+                <attributes><attribute name="font-desc" value="Sans 11"></attribute></attributes>
+                <layout><property name="column">0</property><property name="row">0</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="width-request">280</property>
+                <property name="label" translatable="1">SET (PARS)</property>
+                <property name="xalign">0</property>
+                <attributes><attribute name="font-desc" value="Sans 11"></attribute></attributes>
+                <layout><property name="column">1</property><property name="row">0</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="width-request">280</property>
+                <property name="label" translatable="1">NOW (PARC)</property>
+                <property name="xalign">0</property>
+                <attributes><attribute name="font-desc" value="Sans 11"></attribute></attributes>
+                <layout><property name="column">2</property><property name="row">0</property></layout>
+              </object>
+            </child>
+
+            <!-- Row 1: Max Torque -->
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="1">Max Torque</property>
+                <property name="xalign">0</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">0</property><property name="row">1</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_pars_max_torque">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">1</property><property name="row">1</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_parc_max_torque">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">2</property><property name="row">1</property></layout>
+              </object>
+            </child>
+
+            <!-- Row 2: Max Power -->
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="1">Max Power</property>
+                <property name="xalign">0</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">0</property><property name="row">2</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_pars_max_power">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">1</property><property name="row">2</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_parc_max_power">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">2</property><property name="row">2</property></layout>
+              </object>
+            </child>
+
+            <!-- Row 3: RECU -->
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="1">RECU</property>
+                <property name="xalign">0</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">0</property><property name="row">3</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_pars_recu">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">1</property><property name="row">3</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_parc_recu">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">2</property><property name="row">3</property></layout>
+              </object>
+            </child>
+
+            <!-- Row 4: RECU % -->
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="1">RECU %</property>
+                <property name="xalign">0</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">0</property><property name="row">4</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_pars_recu_pct">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">1</property><property name="row">4</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_parc_recu_pct">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">2</property><property name="row">4</property></layout>
+              </object>
+            </child>
+
+            <!-- Row 5: TV -->
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="1">TV</property>
+                <property name="xalign">0</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">0</property><property name="row">5</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_pars_tv">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">1</property><property name="row">5</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_parc_tv">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">2</property><property name="row">5</property></layout>
+              </object>
+            </child>
+
+            <!-- Row 6: Dyn. Torque -->
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="1">Dyn. Torque</property>
+                <property name="xalign">0</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">0</property><property name="row">6</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_pars_dyn_torque">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">1</property><property name="row">6</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_parc_dyn_torque">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">2</property><property name="row">6</property></layout>
+              </object>
+            </child>
+
+            <!-- Row 7: Torque Limit -->
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="1">Torq. Limit</property>
+                <property name="xalign">0</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">0</property><property name="row">7</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_pars_torque_limit">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">1</property><property name="row">7</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_parc_torque_limit">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">2</property><property name="row">7</property></layout>
+              </object>
+            </child>
+
+            <!-- Row 8: Launch Control -->
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="1">Launch Ctrl</property>
+                <property name="xalign">0</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">0</property><property name="row">8</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_pars_launch_ctrl">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">1</property><property name="row">8</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_parc_launch_ctrl">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">2</property><property name="row">8</property></layout>
+              </object>
+            </child>
+
+            <!-- Row 9: OPD -->
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="1">OPD</property>
+                <property name="xalign">0</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">0</property><property name="row">9</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_pars_opd">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">1</property><property name="row">9</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_parc_opd">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">2</property><property name="row">9</property></layout>
+              </object>
+            </child>
+
+            <!-- Row 10: Speed Limit -->
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="1">Spd Limit</property>
+                <property name="xalign">0</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">0</property><property name="row">10</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_pars_spd_limit">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">1</property><property name="row">10</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_parc_spd_limit">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">2</property><property name="row">10</property></layout>
+              </object>
+            </child>
+
+            <!-- Row 11: Max Speed -->
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="1">Max Speed</property>
+                <property name="xalign">0</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">0</property><property name="row">11</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_pars_max_speed">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">1</property><property name="row">11</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_parc_max_speed">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">2</property><property name="row">11</property></layout>
+              </object>
+            </child>
+
+            <!-- Row 12: Acc. Drossel (PARC only, always green) -->
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="1">Acc. Drossel</property>
+                <property name="xalign">0</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">0</property><property name="row">12</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_pars_acc_dross">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">1</property><property name="row">12</property></layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="info_parc_acc_dross">
+                <property name="label" translatable="1">-</property>
+                <property name="xalign">0</property>
+                <property name="margin-start">4</property>
+                <attributes><attribute name="font-desc" value="Sans 13"></attribute></attributes>
+                <layout><property name="column">2</property><property name="row">12</property></layout>
+              </object>
+            </child>
+
+          </object>
+        </child>
+
+        <!-- Signal light row (bottom right) -->
+        <child>
+          <object class="GtkBox" id="box_signal_row_params">
+            <property name="margin-top">12</property>
+            <property name="margin-end">15</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="hexpand">1</property>
+                <property name="label" translatable="1"></property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_change_params">
+                <property name="width-request">150</property>
+                <property name="height-request">40</property>
+                <property name="label" translatable="1">CHANGE PARAMS</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans 13"></attribute>
+                </attributes>
+              </object>
+            </child>
+          </object>
+        </child>
+
+      </object>
+    </property>
+  </object>
+</interface>
