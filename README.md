@@ -12,3 +12,8 @@ CAN thread continuously reads all CAN messages and saves the newest message into
 -> this thread could also do error checking if necessary
 
 GUI thread reads the shared memory every x seconds and updates the GUI accordingly.
+
+# Set up Autostart
+
+1. Copy `driver-display.service` from scripts folder to `~/.config/systemd/user/` (Change paths of the script)
+2. enable the service with `systemctl --user enable driver-display.service`

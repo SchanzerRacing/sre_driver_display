@@ -1,0 +1,15 @@
+[Unit]
+Description=Start Display Software after GUI
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/home/sre-pi5/scripts/update_and_run.sh
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=%h/.Xauthority
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
