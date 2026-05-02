@@ -363,5 +363,21 @@ static void event_key_release_cb(
 			sre_state->asb_trigger_cause = 12;
 		}
 	}
+
+	// Parameters panel test keys
+	if (keyval == GDK_KEY_1)
+		PARS_ECU_Settings.change_params = !PARS_ECU_Settings.change_params;
+
+	if (keyval == GDK_KEY_2)
+		PARS_ECU_Settings.enable_recu_s = !PARS_ECU_Settings.enable_recu_s;
+
+	if (keyval == GDK_KEY_3)
+		PARS_ECU_Settings.enable_tv_s = !PARS_ECU_Settings.enable_tv_s;
+
+	if (keyval == GDK_KEY_4)
+		PARS_ECU_Settings.max_torque_s -= 1.0f;
+
+	if (keyval == GDK_KEY_5)
+		PARS_ECU_Settings.max_torque_s += 1.0f;
 }
 #endif

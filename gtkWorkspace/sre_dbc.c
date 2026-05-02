@@ -2,7 +2,7 @@
 /***
  * Header File from DBC
  * Auto-generated using Python
- * 18.09.2025, 17:31:54 UTC
+ * 23.04.2026, 17:56:30 UTC
  ***/
 
 #if defined ARCH_F280013X
@@ -92,7 +92,7 @@ SOFT_INLINE void SF2_Data2_UnionToStruct(struct SF2_Data2_Struct *s,
 {
   s->vel_x = (float)(u.vel_x * 0.036f);
   s->vel_y = (float)(u.vel_y * 0.036f);
-  s->angle = (float)(u.angle * 0.01f);
+  s->slip_angle_sf_2 = (float)(u.slip_angle_sf_2 * 0.01f);
 }
 
 SOFT_INLINE void SF2_Data2_StructToUnion(union SF2_Data2_Union *u,
@@ -100,7 +100,7 @@ SOFT_INLINE void SF2_Data2_StructToUnion(union SF2_Data2_Union *u,
 {
   u->vel_x = (int64_t)(s.vel_x * 27.77777777777778f);
   u->vel_y = (int64_t)(s.vel_y * 27.77777777777778f);
-  u->angle = (int64_t)(s.angle * 100.0f);
+  u->slip_angle_sf_2 = (int64_t)(s.slip_angle_sf_2 * 100.0f);
 }
 
 /* ------------------------------- SF2_Data1 ------------------------------- */
@@ -109,16 +109,16 @@ SOFT_INLINE void SF2_Data1_UnionToStruct(struct SF2_Data1_Struct *s,
                                          union SF2_Data1_Union u)
 {
   s->timestamp = (uint16_t)u.timestamp;
-  s->vel = (float)(u.vel * 0.036f);
-  s->dist = (float)(u.dist * 0.001f);
+  s->velocity_sf_2 = (float)(u.velocity_sf_2 * 0.036f);
+  s->dist_sf_2 = (float)(u.dist_sf_2 * 0.001f);
 }
 
 SOFT_INLINE void SF2_Data1_StructToUnion(union SF2_Data1_Union *u,
                                          struct SF2_Data1_Struct s)
 {
   u->timestamp = (uint64_t)s.timestamp;
-  u->vel = (uint64_t)(s.vel * 27.77777777777778f);
-  u->dist = (uint64_t)(s.dist * 1000.0f);
+  u->velocity_sf_2 = (uint64_t)(s.velocity_sf_2 * 27.77777777777778f);
+  u->dist_sf_2 = (uint64_t)(s.dist_sf_2 * 1000.0f);
 }
 
 /* ------------------------------ LOG_DashLEDs ------------------------------ */
@@ -127,14 +127,14 @@ SOFT_INLINE void LOG_DashLEDs_UnionToStruct(struct LOG_DashLEDs_Struct *s,
                                             union LOG_DashLEDs_Union u)
 {
   s->imd = (bool)u.imd;
-  s->ams = (bool)u.ams;
+  s->ams_led = (bool)u.ams_led;
 }
 
 SOFT_INLINE void LOG_DashLEDs_StructToUnion(union LOG_DashLEDs_Union *u,
                                             struct LOG_DashLEDs_Struct s)
 {
   u->imd = (uint64_t)s.imd;
-  u->ams = (uint64_t)s.ams;
+  u->ams_led = (uint64_t)s.ams_led;
 }
 
 /* ---------------------------- LSC_DASH_Buttons ---------------------------- */
@@ -183,7 +183,7 @@ SAF_DASH_Status_StructToUnion(union SAF_DASH_Status_Union *u,
 SOFT_INLINE void LOG_ECU_ERRORS_UnionToStruct(struct LOG_ECU_ERRORS_Struct *s,
                                               union LOG_ECU_ERRORS_Union u)
 {
-  s->temp = (bool)u.temp;
+  s->temp_err = (bool)u.temp_err;
   s->mt_driver_input = (bool)u.mt_driver_input;
   s->mt_zoco_front = (bool)u.mt_zoco_front;
   s->mt_asb_status = (bool)u.mt_asb_status;
@@ -219,7 +219,7 @@ SOFT_INLINE void LOG_ECU_ERRORS_UnionToStruct(struct LOG_ECU_ERRORS_Struct *s,
 SOFT_INLINE void LOG_ECU_ERRORS_StructToUnion(union LOG_ECU_ERRORS_Union *u,
                                               struct LOG_ECU_ERRORS_Struct s)
 {
-  u->temp = (uint64_t)s.temp;
+  u->temp_err = (uint64_t)s.temp_err;
   u->mt_driver_input = (uint64_t)s.mt_driver_input;
   u->mt_zoco_front = (uint64_t)s.mt_zoco_front;
   u->mt_asb_status = (uint64_t)s.mt_asb_status;
@@ -258,40 +258,52 @@ SOFT_INLINE void
 PARS_ECU_Settings_UnionToStruct(struct PARS_ECU_Settings_Struct *s,
                                 union PARS_ECU_Settings_Union u)
 {
-  s->recu_enable = (bool)u.recu_enable;
-  s->acc_drosselung_enable = (bool)u.acc_drosselung_enable;
-  s->tv_enable = (bool)u.tv_enable;
-  s->dtd_enable = (bool)u.dtd_enable;
-  s->launch_control_enable = (bool)u.launch_control_enable;
-  s->torque_limit_enable = (bool)u.torque_limit_enable;
-  s->recu_percentage = (float)(u.recu_percentage * 5.0f);
-  s->opd_lower_input = (float)(u.opd_lower_input * 5.0f);
-  s->opd_output_brake = (float)(u.opd_output_brake * 5.0f);
-  s->opd_output_drive = (float)(u.opd_output_drive * 5.0f);
-  s->opd_splitting_point = (float)(u.opd_splitting_point * 5.0f);
-  s->opd_upper_input = (float)(u.opd_upper_input * 5.0f);
-  s->car_control_speed_switch = (uint8_t)u.car_control_speed_switch;
-  s->car_control_max_speed = (float)(u.car_control_max_speed * 5.0f);
+  s->enable_recu_s = (bool)u.enable_recu_s;
+  s->change_params = (bool)u.change_params;
+  s->enable_tv_s = (bool)u.enable_tv_s;
+  s->enable_dynamic_torque_s = (bool)u.enable_dynamic_torque_s;
+  s->enable_launch_control_s = (bool)u.enable_launch_control_s;
+  s->enable_torque_limit_s = (bool)u.enable_torque_limit_s;
+  s->enable_opd_s = (bool)u.enable_opd_s;
+  s->enable_speed_limit_s = (bool)u.enable_speed_limit_s;
+  s->recu_percentage_s = (float)(u.recu_percentage_s * 5.0f);
+  s->opd_lower_input_s = (float)(u.opd_lower_input_s * 5.0f);
+  s->opd_output_brake_s = (float)(u.opd_output_brake_s * 5.0f);
+  s->opd_output_drive_s = (float)(u.opd_output_drive_s * 5.0f);
+  s->opd_splitting_point_s = (float)(u.opd_splitting_point_s * 5.0f);
+  s->opd_upper_input_s = (float)(u.opd_upper_input_s * 5.0f);
+  s->car_control_speed_switch_s = (uint8_t)u.car_control_speed_switch_s;
+  s->car_control_max_speed_s = (float)(u.car_control_max_speed_s * 5.0f);
+  s->max_power_s = (float)(u.max_power_s * 500.0f);
+  s->max_torque_s = (float)(u.max_torque_s * 0.1f);
+  s->car_control_slip_angle_switch_s =
+      (uint8_t)u.car_control_slip_angle_switch_s;
 }
 
 SOFT_INLINE void
 PARS_ECU_Settings_StructToUnion(union PARS_ECU_Settings_Union *u,
                                 struct PARS_ECU_Settings_Struct s)
 {
-  u->recu_enable = (uint64_t)s.recu_enable;
-  u->acc_drosselung_enable = (uint64_t)s.acc_drosselung_enable;
-  u->tv_enable = (uint64_t)s.tv_enable;
-  u->dtd_enable = (uint64_t)s.dtd_enable;
-  u->launch_control_enable = (uint64_t)s.launch_control_enable;
-  u->torque_limit_enable = (uint64_t)s.torque_limit_enable;
-  u->recu_percentage = (uint64_t)(s.recu_percentage * 0.2f);
-  u->opd_lower_input = (uint64_t)(s.opd_lower_input * 0.2f);
-  u->opd_output_brake = (uint64_t)(s.opd_output_brake * 0.2f);
-  u->opd_output_drive = (uint64_t)(s.opd_output_drive * 0.2f);
-  u->opd_splitting_point = (uint64_t)(s.opd_splitting_point * 0.2f);
-  u->opd_upper_input = (uint64_t)(s.opd_upper_input * 0.2f);
-  u->car_control_speed_switch = (uint64_t)s.car_control_speed_switch;
-  u->car_control_max_speed = (uint64_t)(s.car_control_max_speed * 0.2f);
+  u->enable_recu_s = (uint64_t)s.enable_recu_s;
+  u->change_params = (uint64_t)s.change_params;
+  u->enable_tv_s = (uint64_t)s.enable_tv_s;
+  u->enable_dynamic_torque_s = (uint64_t)s.enable_dynamic_torque_s;
+  u->enable_launch_control_s = (uint64_t)s.enable_launch_control_s;
+  u->enable_torque_limit_s = (uint64_t)s.enable_torque_limit_s;
+  u->enable_opd_s = (uint64_t)s.enable_opd_s;
+  u->enable_speed_limit_s = (uint64_t)s.enable_speed_limit_s;
+  u->recu_percentage_s = (uint64_t)(s.recu_percentage_s * 0.2f);
+  u->opd_lower_input_s = (uint64_t)(s.opd_lower_input_s * 0.2f);
+  u->opd_output_brake_s = (uint64_t)(s.opd_output_brake_s * 0.2f);
+  u->opd_output_drive_s = (uint64_t)(s.opd_output_drive_s * 0.2f);
+  u->opd_splitting_point_s = (uint64_t)(s.opd_splitting_point_s * 0.2f);
+  u->opd_upper_input_s = (uint64_t)(s.opd_upper_input_s * 0.2f);
+  u->car_control_speed_switch_s = (uint64_t)s.car_control_speed_switch_s;
+  u->car_control_max_speed_s = (uint64_t)(s.car_control_max_speed_s * 0.2f);
+  u->max_power_s = (uint64_t)(s.max_power_s * 0.002f);
+  u->max_torque_s = (uint64_t)(s.max_torque_s * 10.0f);
+  u->car_control_slip_angle_switch_s =
+      (uint64_t)s.car_control_slip_angle_switch_s;
 }
 
 /* --------------------------- PARC_ECU_Settings --------------------------- */
@@ -300,128 +312,140 @@ SOFT_INLINE void
 PARC_ECU_Settings_UnionToStruct(struct PARC_ECU_Settings_Struct *s,
                                 union PARC_ECU_Settings_Union u)
 {
-  s->recu_enable = (bool)u.recu_enable;
-  s->acc_drosselung_enable = (bool)u.acc_drosselung_enable;
-  s->tv_enable = (bool)u.tv_enable;
-  s->dtd_enable = (bool)u.dtd_enable;
-  s->launch_control_enable = (bool)u.launch_control_enable;
-  s->torque_limit_enable = (bool)u.torque_limit_enable;
-  s->recu_percentage = (float)(u.recu_percentage * 5.0f);
-  s->opd_lower_input = (float)(u.opd_lower_input * 5.0f);
-  s->opd_output_brake = (float)(u.opd_output_brake * 5.0f);
-  s->opd_output_drive = (float)(u.opd_output_drive * 5.0f);
-  s->opd_splitting_point = (float)(u.opd_splitting_point * 5.0f);
-  s->opd_upper_input = (float)(u.opd_upper_input * 5.0f);
-  s->car_control_speed_switch = (uint8_t)u.car_control_speed_switch;
-  s->car_control_max_speed = (float)(u.car_control_max_speed * 5.0f);
+  s->enable_recu_c = (bool)u.enable_recu_c;
+  s->enable_acc_drosselung_c = (bool)u.enable_acc_drosselung_c;
+  s->enable_tv_c = (bool)u.enable_tv_c;
+  s->enable_dynamic_torque_c = (bool)u.enable_dynamic_torque_c;
+  s->enable_launch_control_c = (bool)u.enable_launch_control_c;
+  s->enable_torque_limit_c = (bool)u.enable_torque_limit_c;
+  s->enable_opd_c = (bool)u.enable_opd_c;
+  s->enable_speed_limit_c = (bool)u.enable_speed_limit_c;
+  s->recu_percentage_c = (float)(u.recu_percentage_c * 5.0f);
+  s->opd_lower_input_c = (float)(u.opd_lower_input_c * 5.0f);
+  s->opd_output_brake_c = (float)(u.opd_output_brake_c * 5.0f);
+  s->opd_output_drive_c = (float)(u.opd_output_drive_c * 5.0f);
+  s->opd_splitting_point_c = (float)(u.opd_splitting_point_c * 5.0f);
+  s->opd_upper_input_c = (float)(u.opd_upper_input_c * 5.0f);
+  s->car_control_speed_switch_c = (uint8_t)u.car_control_speed_switch_c;
+  s->car_control_max_speed_c = (float)(u.car_control_max_speed_c * 5.0f);
+  s->max_power_c = (float)(u.max_power_c * 500.0f);
+  s->max_torque_c = (float)(u.max_torque_c * 0.1f);
+  s->car_control_slip_angle_switch_c =
+      (uint8_t)u.car_control_slip_angle_switch_c;
 }
 
 SOFT_INLINE void
 PARC_ECU_Settings_StructToUnion(union PARC_ECU_Settings_Union *u,
                                 struct PARC_ECU_Settings_Struct s)
 {
-  u->recu_enable = (uint64_t)s.recu_enable;
-  u->acc_drosselung_enable = (uint64_t)s.acc_drosselung_enable;
-  u->tv_enable = (uint64_t)s.tv_enable;
-  u->dtd_enable = (uint64_t)s.dtd_enable;
-  u->launch_control_enable = (uint64_t)s.launch_control_enable;
-  u->torque_limit_enable = (uint64_t)s.torque_limit_enable;
-  u->recu_percentage = (uint64_t)(s.recu_percentage * 0.2f);
-  u->opd_lower_input = (uint64_t)(s.opd_lower_input * 0.2f);
-  u->opd_output_brake = (uint64_t)(s.opd_output_brake * 0.2f);
-  u->opd_output_drive = (uint64_t)(s.opd_output_drive * 0.2f);
-  u->opd_splitting_point = (uint64_t)(s.opd_splitting_point * 0.2f);
-  u->opd_upper_input = (uint64_t)(s.opd_upper_input * 0.2f);
-  u->car_control_speed_switch = (uint64_t)s.car_control_speed_switch;
-  u->car_control_max_speed = (uint64_t)(s.car_control_max_speed * 0.2f);
+  u->enable_recu_c = (uint64_t)s.enable_recu_c;
+  u->enable_acc_drosselung_c = (uint64_t)s.enable_acc_drosselung_c;
+  u->enable_tv_c = (uint64_t)s.enable_tv_c;
+  u->enable_dynamic_torque_c = (uint64_t)s.enable_dynamic_torque_c;
+  u->enable_launch_control_c = (uint64_t)s.enable_launch_control_c;
+  u->enable_torque_limit_c = (uint64_t)s.enable_torque_limit_c;
+  u->enable_opd_c = (uint64_t)s.enable_opd_c;
+  u->enable_speed_limit_c = (uint64_t)s.enable_speed_limit_c;
+  u->recu_percentage_c = (uint64_t)(s.recu_percentage_c * 0.2f);
+  u->opd_lower_input_c = (uint64_t)(s.opd_lower_input_c * 0.2f);
+  u->opd_output_brake_c = (uint64_t)(s.opd_output_brake_c * 0.2f);
+  u->opd_output_drive_c = (uint64_t)(s.opd_output_drive_c * 0.2f);
+  u->opd_splitting_point_c = (uint64_t)(s.opd_splitting_point_c * 0.2f);
+  u->opd_upper_input_c = (uint64_t)(s.opd_upper_input_c * 0.2f);
+  u->car_control_speed_switch_c = (uint64_t)s.car_control_speed_switch_c;
+  u->car_control_max_speed_c = (uint64_t)(s.car_control_max_speed_c * 0.2f);
+  u->max_power_c = (uint64_t)(s.max_power_c * 0.002f);
+  u->max_torque_c = (uint64_t)(s.max_torque_c * 10.0f);
+  u->car_control_slip_angle_switch_c =
+      (uint64_t)s.car_control_slip_angle_switch_c;
 }
 
-/* ------------------------------ LOG_aero_SPR ------------------------------ */
+/* ------------------------------ LOG_Aero_SPR ------------------------------ */
 
-SOFT_INLINE void LOG_aero_SPR_UnionToStruct(struct LOG_aero_SPR_Struct *s,
-                                            union LOG_aero_SPR_Union u)
+SOFT_INLINE void LOG_Aero_SPR_UnionToStruct(struct LOG_Aero_SPR_Struct *s,
+                                            union LOG_Aero_SPR_Union u)
 {
-  s->temp_1 = (float)(u.temp_1 * 0.05f);
-  s->temp_2 = (float)(u.temp_2 * 0.05f);
-  s->temp_3 = (float)(u.temp_3 * 0.05f);
-  s->hum_1 = (float)(u.hum_1 * 0.1f);
-  s->hum_2 = (float)(u.hum_2 * 0.1f);
-  s->hum_3 = (float)(u.hum_3 * 0.1f);
+  s->temp_1_spr = (float)(u.temp_1_spr * 0.05f);
+  s->temp_2_spr = (float)(u.temp_2_spr * 0.05f);
+  s->temp_3_spr = (float)(u.temp_3_spr * 0.05f);
+  s->hum_1_spr = (float)(u.hum_1_spr * 0.1f);
+  s->hum_2_spr = (float)(u.hum_2_spr * 0.1f);
+  s->hum_3_spr = (float)(u.hum_3_spr * 0.1f);
 }
 
-SOFT_INLINE void LOG_aero_SPR_StructToUnion(union LOG_aero_SPR_Union *u,
-                                            struct LOG_aero_SPR_Struct s)
+SOFT_INLINE void LOG_Aero_SPR_StructToUnion(union LOG_Aero_SPR_Union *u,
+                                            struct LOG_Aero_SPR_Struct s)
 {
-  u->temp_1 = (uint64_t)(s.temp_1 * 20.0f);
-  u->temp_2 = (uint64_t)(s.temp_2 * 20.0f);
-  u->temp_3 = (uint64_t)(s.temp_3 * 20.0f);
-  u->hum_1 = (uint64_t)(s.hum_1 * 10.0f);
-  u->hum_2 = (uint64_t)(s.hum_2 * 10.0f);
-  u->hum_3 = (uint64_t)(s.hum_3 * 10.0f);
+  u->temp_1_spr = (uint64_t)(s.temp_1_spr * 20.0f);
+  u->temp_2_spr = (uint64_t)(s.temp_2_spr * 20.0f);
+  u->temp_3_spr = (uint64_t)(s.temp_3_spr * 20.0f);
+  u->hum_1_spr = (uint64_t)(s.hum_1_spr * 10.0f);
+  u->hum_2_spr = (uint64_t)(s.hum_2_spr * 10.0f);
+  u->hum_3_spr = (uint64_t)(s.hum_3_spr * 10.0f);
 }
 
-/* ------------------------------ LOG_aero_SPL ------------------------------ */
+/* ------------------------------ LOG_Aero_SPL ------------------------------ */
 
-SOFT_INLINE void LOG_aero_SPL_UnionToStruct(struct LOG_aero_SPL_Struct *s,
-                                            union LOG_aero_SPL_Union u)
+SOFT_INLINE void LOG_Aero_SPL_UnionToStruct(struct LOG_Aero_SPL_Struct *s,
+                                            union LOG_Aero_SPL_Union u)
 {
-  s->temp_1 = (float)(u.temp_1 * 0.05f);
-  s->temp_2 = (float)(u.temp_2 * 0.05f);
-  s->temp_3 = (float)(u.temp_3 * 0.05f);
-  s->hum_1 = (float)(u.hum_1 * 0.1f);
-  s->hum_2 = (float)(u.hum_2 * 0.1f);
-  s->hum_3 = (float)(u.hum_3 * 0.1f);
+  s->temp_1_spl = (float)(u.temp_1_spl * 0.05f);
+  s->temp_2_spl = (float)(u.temp_2_spl * 0.05f);
+  s->temp_3_spl = (float)(u.temp_3_spl * 0.05f);
+  s->hum_1_spl = (float)(u.hum_1_spl * 0.1f);
+  s->hum_2_spl = (float)(u.hum_2_spl * 0.1f);
+  s->hum_3_spl = (float)(u.hum_3_spl * 0.1f);
 }
 
-SOFT_INLINE void LOG_aero_SPL_StructToUnion(union LOG_aero_SPL_Union *u,
-                                            struct LOG_aero_SPL_Struct s)
+SOFT_INLINE void LOG_Aero_SPL_StructToUnion(union LOG_Aero_SPL_Union *u,
+                                            struct LOG_Aero_SPL_Struct s)
 {
-  u->temp_1 = (uint64_t)(s.temp_1 * 20.0f);
-  u->temp_2 = (uint64_t)(s.temp_2 * 20.0f);
-  u->temp_3 = (uint64_t)(s.temp_3 * 20.0f);
-  u->hum_1 = (uint64_t)(s.hum_1 * 10.0f);
-  u->hum_2 = (uint64_t)(s.hum_2 * 10.0f);
-  u->hum_3 = (uint64_t)(s.hum_3 * 10.0f);
+  u->temp_1_spl = (uint64_t)(s.temp_1_spl * 20.0f);
+  u->temp_2_spl = (uint64_t)(s.temp_2_spl * 20.0f);
+  u->temp_3_spl = (uint64_t)(s.temp_3_spl * 20.0f);
+  u->hum_1_spl = (uint64_t)(s.hum_1_spl * 10.0f);
+  u->hum_2_spl = (uint64_t)(s.hum_2_spl * 10.0f);
+  u->hum_3_spl = (uint64_t)(s.hum_3_spl * 10.0f);
 }
 
-/* ------------------------------ LOG_aero_RW ------------------------------ */
+/* ------------------------------ LOG_Aero_RW ------------------------------ */
 
-SOFT_INLINE void LOG_aero_RW_UnionToStruct(struct LOG_aero_RW_Struct *s,
-                                           union LOG_aero_RW_Union u)
+SOFT_INLINE void LOG_Aero_RW_UnionToStruct(struct LOG_Aero_RW_Struct *s,
+                                           union LOG_Aero_RW_Union u)
 {
-  s->temp_1 = (float)(u.temp_1 * 0.05f);
-  s->temp_2 = (float)(u.temp_2 * 0.05f);
-  s->hum_1 = (float)(u.hum_1 * 0.1f);
-  s->hum_2 = (float)(u.hum_2 * 0.1f);
+  s->temp_1_rw = (float)(u.temp_1_rw * 0.05f);
+  s->temp_2_rw = (float)(u.temp_2_rw * 0.05f);
+  s->hum_1_rw = (float)(u.hum_1_rw * 0.1f);
+  s->hum_2_rw = (float)(u.hum_2_rw * 0.1f);
 }
 
-SOFT_INLINE void LOG_aero_RW_StructToUnion(union LOG_aero_RW_Union *u,
-                                           struct LOG_aero_RW_Struct s)
+SOFT_INLINE void LOG_Aero_RW_StructToUnion(union LOG_Aero_RW_Union *u,
+                                           struct LOG_Aero_RW_Struct s)
 {
-  u->temp_1 = (uint64_t)(s.temp_1 * 20.0f);
-  u->temp_2 = (uint64_t)(s.temp_2 * 20.0f);
-  u->hum_1 = (uint64_t)(s.hum_1 * 10.0f);
-  u->hum_2 = (uint64_t)(s.hum_2 * 10.0f);
+  u->temp_1_rw = (uint64_t)(s.temp_1_rw * 20.0f);
+  u->temp_2_rw = (uint64_t)(s.temp_2_rw * 20.0f);
+  u->hum_1_rw = (uint64_t)(s.hum_1_rw * 10.0f);
+  u->hum_2_rw = (uint64_t)(s.hum_2_rw * 10.0f);
 }
 
-/* ------------------------------ LOG_aero_FW ------------------------------ */
+/* ------------------------------ LOG_Aero_FW ------------------------------ */
 
-SOFT_INLINE void LOG_aero_FW_UnionToStruct(struct LOG_aero_FW_Struct *s,
-                                           union LOG_aero_FW_Union u)
+SOFT_INLINE void LOG_Aero_FW_UnionToStruct(struct LOG_Aero_FW_Struct *s,
+                                           union LOG_Aero_FW_Union u)
 {
-  s->temp_1 = (float)(u.temp_1 * 0.05f);
-  s->temp_2 = (float)(u.temp_2 * 0.05f);
-  s->hum_1 = (float)(u.hum_1 * 0.1f);
-  s->hum_2 = (float)(u.hum_2 * 0.1f);
+  s->temp_1_fw = (float)(u.temp_1_fw * 0.05f);
+  s->temp_2_fw = (float)(u.temp_2_fw * 0.05f);
+  s->hum_1_fw = (float)(u.hum_1_fw * 0.1f);
+  s->hum_2_fw = (float)(u.hum_2_fw * 0.1f);
 }
 
-SOFT_INLINE void LOG_aero_FW_StructToUnion(union LOG_aero_FW_Union *u,
-                                           struct LOG_aero_FW_Struct s)
+SOFT_INLINE void LOG_Aero_FW_StructToUnion(union LOG_Aero_FW_Union *u,
+                                           struct LOG_Aero_FW_Struct s)
 {
-  u->temp_1 = (uint64_t)(s.temp_1 * 20.0f);
-  u->temp_2 = (uint64_t)(s.temp_2 * 20.0f);
-  u->hum_1 = (uint64_t)(s.hum_1 * 10.0f);
-  u->hum_2 = (uint64_t)(s.hum_2 * 10.0f);
+  u->temp_1_fw = (uint64_t)(s.temp_1_fw * 20.0f);
+  u->temp_2_fw = (uint64_t)(s.temp_2_fw * 20.0f);
+  u->hum_1_fw = (uint64_t)(s.hum_1_fw * 10.0f);
+  u->hum_2_fw = (uint64_t)(s.hum_2_fw * 10.0f);
 }
 
 /* ------------------------------ CAL_EPOS_HC ------------------------------ */
@@ -429,13 +453,13 @@ SOFT_INLINE void LOG_aero_FW_StructToUnion(union LOG_aero_FW_Union *u,
 SOFT_INLINE void CAL_EPOS_HC_UnionToStruct(struct CAL_EPOS_HC_Struct *s,
                                            union CAL_EPOS_HC_Union u)
 {
-  s->voltage = (uint16_t)u.voltage;
+  s->voltage_epos = (uint16_t)u.voltage_epos;
 }
 
 SOFT_INLINE void CAL_EPOS_HC_StructToUnion(union CAL_EPOS_HC_Union *u,
                                            struct CAL_EPOS_HC_Struct s)
 {
-  u->voltage = (uint64_t)s.voltage;
+  u->voltage_epos = (uint64_t)s.voltage_epos;
 }
 
 /* -------------------------------- CAL_SDC -------------------------------- */
@@ -443,13 +467,13 @@ SOFT_INLINE void CAL_EPOS_HC_StructToUnion(union CAL_EPOS_HC_Union *u,
 SOFT_INLINE void CAL_SDC_UnionToStruct(struct CAL_SDC_Struct *s,
                                        union CAL_SDC_Union u)
 {
-  s->voltage = (uint16_t)u.voltage;
+  s->voltage_sdc = (uint16_t)u.voltage_sdc;
 }
 
 SOFT_INLINE void CAL_SDC_StructToUnion(union CAL_SDC_Union *u,
                                        struct CAL_SDC_Struct s)
 {
-  u->voltage = (uint64_t)s.voltage;
+  u->voltage_sdc = (uint64_t)s.voltage_sdc;
 }
 
 /* ------------------------------ CAL_WT_Right ------------------------------ */
@@ -457,19 +481,19 @@ SOFT_INLINE void CAL_SDC_StructToUnion(union CAL_SDC_Union *u,
 SOFT_INLINE void CAL_WT_Right_UnionToStruct(struct CAL_WT_Right_Struct *s,
                                             union CAL_WT_Right_Union u)
 {
-  s->vin_1 = (uint16_t)u.vin_1;
-  s->vin_2 = (uint16_t)u.vin_2;
-  s->vin_3 = (uint16_t)u.vin_3;
-  s->vin_4 = (uint16_t)u.vin_4;
+  s->vin_1_r = (uint16_t)u.vin_1_r;
+  s->vin_2_r = (uint16_t)u.vin_2_r;
+  s->vin_3_r = (uint16_t)u.vin_3_r;
+  s->vin_4_r = (uint16_t)u.vin_4_r;
 }
 
 SOFT_INLINE void CAL_WT_Right_StructToUnion(union CAL_WT_Right_Union *u,
                                             struct CAL_WT_Right_Struct s)
 {
-  u->vin_1 = (uint64_t)s.vin_1;
-  u->vin_2 = (uint64_t)s.vin_2;
-  u->vin_3 = (uint64_t)s.vin_3;
-  u->vin_4 = (uint64_t)s.vin_4;
+  u->vin_1_r = (uint64_t)s.vin_1_r;
+  u->vin_2_r = (uint64_t)s.vin_2_r;
+  u->vin_3_r = (uint64_t)s.vin_3_r;
+  u->vin_4_r = (uint64_t)s.vin_4_r;
 }
 
 /* ------------------------------ CAL_WT_Left ------------------------------ */
@@ -477,19 +501,19 @@ SOFT_INLINE void CAL_WT_Right_StructToUnion(union CAL_WT_Right_Union *u,
 SOFT_INLINE void CAL_WT_Left_UnionToStruct(struct CAL_WT_Left_Struct *s,
                                            union CAL_WT_Left_Union u)
 {
-  s->vin_1 = (uint16_t)u.vin_1;
-  s->vin_2 = (uint16_t)u.vin_2;
-  s->vin_3 = (uint16_t)u.vin_3;
-  s->vin_4 = (uint16_t)u.vin_4;
+  s->vin_1_l = (uint16_t)u.vin_1_l;
+  s->vin_2_l = (uint16_t)u.vin_2_l;
+  s->vin_3_l = (uint16_t)u.vin_3_l;
+  s->vin_4_l = (uint16_t)u.vin_4_l;
 }
 
 SOFT_INLINE void CAL_WT_Left_StructToUnion(union CAL_WT_Left_Union *u,
                                            struct CAL_WT_Left_Struct s)
 {
-  u->vin_1 = (uint64_t)s.vin_1;
-  u->vin_2 = (uint64_t)s.vin_2;
-  u->vin_3 = (uint64_t)s.vin_3;
-  u->vin_4 = (uint64_t)s.vin_4;
+  u->vin_1_l = (uint64_t)s.vin_1_l;
+  u->vin_2_l = (uint64_t)s.vin_2_l;
+  u->vin_3_l = (uint64_t)s.vin_3_l;
+  u->vin_4_l = (uint64_t)s.vin_4_l;
 }
 
 /* ------------------------------- CAL_LV_LEM ------------------------------- */
@@ -497,13 +521,13 @@ SOFT_INLINE void CAL_WT_Left_StructToUnion(union CAL_WT_Left_Union *u,
 SOFT_INLINE void CAL_LV_LEM_UnionToStruct(struct CAL_LV_LEM_Struct *s,
                                           union CAL_LV_LEM_Union u)
 {
-  s->voltage = (uint16_t)u.voltage;
+  s->voltage_lvlem = (uint16_t)u.voltage_lvlem;
 }
 
 SOFT_INLINE void CAL_LV_LEM_StructToUnion(union CAL_LV_LEM_Union *u,
                                           struct CAL_LV_LEM_Struct s)
 {
-  u->voltage = (uint64_t)s.voltage;
+  u->voltage_lvlem = (uint64_t)s.voltage_lvlem;
 }
 
 /* -------------------------------- LOG_SDC -------------------------------- */
@@ -799,7 +823,7 @@ HSC_SBG_Euler_Acc_UnionToStruct(struct HSC_SBG_Euler_Acc_Struct *s,
                                 union HSC_SBG_Euler_Acc_Union u)
 {
   s->roll_acc = (float)(u.roll_acc * 0.0001f);
-  s->pitch_acc = (float)(u.pitch_acc * 0.01f);
+  s->pitch_euler_acc = (float)(u.pitch_euler_acc * 0.01f);
   s->yaw_acc = (float)(u.yaw_acc * 0.0001f);
 }
 
@@ -808,7 +832,7 @@ HSC_SBG_Euler_Acc_StructToUnion(union HSC_SBG_Euler_Acc_Union *u,
                                 struct HSC_SBG_Euler_Acc_Struct s)
 {
   u->roll_acc = (uint64_t)(s.roll_acc * 10000.0f);
-  u->pitch_acc = (uint64_t)(s.pitch_acc * 100.0f);
+  u->pitch_euler_acc = (uint64_t)(s.pitch_euler_acc * 100.0f);
   u->yaw_acc = (uint64_t)(s.yaw_acc * 10000.0f);
 }
 
@@ -817,16 +841,16 @@ HSC_SBG_Euler_Acc_StructToUnion(union HSC_SBG_Euler_Acc_Union *u,
 SOFT_INLINE void HSC_SBG_Euler_UnionToStruct(struct HSC_SBG_Euler_Struct *s,
                                              union HSC_SBG_Euler_Union u)
 {
-  s->roll = (float)(u.roll * 0.0001f);
-  s->pitch = (float)(u.pitch * 0.0001f);
+  s->roll_euler = (float)(u.roll_euler * 0.0001f);
+  s->pitch_euler = (float)(u.pitch_euler * 0.0001f);
   s->yaw = (float)(u.yaw * 0.0001f);
 }
 
 SOFT_INLINE void HSC_SBG_Euler_StructToUnion(union HSC_SBG_Euler_Union *u,
                                              struct HSC_SBG_Euler_Struct s)
 {
-  u->roll = (int64_t)(s.roll * 10000.0f);
-  u->pitch = (int64_t)(s.pitch * 10000.0f);
+  u->roll_euler = (int64_t)(s.roll_euler * 10000.0f);
+  u->pitch_euler = (int64_t)(s.pitch_euler * 10000.0f);
   u->yaw = (int64_t)(s.yaw * 10000.0f);
 }
 
@@ -952,7 +976,7 @@ HSC_SBG_True_Heading_UnionToStruct(struct HSC_SBG_True_Heading_Struct *s,
 {
   s->true_heading = (float)(u.true_heading * 0.01f);
   s->true_heading_acc = (float)(u.true_heading_acc * 0.01f);
-  s->pitch = (float)(u.pitch * 0.01f);
+  s->pitch_heading = (float)(u.pitch_heading * 0.01f);
 }
 
 SOFT_INLINE void
@@ -961,7 +985,7 @@ HSC_SBG_True_Heading_StructToUnion(union HSC_SBG_True_Heading_Union *u,
 {
   u->true_heading = (uint64_t)(s.true_heading * 100.0f);
   u->true_heading_acc = (uint64_t)(s.true_heading_acc * 100.0f);
-  u->pitch = (int64_t)(s.pitch * 100.0f);
+  u->pitch_heading = (int64_t)(s.pitch_heading * 100.0f);
 }
 
 /* ---------------------------- HSC_SBG_Altitude ---------------------------- */
@@ -1124,8 +1148,8 @@ SOFT_INLINE void HSC_SBG_Track_Slip_Curve_UnionToStruct(
     struct HSC_SBG_Track_Slip_Curve_Struct *s,
     union HSC_SBG_Track_Slip_Curve_Union u)
 {
-  s->angle_track = (float)(u.angle_track * 0.0001f);
-  s->angle_slip = (float)(u.angle_slip * 0.0001f);
+  s->track_angle = (float)(u.track_angle * 0.0001f);
+  s->slip_angle_sbg = (float)(u.slip_angle_sbg * 0.0001f);
   s->curvature_radius = (float)(u.curvature_radius * 0.01f);
   s->track_valid = (bool)u.track_valid;
   s->slip_valid = (bool)u.slip_valid;
@@ -1136,8 +1160,8 @@ SOFT_INLINE void HSC_SBG_Track_Slip_Curve_StructToUnion(
     union HSC_SBG_Track_Slip_Curve_Union *u,
     struct HSC_SBG_Track_Slip_Curve_Struct s)
 {
-  u->angle_track = (int64_t)(s.angle_track * 10000.0f);
-  u->angle_slip = (int64_t)(s.angle_slip * 10000.0f);
+  u->track_angle = (int64_t)(s.track_angle * 10000.0f);
+  u->slip_angle_sbg = (int64_t)(s.slip_angle_sbg * 10000.0f);
   u->curvature_radius = (uint64_t)(s.curvature_radius * 100.0f);
   u->track_valid = (uint64_t)s.track_valid;
   u->slip_valid = (uint64_t)s.slip_valid;
@@ -1230,7 +1254,7 @@ SOFT_INLINE void
 GW_Battery_Status_UnionToStruct(struct GW_Battery_Status_Struct *s,
                                 union GW_Battery_Status_Union u)
 {
-  s->state = (GW_Battery_Status_State)u.state;
+  s->bat_state = (GW_Battery_Status_BatState)u.bat_state;
   s->soc_internal = (float)(u.soc_internal * 0.01f);
   s->power = (float)(u.power * 0.01f);
   s->current = (float)(u.current * 0.1f);
@@ -1240,7 +1264,7 @@ SOFT_INLINE void
 GW_Battery_Status_StructToUnion(union GW_Battery_Status_Union *u,
                                 struct GW_Battery_Status_Struct s)
 {
-  u->state = (uint64_t)s.state;
+  u->bat_state = (uint64_t)s.bat_state;
   u->soc_internal = (uint64_t)(s.soc_internal * 100.0f);
   u->power = (uint64_t)(s.power * 100.0f);
   u->current = (int64_t)(s.current * 10.0f);
@@ -1251,20 +1275,20 @@ GW_Battery_Status_StructToUnion(union GW_Battery_Status_Union *u,
 SOFT_INLINE void GW_PE_FrontLeft_UnionToStruct(struct GW_PE_FrontLeft_Struct *s,
                                                union GW_PE_FrontLeft_Union u)
 {
-  s->temp_motor = (float)(u.temp_motor * 0.1f);
-  s->temp_inverter = (float)(u.temp_inverter * 0.1f);
-  s->temp_igbt = (float)(u.temp_igbt * 0.1f);
-  s->actual_velocity = (int16_t)u.actual_velocity;
+  s->temp_motor_fl = (float)(u.temp_motor_fl * 0.1f);
+  s->temp_inverter_fl = (float)(u.temp_inverter_fl * 0.1f);
+  s->temp_igbt_fl = (float)(u.temp_igbt_fl * 0.1f);
+  s->actual_velocity_fl = (int16_t)u.actual_velocity_fl;
 }
 
 SOFT_INLINE void
 GW_PE_FrontLeft_StructToUnion(union GW_PE_FrontLeft_Union *u,
                               struct GW_PE_FrontLeft_Struct s)
 {
-  u->temp_motor = (int64_t)(s.temp_motor * 10.0f);
-  u->temp_inverter = (int64_t)(s.temp_inverter * 10.0f);
-  u->temp_igbt = (int64_t)(s.temp_igbt * 10.0f);
-  u->actual_velocity = (int64_t)s.actual_velocity;
+  u->temp_motor_fl = (int64_t)(s.temp_motor_fl * 10.0f);
+  u->temp_inverter_fl = (int64_t)(s.temp_inverter_fl * 10.0f);
+  u->temp_igbt_fl = (int64_t)(s.temp_igbt_fl * 10.0f);
+  u->actual_velocity_fl = (int64_t)s.actual_velocity_fl;
 }
 
 /* ----------------------------- GW_PE_RearLeft ----------------------------- */
@@ -1272,19 +1296,19 @@ GW_PE_FrontLeft_StructToUnion(union GW_PE_FrontLeft_Union *u,
 SOFT_INLINE void GW_PE_RearLeft_UnionToStruct(struct GW_PE_RearLeft_Struct *s,
                                               union GW_PE_RearLeft_Union u)
 {
-  s->temp_motor = (float)(u.temp_motor * 0.1f);
-  s->temp_inverter = (float)(u.temp_inverter * 0.1f);
-  s->temp_igbt = (float)(u.temp_igbt * 0.1f);
-  s->actual_velocity = (int16_t)u.actual_velocity;
+  s->temp_motor_rl = (float)(u.temp_motor_rl * 0.1f);
+  s->temp_inverter_rl = (float)(u.temp_inverter_rl * 0.1f);
+  s->temp_igbt_rl = (float)(u.temp_igbt_rl * 0.1f);
+  s->actual_velocity_rl = (int16_t)u.actual_velocity_rl;
 }
 
 SOFT_INLINE void GW_PE_RearLeft_StructToUnion(union GW_PE_RearLeft_Union *u,
                                               struct GW_PE_RearLeft_Struct s)
 {
-  u->temp_motor = (int64_t)(s.temp_motor * 10.0f);
-  u->temp_inverter = (int64_t)(s.temp_inverter * 10.0f);
-  u->temp_igbt = (int64_t)(s.temp_igbt * 10.0f);
-  u->actual_velocity = (int64_t)s.actual_velocity;
+  u->temp_motor_rl = (int64_t)(s.temp_motor_rl * 10.0f);
+  u->temp_inverter_rl = (int64_t)(s.temp_inverter_rl * 10.0f);
+  u->temp_igbt_rl = (int64_t)(s.temp_igbt_rl * 10.0f);
+  u->actual_velocity_rl = (int64_t)s.actual_velocity_rl;
 }
 
 /* ---------------------------- GW_PE_RearRight ---------------------------- */
@@ -1292,20 +1316,20 @@ SOFT_INLINE void GW_PE_RearLeft_StructToUnion(union GW_PE_RearLeft_Union *u,
 SOFT_INLINE void GW_PE_RearRight_UnionToStruct(struct GW_PE_RearRight_Struct *s,
                                                union GW_PE_RearRight_Union u)
 {
-  s->temp_motor = (float)(u.temp_motor * 0.1f);
-  s->temp_inverter = (float)(u.temp_inverter * 0.1f);
-  s->temp_igbt = (float)(u.temp_igbt * 0.1f);
-  s->actual_velocity = (int16_t)u.actual_velocity;
+  s->temp_motor_rr = (float)(u.temp_motor_rr * 0.1f);
+  s->temp_inverter_rr = (float)(u.temp_inverter_rr * 0.1f);
+  s->temp_igbt_rr = (float)(u.temp_igbt_rr * 0.1f);
+  s->actual_velocity_rr = (int16_t)u.actual_velocity_rr;
 }
 
 SOFT_INLINE void
 GW_PE_RearRight_StructToUnion(union GW_PE_RearRight_Union *u,
                               struct GW_PE_RearRight_Struct s)
 {
-  u->temp_motor = (int64_t)(s.temp_motor * 10.0f);
-  u->temp_inverter = (int64_t)(s.temp_inverter * 10.0f);
-  u->temp_igbt = (int64_t)(s.temp_igbt * 10.0f);
-  u->actual_velocity = (int64_t)s.actual_velocity;
+  u->temp_motor_rr = (int64_t)(s.temp_motor_rr * 10.0f);
+  u->temp_inverter_rr = (int64_t)(s.temp_inverter_rr * 10.0f);
+  u->temp_igbt_rr = (int64_t)(s.temp_igbt_rr * 10.0f);
+  u->actual_velocity_rr = (int64_t)s.actual_velocity_rr;
 }
 
 /* ---------------------------- GW_PE_FrontRight ---------------------------- */
@@ -1314,20 +1338,20 @@ SOFT_INLINE void
 GW_PE_FrontRight_UnionToStruct(struct GW_PE_FrontRight_Struct *s,
                                union GW_PE_FrontRight_Union u)
 {
-  s->temp_motor = (float)(u.temp_motor * 0.1f);
-  s->temp_inverter = (float)(u.temp_inverter * 0.1f);
-  s->temp_igbt = (float)(u.temp_igbt * 0.1f);
-  s->actual_velocity = (int16_t)u.actual_velocity;
+  s->temp_motor_fr = (float)(u.temp_motor_fr * 0.1f);
+  s->temp_inverter_fr = (float)(u.temp_inverter_fr * 0.1f);
+  s->temp_igbt_fr = (float)(u.temp_igbt_fr * 0.1f);
+  s->actual_velocity_fr = (int16_t)u.actual_velocity_fr;
 }
 
 SOFT_INLINE void
 GW_PE_FrontRight_StructToUnion(union GW_PE_FrontRight_Union *u,
                                struct GW_PE_FrontRight_Struct s)
 {
-  u->temp_motor = (int64_t)(s.temp_motor * 10.0f);
-  u->temp_inverter = (int64_t)(s.temp_inverter * 10.0f);
-  u->temp_igbt = (int64_t)(s.temp_igbt * 10.0f);
-  u->actual_velocity = (int64_t)s.actual_velocity;
+  u->temp_motor_fr = (int64_t)(s.temp_motor_fr * 10.0f);
+  u->temp_inverter_fr = (int64_t)(s.temp_inverter_fr * 10.0f);
+  u->temp_igbt_fr = (int64_t)(s.temp_igbt_fr * 10.0f);
+  u->actual_velocity_fr = (int64_t)s.actual_velocity_fr;
 }
 
 /* --------------------------- EXC_BATFAN_Control --------------------------- */
@@ -1354,14 +1378,14 @@ SOFT_INLINE void LOG_ASSILEDs_UnionToStruct(struct LOG_ASSILEDs_Struct *s,
                                             union LOG_ASSILEDs_Union u)
 {
   s->yellow = (bool)u.yellow;
-  s->blue = (bool)u.blue;
+  s->blue_assi = (bool)u.blue_assi;
 }
 
 SOFT_INLINE void LOG_ASSILEDs_StructToUnion(union LOG_ASSILEDs_Union *u,
                                             struct LOG_ASSILEDs_Struct s)
 {
   u->yellow = (uint64_t)s.yellow;
-  u->blue = (uint64_t)s.blue;
+  u->blue_assi = (uint64_t)s.blue_assi;
 }
 
 /* ---------------------------- EXC_FAN_Control ---------------------------- */
@@ -1405,7 +1429,7 @@ SOFT_INLINE void
 HSC_Vehicle_Status_UnionToStruct(struct HSC_Vehicle_Status_Struct *s,
                                  union HSC_Vehicle_Status_Union u)
 {
-  s->state = (HSC_Vehicle_Status_State)u.state;
+  s->car_state = (HSC_Vehicle_Status_CarState)u.car_state;
   s->imd_error = (bool)u.imd_error;
   s->ams_error = (bool)u.ams_error;
   s->gen_scs = (uint8_t)u.gen_scs;
@@ -1417,7 +1441,7 @@ SOFT_INLINE void
 HSC_Vehicle_Status_StructToUnion(union HSC_Vehicle_Status_Union *u,
                                  struct HSC_Vehicle_Status_Struct s)
 {
-  u->state = (uint64_t)s.state;
+  u->car_state = (uint64_t)s.car_state;
   u->imd_error = (uint64_t)s.imd_error;
   u->ams_error = (uint64_t)s.ams_error;
   u->gen_scs = (uint64_t)s.gen_scs;
@@ -1431,7 +1455,7 @@ SOFT_INLINE void
 LSC_Extern_Buttons_UnionToStruct(struct LSC_Extern_Buttons_Struct *s,
                                  union LSC_Extern_Buttons_Union u)
 {
-  s->tsa = (bool)u.tsa;
+  s->tsa_ext = (bool)u.tsa_ext;
   s->gen_scs = (uint8_t)u.gen_scs;
 }
 
@@ -1439,7 +1463,7 @@ SOFT_INLINE void
 LSC_Extern_Buttons_StructToUnion(union LSC_Extern_Buttons_Union *u,
                                  struct LSC_Extern_Buttons_Struct s)
 {
-  u->tsa = (uint64_t)s.tsa;
+  u->tsa_ext = (uint64_t)s.tsa_ext;
   u->gen_scs = (uint64_t)s.gen_scs;
 }
 
@@ -1546,7 +1570,7 @@ SOFT_INLINE void HSC_Steering_UnionToStruct(struct HSC_Steering_Struct *s,
 {
   s->steering_wheel_angle = (float)(u.steering_wheel_angle * 0.075f);
   s->steering_angle = (float)(u.steering_angle * 0.075f);
-  s->angle_valid = (bool)u.angle_valid;
+  s->st_angle_valid = (bool)u.st_angle_valid;
   s->gen_scs = (uint8_t)u.gen_scs;
 }
 
@@ -1556,7 +1580,7 @@ SOFT_INLINE void HSC_Steering_StructToUnion(union HSC_Steering_Union *u,
   u->steering_wheel_angle =
       (int64_t)(s.steering_wheel_angle * 13.333333333333334f);
   u->steering_angle = (int64_t)(s.steering_angle * 13.333333333333334f);
-  u->angle_valid = (uint64_t)s.angle_valid;
+  u->st_angle_valid = (uint64_t)s.st_angle_valid;
   u->gen_scs = (uint64_t)s.gen_scs;
 }
 
@@ -1639,14 +1663,14 @@ SOFT_INLINE void DV_SCS_Errors_StructToUnion(union DV_SCS_Errors_Union *u,
 SOFT_INLINE void DV_AMI_Status_UnionToStruct(struct DV_AMI_Status_Struct *s,
                                              union DV_AMI_Status_Union u)
 {
-  s->state = (DV_AMI_Status_State)u.state;
+  s->ami_state = (DV_AMI_Status_AMI_State)u.ami_state;
   s->gen_scs = (uint8_t)u.gen_scs;
 }
 
 SOFT_INLINE void DV_AMI_Status_StructToUnion(union DV_AMI_Status_Union *u,
                                              struct DV_AMI_Status_Struct s)
 {
-  u->state = (uint64_t)s.state;
+  u->ami_state = (uint64_t)s.ami_state;
   u->gen_scs = (uint64_t)s.gen_scs;
 }
 
@@ -1727,7 +1751,7 @@ DV_System_Status_UnionToStruct(struct DV_System_Status_Struct *s,
 {
   s->as_state = (DV_System_Status_AS_State)u.as_state;
   s->ebs_state = (uint8_t)u.ebs_state;
-  s->ami_state = (uint8_t)u.ami_state;
+  s->ami_state = (DV_System_Status_AMI_State)u.ami_state;
   s->steering_state = (bool)u.steering_state;
   s->service_brake_state = (uint8_t)u.service_brake_state;
   s->lap_counter = (uint8_t)u.lap_counter;
@@ -1762,7 +1786,7 @@ SOFT_INLINE void DV_ASB_Status_UnionToStruct(struct DV_ASB_Status_Struct *s,
   s->sdc_closed = (bool)u.sdc_closed;
   s->scs_error = (bool)u.scs_error;
   s->trigger_cause = (uint8_t)u.trigger_cause;
-  s->state = (uint8_t)u.state;
+  s->asb_state = (uint8_t)u.asb_state;
   s->gen_scs = (uint8_t)u.gen_scs;
 }
 
@@ -1777,7 +1801,7 @@ SOFT_INLINE void DV_ASB_Status_StructToUnion(union DV_ASB_Status_Union *u,
   u->sdc_closed = (uint64_t)s.sdc_closed;
   u->scs_error = (uint64_t)s.scs_error;
   u->trigger_cause = (uint64_t)s.trigger_cause;
-  u->state = (uint64_t)s.state;
+  u->asb_state = (uint64_t)s.asb_state;
   u->gen_scs = (uint64_t)s.gen_scs;
 }
 
@@ -1894,14 +1918,14 @@ SOFT_INLINE void
 CAL_SteeringAngle_UnionToStruct(struct CAL_SteeringAngle_Struct *s,
                                 union CAL_SteeringAngle_Union u)
 {
-  s->voltage = (uint16_t)u.voltage;
+  s->voltage_stang = (uint16_t)u.voltage_stang;
 }
 
 SOFT_INLINE void
 CAL_SteeringAngle_StructToUnion(union CAL_SteeringAngle_Union *u,
                                 struct CAL_SteeringAngle_Struct s)
 {
-  u->voltage = (uint64_t)s.voltage;
+  u->voltage_stang = (uint64_t)s.voltage_stang;
 }
 
 /* -------------------------------- CAL_APPS -------------------------------- */
@@ -2031,20 +2055,20 @@ SOFT_INLINE void
 LOG_WaterTemps_Left_UnionToStruct(struct LOG_WaterTemps_Left_Struct *s,
                                   union LOG_WaterTemps_Left_Union u)
 {
-  s->wt_1 = (float)(u.wt_1 * 0.5f);
-  s->wt_2 = (float)(u.wt_2 * 0.5f);
-  s->wt_3 = (float)(u.wt_3 * 0.5f);
-  s->wt_4 = (float)(u.wt_4 * 0.5f);
+  s->wt_1_l = (float)(u.wt_1_l * 0.5f);
+  s->wt_2_l = (float)(u.wt_2_l * 0.5f);
+  s->wt_3_l = (float)(u.wt_3_l * 0.5f);
+  s->wt_4_l = (float)(u.wt_4_l * 0.5f);
 }
 
 SOFT_INLINE void
 LOG_WaterTemps_Left_StructToUnion(union LOG_WaterTemps_Left_Union *u,
                                   struct LOG_WaterTemps_Left_Struct s)
 {
-  u->wt_1 = (uint64_t)(s.wt_1 * 2.0f);
-  u->wt_2 = (uint64_t)(s.wt_2 * 2.0f);
-  u->wt_3 = (uint64_t)(s.wt_3 * 2.0f);
-  u->wt_4 = (uint64_t)(s.wt_4 * 2.0f);
+  u->wt_1_l = (uint64_t)(s.wt_1_l * 2.0f);
+  u->wt_2_l = (uint64_t)(s.wt_2_l * 2.0f);
+  u->wt_3_l = (uint64_t)(s.wt_3_l * 2.0f);
+  u->wt_4_l = (uint64_t)(s.wt_4_l * 2.0f);
 }
 
 /* -------------------------- LOG_WaterTemps_Right -------------------------- */
@@ -2053,20 +2077,20 @@ SOFT_INLINE void
 LOG_WaterTemps_Right_UnionToStruct(struct LOG_WaterTemps_Right_Struct *s,
                                    union LOG_WaterTemps_Right_Union u)
 {
-  s->wt_1 = (float)(u.wt_1 * 0.5f);
-  s->wt_2 = (float)(u.wt_2 * 0.5f);
-  s->wt_3 = (float)(u.wt_3 * 0.5f);
-  s->wt_4 = (float)(u.wt_4 * 0.5f);
+  s->wt_1_r = (float)(u.wt_1_r * 0.5f);
+  s->wt_2_r = (float)(u.wt_2_r * 0.5f);
+  s->wt_3_r = (float)(u.wt_3_r * 0.5f);
+  s->wt_4_r = (float)(u.wt_4_r * 0.5f);
 }
 
 SOFT_INLINE void
 LOG_WaterTemps_Right_StructToUnion(union LOG_WaterTemps_Right_Union *u,
                                    struct LOG_WaterTemps_Right_Struct s)
 {
-  u->wt_1 = (uint64_t)(s.wt_1 * 2.0f);
-  u->wt_2 = (uint64_t)(s.wt_2 * 2.0f);
-  u->wt_3 = (uint64_t)(s.wt_3 * 2.0f);
-  u->wt_4 = (uint64_t)(s.wt_4 * 2.0f);
+  u->wt_1_r = (uint64_t)(s.wt_1_r * 2.0f);
+  u->wt_2_r = (uint64_t)(s.wt_2_r * 2.0f);
+  u->wt_3_r = (uint64_t)(s.wt_3_r * 2.0f);
+  u->wt_4_r = (uint64_t)(s.wt_4_r * 2.0f);
 }
 
 /* ------------------------- LOG_SpringTravel_Front ------------------------- */
@@ -2111,16 +2135,16 @@ SOFT_INLINE void
 LOG_BrakePressures_UnionToStruct(struct LOG_BrakePressures_Struct *s,
                                  union LOG_BrakePressures_Union u)
 {
-  s->front = (float)(u.front * 50.0f);
-  s->rear = (float)(u.rear * 50.0f);
+  s->front_bp = (float)(u.front_bp * 50.0f);
+  s->rear_bp = (float)(u.rear_bp * 50.0f);
 }
 
 SOFT_INLINE void
 LOG_BrakePressures_StructToUnion(union LOG_BrakePressures_Union *u,
                                  struct LOG_BrakePressures_Struct s)
 {
-  u->front = (uint64_t)(s.front * 0.02f);
-  u->rear = (uint64_t)(s.rear * 0.02f);
+  u->front_bp = (uint64_t)(s.front_bp * 0.02f);
+  u->rear_bp = (uint64_t)(s.rear_bp * 0.02f);
 }
 
 /* -------------------------------- LOG_LEM -------------------------------- */
@@ -2128,81 +2152,81 @@ LOG_BrakePressures_StructToUnion(union LOG_BrakePressures_Union *u,
 SOFT_INLINE void LOG_LEM_UnionToStruct(struct LOG_LEM_Struct *s,
                                        union LOG_LEM_Union u)
 {
-  s->lv = (uint16_t)u.lv;
+  s->lv_current = (uint16_t)u.lv_current;
 }
 
 SOFT_INLINE void LOG_LEM_StructToUnion(union LOG_LEM_Union *u,
                                        struct LOG_LEM_Struct s)
 {
-  u->lv = (uint64_t)s.lv;
+  u->lv_current = (uint64_t)s.lv_current;
 }
 
-/* ------------------------------ LOG_airp_FW ------------------------------ */
+/* ------------------------------ LOG_Airp_FW ------------------------------ */
 
-SOFT_INLINE void LOG_airp_FW_UnionToStruct(struct LOG_airp_FW_Struct *s,
-                                           union LOG_airp_FW_Union u)
+SOFT_INLINE void LOG_Airp_FW_UnionToStruct(struct LOG_Airp_FW_Struct *s,
+                                           union LOG_Airp_FW_Union u)
 {
-  s->airp_1 = (float)(u.airp_1 * 2.0f) + 30000;
-  s->airp_2 = (float)(u.airp_2 * 2.0f) + 30000;
+  s->airp_1_fw = (float)(u.airp_1_fw * 2.0f) + 30000;
+  s->airp_2_fw = (float)(u.airp_2_fw * 2.0f) + 30000;
 }
 
-SOFT_INLINE void LOG_airp_FW_StructToUnion(union LOG_airp_FW_Union *u,
-                                           struct LOG_airp_FW_Struct s)
+SOFT_INLINE void LOG_Airp_FW_StructToUnion(union LOG_Airp_FW_Union *u,
+                                           struct LOG_Airp_FW_Struct s)
 {
-  u->airp_1 = (uint64_t)(s.airp_1 * 0.5f) - 30000;
-  u->airp_2 = (uint64_t)(s.airp_2 * 0.5f) - 30000;
+  u->airp_1_fw = (uint64_t)(s.airp_1_fw * 0.5f) - 30000;
+  u->airp_2_fw = (uint64_t)(s.airp_2_fw * 0.5f) - 30000;
 }
 
-/* ------------------------------ LOG_airp_SPL ------------------------------ */
+/* ------------------------------ LOG_Airp_SPL ------------------------------ */
 
-SOFT_INLINE void LOG_airp_SPL_UnionToStruct(struct LOG_airp_SPL_Struct *s,
-                                            union LOG_airp_SPL_Union u)
+SOFT_INLINE void LOG_Airp_SPL_UnionToStruct(struct LOG_Airp_SPL_Struct *s,
+                                            union LOG_Airp_SPL_Union u)
 {
-  s->airp_1 = (float)(u.airp_1 * 2.0f) + 30000;
-  s->airp_2 = (float)(u.airp_2 * 2.0f) + 30000;
-  s->airp_3 = (float)(u.airp_3 * 2.0f) + 30000;
+  s->airp_1_spl = (float)(u.airp_1_spl * 2.0f) + 30000;
+  s->airp_2_spl = (float)(u.airp_2_spl * 2.0f) + 30000;
+  s->airp_3_spl = (float)(u.airp_3_spl * 2.0f) + 30000;
 }
 
-SOFT_INLINE void LOG_airp_SPL_StructToUnion(union LOG_airp_SPL_Union *u,
-                                            struct LOG_airp_SPL_Struct s)
+SOFT_INLINE void LOG_Airp_SPL_StructToUnion(union LOG_Airp_SPL_Union *u,
+                                            struct LOG_Airp_SPL_Struct s)
 {
-  u->airp_1 = (uint64_t)(s.airp_1 * 0.5f) - 30000;
-  u->airp_2 = (uint64_t)(s.airp_2 * 0.5f) - 30000;
-  u->airp_3 = (uint64_t)(s.airp_3 * 0.5f) - 30000;
+  u->airp_1_spl = (uint64_t)(s.airp_1_spl * 0.5f) - 30000;
+  u->airp_2_spl = (uint64_t)(s.airp_2_spl * 0.5f) - 30000;
+  u->airp_3_spl = (uint64_t)(s.airp_3_spl * 0.5f) - 30000;
 }
 
-/* ------------------------------ LOG_airp_SPR ------------------------------ */
+/* ------------------------------ LOG_Airp_SPR ------------------------------ */
 
-SOFT_INLINE void LOG_airp_SPR_UnionToStruct(struct LOG_airp_SPR_Struct *s,
-                                            union LOG_airp_SPR_Union u)
+SOFT_INLINE void LOG_Airp_SPR_UnionToStruct(struct LOG_Airp_SPR_Struct *s,
+                                            union LOG_Airp_SPR_Union u)
 {
-  s->airp_1 = (float)(u.airp_1 * 2.0f) + 30000;
-  s->airp_2 = (float)(u.airp_2 * 2.0f) + 30000;
-  s->airp_3 = (float)(u.airp_3 * 2.0f) + 30000;
+  s->airp_1_spr = (float)(u.airp_1_spr * 2.0f) + 30000;
+  s->airp_2_spr = (float)(u.airp_2_spr * 2.0f) + 30000;
+  s->airp_3_spr = (float)(u.airp_3_spr * 2.0f) + 30000;
 }
 
-SOFT_INLINE void LOG_airp_SPR_StructToUnion(union LOG_airp_SPR_Union *u,
-                                            struct LOG_airp_SPR_Struct s)
+SOFT_INLINE void LOG_Airp_SPR_StructToUnion(union LOG_Airp_SPR_Union *u,
+                                            struct LOG_Airp_SPR_Struct s)
 {
-  u->airp_1 = (uint64_t)(s.airp_1 * 0.5f) - 30000;
-  u->airp_2 = (uint64_t)(s.airp_2 * 0.5f) - 30000;
-  u->airp_3 = (uint64_t)(s.airp_3 * 0.5f) - 30000;
+  u->airp_1_spr = (uint64_t)(s.airp_1_spr * 0.5f) - 30000;
+  u->airp_2_spr = (uint64_t)(s.airp_2_spr * 0.5f) - 30000;
+  u->airp_3_spr = (uint64_t)(s.airp_3_spr * 0.5f) - 30000;
 }
 
-/* ------------------------------ LOG_airp_RW ------------------------------ */
+/* ------------------------------ LOG_Airp_RW ------------------------------ */
 
-SOFT_INLINE void LOG_airp_RW_UnionToStruct(struct LOG_airp_RW_Struct *s,
-                                           union LOG_airp_RW_Union u)
+SOFT_INLINE void LOG_Airp_RW_UnionToStruct(struct LOG_Airp_RW_Struct *s,
+                                           union LOG_Airp_RW_Union u)
 {
-  s->airp_1 = (float)(u.airp_1 * 2.0f) + 30000;
-  s->airp_2 = (float)(u.airp_2 * 2.0f) + 30000;
+  s->airp_1_rw = (float)(u.airp_1_rw * 2.0f) + 30000;
+  s->airp_2_rw = (float)(u.airp_2_rw * 2.0f) + 30000;
 }
 
-SOFT_INLINE void LOG_airp_RW_StructToUnion(union LOG_airp_RW_Union *u,
-                                           struct LOG_airp_RW_Struct s)
+SOFT_INLINE void LOG_Airp_RW_StructToUnion(union LOG_Airp_RW_Union *u,
+                                           struct LOG_Airp_RW_Struct s)
 {
-  u->airp_1 = (uint64_t)(s.airp_1 * 0.5f) - 30000;
-  u->airp_2 = (uint64_t)(s.airp_2 * 0.5f) - 30000;
+  u->airp_1_rw = (uint64_t)(s.airp_1_rw * 0.5f) - 30000;
+  u->airp_2_rw = (uint64_t)(s.airp_2_rw * 0.5f) - 30000;
 }
 
 /* ---------------------------- LOG_PE_MaxTemps ---------------------------- */
@@ -2210,10 +2234,10 @@ SOFT_INLINE void LOG_airp_RW_StructToUnion(union LOG_airp_RW_Union *u,
 SOFT_INLINE void LOG_PE_MaxTemps_UnionToStruct(struct LOG_PE_MaxTemps_Struct *s,
                                                union LOG_PE_MaxTemps_Union u)
 {
-  s->front = (float)(u.front * 0.6f);
-  s->rear = (float)(u.rear * 0.6f);
-  s->left = (float)(u.left * 0.6f);
-  s->right = (float)(u.right * 0.6f);
+  s->front_pe = (float)(u.front_pe * 0.6f);
+  s->rear_pe = (float)(u.rear_pe * 0.6f);
+  s->left_pe = (float)(u.left_pe * 0.6f);
+  s->right_pe = (float)(u.right_pe * 0.6f);
   s->usage_front = (float)(u.usage_front * 0.5f);
   s->usage_rear = (float)(u.usage_rear * 0.5f);
   s->usage_left = (float)(u.usage_left * 0.5f);
@@ -2224,10 +2248,10 @@ SOFT_INLINE void
 LOG_PE_MaxTemps_StructToUnion(union LOG_PE_MaxTemps_Union *u,
                               struct LOG_PE_MaxTemps_Struct s)
 {
-  u->front = (uint64_t)(s.front * 1.6666666666666667f);
-  u->rear = (uint64_t)(s.rear * 1.6666666666666667f);
-  u->left = (uint64_t)(s.left * 1.6666666666666667f);
-  u->right = (uint64_t)(s.right * 1.6666666666666667f);
+  u->front_pe = (uint64_t)(s.front_pe * 1.6666666666666667f);
+  u->rear_pe = (uint64_t)(s.rear_pe * 1.6666666666666667f);
+  u->left_pe = (uint64_t)(s.left_pe * 1.6666666666666667f);
+  u->right_pe = (uint64_t)(s.right_pe * 1.6666666666666667f);
   u->usage_front = (uint64_t)(s.usage_front * 2.0f);
   u->usage_rear = (uint64_t)(s.usage_rear * 2.0f);
   u->usage_left = (uint64_t)(s.usage_left * 2.0f);
@@ -2263,7 +2287,7 @@ LOG_EKF_Rotation_UnionToStruct(struct LOG_EKF_Rotation_Struct *s,
                                union LOG_EKF_Rotation_Union u)
 {
   s->heading_psi = (float)(u.heading_psi * 0.0003f);
-  s->yaw_rate = (float)(u.yaw_rate * 0.00018f);
+  s->yaw_rate_np = (float)(u.yaw_rate_np * 0.00018f);
 }
 
 SOFT_INLINE void
@@ -2271,7 +2295,7 @@ LOG_EKF_Rotation_StructToUnion(union LOG_EKF_Rotation_Union *u,
                                struct LOG_EKF_Rotation_Struct s)
 {
   u->heading_psi = (int64_t)(s.heading_psi * 3333.3333333333335f);
-  u->yaw_rate = (int64_t)(s.yaw_rate * 5555.555555555556f);
+  u->yaw_rate_np = (int64_t)(s.yaw_rate_np * 5555.555555555556f);
 }
 
 /* ------------------------------- CANO_TLSS ------------------------------- */
