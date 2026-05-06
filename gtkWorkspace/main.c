@@ -53,9 +53,10 @@ static gboolean on_click(
 		gpointer user_data)
 {
 	static int panel_index = 0;
-	const char *panels[] = {"Endurance", "Debug", "Parameters", "Vehicleinfo"};
-	panel_index = (panel_index + 1) % 4;
-	currentPanel = panel_index;
+	const char *panels[] = {"Endurance", "Vehicleinfo"};
+	const uint8_t panel_enums[] = {ENDURANCE, VEHICLEINFO};
+	panel_index = (panel_index + 1) % 2;
+	currentPanel = panel_enums[panel_index];
 	switch_panel(GTK_WIDGET(user_data), panels[panel_index]);
 	return TRUE;
 }
