@@ -122,28 +122,28 @@ void init_sre_logic()
 	sre_pressures->asb_pressure_2 = 0;
 
 	// Temperatures
-	sre_temperatures->temp_per = 0;
-	sre_temperatures->temp_pef = 0;
-	sre_temperatures->temp_motor_fl = 0;
-	sre_temperatures->temp_motor_fr = 0;
-	sre_temperatures->temp_motor_rl = 0;
-	sre_temperatures->temp_motor_rr = 0;
+	sre_temperatures->temp_per = 44.4;
+	sre_temperatures->temp_pef = 19.4;
+	sre_temperatures->temp_motor_fl = 54.5;
+	sre_temperatures->temp_motor_fr = 77.7;
+	sre_temperatures->temp_motor_rl = 15.8;
+	sre_temperatures->temp_motor_rr = 28.8;
 
 	// Battery
-	sre_battery->bat_soc = 10.0;
-	sre_battery->bat_temp_max = 53;
-	sre_battery->bat_temp_min = 48;
-	sre_battery->bat_volt_max = 3.0;
-	sre_battery->bat_volt_min = 2.6;
+	sre_battery->bat_soc = 34.0;
+	sre_battery->bat_temp_max = 42.0;
+	sre_battery->bat_temp_min = 34.0;
+	sre_battery->bat_volt_max = 3.79;
+	sre_battery->bat_volt_min = 3.67;
 
 	// Power Measurement
 	sre_power->sdc_power = 0;
 	sre_power->lv_power = 0;
-	sre_power->hv_power = 0;
+	sre_power->hv_power = 100.8;
 	sre_power->epos_power = 0;
 
 	// Vehicle Info
-	sre_vehicle_info->car_speed = 0;
+	sre_vehicle_info->car_speed = 109;
 	sre_vehicle_info->car_speed_gps = 0;
 	sre_vehicle_info->car_accel_x = 0;
 	sre_vehicle_info->car_accel_z = 0;
@@ -163,8 +163,8 @@ void init_sre_logic()
 	sre_switches->sensors_switch = false;
 
 	// States
-	sre_state->car_state = UNDEFINED_C;
-	sre_state->bat_state = UNDEFINED_B;
+	sre_state->car_state = DRIVE;
+	sre_state->bat_state = TSA;
 	sre_state->asb_state = UNINITALIZED;
 	sre_state->ami_state = MANUAL;
 	sre_state->as_state = OFF;
@@ -514,7 +514,7 @@ void label_update()
 
 			gtk_label_set_text(GTK_LABEL(info_bat_temp_max_endu), buffer);
 
-			sprintf(buffer, "%.0f°c", sre_temperatures->temp_pef);
+			sprintf(buffer, "%.1f°c", sre_temperatures->temp_pef);
 			gtk_label_set_text(GTK_LABEL(info_temp_pef_endu), buffer);
 			if (sre_temperatures->temp_pef >= CRITICAL_PE_TEMP)
 			{
@@ -532,7 +532,7 @@ void label_update()
 																		"blink-critical");
 			}
 
-			sprintf(buffer, "%.0f°c", sre_temperatures->temp_per);
+			sprintf(buffer, "%.1f°c", sre_temperatures->temp_per);
 			gtk_label_set_text(GTK_LABEL(info_temp_per_endu), buffer);
 			if (sre_temperatures->temp_per >= CRITICAL_PE_TEMP)
 			{
@@ -550,7 +550,7 @@ void label_update()
 																		"blink-critical");
 			}
 
-			sprintf(buffer, "%.0f°c", sre_temperatures->temp_motor_fl);
+			sprintf(buffer, "%.1f°c", sre_temperatures->temp_motor_fl);
 			gtk_label_set_text(GTK_LABEL(info_temp_motor_fl_endu), buffer);
 			if (sre_temperatures->temp_motor_fl >= CRITICAL_MOTOR_TEMP)
 			{
@@ -570,7 +570,7 @@ void label_update()
 																		"blink-critical");
 			}
 
-			sprintf(buffer, "%.0f°c", sre_temperatures->temp_motor_fr);
+			sprintf(buffer, "%.1f°c", sre_temperatures->temp_motor_fr);
 			gtk_label_set_text(GTK_LABEL(info_temp_motor_fr_endu), buffer);
 			if (sre_temperatures->temp_motor_fr >= CRITICAL_MOTOR_TEMP)
 			{
@@ -590,7 +590,7 @@ void label_update()
 																		"blink-critical");
 			}
 
-			sprintf(buffer, "%.0f°c", sre_temperatures->temp_motor_rl);
+			sprintf(buffer, "%.1f°c", sre_temperatures->temp_motor_rl);
 			gtk_label_set_text(GTK_LABEL(info_temp_motor_rl_endu), buffer);
 			if (sre_temperatures->temp_motor_rl >= CRITICAL_MOTOR_TEMP)
 			{
@@ -610,7 +610,7 @@ void label_update()
 																		"blink-critical");
 			}
 
-			sprintf(buffer, "%.0f°c", sre_temperatures->temp_motor_rr);
+			sprintf(buffer, "%.1f°c", sre_temperatures->temp_motor_rr);
 			gtk_label_set_text(GTK_LABEL(info_temp_motor_rr_endu), buffer);
 			if (sre_temperatures->temp_motor_rr >= CRITICAL_MOTOR_TEMP)
 			{
@@ -752,11 +752,11 @@ void label_update()
 			}
 
 			// POWER MEASUREMENT
-			sprintf(buffer, "%.0f", sre_power->hv_power);
+			sprintf(buffer, "%.1f", sre_power->hv_power);
 			gtk_label_set_text(GTK_LABEL(info_hv_power_vehicleinfo), buffer);
 
 			// VEHICLE INFO
-			sprintf(buffer, "%.0f", sre_vehicle_info->car_speed * 3.6);
+			sprintf(buffer, "%.0f", sre_vehicle_info->car_speed);
 			gtk_label_set_text(GTK_LABEL(info_car_speed_vehicleinfo), buffer);
 
 			// STATES
