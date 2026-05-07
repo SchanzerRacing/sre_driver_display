@@ -175,10 +175,8 @@ static void activate(GtkApplication *app, gpointer user_data)
 	// Add the main overlay to the window
 	gtk_window_set_child(GTK_WINDOW(window), main_overlay);
 
-// set fullscreen
-#if USE_CAN
+	// set fullscreen
 	gtk_window_fullscreen(GTK_WINDOW(window));
-#endif
 
 	gtk_window_present(GTK_WINDOW(window));
 }
