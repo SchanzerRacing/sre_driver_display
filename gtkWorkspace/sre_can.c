@@ -90,7 +90,7 @@ can_mapping_t can_mappings[] = {
 
 #pragma GCC diagnostic pop
 
-void can_loop()
+void * can_loop()
 {
 	while (1)
 	{

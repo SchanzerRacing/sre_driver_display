@@ -210,7 +210,7 @@ int main(int argc, char *argv[])
 	setup_can();
 
 	// Setup CAN daughter thread
-	if (pthread_create(&can_thread, NULL, &can_loop, NULL) != 0)
+	if (pthread_create(&can_thread, NULL, *can_loop, NULL) != 0)
 	{
 		perror("Failed to create CAN thread");
 		exit(EXIT_FAILURE);

@@ -17,7 +17,7 @@
 #include <linux/can.h>
 #include <linux/can/raw.h>
 
-void can_loop();
+void * can_loop();
 uint8_t read_and_match();
 void setup_can();
 void close_can();
