@@ -5,7 +5,7 @@
 #include <stdbool.h>
 
 // whether to use can and disable debugging features (key press debug)
-#define USE_CAN 0
+#define USE_CAN 1
 
 // Critical or Warning Values
 #define WARNING_BAT_TEMP 48
