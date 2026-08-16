@@ -89,6 +89,10 @@ void remove_error(uint16_t index);
 /// @return returns pointer to the error if it exists, NULL if it does not
 SRE_error *check_if_error_exists(uint16_t error_type, uint16_t sub_error_type);
 
+/// @brief dismisses the error currently shown in the error popup and
+/// immediately advances the popup to the next non-dismissed error, if any
+void dismiss_current_error();
+
 /// @brief frees all errors in the vehicle_error array
 void free_all_errors();
 
