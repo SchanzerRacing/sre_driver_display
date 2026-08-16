@@ -812,73 +812,80 @@ void error_label_update()
 	}
 }
 
-void error_panel_update()
+// index into vehicle_errors of the error currently shown in the error popup
+static uint8_t cur_err_ind = 0;
+
+// Advances cur_err_ind to the next non-dismissed error and updates the popup
+// labels. Clears the labels if no non-dismissed error is found.
+static void advance_error_display()
 {
-	// printf("error_panel_update\n");
-	uint8_t error_count = 0;
 	for (int i = 0; i < MAX_ERRORS; i++)
 	{
-		if (vehicle_errors[i] != NULL)
+		cur_err_ind = (cur_err_ind + 1) % MAX_ERRORS;
+		if (vehicle_errors[cur_err_ind] != NULL &&
+				vehicle_errors[cur_err_ind]->dismissed == 0)
 		{
-			error_count++;
+			char buffer[100];
+			const char *error_type_str =
+					ERROR_TYPES_STR[vehicle_errors[cur_err_ind]->error_type];
+			const char *sub_error_str = "N/A"; // default if no subtype exists
+			if (vehicle_errors[cur_err_ind]->error_type <
+							ERROR_TYPE_COUNT &&
+					ERROR_SUB_TYPE_MAP[vehicle_errors[cur_err_ind]->error_type] !=
+							NULL &&
+					vehicle_errors[cur_err_ind]->sub_error_type <
+							ERROR_SUB_TYPE_COUNT) // avoid out of bounds
+			{
+				sub_error_str =
+						ERROR_SUB_TYPE_MAP[vehicle_errors[cur_err_ind]->error_type][vehicle_errors[cur_err_ind]->sub_error_type];
+			}
+			sprintf(buffer, "%s", error_type_str);
+			gtk_label_set_text(GTK_LABEL(info_error_type), buffer);
+			sprintf(buffer, "%s", sub_error_str);
+			gtk_label_set_text(GTK_LABEL(info_error_message), buffer);
+			return;
 		}
 	}
 
-	if (error_count > 0)
+	gtk_label_set_text(GTK_LABEL(info_error_type), "");
+	gtk_label_set_text(GTK_LABEL(info_error_message), "");
+}
+
+// Marks the error currently shown in the popup as dismissed and immediately
+// shows the next non-dismissed error (if any), instead of waiting for the
+// next cycle.
+void dismiss_current_error()
+{
+	if (vehicle_errors[cur_err_ind] != NULL)
 	{
-		sre_gui->error_show = 1;
+		vehicle_errors[cur_err_ind]->dismissed = 1;
 	}
-	else
+	advance_error_display();
+}
+
+void error_panel_update()
+{
+	// printf("error_panel_update\n");
+	uint8_t active_count = 0; // errors that are not dismissed
+	for (int i = 0; i < MAX_ERRORS; i++)
 	{
-		sre_gui->error_show = 0;
+		if (vehicle_errors[i] != NULL && vehicle_errors[i]->dismissed == 0)
+		{
+			active_count++;
+		}
 	}
 
-	if (sre_gui->error_show)
-	{
-		gtk_widget_set_visible(GTK_WIDGET(box_error), true);
-	}
-	else
-	{
-		gtk_widget_set_visible(GTK_WIDGET(box_error), false);
-	}
+	sre_gui->error_show = active_count > 0;
+	gtk_widget_set_visible(GTK_WIDGET(box_error), sre_gui->error_show);
 
-	// @todo: add cycling error messages
 	// cycle error messages
-	if (error_count > 0)
+	if (active_count > 0)
 	{
-		static uint8_t cur_err_ind = 0;
 		static uint64_t time_since_last_change = 0;
 
 		if ((uint64_t)time(NULL) - time_since_last_change >= ERROR_PANEL_UPDATE_INT)
 		{
-			// Find next error that is not NULL
-			for (int i = 0; i < MAX_ERRORS; i++)
-			{
-				cur_err_ind = (cur_err_ind + 1) % MAX_ERRORS;
-				if (vehicle_errors[cur_err_ind] != NULL &&
-						vehicle_errors[cur_err_ind]->dismissed == 0)
-				{
-					char buffer[100];
-					const char *error_type_str =
-							ERROR_TYPES_STR[vehicle_errors[cur_err_ind]->error_type];
-					const char *sub_error_str = "N/A"; // default if no subtype exists
-					if (vehicle_errors[cur_err_ind]->error_type <
-									ERROR_TYPE_COUNT &&
-							ERROR_SUB_TYPE_MAP[vehicle_errors[cur_err_ind]->error_type] !=
-									NULL &&
-							vehicle_errors[cur_err_ind]->sub_error_type <
-									ERROR_SUB_TYPE_COUNT) // avoid out of bounds
-					{
-						sub_error_str =
-								ERROR_SUB_TYPE_MAP[vehicle_errors[cur_err_ind]->error_type][vehicle_errors[cur_err_ind]->sub_error_type];
-					}
-					sprintf(buffer, "%s", error_type_str);
-					gtk_label_set_text(GTK_LABEL(info_error_type), buffer);
-					sprintf(buffer, "%s", sub_error_str);
-					gtk_label_set_text(GTK_LABEL(info_error_message), buffer);
-					break;
-				}
-			}
+			advance_error_display();
 			// update last update time
 			time_since_last_change = (uint64_t)time(NULL);
 		}
@@ -1163,12 +1170,10 @@ void error_logic()
 
 	if ((sre_state->asb_state == EBS_TRIGGERED) && (sre_state->asb_trigger_cause != 0))
 	{
-		SRE_error *buff_error = check_if_error_exists(ASB_ERROR,
-																									sre_state->asb_trigger_cause);
+		SRE_error *buff_error = check_if_error_exists(ASB_ERROR, sre_state->asb_trigger_cause);
 		if (buff_error == NULL)
 		{
-			SRE_error *new_buff_error = create_sre_error(ASB_ERROR,
-																									 sre_state->asb_trigger_cause);
+			SRE_error *new_buff_error = create_sre_error(ASB_ERROR, sre_state->asb_trigger_cause);
 			add_error(new_buff_error);
 		}
 		else

@@ -24,6 +24,10 @@ static gboolean on_click(
 		GtkGestureClick *gesture, gint n_press, gdouble x, gdouble y,
 		gpointer user_data);
 
+static void on_error_box_click(
+		GtkGestureClick *gesture, gint n_press, gdouble x, gdouble y,
+		gpointer user_data);
+
 static void switch_panel(GtkWidget *widget, const char *panel_name)
 {
 	// Could be done with overlays that appear and disappear instead of switching panels if switching lag is to high
@@ -52,12 +56,22 @@ static gboolean on_click(
 		GtkGestureClick *gesture, gint n_press, gdouble x, gdouble y,
 		gpointer user_data)
 {
-	static int panel_index = 0;
-	const char *panels[] = {"Endurance", "Debug", "Parameters", "Vehicleinfo"};
-	panel_index = (panel_index + 1) % 4;
-	currentPanel = panel_index;
-	switch_panel(GTK_WIDGET(user_data), panels[panel_index]);
+		static int panel_index = 0;
+		const char *panels[] = {"Endurance", "Debug", "Parameters", "Vehicleinfo"};
+		panel_index = (panel_index + 1) % 4;
+		currentPanel = panel_index;
+		switch_panel(GTK_WIDGET(user_data), panels[panel_index]);
 	return TRUE;
+}
+
+// Dismisses the currently shown error popup on tap, instead of switching panels
+static void on_error_box_click(
+		GtkGestureClick *gesture, gint n_press, gdouble x, gdouble y,
+		gpointer user_data)
+{
+	dismiss_current_error();
+	// Claim the sequence so the window-level click gesture doesn't also switch panels
+	gtk_gesture_set_state(GTK_GESTURE(gesture), GTK_EVENT_SEQUENCE_CLAIMED);
 }
 
 static void setup_error_info(GObject *main_overlay)
@@ -109,6 +123,11 @@ static void setup_error_info(GObject *main_overlay)
 	gtk_widget_set_halign(GTK_WIDGET(box_info), GTK_ALIGN_CENTER);
 	gtk_widget_set_valign(GTK_WIDGET(box_info), GTK_ALIGN_END);
 
+	// Tapping the error popup dismisses the currently shown error
+	GtkGesture *error_box_click = gtk_gesture_click_new();
+	g_signal_connect(error_box_click, "pressed", G_CALLBACK(on_error_box_click), NULL);
+	gtk_widget_add_controller(GTK_WIDGET(box_error), GTK_EVENT_CONTROLLER(error_box_click));
+
 	// Add error and info box to the main overlay
 	gtk_overlay_add_overlay(GTK_OVERLAY(main_overlay), GTK_WIDGET(box_error));
 	gtk_widget_set_visible(GTK_WIDGET(box_error), FALSE);
@@ -144,8 +163,11 @@ static void activate(GtkApplication *app, gpointer user_data)
 	// Create the main overlay
 	GtkWidget *main_overlay = gtk_overlay_new();
 
-	// Disallow being a target
-	gtk_widget_set_can_target(GTK_WIDGET(main_overlay), FALSE);
+	// Must stay targetable: gtk_widget_pick() stops descending at a non-targetable
+	// widget, so marking the overlay FALSE would keep the error popup inside it from
+	// ever receiving a click. The panels hold only labels and boxes, which carry no
+	// gestures of their own, so their clicks still bubble up to the window gesture.
+	gtk_widget_set_can_target(GTK_WIDGET(main_overlay), TRUE);
 
 	// Initial panel
 	GtkWidget *initial_panel = create_endurance_panel();
