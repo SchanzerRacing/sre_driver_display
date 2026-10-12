@@ -1,8 +1,11 @@
 #!/bin/bash
 
+# Enable CAN
+sudo ip link set can0 up type can bitrate 1000000
+
 # Configuration
 REPO_URL="https://github.com/SchanzerRacing/sre_driver_display.git"
-PROJECT_DIR="$HOME/driver-display"
+PROJECT_DIR="$HOME/sre_driver_display"
 GTK_WORKSPACE_DIR="$PROJECT_DIR/gtkWorkspace"
 BUILD_DIR="$GTK_WORKSPACE_DIR/build"
 EXECUTABLE="$BUILD_DIR/driver-display.out"
